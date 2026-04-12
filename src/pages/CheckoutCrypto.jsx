@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { ChevronRight, Bitcoin, Coins, DollarSign } from 'lucide-react'
+import {
+  ChevronRight, Bitcoin, Coins, DollarSign,
+  ShieldCheck, Truck, RefreshCw, X, ArrowLeft, CreditCard,
+} from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 const cryptoOptions = [
   { id: 'btc', label: 'Bitcoin', ticker: 'BTC', amount: '0.00094 BTC', icon: Bitcoin, iconColor: '#F59E0B', bg: '#1A150A', borderActive: '#F59E0B' },
-  { id: 'eth', label: 'Ethereum', ticker: 'ETH', amount: '0.01482 ETH', icon: Coins, iconColor: '#6366F1', bg: '#0F0F1A', borderActive: '#6366F1' },
-  { id: 'usdt', label: 'Tether', ticker: 'USDT', amount: '4.698,99 USDT', icon: DollarSign, iconColor: '#22C55E', bg: '#0A1A0F', borderActive: '#22C55E' },
+  { id: 'eth', label: 'Ethereum', ticker: 'ETH', amount: '1.879 ETH', icon: Coins, iconColor: '#6366F1', bg: '#0F0F1A', borderActive: '#6366F1' },
+  { id: 'usdt', label: 'Tether', ticker: 'USDT', amount: '4.699 USDT', icon: DollarSign, iconColor: '#22C55E', bg: '#0A1A0F', borderActive: '#22C55E' },
 ]
 
 const CheckoutCrypto = () => {
@@ -19,8 +22,29 @@ const CheckoutCrypto = () => {
     <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
       <Navbar />
 
-      {/* Breadcrumb */}
-      <div className="flex items-center w-full" style={{ backgroundColor: '#0A0F1C', height: '44px', padding: '0 80px', gap: '8px' }}>
+      {/* ═══════════════ MOBILE HEADER ═══════════════ */}
+      <div
+        className="flex md:hidden items-center justify-between w-full"
+        style={{ backgroundColor: '#0A0F1C', height: '56px', padding: '0 16px' }}
+      >
+        <Link to="/checkout" className="flex items-center no-underline">
+          <ArrowLeft size={20} color="#F5F7FA" />
+        </Link>
+        <div className="flex flex-col items-center">
+          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+            Elegí tu cripto
+          </span>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>
+            Paso 3 de 3
+          </span>
+        </div>
+        <Link to="/checkout" className="flex items-center no-underline">
+          <X size={20} color="#AAB3C5" />
+        </Link>
+      </div>
+
+      {/* ═══════════════ DESKTOP BREADCRUMB ═══════════════ */}
+      <div className="hidden md:flex items-center w-full" style={{ backgroundColor: '#0A0F1C', height: '44px', padding: '0 80px', gap: '8px' }}>
         <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Inicio</Link>
         <ChevronRight size={14} color="#1B2333" />
         <Link to="/checkout" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Método de pago</Link>
@@ -28,8 +52,91 @@ const CheckoutCrypto = () => {
         <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>Pagar con cripto</span>
       </div>
 
-      {/* Main */}
-      <div className="flex w-full" style={{ padding: '40px 80px', gap: '30px' }}>
+      {/* ═══════════════ MOBILE CONTENT ═══════════════ */}
+      <div className="flex md:hidden flex-col w-full" style={{ padding: '16px', gap: '16px' }}>
+
+        {/* Cart summary strip */}
+        <div
+          className="flex items-center"
+          style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px 14px', gap: '10px', border: '1px solid #1B2333' }}
+        >
+          <CreditCard size={18} color="#24A8F5" />
+          <div className="flex-1">
+            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>4 productos en tu carrito</span>
+          </div>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+            Total: $4.698.996
+          </span>
+          <ChevronRight size={16} color="#AAB3C5" />
+        </div>
+
+        {/* Title */}
+        <div className="flex flex-col" style={{ gap: '4px' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '20px', fontWeight: '800' }}>
+            Seleccioná tu criptomoneda
+          </span>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>
+            Tu pago será convertido al tipo de cambio actual
+          </span>
+        </div>
+
+        {/* Crypto options */}
+        <div className="flex flex-col" style={{ gap: '10px' }}>
+          {cryptoOptions.map(opt => {
+            const Icon = opt.icon
+            const isActive = selected === opt.id
+            return (
+              <button
+                key={opt.id}
+                onClick={() => setSelected(opt.id)}
+                className="flex items-center border-none cursor-pointer text-left w-full"
+                style={{
+                  backgroundColor: '#0E1424',
+                  borderRadius: '14px',
+                  padding: '16px',
+                  gap: '14px',
+                  border: `1px solid ${isActive ? opt.borderActive : '#1B2333'}`,
+                }}
+              >
+                <div style={{ backgroundColor: opt.bg, borderRadius: '12px', padding: '12px', flexShrink: 0 }}>
+                  <Icon size={22} color={opt.iconColor} />
+                </div>
+                <div className="flex flex-col flex-1" style={{ gap: '2px' }}>
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+                    {opt.label}
+                  </span>
+                  <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>
+                    {opt.ticker}
+                  </span>
+                </div>
+                <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700', flexShrink: 0 }}>
+                  {opt.amount}
+                </span>
+                <ChevronRight size={18} color={isActive ? opt.borderActive : '#AAB3C5'} style={{ flexShrink: 0 }} />
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Trust badges */}
+        <div className="flex items-center justify-center" style={{ gap: '16px', padding: '16px 0' }}>
+          <div className="flex items-center" style={{ gap: '4px' }}>
+            <ShieldCheck size={14} color="#22C55E" />
+            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Pago seguro</span>
+          </div>
+          <div className="flex items-center" style={{ gap: '4px' }}>
+            <Truck size={14} color="#22C55E" />
+            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Envío gratis</span>
+          </div>
+          <div className="flex items-center" style={{ gap: '4px' }}>
+            <RefreshCw size={14} color="#22C55E" />
+            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>30 días de devolución</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ═══════════════ DESKTOP CONTENT ═══════════════ */}
+      <div className="hidden md:flex w-full" style={{ padding: '40px 80px', gap: '30px' }}>
 
         {/* Left */}
         <div className="flex flex-col" style={{ flex: 1, gap: '24px' }}>

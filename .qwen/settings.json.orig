@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(C:\\Users\\tomba\\Downloads\\ilovepdf_pages-to-jpg\\export-mobilev2/**)"
+    ]
+  }
+}

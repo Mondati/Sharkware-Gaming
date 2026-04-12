@@ -3,7 +3,9 @@ import {
   Zap, LayoutDashboard, Package, ShoppingCart, Users, Settings, LogOut,
   UserRound, Bell, Plus, Search, Pencil, Trash2, CircleCheck, TriangleAlert,
   Layers, ChevronDown, X, Upload, Save, Image, ChevronLeft, ChevronRight,
+  Menu,
 } from 'lucide-react'
+import AdminBottomNav from '../components/AdminBottomNav'
 
 /* ─────────────────────────────────────────────────────────────────── data */
 
@@ -43,10 +45,186 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
   }
   const labelStyle = { color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '500' }
 
+  /* ──────────────── MOBILE VERSION (full-screen) ──────────────── */
+
+  const MobileModalBody = () => (
+    <div className="flex md:hidden flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
+      {/* Header */}
+      <div
+        className="flex items-center justify-between w-full"
+        style={{ height: '56px', padding: '0 16px', backgroundColor: '#0A0F1C', borderBottom: '1px solid #1B2333', flexShrink: 0 }}
+      >
+        <button
+          onClick={onClose}
+          className="flex items-center justify-center border-none cursor-pointer"
+          style={{ width: '36px', height: '36px', backgroundColor: '#1E2232', borderRadius: '8px' }}
+        >
+          <X size={18} color="#F5F7FA" />
+        </button>
+        <div className="flex flex-col items-center">
+          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+            {isEdit ? 'Editar Producto' : 'Agregar Producto'}
+          </span>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px' }}>
+            {isEdit ? product?.name : 'Nuevo producto'}
+          </span>
+        </div>
+        <div style={{ width: '36px' }} />
+      </div>
+
+      {/* Scrollable form */}
+      <div className="flex flex-col" style={{ flex: 1, padding: '16px', gap: '14px', overflowY: 'auto', paddingBottom: '80px' }}>
+
+        {/* Image upload */}
+        <div
+          className="flex flex-col items-center justify-center"
+          style={{ height: '140px', borderRadius: '12px', gap: '8px', border: `1px dashed ${isEdit ? '#24A8F5' : '#1B2333'}`, backgroundColor: isEdit ? '#0D2035' : '#0E1424' }}
+        >
+          {isEdit ? <Image size={32} color="#24A8F5" /> : <Upload size={28} color="#AAB3C5" />}
+          <span style={{ color: isEdit ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '500' }}>
+            {isEdit ? 'Imagen actual cargada' : 'Subí una imagen del producto'}
+          </span>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px' }}>JPG, PNG, WEBP · Máx 5MB</span>
+        </div>
+
+        {/* Nombre + Marca */}
+        <div className="flex" style={{ gap: '10px' }}>
+          <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Nombre del producto *</span>
+            <input
+              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
+              value={form.nombre} onChange={set('nombre')} placeholder="Ej: RTX 5090 24GB GDDR7"
+            />
+          </div>
+          <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Marca *</span>
+            <input
+              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
+              value={form.marca} onChange={set('marca')} placeholder="Ej: NVIDIA"
+            />
+          </div>
+        </div>
+
+        {/* Descripción */}
+        <div className="flex flex-col" style={{ gap: '6px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Descripción</span>
+          <textarea
+            rows={3}
+            style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none', resize: 'none' }}
+            value={form.desc} onChange={set('desc')} placeholder="Describí el producto brevemente..."
+          />
+        </div>
+
+        {/* Especificaciones */}
+        <div className="flex flex-col" style={{ gap: '6px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Especificaciones técnicas</span>
+          <textarea
+            rows={3}
+            style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none', resize: 'none' }}
+            value={form.espec} onChange={set('espec')} placeholder="Ej: GPU Nativa 16384 CUDA Cores..."
+          />
+        </div>
+
+        {/* Precio + Stock */}
+        <div className="flex" style={{ gap: '10px' }}>
+          <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Precio (USD) *</span>
+            <input
+              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
+              value={form.precio} onChange={set('precio')} placeholder="0.00"
+            />
+          </div>
+          <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Stock *</span>
+            <input
+              type="number"
+              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
+              value={form.stock} onChange={set('stock')} placeholder="0"
+            />
+          </div>
+        </div>
+
+        {/* Categoría */}
+        <div className="flex flex-col" style={{ gap: '6px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Categoría *</span>
+          <div
+            className="flex items-center justify-between"
+            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', cursor: 'pointer' }}
+          >
+            <select
+              value={form.cat}
+              onChange={set('cat')}
+              style={{ background: 'none', border: 'none', outline: 'none', color: form.cat ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', width: '100%', cursor: 'pointer', appearance: 'none' }}
+            >
+              <option value="" disabled>Seleccioná una categoría</option>
+              {CATEGORIES.map(c => <option key={c} value={c} style={{ backgroundColor: '#0E1424' }}>{c}</option>)}
+            </select>
+            <ChevronDown size={14} color="#AAB3C5" style={{ pointerEvents: 'none', flexShrink: 0 }} />
+          </div>
+        </div>
+
+        {/* Estado toggle */}
+        <div className="flex items-center justify-between" style={{ padding: '4px 0' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>Estado del producto</span>
+          <div className="flex flex-col items-end" style={{ gap: '3px' }}>
+            <button
+              onClick={() => setForm(f => ({ ...f, activo: !f.activo }))}
+              className="flex items-center border-none cursor-pointer"
+              style={{
+                width: '44px', height: '24px', borderRadius: '12px',
+                backgroundColor: form.activo ? '#24A8F5' : '#1B2333',
+                padding: '0 3px',
+                justifyContent: form.activo ? 'flex-end' : 'flex-start',
+              }}
+            >
+              <div style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#FFFFFF' }} />
+            </button>
+            <span style={{ color: form.activo ? '#22C55E' : '#AAB3C5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '600' }}>
+              {form.activo ? 'Activo' : 'Inactivo'}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Fixed footer */}
+      <div
+        className="flex items-center justify-between w-full"
+        style={{ position: 'fixed', bottom: '64px', left: 0, right: 0, padding: '12px 16px', gap: '10px', backgroundColor: '#0E1424', borderTop: '1px solid #1B2333', zIndex: 55 }}
+      >
+        <button
+          onClick={onClose}
+          className="flex items-center justify-center flex-1 border-none cursor-pointer"
+          style={{ backgroundColor: '#1B2333', borderRadius: '10px', height: '46px' }}
+        >
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>Cancelar</span>
+        </button>
+        <button
+          onClick={() => { onSave(form); onClose() }}
+          className="flex items-center justify-center flex-1 border-none cursor-pointer"
+          style={{ backgroundColor: '#24A8F5', borderRadius: '10px', height: '46px', gap: '8px' }}
+        >
+          <Save size={16} color="#FFFFFF" />
+          <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+            {isEdit ? 'Guardar Cambios' : 'Guardar Producto'}
+          </span>
+        </button>
+      </div>
+    </div>
+  )
+
   return (
-    /* Overlay */
-    <div
-      className="flex items-start justify-center"
+    <>
+      {/* ── MOBILE: full-screen overlay ── */}
+      <div
+        className="flex md:hidden items-start justify-center"
+        style={{ position: 'fixed', inset: 0, backgroundColor: '#070B16', zIndex: 60 }}
+      >
+        <MobileModalBody />
+      </div>
+
+      {/* ── DESKTOP: modal overlay ── */}
+      <div
+        className="hidden md:flex items-start justify-center"
       style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(7,6,16,0.97)', zIndex: 50, paddingTop: '85px' }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
@@ -235,6 +413,7 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 
@@ -258,6 +437,24 @@ const StatCard = ({ label, value, sub, subColor, icon: Icon, iconColor }) => (
       <Icon size={16} color={iconColor} />
     </div>
     <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '28px', fontWeight: '800' }}>{value}</span>
+    <span style={{ color: subColor, fontFamily: 'Inter', fontSize: '11px' }}>{sub}</span>
+  </div>
+)
+
+const MobileStatCard = ({ label, value, sub, subColor, icon: Icon, iconColor }) => (
+  <div
+    className="flex flex-col"
+    style={{ backgroundColor: '#0E1424', borderRadius: '12px', padding: '14px', gap: '8px', border: '1px solid #1B2333' }}
+  >
+    <div className="flex items-center" style={{ gap: '10px' }}>
+      <div style={{ backgroundColor: '#1B2333', borderRadius: '10px', padding: '10px', flexShrink: 0 }}>
+        <Icon size={18} color={iconColor} />
+      </div>
+      <div className="flex flex-col" style={{ gap: '2px', flex: 1 }}>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '500' }}>{label}</span>
+        <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '24px', fontWeight: '800' }}>{value}</span>
+      </div>
+    </div>
     <span style={{ color: subColor, fontFamily: 'Inter', fontSize: '11px' }}>{sub}</span>
   </div>
 )
@@ -294,9 +491,9 @@ const AdminPanel = () => {
   return (
     <div className="flex" style={{ height: '100vh', backgroundColor: '#070B16', overflow: 'hidden' }}>
 
-      {/* ── Sidebar ── */}
+      {/* ── Sidebar (desktop only) ── */}
       <div
-        className="flex flex-col"
+        className="hidden md:flex flex-col"
         style={{ width: '260px', flexShrink: 0, backgroundColor: '#0E1424', borderRight: '1px solid #1B2333', height: '100%' }}
       >
         {/* Logo */}
@@ -353,11 +550,36 @@ const AdminPanel = () => {
       </div>
 
       {/* ── Main content ── */}
-      <div className="flex flex-col" style={{ flex: 1, overflow: 'hidden' }}>
+      <div className="flex flex-col" style={{ flex: 1, overflow: 'hidden', paddingBottom: '64px' }}>
 
-        {/* TopBar */}
+        {/* Mobile TopBar */}
         <div
-          className="flex items-center justify-between"
+          className="flex md:hidden items-center justify-between"
+          style={{ height: '56px', flexShrink: 0, backgroundColor: '#0E1424', padding: '0 16px', borderBottom: '1px solid #1B2333' }}
+        >
+          <div className="flex items-center" style={{ gap: '10px' }}>
+            <button
+              className="flex items-center justify-center border-none cursor-pointer"
+              style={{ width: '36px', height: '36px', backgroundColor: '#1B2333', borderRadius: '8px' }}
+            >
+              <Menu size={18} color="#F5F7FA" />
+            </button>
+            <div className="flex flex-col" style={{ gap: '0' }}>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>Gestión de Productos</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px' }}>Panel Admin / Productos</span>
+            </div>
+          </div>
+          <div className="flex items-center" style={{ gap: '8px' }}>
+            <Bell size={18} color="#AAB3C5" />
+            <div className="flex items-center justify-center" style={{ width: '32px', height: '32px', backgroundColor: '#1B2333', borderRadius: '16px' }}>
+              <UserRound size={16} color="#24A8F5" />
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop TopBar */}
+        <div
+          className="hidden md:flex items-center justify-between"
           style={{ height: '60px', flexShrink: 0, backgroundColor: '#0E1424', padding: '0 28px', borderBottom: '1px solid #1B2333' }}
         >
           <div className="flex flex-col" style={{ gap: '2px' }}>
@@ -375,16 +597,51 @@ const AdminPanel = () => {
         {/* Content area */}
         <div className="flex flex-col" style={{ flex: 1, padding: '28px', gap: '20px', overflowY: 'auto' }}>
 
-          {/* Stats row */}
-          <div className="flex" style={{ gap: '14px' }}>
+          {/* Mobile Stats (2x2 grid) */}
+          <div className="md:hidden grid grid-cols-2" style={{ gap: '10px' }}>
+            <MobileStatCard label="Total Productos" value="156" sub="+12 este mes" subColor="#22C55E" icon={Package} iconColor="#24A8F5" />
+            <MobileStatCard label="Activos" value="142" sub="91% del catálogo" subColor="#AAB3C5" icon={CircleCheck} iconColor="#22C55E" />
+            <MobileStatCard label="Sin Stock" value="8" sub="Requieren reposición" subColor="#FF8400" icon={TriangleAlert} iconColor="#FF8400" />
+            <MobileStatCard label="Categorías" value="5" sub="GPU · CPU · Monitor..." subColor="#AAB3C5" icon={Layers} iconColor="#37C3FF" />
+          </div>
+
+          {/* Desktop Stats row */}
+          <div className="hidden md:flex" style={{ gap: '14px' }}>
             <StatCard label="Total Productos" value="156" sub="+12 este mes"        subColor="#22C55E" icon={Package}       iconColor="#24A8F5" />
             <StatCard label="Activos"         value="142" sub="91% del catálogo"    subColor="#AAB3C5" icon={CircleCheck}   iconColor="#22C55E" />
             <StatCard label="Sin Stock"       value="8"   sub="Requieren reposición" subColor="#FF8400" icon={TriangleAlert} iconColor="#FF8400" />
             <StatCard label="Categorías"      value="5"   sub="GPU · CPU · Monitor · RAM..." subColor="#AAB3C5" icon={Layers} iconColor="#37C3FF" />
           </div>
 
-          {/* Action bar */}
-          <div className="flex items-center justify-between">
+          {/* Mobile Action bar */}
+          <div className="md:hidden flex items-center justify-between" style={{ gap: '10px' }}>
+            <div className="flex flex-col" style={{ gap: '2px', flex: 1 }}>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '16px', fontWeight: '700' }}>Lista de Productos</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>{filtered.length} de {products.length} productos</span>
+            </div>
+            <button
+              onClick={() => setModal('add')}
+              className="flex items-center justify-center border-none cursor-pointer"
+              style={{ backgroundColor: '#24A8F5', borderRadius: '8px', width: '40px', height: '40px' }}
+            >
+              <Plus size={18} color="#FFFFFF" />
+            </button>
+          </div>
+
+          {/* Mobile Search */}
+          <div className="md:hidden flex items-center" style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', gap: '8px', border: '1px solid #1B2333' }}>
+            <Search size={16} color="#AAB3C5" />
+            <input
+              placeholder="Buscar producto..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="bg-transparent border-none outline-none w-full"
+              style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}
+            />
+          </div>
+
+          {/* Desktop Action bar */}
+          <div className="hidden md:flex items-center justify-between">
             <div className="flex flex-col" style={{ gap: '3px' }}>
               <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>Lista de Productos</span>
               <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>Administrá el catálogo completo de la tienda</span>
@@ -414,8 +671,74 @@ const AdminPanel = () => {
             </div>
           </div>
 
-          {/* Table */}
-          <div style={{ backgroundColor: '#0E1424', borderRadius: '8px', border: '1px solid #1B2333', overflow: 'hidden' }}>
+          {/* Mobile Product Cards */}
+          <div className="md:hidden flex flex-col" style={{ gap: '10px' }}>
+            {filtered.map((p) => (
+              <div
+                key={p.id}
+                className="flex flex-col"
+                style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '14px', gap: '10px', border: '1px solid #1B2333' }}
+              >
+                {/* Name + SKU */}
+                <div className="flex flex-col" style={{ gap: '2px' }}>
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>{p.name}</span>
+                  <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>SKU: {p.sku}</span>
+                </div>
+
+                {/* Category + Price row */}
+                <div className="flex items-center" style={{ gap: '12px' }}>
+                  <div className="flex flex-col" style={{ gap: '2px' }}>
+                    <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '600' }}>Categoría</span>
+                    <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>{p.cat}</span>
+                  </div>
+                  <div style={{ flex: 1 }} />
+                  <div className="flex flex-col" style={{ gap: '2px', alignItems: 'flex-end' }}>
+                    <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '600' }}>Precio</span>
+                    <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>{p.price}</span>
+                  </div>
+                </div>
+
+                {/* Stock + Status row */}
+                <div className="flex items-center" style={{ gap: '12px' }}>
+                  <div className="flex items-center" style={{ gap: '6px' }}>
+                    <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Stock:</span>
+                    <span style={{ color: p.stock === 0 ? '#EF4444' : '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: p.stock === 0 ? '700' : '600' }}>
+                      {p.stock} un.
+                    </span>
+                  </div>
+                  <div style={{ flex: 1 }} />
+                  <div style={{ backgroundColor: p.active ? '#0F3D22' : '#2D1010', borderRadius: '5px', padding: '4px 10px' }}>
+                    <span style={{ color: p.active ? '#22C55E' : '#EF4444', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600' }}>
+                      {p.active ? 'Activo' : 'Agotado'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Action buttons */}
+                <div className="flex items-center" style={{ gap: '8px', paddingTop: '4px', borderTop: '1px solid #1B2333' }}>
+                  <button
+                    onClick={() => openEdit(p)}
+                    className="flex items-center justify-center border-none cursor-pointer flex-1"
+                    style={{ backgroundColor: '#0D2035', borderRadius: '8px', height: '36px', gap: '6px' }}
+                  >
+                    <Pencil size={14} color="#24A8F5" />
+                    <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Editar</span>
+                  </button>
+                  <button
+                    onClick={() => deleteProduct(p.id)}
+                    className="flex items-center justify-center border-none cursor-pointer flex-1"
+                    style={{ backgroundColor: '#2D1010', borderRadius: '8px', height: '36px', gap: '6px' }}
+                  >
+                    <Trash2 size={14} color="#EF4444" />
+                    <span style={{ color: '#EF4444', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Eliminar</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop Table */}
+          <div className="hidden md:block" style={{ backgroundColor: '#0E1424', borderRadius: '8px', border: '1px solid #1B2333', overflow: 'hidden' }}>
             {/* Header */}
             <div
               className="flex items-center"
@@ -519,6 +842,9 @@ const AdminPanel = () => {
           onSave={handleSave}
         />
       )}
+
+      {/* ── Mobile Bottom Nav ── */}
+      <AdminBottomNav />
     </div>
   )
 }

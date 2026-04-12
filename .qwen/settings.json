@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(C:\\Users\\tomba\\Downloads\\ilovepdf_pages-to-jpg\\export-mobilev2/**)",
+      "Bash(npm run *)",
+      "Bash(timeout *)",
+      "Bash(curl *)"
+    ]
+  },
+  "$version": 3
+}
