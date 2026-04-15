@@ -77,7 +77,7 @@ const Home = () => {
           </p>
           <div className="flex flex-col" style={{ gap: '4px' }}>
             <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px' }}>Precio desde</span>
-            <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '32px', fontWeight: '800' }}>$2.499.999 ARS</span>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '32px', fontWeight: '800' }}>$2.499.999 ARS</span>
           </div>
           <div className="flex items-center" style={{ gap: '14px' }}>
             <button
@@ -129,7 +129,7 @@ const Home = () => {
           Build Personalizada
         </p>
         <div className="flex flex-col" style={{ gap: '2px' }}>
-          <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '24px', fontWeight: '800' }}>$2.499.999 ARS</span>
+          <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '800' }}>$2.499.999 ARS</span>
         </div>
         <div className="flex items-center" style={{ gap: '10px' }}>
           <button

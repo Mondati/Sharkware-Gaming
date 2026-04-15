@@ -239,7 +239,7 @@ const CheckoutConfirmCrypto = () => {
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
           <div className="flex items-center">
             <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '800' }}>Total</span>
-            <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '22px', fontWeight: '800' }}>$4.698.996</span>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '22px', fontWeight: '800' }}>$4.698.996</span>
           </div>
           <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '12px' }}>en 12 cuotas sin interés de $391.583</span>
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
