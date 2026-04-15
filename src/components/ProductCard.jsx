@@ -24,7 +24,7 @@ const ProductCard = ({ id, brand, name, spec, price, imgHeight = 140, mobile = f
               position: 'absolute',
               top: '8px',
               left: '8px',
-              backgroundColor: badge === 'HOT' ? '#EF4444' : badge === 'NUEVO' ? '#22C55E' : badge === 'OFERTA' ? '#FF8400' : '#1E2232',
+              backgroundColor: badge === 'HOT' ? '#EF4444' : badge === 'NUEVO' ? '#22C55E' : badge === 'OFERTA' ? '#EF4444' : '#1E2232',
               borderRadius: '4px',
               padding: '3px 8px',
             }}
@@ -43,7 +43,7 @@ const ProductCard = ({ id, brand, name, spec, price, imgHeight = 140, mobile = f
           {name}
         </span>
 
-        <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+        <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
           {price}
         </span>
 
@@ -81,7 +81,7 @@ const ProductCard = ({ id, brand, name, spec, price, imgHeight = 140, mobile = f
               position: 'absolute',
               top: '8px',
               left: '8px',
-              backgroundColor: badge === 'HOT' ? '#EF4444' : badge === 'NUEVO' ? '#22C55E' : badge === 'OFERTA' ? '#FF8400' : '#1E2232',
+              backgroundColor: badge === 'HOT' ? '#EF4444' : badge === 'NUEVO' ? '#22C55E' : badge === 'OFERTA' ? '#EF4444' : '#1E2232',
               borderRadius: '4px',
               padding: '3px 8px',
             }}
@@ -105,7 +105,7 @@ const ProductCard = ({ id, brand, name, spec, price, imgHeight = 140, mobile = f
         {spec}
       </span>
 
-      <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+      <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
         {price}
       </span>
 

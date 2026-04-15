@@ -111,7 +111,7 @@ const Cart = () => {
 
                 {/* Price + Qty row */}
                 <div className="flex items-center justify-between" style={{ marginTop: '4px' }}>
-                  <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
+                  <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
                     {fmt(item.price * item.qty)}
                   </span>
                   <div className="flex items-center" style={{ backgroundColor: '#070B16', borderRadius: '8px', overflow: 'hidden' }}>
@@ -198,7 +198,7 @@ const Cart = () => {
 
           <div className="flex items-center">
             <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>Total</span>
-            <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '22px', fontWeight: '800' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '22px', fontWeight: '800' }}>
               {fmt(subtotal)}
             </span>
           </div>
@@ -290,7 +290,7 @@ const Cart = () => {
                       {item.spec}
                     </span>
                   </div>
-                  <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800', flexShrink: 0 }}>
+                  <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800', flexShrink: 0 }}>
                     {fmt(item.price * item.qty)}
                   </span>
                   <div className="flex items-center" style={{ backgroundColor: '#070B16', borderRadius: '8px', flexShrink: 0 }}>
@@ -392,7 +392,7 @@ const Cart = () => {
 
           <div className="flex items-center" style={{ width: '100%' }}>
             <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '800' }}>Total</span>
-            <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '22px', fontWeight: '800' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '22px', fontWeight: '800' }}>
               {fmt(subtotal)}
             </span>
           </div>

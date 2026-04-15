@@ -138,7 +138,7 @@ const ProductDetail = () => {
             <div style={{ position: 'absolute', top: '16px', left: '16px', backgroundColor: '#22C55E', borderRadius: '6px', padding: '4px 12px' }}>
               <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>NUEVO</span>
             </div>
-            <div style={{ position: 'absolute', top: '16px', left: '90px', backgroundColor: '#FF8400', borderRadius: '6px', padding: '4px 12px' }}>
+            <div style={{ position: 'absolute', top: '16px', left: '90px', backgroundColor: '#EF4444', borderRadius: '6px', padding: '4px 12px' }}>
               <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>MÁS VENDIDO</span>
             </div>
           </div>
@@ -190,7 +190,7 @@ const ProductDetail = () => {
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
 
           <div className="flex flex-col" style={{ gap: '6px' }}>
-            <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '36px', fontWeight: '800' }}>$ 2.899.999</span>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '36px', fontWeight: '800' }}>$ 2.899.999</span>
             <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '14px' }}>12 cuotas sin interés de $ 241.666</span>
           </div>
 
@@ -283,7 +283,7 @@ const ProductDetail = () => {
           <div style={{ backgroundColor: '#22C55E', borderRadius: '5px', padding: '4px 10px' }}>
             <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>NUEVO</span>
           </div>
-          <div style={{ backgroundColor: '#FF8400', borderRadius: '5px', padding: '4px 10px' }}>
+          <div style={{ backgroundColor: '#EF4444', borderRadius: '5px', padding: '4px 10px' }}>
             <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>MAS VENDIDO</span>
           </div>
         </div>
@@ -307,7 +307,7 @@ const ProductDetail = () => {
 
         {/* Price */}
         <div className="flex flex-col" style={{ gap: '4px' }}>
-          <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '28px', fontWeight: '800' }}>$ 2.899.999</span>
+          <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '28px', fontWeight: '800' }}>$ 2.899.999</span>
           <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '13px' }}>
             12 cuotas sin interés de $ 241.666
           </span>
@@ -469,7 +469,7 @@ const ProductDetail = () => {
                   <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '700', lineHeight: '1.3' }}>
                     {p.name}
                   </span>
-                  <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '14px', fontWeight: '800' }}>
+                  <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '800' }}>
                     {p.price}
                   </span>
                 </div>
@@ -594,7 +594,7 @@ const ProductDetail = () => {
               <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
                 {p.name}
               </span>
-              <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
+              <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
                 {p.price}
               </span>
             </div>

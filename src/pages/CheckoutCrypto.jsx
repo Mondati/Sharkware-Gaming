@@ -206,7 +206,7 @@ const CheckoutCrypto = () => {
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
           <div className="flex items-center">
             <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '800' }}>Total</span>
-            <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '22px', fontWeight: '800' }}>$4.698.996</span>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '22px', fontWeight: '800' }}>$4.698.996</span>
           </div>
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
           <div className="flex items-center" style={{ gap: '10px' }}>

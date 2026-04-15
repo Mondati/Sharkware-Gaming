@@ -694,7 +694,7 @@ const AdminPanel = () => {
                   <div style={{ flex: 1 }} />
                   <div className="flex flex-col" style={{ gap: '2px', alignItems: 'flex-end' }}>
                     <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '600' }}>Precio</span>
-                    <span style={{ color: '#FF8400', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>{p.price}</span>
+                    <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>{p.price}</span>
                   </div>
                 </div>
 
