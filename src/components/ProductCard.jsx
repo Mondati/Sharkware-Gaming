@@ -1,6 +1,48 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const ProductCard = ({ id, brand, name, spec, price, imgHeight = 140, mobile = false, badge = null }) => {
+const ProductImage = ({ image_url, brand, name, height }) => {
+  const [imgError, setImgError] = useState(false)
+
+  if (image_url && !imgError) {
+    return (
+      <img
+        src={image_url}
+        alt={name}
+        onError={() => setImgError(true)}
+        style={{
+          width: '100%',
+          height: `${height}px`,
+          objectFit: 'cover',
+          borderRadius: '10px',
+          display: 'block',
+        }}
+      />
+    )
+  }
+
+  return (
+    <div
+      className="flex flex-col items-center justify-center"
+      style={{
+        backgroundColor: '#1E2232',
+        borderRadius: '10px',
+        height: `${height}px`,
+        gap: '6px',
+        padding: '12px',
+      }}
+    >
+      <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
+        {brand}
+      </span>
+      <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600', textAlign: 'center', lineHeight: '1.3' }}>
+        {name}
+      </span>
+    </div>
+  )
+}
+
+const ProductCard = ({ id, brand, name, spec, price, image_url, imgHeight = 140, mobile = false, badge = null }) => {
   if (mobile) {
     return (
       <div
@@ -14,10 +56,8 @@ const ProductCard = ({ id, brand, name, spec, price, imgHeight = 140, mobile = f
           overflow: 'hidden',
         }}
       >
-        {/* Image placeholder */}
-        <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', height: '120px' }} />
+        <ProductImage image_url={image_url} brand={brand} name={name} height={120} />
 
-        {/* Badge */}
         {badge && (
           <div
             style={{
@@ -62,7 +102,7 @@ const ProductCard = ({ id, brand, name, spec, price, imgHeight = 140, mobile = f
             display: 'block',
           }}
         >
-          Agregar
+          Ver detalle
         </Link>
       </div>
     )
@@ -71,10 +111,10 @@ const ProductCard = ({ id, brand, name, spec, price, imgHeight = 140, mobile = f
   return (
     <div
       className="flex flex-col"
-      style={{ backgroundColor: '#121420', borderRadius: '14px', padding: '14px', gap: '12px', flex: 1 }}
+      style={{ backgroundColor: '#121420', borderRadius: '14px', padding: '14px', gap: '12px', flex: 1, position: 'relative' }}
     >
-      {/* Image placeholder */}
-      <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', height: `${imgHeight}px`, position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'relative' }}>
+        <ProductImage image_url={image_url} brand={brand} name={name} height={imgHeight} />
         {badge && (
           <div
             style={{
@@ -124,7 +164,7 @@ const ProductCard = ({ id, brand, name, spec, price, imgHeight = 140, mobile = f
           display: 'block',
         }}
       >
-        Agregar al carrito
+        Ver detalle
       </Link>
     </div>
   )

@@ -4,44 +4,31 @@ import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
+import { categories } from '../data/categories'
+import { products, newProducts, notebooksList, monitorsList } from '../data/products'
 
-const categories = [
-  { id: 'all', label: 'Todo', icon: null },
-  { id: 'notebooks', label: 'Notebooks', icon: Laptop },
-  { id: 'cpu', label: 'Procesadores', icon: Cpu },
-  { id: 'gpu', label: 'GPU / Placas de Video', icon: Zap },
-  { id: 'ram', label: 'Memorias RAM', icon: MemoryStick },
-  { id: 'monitors', label: 'Monitores', icon: Monitor },
-  { id: 'storage', label: 'Almacenamiento', icon: HardDrive },
-  { id: 'peripherals', label: 'Periféricos', icon: Keyboard },
-]
-
-const newProducts = [
-  { id: 1, brand: 'NVIDIA', name: 'RTX 5080 Super', spec: '16GB GDDR7 · PCIe 5.0 · 285W', price: '$1.899.999', badge: 'NUEVO' },
-  { id: 2, brand: 'ASUS', name: 'ROG Strix G16 2025', spec: 'RTX 4080 · i9-14900HX · 32GB', price: '$2.099.999', badge: 'HOT' },
-  { id: 3, brand: 'LENOVO', name: 'Legion 7i Pro 2025', spec: 'RTX 4070 Ti · i9-14900HX', price: '$1.699.999' },
-  { id: 4, brand: 'MSI', name: 'Titan GT77 HX 17"', spec: 'RTX 4090 · i9-14900HX · 64GB', price: '$3.199.999', badge: 'OFERTA' },
-]
+const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard }
 
 const notebookFilters = ['Todos', 'i7 / i9', 'Ryzen 5', 'Ryzen 7', 'Ryzen 9']
 
-const notebooks = [
-  { id: 5, brand: 'LENOVO', name: 'Legion 5i Pro', spec: 'i7-13620H · RTX 4060 · 16GB', price: '$1.299.999', badge: 'HOT' },
-  { id: 6, brand: 'MSI', name: 'Katana 17 B13', spec: 'i7-13620H · RTX 4060', price: '$999.999' },
-  { id: 7, brand: 'ACER', name: 'Predator Helios 16', spec: 'i7-14700HX · RTX 4070 Ti', price: '$1.849.999' },
-  { id: 8, brand: 'RAZER', name: 'Blade 16 2025', spec: 'RTX 4090 · i9-14900HX · 32GB', price: '$2.999.999' },
-]
-
-const monitors = [
-  { id: 9, brand: 'SAMSUNG', name: 'Odyssey G7 32"', spec: 'QHD · 1ms · HDR600', price: '$599.999' },
-  { id: 10, brand: 'LG', name: 'UltraGear 27" 165Hz', spec: 'FHD · 1ms · G-Sync', price: '$449.999' },
-  { id: 11, brand: 'ASUS', name: 'ROG Swift 27" 360Hz', spec: 'FHD · 0.5ms · OLED', price: '$849.999' },
-  { id: 12, brand: 'ALIENWARE', name: 'AW3225QF 32" 4K', spec: '4K UHD · 240Hz', price: '$1.299.999' },
-]
+const NB_FILTER_MAP = {
+  'i7 / i9': (p) => p.spec.includes('i7') || p.spec.includes('i9'),
+  'Ryzen 5': (p) => p.spec.includes('Ryzen 5'),
+  'Ryzen 7': (p) => p.spec.includes('Ryzen 7'),
+  'Ryzen 9': (p) => p.spec.includes('Ryzen 9'),
+}
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState('all')
   const [activeNbFilter, setActiveNbFilter] = useState('Todos')
+
+  const filteredByCategory = activeCategory === 'all'
+    ? null
+    : products.filter((p) => p.category_id === activeCategory && p.active)
+
+  const filteredNotebooks = activeNbFilter === 'Todos'
+    ? notebooksList
+    : notebooksList.filter(NB_FILTER_MAP[activeNbFilter] ?? (() => true))
 
   return (
     <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#0A0C14' }}>
@@ -158,8 +145,9 @@ const Home = () => {
           gap: '10px',
         }}
       >
-        {categories.map(({ id, label, icon: Icon }) => {
+        {categories.map(({ id, label, icon }) => {
           const isActive = activeCategory === id
+          const Icon = ICON_MAP[icon] ?? null
           return (
             <button
               key={id}
@@ -194,8 +182,9 @@ const Home = () => {
           scrollbarWidth: 'none',
         }}
       >
-        {categories.map(({ id, label, icon: Icon }) => {
+        {categories.map(({ id, label, icon }) => {
           const isActive = activeCategory === id
+          const Icon = ICON_MAP[icon] ?? null
           return (
             <button
               key={id}
@@ -218,136 +207,186 @@ const Home = () => {
         })}
       </div>
 
-      {/* ═══════════════ NUEVOS PRODUCTOS ═══════════════ */}
+      {/* ═══════════════ CATÁLOGO — filtrado por categoría o secciones por defecto ═══════════════ */}
 
-      {/* Desktop */}
-      <section className="hidden md:flex flex-col w-full" style={{ padding: '40px 80px', gap: '20px' }}>
-        <div className="flex items-center w-full">
-          <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
-            Nuevos Productos
-          </span>
-          <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '14px' }}>
-            Ver todos los productos →
-          </Link>
-        </div>
-        <div className="flex w-full" style={{ gap: '16px' }}>
-          {newProducts.map((p) => (
-            <ProductCard key={p.id} {...p} />
-          ))}
-        </div>
-      </section>
+      {filteredByCategory ? (
+        <>
+          {/* Desktop — categoría filtrada */}
+          <section className="hidden md:flex flex-col w-full" style={{ padding: '40px 80px', gap: '20px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
+              {categories.find((c) => c.id === activeCategory)?.label}
+            </span>
+            {filteredByCategory.length === 0 ? (
+              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>
+                No hay productos en esta categoría.
+              </span>
+            ) : (
+              <div className="flex flex-wrap w-full" style={{ gap: '16px' }}>
+                {filteredByCategory.map((p) => (
+                  <ProductCard key={p.id} {...p} imgHeight={130} />
+                ))}
+              </div>
+            )}
+          </section>
 
-      {/* Mobile */}
-      <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
-        <div className="flex items-center w-full">
-          <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
-            Nuevos Productos
-          </span>
-          <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '12px' }}>
-            Ver más →
-          </Link>
-        </div>
-        <div className="grid grid-cols-2" style={{ gap: '10px' }}>
-          {newProducts.map((p) => (
-            <ProductCard key={p.id} {...p} mobile />
-          ))}
-        </div>
-      </section>
+          {/* Mobile — categoría filtrada */}
+          <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
+              {categories.find((c) => c.id === activeCategory)?.label}
+            </span>
+            {filteredByCategory.length === 0 ? (
+              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>
+                No hay productos en esta categoría.
+              </span>
+            ) : (
+              <div className="grid grid-cols-2" style={{ gap: '10px' }}>
+                {filteredByCategory.map((p) => (
+                  <ProductCard key={p.id} {...p} mobile />
+                ))}
+              </div>
+            )}
+          </section>
+        </>
+      ) : (
+        <>
+          {/* ── Nuevos Productos ─────────────────────────────────────────── */}
 
-      {/* ═══════════════ NOTEBOOKS GAMER ═══════════════ */}
+          {/* Desktop */}
+          <section className="hidden md:flex flex-col w-full" style={{ padding: '40px 80px', gap: '20px' }}>
+            <div className="flex items-center w-full">
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
+                Nuevos Productos
+              </span>
+              <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '14px' }}>
+                Ver todos los productos →
+              </Link>
+            </div>
+            <div className="flex w-full" style={{ gap: '16px' }}>
+              {newProducts.map((p) => (
+                <ProductCard key={p.id} {...p} />
+              ))}
+            </div>
+          </section>
 
-      {/* Desktop */}
-      <section className="hidden md:flex flex-col w-full" style={{ padding: '0 80px 40px', gap: '20px' }}>
-        <div className="flex items-center w-full">
-          <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
-            Notebooks Gamer
-          </span>
-          <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '14px' }}>
-            Ver todos →
-          </Link>
-        </div>
-        <div className="flex" style={{ gap: '8px' }}>
-          {notebookFilters.map((f) => {
-            const isActive = activeNbFilter === f
-            return (
-              <button
-                key={f}
-                onClick={() => setActiveNbFilter(f)}
-                className="border-none cursor-pointer"
-                style={{
-                  backgroundColor: isActive ? '#00C8FF' : '#1E2232',
-                  borderRadius: '20px',
-                  padding: '6px 16px',
-                  color: isActive ? '#060810' : '#8890A4',
-                  fontFamily: 'Inter',
-                  fontSize: '12px',
-                  fontWeight: isActive ? '700' : 'normal',
-                }}
-              >
-                {f}
-              </button>
-            )
-          })}
-        </div>
-        <div className="flex w-full" style={{ gap: '16px' }}>
-          {notebooks.map((p) => (
-            <ProductCard key={p.id} {...p} imgHeight={130} />
-          ))}
-        </div>
-      </section>
+          {/* Mobile */}
+          <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
+            <div className="flex items-center w-full">
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
+                Nuevos Productos
+              </span>
+              <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '12px' }}>
+                Ver más →
+              </Link>
+            </div>
+            <div className="grid grid-cols-2" style={{ gap: '10px' }}>
+              {newProducts.map((p) => (
+                <ProductCard key={p.id} {...p} mobile />
+              ))}
+            </div>
+          </section>
 
-      {/* Mobile */}
-      <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
-        <div className="flex items-center w-full">
-          <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
-            Notebooks Gamer
-          </span>
-          <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '12px' }}>
-            Ver más →
-          </Link>
-        </div>
-        <div className="grid grid-cols-2" style={{ gap: '10px' }}>
-          {notebooks.map((p) => (
-            <ProductCard key={p.id} {...p} mobile />
-          ))}
-        </div>
-      </section>
+          {/* ── Notebooks Gamer ──────────────────────────────────────────── */}
 
-      {/* ═══════════════ MONITORES GAMING ═══════════════ */}
+          {/* Desktop */}
+          <section className="hidden md:flex flex-col w-full" style={{ padding: '0 80px 40px', gap: '20px' }}>
+            <div className="flex items-center w-full">
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
+                Notebooks Gamer
+              </span>
+              <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '14px' }}>
+                Ver todos →
+              </Link>
+            </div>
+            <div className="flex" style={{ gap: '8px' }}>
+              {notebookFilters.map((f) => {
+                const isActive = activeNbFilter === f
+                return (
+                  <button
+                    key={f}
+                    onClick={() => setActiveNbFilter(f)}
+                    className="border-none cursor-pointer"
+                    style={{
+                      backgroundColor: isActive ? '#00C8FF' : '#1E2232',
+                      borderRadius: '20px',
+                      padding: '6px 16px',
+                      color: isActive ? '#060810' : '#8890A4',
+                      fontFamily: 'Inter',
+                      fontSize: '12px',
+                      fontWeight: isActive ? '700' : 'normal',
+                    }}
+                  >
+                    {f}
+                  </button>
+                )
+              })}
+            </div>
+            {filteredNotebooks.length === 0 ? (
+              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>
+                Sin resultados para este filtro.
+              </span>
+            ) : (
+              <div className="flex w-full" style={{ gap: '16px' }}>
+                {filteredNotebooks.map((p) => (
+                  <ProductCard key={p.id} {...p} imgHeight={130} />
+                ))}
+              </div>
+            )}
+          </section>
 
-      {/* Desktop */}
-      <section className="hidden md:flex flex-col w-full" style={{ padding: '0 80px 40px', gap: '20px' }}>
-        <div className="flex items-center w-full">
-          <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
-            Monitores Gaming
-          </span>
-          <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '14px' }}>
-            Ver todos →
-          </Link>
-        </div>
-        <div className="flex w-full" style={{ gap: '16px' }}>
-          {monitors.map((p) => (
-            <ProductCard key={p.id} {...p} imgHeight={130} />
-          ))}
-        </div>
-      </section>
+          {/* Mobile */}
+          <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
+            <div className="flex items-center w-full">
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
+                Notebooks Gamer
+              </span>
+              <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '12px' }}>
+                Ver más →
+              </Link>
+            </div>
+            <div className="grid grid-cols-2" style={{ gap: '10px' }}>
+              {filteredNotebooks.map((p) => (
+                <ProductCard key={p.id} {...p} mobile />
+              ))}
+            </div>
+          </section>
 
-      {/* Mobile */}
-      <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
-        <div className="flex items-center w-full">
-          <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
-            Monitores Gaming
-          </span>
-          <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '12px' }}>
-            Ver más →
-          </Link>
-        </div>
-        <div className="grid grid-cols-2" style={{ gap: '10px' }}>
-          {monitors.map((p) => (
-            <ProductCard key={p.id} {...p} mobile />
-          ))}
-        </div>
-      </section>
+          {/* ── Monitores Gaming ─────────────────────────────────────────── */}
+
+          {/* Desktop */}
+          <section className="hidden md:flex flex-col w-full" style={{ padding: '0 80px 40px', gap: '20px' }}>
+            <div className="flex items-center w-full">
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
+                Monitores Gaming
+              </span>
+              <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '14px' }}>
+                Ver todos →
+              </Link>
+            </div>
+            <div className="flex w-full" style={{ gap: '16px' }}>
+              {monitorsList.map((p) => (
+                <ProductCard key={p.id} {...p} imgHeight={130} />
+              ))}
+            </div>
+          </section>
+
+          {/* Mobile */}
+          <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
+            <div className="flex items-center w-full">
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
+                Monitores Gaming
+              </span>
+              <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '12px' }}>
+                Ver más →
+              </Link>
+            </div>
+            <div className="grid grid-cols-2" style={{ gap: '10px' }}>
+              {monitorsList.map((p) => (
+                <ProductCard key={p.id} {...p} mobile />
+              ))}
+            </div>
+          </section>
+        </>
+      )}
 
       <Footer />
 
