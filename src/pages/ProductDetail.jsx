@@ -2,42 +2,83 @@ import { useState } from 'react'
 import {
   Cpu, Monitor, MemoryStick, HardDrive,
   Star, Heart, Share2, ShoppingCart,
-  ShieldCheck, Truck, RefreshCw, ChevronRight, ChevronDown, ChevronLeft,
+  ShieldCheck, Truck, RefreshCw, ChevronRight, ChevronDown,
   ArrowLeft,
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-
-const quickSpecs = [
-  { icon: Cpu, label: 'PROCESADOR', value: 'Intel Core i9-14900HX' },
-  { icon: Monitor, label: 'GPU', value: 'RTX 4090 16GB' },
-  { icon: MemoryStick, label: 'RAM', value: '64GB DDR5 5600MHz' },
-  { icon: HardDrive, label: 'ALMACENAMIENTO', value: '2TB NVMe SSD' },
-]
-
-const detailSpecs = [
-  { label: 'Pantalla', value: '17" QHD+ 240Hz' },
-  { label: 'Sistema Op.', value: 'Windows 11 Home' },
-  { label: 'Batería', value: '99.9Whr, carga 240W' },
-  { label: 'Conectividad', value: 'WiFi 7, BT 5.4' },
-  { label: 'Peso', value: '2.99 kg' },
-]
-
-const relatedProducts = [
-  { id: 2, brand: 'ASUS', name: 'ROG Strix G18 RTX 4080', price: '$ 2.499.999' },
-  { id: 3, brand: 'LENOVO', name: 'Legion Pro 7i Gen 9 RTX 4070', price: '$ 1.899.999' },
-  { id: 8, brand: 'RAZER', name: 'Blade 18 RTX 4090 240Hz', price: '$ 3.199.999' },
-]
+import { products } from '../data/products'
 
 const tabs = ['Descripción', 'Especificaciones', 'Reseñas (127)']
 
+const ImgOrPlaceholder = ({ src, brand, name, style }) => {
+  const [err, setErr] = useState(false)
+  if (src && !err) {
+    return (
+      <img
+        src={src}
+        alt={name}
+        onError={() => setErr(true)}
+        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+      />
+    )
+  }
+  return (
+    <div className="flex flex-col items-center justify-center w-full h-full" style={{ gap: '8px', ...style }}>
+      <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', letterSpacing: '2px' }}>
+        {brand}
+      </span>
+      <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600', textAlign: 'center', lineHeight: '1.3', padding: '0 16px' }}>
+        {name}
+      </span>
+    </div>
+  )
+}
+
 const ProductDetail = () => {
+  const { id } = useParams()
+  const product = products.find((p) => p.id === Number(id))
+
   const [activeTab, setActiveTab] = useState(0)
   const [qty, setQty] = useState(1)
   const [activeThumb, setActiveThumb] = useState(0)
   const [descOpen, setDescOpen] = useState(false)
   const [specsOpen, setSpecsOpen] = useState(false)
+
+  if (!product) {
+    return (
+      <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
+        <Navbar />
+        <div className="flex flex-col flex-1 items-center justify-center" style={{ gap: '16px' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
+            Producto no encontrado
+          </span>
+          <Link to="/" style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '14px' }}>
+            ← Volver al inicio
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  const displayGallery = product.gallery?.length > 0 ? product.gallery : [product.image_url]
+
+  const quickSpecs = [
+    { icon: Cpu,         label: 'PROCESADOR',    value: product.specs?.cpu     ?? product.specs?.chipset },
+    { icon: Monitor,     label: 'GPU',            value: product.specs?.gpu     ?? product.specs?.panel },
+    { icon: MemoryStick, label: 'RAM / VRAM',     value: product.specs?.ram     ?? product.specs?.vram },
+    { icon: HardDrive,   label: 'ALMACENAMIENTO', value: product.specs?.storage ?? product.specs?.resolution },
+  ].filter((s) => s.value)
+
+  const detailSpecs = Object.entries(product.specs ?? {}).map(([key, value]) => ({
+    label: key.charAt(0).toUpperCase() + key.slice(1),
+    value,
+  }))
+
+  const relatedProducts = products
+    .filter((p) => p.category_id === product.category_id && p.id !== product.id)
+    .slice(0, 3)
 
   return (
     <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
@@ -72,31 +113,27 @@ const ProductDetail = () => {
 
       {/* ═══════════════ MOBILE IMAGE ═══════════════ */}
       <div className="md:hidden relative">
-        <div
-          style={{
-            width: '100%',
-            height: '280px',
-            backgroundColor: '#0E1424',
-            backgroundImage: 'url(https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&h=400&fit=crop)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        {/* Dots */}
-        <div className="flex items-center justify-center" style={{ gap: '6px', position: 'absolute', bottom: '12px', width: '100%' }}>
-          {[0, 1, 2, 3].map((i) => (
-            <div
-              key={i}
-              style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                backgroundColor: activeThumb === i ? '#00C8FF' : '#1B2333',
-                flexShrink: 0,
-              }}
-            />
-          ))}
+        <div style={{ width: '100%', height: '280px', backgroundColor: '#0E1424', overflow: 'hidden' }}>
+          <ImgOrPlaceholder src={displayGallery[activeThumb]} brand={product.brand} name={product.name} />
         </div>
+        {displayGallery.length > 1 && (
+          <div className="flex items-center justify-center" style={{ gap: '6px', position: 'absolute', bottom: '12px', width: '100%' }}>
+            {displayGallery.map((_, i) => (
+              <div
+                key={i}
+                onClick={() => setActiveThumb(i)}
+                style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  backgroundColor: activeThumb === i ? '#00C8FF' : '#1B2333',
+                  flexShrink: 0,
+                  cursor: 'pointer',
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ═══════════════ DESKTOP BREADCRUMB + MAIN ═══════════════ */}
@@ -115,7 +152,7 @@ const ProductDetail = () => {
         </Link>
         <ChevronRight size={14} color="#1B2333" />
         <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
-          MSI Raider GE78 HX
+          {product.name}
         </span>
       </div>
 
@@ -130,20 +167,17 @@ const ProductDetail = () => {
               height: '440px',
               position: 'relative',
               overflow: 'hidden',
-              backgroundImage: 'url(https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=777&h=440&fit=crop)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
             }}
           >
-            <div style={{ position: 'absolute', top: '16px', left: '16px', backgroundColor: '#22C55E', borderRadius: '6px', padding: '4px 12px' }}>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>NUEVO</span>
-            </div>
-            <div style={{ position: 'absolute', top: '16px', left: '90px', backgroundColor: '#EF4444', borderRadius: '6px', padding: '4px 12px' }}>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>MÁS VENDIDO</span>
-            </div>
+            <ImgOrPlaceholder src={displayGallery[activeThumb]} brand={product.brand} name={product.name} />
+            {product.badge && (
+              <div style={{ position: 'absolute', top: '16px', left: '16px', backgroundColor: product.badge === 'NUEVO' ? '#22C55E' : '#EF4444', borderRadius: '6px', padding: '4px 12px' }}>
+                <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>{product.badge}</span>
+              </div>
+            )}
           </div>
           <div className="flex" style={{ gap: '10px' }}>
-            {[0, 1, 2, 3].map((i) => (
+            {displayGallery.map((url, i) => (
               <div
                 key={i}
                 onClick={() => setActiveThumb(i)}
@@ -155,8 +189,11 @@ const ProductDetail = () => {
                   cursor: 'pointer',
                   border: activeThumb === i ? '2px solid #24A8F5' : '1px solid #1B2333',
                   flexShrink: 0,
+                  overflow: 'hidden',
                 }}
-              />
+              >
+                <ImgOrPlaceholder src={url} brand={product.brand} name="" />
+              </div>
             ))}
           </div>
         </div>
@@ -165,7 +202,7 @@ const ProductDetail = () => {
         <div className="flex flex-col flex-1" style={{ gap: '20px' }}>
           <div className="flex items-center" style={{ gap: '8px' }}>
             <span className="flex-1" style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '700', letterSpacing: '2px' }}>
-              MSI
+              {product.brand}
             </span>
             <button style={{ backgroundColor: '#0E1424', border: '1px solid #1B2333', borderRadius: '8px', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Heart size={16} color="#AAB3C5" />
@@ -176,7 +213,7 @@ const ProductDetail = () => {
           </div>
 
           <h1 style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '26px', fontWeight: '800', lineHeight: '1.25', margin: 0 }}>
-            MSI Raider GE78 HX — Laptop Gaming 17"
+            {product.name}
           </h1>
 
           <div className="flex items-center" style={{ gap: '8px' }}>
@@ -190,7 +227,7 @@ const ProductDetail = () => {
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
 
           <div className="flex flex-col" style={{ gap: '6px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '36px', fontWeight: '800' }}>$ 2.899.999</span>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '36px', fontWeight: '800' }}>{product.price}</span>
             <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '14px' }}>12 cuotas sin interés de $ 241.666</span>
           </div>
 
@@ -201,29 +238,31 @@ const ProductDetail = () => {
             </span>
           </div>
 
-          <div className="flex flex-col" style={{ gap: '8px' }}>
-            {[[quickSpecs[0], quickSpecs[1]], [quickSpecs[2], quickSpecs[3]]].map((row, ri) => (
-              <div key={ri} className="flex" style={{ gap: '8px' }}>
-                {row.map(({ icon: Icon, label, value }) => (
-                  <div
-                    key={label}
-                    className="flex flex-1 items-center"
-                    style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px', gap: '10px' }}
-                  >
-                    <Icon size={16} color="#24A8F5" />
-                    <div className="flex flex-col" style={{ gap: '2px' }}>
-                      <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '1px' }}>
-                        {label}
-                      </span>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '700' }}>
-                        {value}
-                      </span>
+          {quickSpecs.length > 0 && (
+            <div className="flex flex-col" style={{ gap: '8px' }}>
+              {[quickSpecs.slice(0, 2), quickSpecs.slice(2, 4)].filter((r) => r.length > 0).map((row, ri) => (
+                <div key={ri} className="flex" style={{ gap: '8px' }}>
+                  {row.map(({ icon: Icon, label, value }) => (
+                    <div
+                      key={label}
+                      className="flex flex-1 items-center"
+                      style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px', gap: '10px' }}
+                    >
+                      <Icon size={16} color="#24A8F5" />
+                      <div className="flex flex-col" style={{ gap: '2px' }}>
+                        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '1px' }}>
+                          {label}
+                        </span>
+                        <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '700' }}>
+                          {value}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="flex items-center" style={{ gap: '16px' }}>
             <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>Cantidad:</span>
@@ -290,12 +329,12 @@ const ProductDetail = () => {
 
         {/* Brand */}
         <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
-          MSI
+          {product.brand}
         </span>
 
         {/* Name */}
         <h1 style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '20px', fontWeight: '800', lineHeight: '1.25', margin: 0 }}>
-          MSI Raider GE78 HX — Laptop Gaming 17"
+          {product.name}
         </h1>
 
         {/* Rating */}
@@ -307,39 +346,41 @@ const ProductDetail = () => {
 
         {/* Price */}
         <div className="flex flex-col" style={{ gap: '4px' }}>
-          <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '28px', fontWeight: '800' }}>$ 2.899.999</span>
+          <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '28px', fontWeight: '800' }}>{product.price}</span>
           <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '13px' }}>
             12 cuotas sin interés de $ 241.666
           </span>
         </div>
 
         {/* Quick Specs 2x2 */}
-        <div className="flex flex-col" style={{ gap: '8px' }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
-            Especificaciones principales
-          </span>
-          {[[quickSpecs[0], quickSpecs[1]], [quickSpecs[2], quickSpecs[3]]].map((row, ri) => (
-            <div key={ri} className="flex" style={{ gap: '8px' }}>
-              {row.map(({ icon: Icon, label, value }) => (
-                <div
-                  key={label}
-                  className="flex flex-1 items-center"
-                  style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px', gap: '10px' }}
-                >
-                  <Icon size={16} color="#24A8F5" />
-                  <div className="flex flex-col" style={{ gap: '2px' }}>
-                    <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '8px', fontWeight: '700', letterSpacing: '1px' }}>
-                      {label}
-                    </span>
-                    <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700' }}>
-                      {value}
-                    </span>
+        {quickSpecs.length > 0 && (
+          <div className="flex flex-col" style={{ gap: '8px' }}>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+              Especificaciones principales
+            </span>
+            {[quickSpecs.slice(0, 2), quickSpecs.slice(2, 4)].filter((r) => r.length > 0).map((row, ri) => (
+              <div key={ri} className="flex" style={{ gap: '8px' }}>
+                {row.map(({ icon: Icon, label, value }) => (
+                  <div
+                    key={label}
+                    className="flex flex-1 items-center"
+                    style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px', gap: '10px' }}
+                  >
+                    <Icon size={16} color="#24A8F5" />
+                    <div className="flex flex-col" style={{ gap: '2px' }}>
+                      <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '8px', fontWeight: '700', letterSpacing: '1px' }}>
+                        {label}
+                      </span>
+                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700' }}>
+                        {value}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Qty + Buttons */}
         <div className="flex flex-col" style={{ gap: '12px' }}>
@@ -402,10 +443,8 @@ const ProductDetail = () => {
           </button>
           {descOpen && (
             <div style={{ padding: '0 16px 16px' }}>
-              <p style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', lineHeight: '1.6', margin: 0 }}>
-                El MSI Raider GE78 HX representa la cúspide del rendimiento gaming. Equipado con el procesador Intel Core i9-14900HX de última generación y la potente GPU NVIDIA RTX 4090, este equipo está diseñado para conquistar los juegos más exigentes del mercado.
-                {'\n\n'}
-                Su pantalla QHD+ de 17" con 240Hz garantiza una fluidez visual incomparable, mientras que el sistema de cooling avanzado mantiene temperaturas óptimas en las sesiones más intensas.
+              <p style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', lineHeight: '1.6', margin: 0, whiteSpace: 'pre-line' }}>
+                {product.description}
               </p>
             </div>
           )}
@@ -524,7 +563,7 @@ const ProductDetail = () => {
           {activeTab === 0 && (
             <>
               <p style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', lineHeight: '1.7', flex: 1, whiteSpace: 'pre-line', margin: 0 }}>
-                {`El MSI Raider GE78 HX representa la cúspide del rendimiento gaming. Equipado con el procesador Intel Core i9-14900HX de última generación y la potente GPU NVIDIA RTX 4090, este equipo está diseñado para conquistar los juegos más exigentes del mercado.\n\nSu pantalla QHD+ de 17" con 240Hz garantiza una fluidez visual incomparable, mientras que el sistema de cooling avanzado MSI Cooler Boost 5 mantiene temperaturas óptimas incluso en las sesiones más intensas.`}
+                {product.description}
               </p>
               <div style={{ backgroundColor: '#0E1424', borderRadius: '12px', width: '380px', flexShrink: 0, overflow: 'hidden' }}>
                 {detailSpecs.map((row, i) => (
@@ -586,7 +625,9 @@ const ProductDetail = () => {
             className="flex flex-col flex-1 no-underline"
             style={{ backgroundColor: '#0E1424', borderRadius: '14px', border: '1px solid #1B2333', overflow: 'hidden' }}
           >
-            <div style={{ backgroundColor: '#1E2232', height: '180px' }} />
+            <div style={{ height: '180px', overflow: 'hidden' }}>
+              <ImgOrPlaceholder src={p.image_url} brand={p.brand} name={p.name} style={{ backgroundColor: '#1E2232' }} />
+            </div>
             <div className="flex flex-col" style={{ padding: '14px', gap: '8px' }}>
               <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
                 {p.brand}
