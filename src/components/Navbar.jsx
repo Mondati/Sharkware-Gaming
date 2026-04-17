@@ -14,7 +14,7 @@ const Navbar = ({ cartCount = 0 }) => {
       {/* ── Mobile Navbar ── */}
       <nav
         className="flex md:hidden items-center w-full"
-        style={{ backgroundColor: '#060810', height: '56px', padding: '0 16px' }}
+        style={{ backgroundColor: '#060810', height: '56px', padding: '0 16px', position: 'sticky', top: 0, zIndex: 50 }}
       >
         <Link to="/" className="flex flex-col no-underline" style={{ gap: '0' }}>
           <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', letterSpacing: '1px' }}>
@@ -93,7 +93,7 @@ const Navbar = ({ cartCount = 0 }) => {
       {/* ── Desktop Navbar ── */}
       <nav
         className="hidden md:flex items-center w-full"
-        style={{ backgroundColor: '#060810', height: '70px', padding: `0 ${sidePadding}`, gap: '40px' }}
+        style={{ backgroundColor: '#060810', height: '70px', padding: `0 ${sidePadding}`, gap: '40px', position: 'sticky', top: 0, zIndex: 50 }}
       >
         <Link to="/" className="flex flex-col no-underline">
           <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '700', letterSpacing: '1px' }}>
