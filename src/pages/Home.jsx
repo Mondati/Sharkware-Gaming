@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Bot } from 'lucide-react'
+import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Bot, ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -26,6 +26,7 @@ const Home = () => {
   const [hoveredNbFilter, setHoveredNbFilter] = useState(null)
   const [heroBtnHovered, setHeroBtnHovered] = useState(false)
   const [heroBtn2Hovered, setHeroBtn2Hovered] = useState(false)
+  const [hoveredVerTodos, setHoveredVerTodos] = useState(null)
   const { sidePadding, cardFlex } = useWindowWidth()
 
   const filteredByCategory = activeCategory === 'all'
@@ -155,9 +156,6 @@ const Home = () => {
           gap: '10px',
           overflowX: 'auto',
           scrollbarWidth: 'none',
-          position: 'sticky',
-          top: '70px',
-          zIndex: 10,
         }}
       >
         {categories.map(({ id, label, icon }) => {
@@ -278,8 +276,25 @@ const Home = () => {
               <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
                 Nuevos Productos
               </span>
-              <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '14px' }}>
-                Ver todos los productos →
+              <Link
+                to="#"
+                className="no-underline flex items-center"
+                onMouseEnter={() => setHoveredVerTodos('nuevos-d')}
+                onMouseLeave={() => setHoveredVerTodos(null)}
+                style={{
+                  gap: '4px',
+                  padding: '5px 12px',
+                  borderRadius: '4px',
+                  border: hoveredVerTodos === 'nuevos-d' ? '1px solid #24A8F5' : '1px solid #1B2333',
+                  color: hoveredVerTodos === 'nuevos-d' ? '#00C8FF' : '#8890A4',
+                  fontFamily: 'Inter',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  transition: 'color 0.15s ease, border-color 0.15s ease',
+                }}
+              >
+                Ver todos
+                <ChevronRight size={12} />
               </Link>
             </div>
             <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
@@ -297,8 +312,25 @@ const Home = () => {
               <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
                 Nuevos Productos
               </span>
-              <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '12px' }}>
-                Ver más →
+              <Link
+                to="#"
+                className="no-underline flex items-center"
+                onMouseEnter={() => setHoveredVerTodos('nuevos-m')}
+                onMouseLeave={() => setHoveredVerTodos(null)}
+                style={{
+                  gap: '3px',
+                  padding: '4px 10px',
+                  borderRadius: '4px',
+                  border: hoveredVerTodos === 'nuevos-m' ? '1px solid #24A8F5' : '1px solid #1B2333',
+                  color: hoveredVerTodos === 'nuevos-m' ? '#00C8FF' : '#8890A4',
+                  fontFamily: 'Inter',
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  transition: 'color 0.15s ease, border-color 0.15s ease',
+                }}
+              >
+                Ver todos
+                <ChevronRight size={11} />
               </Link>
             </div>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
@@ -316,8 +348,25 @@ const Home = () => {
               <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
                 Notebooks Gamer
               </span>
-              <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '14px' }}>
-                Ver todos →
+              <Link
+                to="#"
+                className="no-underline flex items-center"
+                onMouseEnter={() => setHoveredVerTodos('notebooks-d')}
+                onMouseLeave={() => setHoveredVerTodos(null)}
+                style={{
+                  gap: '4px',
+                  padding: '5px 12px',
+                  borderRadius: '4px',
+                  border: hoveredVerTodos === 'notebooks-d' ? '1px solid #24A8F5' : '1px solid #1B2333',
+                  color: hoveredVerTodos === 'notebooks-d' ? '#00C8FF' : '#8890A4',
+                  fontFamily: 'Inter',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  transition: 'color 0.15s ease, border-color 0.15s ease',
+                }}
+              >
+                Ver todos
+                <ChevronRight size={12} />
               </Link>
             </div>
             <div className="flex" style={{ gap: '8px' }}>
@@ -368,8 +417,25 @@ const Home = () => {
               <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
                 Notebooks Gamer
               </span>
-              <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '12px' }}>
-                Ver más →
+              <Link
+                to="#"
+                className="no-underline flex items-center"
+                onMouseEnter={() => setHoveredVerTodos('notebooks-m')}
+                onMouseLeave={() => setHoveredVerTodos(null)}
+                style={{
+                  gap: '3px',
+                  padding: '4px 10px',
+                  borderRadius: '4px',
+                  border: hoveredVerTodos === 'notebooks-m' ? '1px solid #24A8F5' : '1px solid #1B2333',
+                  color: hoveredVerTodos === 'notebooks-m' ? '#00C8FF' : '#8890A4',
+                  fontFamily: 'Inter',
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  transition: 'color 0.15s ease, border-color 0.15s ease',
+                }}
+              >
+                Ver todos
+                <ChevronRight size={11} />
               </Link>
             </div>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
@@ -387,8 +453,25 @@ const Home = () => {
               <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
                 Monitores Gaming
               </span>
-              <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '14px' }}>
-                Ver todos →
+              <Link
+                to="#"
+                className="no-underline flex items-center"
+                onMouseEnter={() => setHoveredVerTodos('monitores-d')}
+                onMouseLeave={() => setHoveredVerTodos(null)}
+                style={{
+                  gap: '4px',
+                  padding: '5px 12px',
+                  borderRadius: '4px',
+                  border: hoveredVerTodos === 'monitores-d' ? '1px solid #24A8F5' : '1px solid #1B2333',
+                  color: hoveredVerTodos === 'monitores-d' ? '#00C8FF' : '#8890A4',
+                  fontFamily: 'Inter',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  transition: 'color 0.15s ease, border-color 0.15s ease',
+                }}
+              >
+                Ver todos
+                <ChevronRight size={12} />
               </Link>
             </div>
             <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
@@ -406,8 +489,25 @@ const Home = () => {
               <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
                 Monitores Gaming
               </span>
-              <Link to="#" className="no-underline" style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '12px' }}>
-                Ver más →
+              <Link
+                to="#"
+                className="no-underline flex items-center"
+                onMouseEnter={() => setHoveredVerTodos('monitores-m')}
+                onMouseLeave={() => setHoveredVerTodos(null)}
+                style={{
+                  gap: '3px',
+                  padding: '4px 10px',
+                  borderRadius: '4px',
+                  border: hoveredVerTodos === 'monitores-m' ? '1px solid #24A8F5' : '1px solid #1B2333',
+                  color: hoveredVerTodos === 'monitores-m' ? '#00C8FF' : '#8890A4',
+                  fontFamily: 'Inter',
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  transition: 'color 0.15s ease, border-color 0.15s ease',
+                }}
+              >
+                Ver todos
+                <ChevronRight size={11} />
               </Link>
             </div>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
