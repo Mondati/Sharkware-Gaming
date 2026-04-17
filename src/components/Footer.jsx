@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Camera, X, Play, Music2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useWindowWidth } from '../hooks/useWindowWidth'
 
 const desktopLinks = {
   Productos: ['Notebooks Gamer', 'Desktops Gamer', 'Monitores', 'Periféricos', 'Sillas Gamer'],
@@ -26,6 +27,7 @@ const socials = [
 const Footer = () => {
   const [hoveredLink, setHoveredLink] = useState(null)
   const [hoveredSocial, setHoveredSocial] = useState(null)
+  const { sidePadding } = useWindowWidth()
 
   return (
     <>
@@ -120,7 +122,7 @@ const Footer = () => {
       {/* ── Desktop Footer ── */}
       <footer
         className="hidden md:flex flex-col w-full"
-        style={{ backgroundColor: '#060810', padding: '48px 400px 40px 400px', gap: '32px' }}
+        style={{ backgroundColor: '#060810', padding: `48px ${sidePadding} 40px`, gap: '32px' }}
       >
         {/* Divider */}
         <div style={{ backgroundColor: '#1E2232', height: '1px', width: '100%' }} />

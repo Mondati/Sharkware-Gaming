@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { Search, UserRound, ShoppingCart, Menu } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import MobileSidebar from './MobileSidebar'
+import { useWindowWidth } from '../hooks/useWindowWidth'
 
 const Navbar = ({ cartCount = 0 }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [hoveredBtn, setHoveredBtn] = useState(null)
+  const { sidePadding } = useWindowWidth()
 
   return (
     <>
@@ -91,7 +93,7 @@ const Navbar = ({ cartCount = 0 }) => {
       {/* ── Desktop Navbar ── */}
       <nav
         className="hidden md:flex items-center w-full"
-        style={{ backgroundColor: '#060810', height: '70px', padding: '0 400px', gap: '40px' }}
+        style={{ backgroundColor: '#060810', height: '70px', padding: `0 ${sidePadding}`, gap: '40px' }}
       >
         <Link to="/" className="flex flex-col no-underline">
           <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '700', letterSpacing: '1px' }}>
