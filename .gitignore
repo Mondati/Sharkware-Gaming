@@ -24,6 +24,8 @@ build/
 .qwen
 *.qwen*
 .claude/
+QWEN.md
+CLAUDE.md
 
 # Editor / IDE
 .vscode/*
