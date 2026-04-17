@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Camera, X, Play, Music2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -23,6 +24,9 @@ const socials = [
 ]
 
 const Footer = () => {
+  const [hoveredLink, setHoveredLink] = useState(null)
+  const [hoveredSocial, setHoveredSocial] = useState(null)
+
   return (
     <>
       {/* ── Mobile Footer ── */}
@@ -39,7 +43,7 @@ const Footer = () => {
             <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '700', letterSpacing: '1px' }}>
               SHARKWARE
             </span>
-            <span style={{ color: '#1A9FFF', fontFamily: 'Inter', fontSize: '8px', fontWeight: '700', letterSpacing: '2px' }}>
+            <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '8px', fontWeight: '700', letterSpacing: '2px' }}>
               GAMING
             </span>
           </div>
@@ -84,7 +88,9 @@ const Footer = () => {
                   key={link}
                   to="#"
                   className="no-underline"
-                  style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px' }}
+                  onMouseEnter={() => setHoveredLink(link)}
+                  onMouseLeave={() => setHoveredLink(null)}
+                  style={{ color: hoveredLink === link ? '#F5F7FA' : '#8890A4', fontFamily: 'Inter', fontSize: '12px', transition: 'color 0.15s ease' }}
                 >
                   {link}
                 </Link>
@@ -114,20 +120,20 @@ const Footer = () => {
       {/* ── Desktop Footer ── */}
       <footer
         className="hidden md:flex flex-col w-full"
-        style={{ backgroundColor: '#060810', padding: '48px 80px 40px 80px', gap: '32px' }}
+        style={{ backgroundColor: '#060810', padding: '48px 400px 40px 400px', gap: '32px' }}
       >
         {/* Divider */}
         <div style={{ backgroundColor: '#1E2232', height: '1px', width: '100%' }} />
 
         {/* Top: Brand + Links */}
-        <div className="flex w-full" style={{ gap: '48px' }}>
+        <div className="flex w-full" style={{ gap: '48px', justifyContent: 'center' }}>
           {/* Brand */}
           <div className="flex flex-col" style={{ gap: '16px', width: '260px', flexShrink: 0 }}>
             <div className="flex flex-col">
               <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700', letterSpacing: '1px' }}>
                 SHARKWARE
               </span>
-              <span style={{ color: '#1A9FFF', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
+              <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
                 GAMING
               </span>
             </div>
@@ -140,10 +146,12 @@ const Footer = () => {
                 <button
                   key={label}
                   aria-label={label}
+                  onMouseEnter={() => setHoveredSocial(label)}
+                  onMouseLeave={() => setHoveredSocial(null)}
                   className="flex items-center justify-center cursor-pointer border-none"
-                  style={{ backgroundColor: '#1E2232', borderRadius: '8px', padding: '8px', width: '36px', height: '36px' }}
+                  style={{ backgroundColor: hoveredSocial === label ? '#252840' : '#1E2232', borderRadius: '8px', padding: '8px', width: '36px', height: '36px', transition: 'background-color 0.15s ease' }}
                 >
-                  <Icon size={16} color="#8890A4" />
+                  <Icon size={16} color={hoveredSocial === label ? '#AAB3C5' : '#8890A4'} />
                 </button>
               ))}
             </div>
@@ -161,7 +169,9 @@ const Footer = () => {
                     key={link}
                     to="#"
                     className="no-underline"
-                    style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}
+                    onMouseEnter={() => setHoveredLink(link)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                    style={{ color: hoveredLink === link ? '#F5F7FA' : '#8890A4', fontFamily: 'Inter', fontSize: '13px', transition: 'color 0.15s ease' }}
                   >
                     {link}
                   </Link>
@@ -199,7 +209,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom: payments + copyright */}
-        <div className="flex items-center w-full" style={{ gap: '20px' }}>
+        <div className="flex items-center w-full" style={{ gap: '20px', justifyContent: 'center' }}>
           <div className="flex" style={{ gap: '8px' }}>
             {paymentMethods.map((method) => (
               <span

@@ -16,3 +16,18 @@ body {
 #root {
   min-height: 100vh;
 }
+
+.sw-scroll::-webkit-scrollbar {
+  height: 10px;
+}
+.sw-scroll::-webkit-scrollbar-track {
+  background: #0A0C14;
+  border-radius: 3px;
+}
+.sw-scroll::-webkit-scrollbar-thumb {
+  background: #1E2232;
+  border-radius: 3px;
+}
+.sw-scroll::-webkit-scrollbar-thumb:hover {
+  background: #24A8F5;
+}

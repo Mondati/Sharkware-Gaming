@@ -1,11 +1,12 @@
 import { useState, Fragment } from 'react'
 import {
-  ChevronRight, Tag, ArrowLeft, Lock, ShieldCheck, Truck, RefreshCw,
+  ChevronRight, Tag, ArrowLeft, Lock,
   Minus, Plus, Trash2, X,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import TrustBadges from '../components/TrustBadges'
 
 const initialItems = [
   { id: 1, brand: 'NVIDIA', name: 'GeForce RTX 5080 Super', spec: '16GB GDDR7', price: 1899999, qty: 1 },
@@ -210,7 +211,7 @@ const Cart = () => {
           <Link
             to="/checkout"
             className="flex items-center justify-center no-underline"
-            style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '50px', gap: '10px', width: '100%' }}
+            style={{ backgroundColor: '#00C8FF', borderRadius: '12px', height: '50px', gap: '10px', width: '100%' }}
           >
             <Lock size={18} color="#FFFFFF" />
             <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '15px', fontWeight: '800' }}>
@@ -228,19 +229,8 @@ const Cart = () => {
         </div>
 
         {/* Trust badges */}
-        <div className="flex items-center justify-center" style={{ gap: '16px', padding: '8px 0' }}>
-          <div className="flex items-center" style={{ gap: '4px' }}>
-            <ShieldCheck size={14} color="#22C55E" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Pago seguro</span>
-          </div>
-          <div className="flex items-center" style={{ gap: '4px' }}>
-            <Truck size={14} color="#24A8F5" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Envío gratis</span>
-          </div>
-          <div className="flex items-center" style={{ gap: '4px' }}>
-            <RefreshCw size={14} color="#F59E0B" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>30 días devolución</span>
-          </div>
+        <div style={{ padding: '8px 0' }}>
+          <TrustBadges size={14} layout="row" />
         </div>
       </div>
 
@@ -403,7 +393,7 @@ const Cart = () => {
           <Link
             to="/checkout"
             className="flex items-center justify-center no-underline"
-            style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '52px', gap: '10px' }}
+            style={{ backgroundColor: '#00C8FF', borderRadius: '12px', height: '52px', gap: '10px' }}
           >
             <Lock size={18} color="#FFFFFF" />
             <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '15px', fontWeight: '800' }}>
@@ -413,20 +403,7 @@ const Cart = () => {
 
           <div style={{ backgroundColor: '#1B2333', height: '1px', width: '100%' }} />
 
-          <div className="flex justify-around" style={{ width: '100%' }}>
-            <div className="flex flex-col items-center" style={{ gap: '4px' }}>
-              <ShieldCheck size={18} color="#22C55E" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Pago seguro</span>
-            </div>
-            <div className="flex flex-col items-center" style={{ gap: '4px' }}>
-              <Truck size={18} color="#24A8F5" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Envío gratis</span>
-            </div>
-            <div className="flex flex-col items-center" style={{ gap: '4px' }}>
-              <RefreshCw size={18} color="#F59E0B" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>30 días devolución</span>
-            </div>
-          </div>
+          <TrustBadges size={18} layout="column" />
         </div>
       </div>
 

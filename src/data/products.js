@@ -40,8 +40,13 @@ export const products = [
     badge: 'HOT',
     stock: 5,
     category_id: 'notebooks',
-    image_url: '/images/products/rog-strix-g16-2025.jpg',
-    gallery: [],
+    image_url: '/images/products/rog-strix-g16-2025.webp',
+    gallery: [
+      '/images/products/rog-strix-g16-2025.webp',
+      '/images/products/rog-strix-g16-2025-2.webp',
+      '/images/products/rog-strix-g16-2025-3.webp',
+      '/images/products/rog-strix-g16-2025-4.webp',
+    ],
     specs: {
       cpu: 'Intel Core i9-14900HX',
       gpu: 'NVIDIA RTX 4080 12GB',
@@ -322,7 +327,7 @@ export const products = [
   {
     id: 13,
     brand: 'MSI',
-    name: 'Raider GE78 HX — Laptop Gaming 17"',
+    name: 'Raider GE78 HX 17"',
     slug: 'raider-ge78-hx',
     spec: 'i9-14900HX · RTX 4090 · 64GB DDR5 · 2TB NVMe',
     description: 'El MSI Raider GE78 HX representa la cúspide del rendimiento gaming. Equipado con el procesador Intel Core i9-14900HX de última generación y la potente GPU NVIDIA RTX 4090, este equipo está diseñado para conquistar los juegos más exigentes del mercado.\n\nSu pantalla QHD+ de 17" con 240Hz garantiza una fluidez visual incomparable, mientras que el sistema de cooling avanzado MSI Cooler Boost 5 mantiene temperaturas óptimas incluso en las sesiones más intensas.',
