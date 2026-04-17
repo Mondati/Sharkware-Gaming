@@ -21,6 +21,10 @@ const NB_FILTER_MAP = {
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState('all')
   const [activeNbFilter, setActiveNbFilter] = useState('Todos')
+  const [hoveredCategory, setHoveredCategory] = useState(null)
+  const [hoveredNbFilter, setHoveredNbFilter] = useState(null)
+  const [heroBtnHovered, setHeroBtnHovered] = useState(false)
+  const [heroBtn2Hovered, setHeroBtn2Hovered] = useState(false)
 
   const filteredByCategory = activeCategory === 'all'
     ? null
@@ -42,7 +46,7 @@ const Home = () => {
         style={{
           background: 'linear-gradient(130deg, #071530 0%, #0D1A40 40%, #0A0C14 100%)',
           height: '480px',
-          padding: '0 80px',
+          padding: '0 400px',
           gap: '48px',
         }}
       >
@@ -68,12 +72,16 @@ const Home = () => {
           </div>
           <div className="flex items-center" style={{ gap: '14px' }}>
             <button
-              style={{ backgroundColor: '#00C8FF', borderRadius: '8px', padding: '14px 28px', color: '#060810', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700', border: 'none', cursor: 'pointer' }}
+              onMouseEnter={() => setHeroBtnHovered(true)}
+              onMouseLeave={() => setHeroBtnHovered(false)}
+              style={{ backgroundColor: heroBtnHovered ? '#00B8EF' : '#00C8FF', borderRadius: '8px', padding: '14px 28px', color: '#060810', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700', border: 'none', cursor: 'pointer', transition: 'background-color 0.15s ease' }}
             >
               Comprar ahora
             </button>
             <button
-              style={{ backgroundColor: '#1E2232', borderRadius: '8px', padding: '14px 28px', color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600', border: 'none', cursor: 'pointer' }}
+              onMouseEnter={() => setHeroBtn2Hovered(true)}
+              onMouseLeave={() => setHeroBtn2Hovered(false)}
+              style={{ backgroundColor: heroBtn2Hovered ? '#252840' : '#1E2232', borderRadius: '8px', padding: '14px 28px', color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600', border: 'none', cursor: 'pointer', transition: 'background-color 0.15s ease' }}
             >
               Ver especificaciones
             </button>
@@ -141,28 +149,33 @@ const Home = () => {
           backgroundColor: '#070B16',
           borderBottom: '1px solid #1B2333',
           height: '76px',
-          padding: '14px 80px',
+          padding: '14px 400px',
           gap: '10px',
+          justifyContent: 'space-between',
         }}
       >
         {categories.map(({ id, label, icon }) => {
           const isActive = activeCategory === id
+          const isHovered = hoveredCategory === id
           const Icon = ICON_MAP[icon] ?? null
           return (
             <button
               key={id}
               onClick={() => setActiveCategory(id)}
+              onMouseEnter={() => setHoveredCategory(id)}
+              onMouseLeave={() => setHoveredCategory(null)}
               className="flex items-center border-none cursor-pointer"
               style={{
-                backgroundColor: isActive ? '#00C8FF' : '#1E2232',
+                backgroundColor: isActive ? '#00C8FF' : isHovered ? '#252840' : '#1E2232',
                 borderRadius: '20px',
                 padding: '8px 18px',
                 gap: '6px',
                 whiteSpace: 'nowrap',
+                transition: 'background-color 0.15s ease',
               }}
             >
-              {Icon && <Icon size={14} color={isActive ? '#060810' : '#8890A4'} />}
-              <span style={{ color: isActive ? '#060810' : '#8890A4', fontFamily: 'Inter', fontSize: '13px', fontWeight: isActive ? '700' : '600' }}>
+              {Icon && <Icon size={14} color={isActive ? '#060810' : '#AAB3C5'} />}
+              <span style={{ color: isActive ? '#060810' : '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: isActive ? '700' : '600' }}>
                 {label}
               </span>
             </button>
@@ -198,8 +211,8 @@ const Home = () => {
                 whiteSpace: 'nowrap',
               }}
             >
-              {Icon && <Icon size={12} color={isActive ? '#060810' : '#8890A4'} />}
-              <span style={{ color: isActive ? '#060810' : '#8890A4', fontFamily: 'Inter', fontSize: '12px', fontWeight: isActive ? '700' : '600' }}>
+              {Icon && <Icon size={12} color={isActive ? '#060810' : '#AAB3C5'} />}
+              <span style={{ color: isActive ? '#060810' : '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: isActive ? '700' : '600' }}>
                 {label}
               </span>
             </button>
@@ -212,7 +225,7 @@ const Home = () => {
       {filteredByCategory ? (
         <>
           {/* Desktop — categoría filtrada */}
-          <section className="hidden md:flex flex-col w-full" style={{ padding: '40px 80px', gap: '20px' }}>
+          <section className="hidden md:flex flex-col w-full" style={{ padding: '40px 400px', gap: '20px' }}>
             <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
               {categories.find((c) => c.id === activeCategory)?.label}
             </span>
@@ -221,9 +234,11 @@ const Home = () => {
                 No hay productos en esta categoría.
               </span>
             ) : (
-              <div className="flex flex-wrap w-full" style={{ gap: '16px' }}>
+              <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
                 {filteredByCategory.map((p) => (
-                  <ProductCard key={p.id} {...p} imgHeight={130} />
+                  <div key={p.id} style={{ flex: '1 0 calc(20% - 13px)', minWidth: 'calc(20% - 13px)' }}>
+                    <ProductCard {...p} imgHeight={210} />
+                  </div>
                 ))}
               </div>
             )}
@@ -252,7 +267,7 @@ const Home = () => {
           {/* ── Nuevos Productos ─────────────────────────────────────────── */}
 
           {/* Desktop */}
-          <section className="hidden md:flex flex-col w-full" style={{ padding: '40px 80px', gap: '20px' }}>
+          <section className="hidden md:flex flex-col w-full" style={{ padding: '40px 400px', gap: '20px' }}>
             <div className="flex items-center w-full">
               <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
                 Nuevos Productos
@@ -261,9 +276,11 @@ const Home = () => {
                 Ver todos los productos →
               </Link>
             </div>
-            <div className="flex w-full" style={{ gap: '16px' }}>
+            <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
               {newProducts.map((p) => (
-                <ProductCard key={p.id} {...p} />
+                <div key={p.id} style={{ flex: '1 0 calc(20% - 13px)', minWidth: 'calc(20% - 13px)' }}>
+                  <ProductCard {...p} />
+                </div>
               ))}
             </div>
           </section>
@@ -288,7 +305,7 @@ const Home = () => {
           {/* ── Notebooks Gamer ──────────────────────────────────────────── */}
 
           {/* Desktop */}
-          <section className="hidden md:flex flex-col w-full" style={{ padding: '0 80px 40px', gap: '20px' }}>
+          <section className="hidden md:flex flex-col w-full" style={{ padding: '0 400px 40px', gap: '20px' }}>
             <div className="flex items-center w-full">
               <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
                 Notebooks Gamer
@@ -300,19 +317,23 @@ const Home = () => {
             <div className="flex" style={{ gap: '8px' }}>
               {notebookFilters.map((f) => {
                 const isActive = activeNbFilter === f
+                const isHovered = hoveredNbFilter === f
                 return (
                   <button
                     key={f}
                     onClick={() => setActiveNbFilter(f)}
+                    onMouseEnter={() => setHoveredNbFilter(f)}
+                    onMouseLeave={() => setHoveredNbFilter(null)}
                     className="border-none cursor-pointer"
                     style={{
-                      backgroundColor: isActive ? '#00C8FF' : '#1E2232',
+                      backgroundColor: isActive ? '#00C8FF' : isHovered ? '#252840' : '#1E2232',
                       borderRadius: '20px',
                       padding: '6px 16px',
-                      color: isActive ? '#060810' : '#8890A4',
+                      color: isActive ? '#060810' : '#AAB3C5',
                       fontFamily: 'Inter',
                       fontSize: '12px',
                       fontWeight: isActive ? '700' : 'normal',
+                      transition: 'background-color 0.15s ease',
                     }}
                   >
                     {f}
@@ -325,9 +346,11 @@ const Home = () => {
                 Sin resultados para este filtro.
               </span>
             ) : (
-              <div className="flex w-full" style={{ gap: '16px' }}>
+              <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
                 {filteredNotebooks.map((p) => (
-                  <ProductCard key={p.id} {...p} imgHeight={130} />
+                  <div key={p.id} style={{ flex: '1 0 calc(20% - 13px)', minWidth: 'calc(20% - 13px)' }}>
+                    <ProductCard {...p} imgHeight={210} />
+                  </div>
                 ))}
               </div>
             )}
@@ -353,7 +376,7 @@ const Home = () => {
           {/* ── Monitores Gaming ─────────────────────────────────────────── */}
 
           {/* Desktop */}
-          <section className="hidden md:flex flex-col w-full" style={{ padding: '0 80px 40px', gap: '20px' }}>
+          <section className="hidden md:flex flex-col w-full" style={{ padding: '0 400px 40px', gap: '20px' }}>
             <div className="flex items-center w-full">
               <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
                 Monitores Gaming
@@ -362,9 +385,11 @@ const Home = () => {
                 Ver todos →
               </Link>
             </div>
-            <div className="flex w-full" style={{ gap: '16px' }}>
+            <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
               {monitorsList.map((p) => (
-                <ProductCard key={p.id} {...p} imgHeight={130} />
+                <div key={p.id} style={{ flex: '1 0 calc(20% - 13px)', minWidth: 'calc(20% - 13px)' }}>
+                  <ProductCard {...p} imgHeight={210} />
+                </div>
               ))}
             </div>
           </section>
@@ -401,8 +426,9 @@ const Home = () => {
           width: '64px',
           height: '64px',
           borderRadius: '999px',
-          background: 'linear-gradient(135deg, #7C3AED 0%, #06B6D4 100%)',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
+          backgroundColor: '#0E1424',
+          border: '1px solid rgba(0,200,255,0.2)',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
           zIndex: 50,
         }}
       >

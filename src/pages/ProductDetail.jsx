@@ -2,12 +2,12 @@ import { useState } from 'react'
 import {
   Cpu, Monitor, MemoryStick, HardDrive,
   Star, Heart, Share2, ShoppingCart,
-  ShieldCheck, Truck, RefreshCw, ChevronRight, ChevronDown,
-  ArrowLeft,
+  ChevronRight, ChevronDown, ArrowLeft, Truck,
 } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import TrustBadges from '../components/TrustBadges'
 import { products } from '../data/products'
 
 const tabs = ['Descripción', 'Especificaciones', 'Reseñas (127)']
@@ -20,7 +20,7 @@ const ImgOrPlaceholder = ({ src, brand, name, style }) => {
         src={src}
         alt={name}
         onError={() => setErr(true)}
-        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '8px', display: 'block' }}
       />
     )
   }
@@ -45,6 +45,7 @@ const ProductDetail = () => {
   const [activeThumb, setActiveThumb] = useState(0)
   const [descOpen, setDescOpen] = useState(false)
   const [specsOpen, setSpecsOpen] = useState(false)
+  const [touchStartX, setTouchStartX] = useState(null)
 
   if (!product) {
     return (
@@ -83,7 +84,7 @@ const ProductDetail = () => {
   return (
     <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
 
-      {/* ═══════════════ MOBILE HEADER ═══════════════ */}
+      {/* ═══ MOBILE HEADER ═══ */}
       <div
         className="flex md:hidden items-center w-full"
         style={{ backgroundColor: '#0A0F1C', height: '56px', padding: '0 16px', gap: '12px' }}
@@ -108,11 +109,22 @@ const ProductDetail = () => {
         </button>
       </div>
 
-      {/* ═══════════════ DESKTOP NAVBAR ═══════════════ */}
+      {/* ═══ DESKTOP NAVBAR ═══ */}
       <Navbar />
 
-      {/* ═══════════════ MOBILE IMAGE ═══════════════ */}
-      <div className="md:hidden relative">
+      {/* ═══ MOBILE IMAGE ═══ */}
+      <div
+        className="md:hidden relative"
+        onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
+        onTouchEnd={(e) => {
+          if (touchStartX === null) return
+          const diff = touchStartX - e.changedTouches[0].clientX
+          if (Math.abs(diff) < 40) { setTouchStartX(null); return }
+          if (diff > 0) setActiveThumb((t) => Math.min(t + 1, displayGallery.length - 1))
+          else setActiveThumb((t) => Math.max(t - 1, 0))
+          setTouchStartX(null)
+        }}
+      >
         <div style={{ width: '100%', height: '280px', backgroundColor: '#0E1424', overflow: 'hidden' }}>
           <ImgOrPlaceholder src={displayGallery[activeThumb]} brand={product.brand} name={product.name} />
         </div>
@@ -123,12 +135,9 @@ const ProductDetail = () => {
                 key={i}
                 onClick={() => setActiveThumb(i)}
                 style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
+                  width: '8px', height: '8px', borderRadius: '50%',
                   backgroundColor: activeThumb === i ? '#00C8FF' : '#1B2333',
-                  flexShrink: 0,
-                  cursor: 'pointer',
+                  flexShrink: 0, cursor: 'pointer',
                 }}
               />
             ))}
@@ -136,43 +145,47 @@ const ProductDetail = () => {
         )}
       </div>
 
-      {/* ═══════════════ DESKTOP BREADCRUMB + MAIN ═══════════════ */}
-
-      {/* Desktop Breadcrumb */}
+      {/* ═══ DESKTOP BREADCRUMB ═══ */}
       <div
         className="hidden md:flex items-center w-full"
-        style={{ backgroundColor: '#0A0F1C', height: '44px', padding: '0 80px', gap: '8px' }}
+        style={{ backgroundColor: '#0A0F1C', height: '44px', padding: '0 80px', gap: '8px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}
       >
-        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>
+        <Link to="/" className="no-underline" style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>
           Inicio
         </Link>
-        <ChevronRight size={14} color="#1B2333" />
-        <Link to="#" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>
-          Notebooks
+        <ChevronRight size={13} color="#2A3347" />
+        <Link to="#" className="no-underline" style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>
+          {product.category_id}
         </Link>
-        <ChevronRight size={14} color="#1B2333" />
+        <ChevronRight size={13} color="#2A3347" />
         <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
           {product.name}
         </span>
       </div>
 
-      {/* Desktop Main */}
-      <div className="hidden md:flex w-full" style={{ padding: '48px 80px', gap: '60px' }}>
-        {/* Left: Gallery */}
-        <div className="flex flex-col" style={{ width: '777px', flexShrink: 0, gap: '16px' }}>
-          <div
-            style={{
-              backgroundColor: '#0E1424',
-              borderRadius: '16px',
-              height: '440px',
-              position: 'relative',
-              overflow: 'hidden',
-            }}
-          >
+      {/* ═══ DESKTOP MAIN ═══ */}
+      <div className="hidden md:flex w-full" style={{ padding: '40px 400px 48px', gap: '56px', alignItems: 'flex-start' }}>
+
+        {/* LEFT — Gallery */}
+        <div className="flex flex-col" style={{ width: '460px', flexShrink: 0, gap: '12px' }}>
+          <div style={{
+            backgroundColor: '#0E1424',
+            borderRadius: '16px',
+            height: '420px',
+            position: 'relative',
+            overflow: 'hidden',
+            border: '1px solid rgba(255,255,255,0.06)',
+          }}>
             <ImgOrPlaceholder src={displayGallery[activeThumb]} brand={product.brand} name={product.name} />
             {product.badge && (
-              <div style={{ position: 'absolute', top: '16px', left: '16px', backgroundColor: product.badge === 'NUEVO' ? '#22C55E' : '#EF4444', borderRadius: '6px', padding: '4px 12px' }}>
-                <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>{product.badge}</span>
+              <div style={{
+                position: 'absolute', top: '14px', left: '14px',
+                backgroundColor: product.badge === 'NUEVO' ? '#22C55E' : '#EF4444',
+                borderRadius: '5px', padding: '4px 10px',
+              }}>
+                <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>
+                  {product.badge}
+                </span>
               </div>
             )}
           </div>
@@ -184,12 +197,13 @@ const ProductDetail = () => {
                 style={{
                   backgroundColor: '#0E1424',
                   borderRadius: '8px',
-                  height: '60px',
-                  width: '60px',
+                  height: '68px',
+                  width: '68px',
                   cursor: 'pointer',
-                  border: activeThumb === i ? '2px solid #24A8F5' : '1px solid #1B2333',
+                  border: activeThumb === i ? '2px solid #24A8F5' : '1px solid rgba(255,255,255,0.06)',
                   flexShrink: 0,
                   overflow: 'hidden',
+                  transition: 'border-color 0.15s ease',
                 }}
               >
                 <ImgOrPlaceholder src={url} brand={product.brand} name="" />
@@ -198,59 +212,87 @@ const ProductDetail = () => {
           </div>
         </div>
 
-        {/* Right: Info */}
-        <div className="flex flex-col flex-1" style={{ gap: '20px' }}>
-          <div className="flex items-center" style={{ gap: '8px' }}>
-            <span className="flex-1" style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '700', letterSpacing: '2px' }}>
+        {/* RIGHT — Product info */}
+        <div className="flex flex-col flex-1" style={{ gap: '0', minWidth: '0' }}>
+
+          {/* Brand + actions */}
+          <div className="flex items-center" style={{ gap: '8px', marginBottom: '10px' }}>
+            <span className="flex-1" style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
               {product.brand}
             </span>
-            <button style={{ backgroundColor: '#0E1424', border: '1px solid #1B2333', borderRadius: '8px', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Heart size={16} color="#AAB3C5" />
+            <button style={{ backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '7px', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Heart size={15} color="#8890A4" />
             </button>
-            <button style={{ backgroundColor: '#0E1424', border: '1px solid #1B2333', borderRadius: '8px', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Share2 size={16} color="#AAB3C5" />
+            <button style={{ backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '7px', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Share2 size={15} color="#8890A4" />
             </button>
           </div>
 
-          <h1 style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '26px', fontWeight: '800', lineHeight: '1.25', margin: 0 }}>
+          {/* Title */}
+          <h1 style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '26px', fontWeight: '800', lineHeight: '1.25', margin: '0 0 10px 0' }}>
             {product.name}
           </h1>
 
-          <div className="flex items-center" style={{ gap: '8px' }}>
+          {/* Rating */}
+          <div className="flex items-center" style={{ gap: '5px', marginBottom: '20px' }}>
             {[...Array(5)].map((_, i) => (
-              <Star key={i} size={14} color="#F59E0B" fill="#F59E0B" />
+              <Star key={i} size={13} color="#F59E0B" fill="#F59E0B" />
             ))}
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>4.8</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>(127 reseñas)</span>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', marginLeft: '4px' }}>4.8</span>
+            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px' }}>(127 reseñas)</span>
           </div>
 
-          <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
+          {/* Divider */}
+          <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', marginBottom: '20px' }} />
 
-          <div className="flex flex-col" style={{ gap: '6px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '36px', fontWeight: '800' }}>{product.price}</span>
-            <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '14px' }}>12 cuotas sin interés de $ 241.666</span>
-          </div>
-
-          <div className="flex items-center" style={{ gap: '8px' }}>
-            <div style={{ backgroundColor: '#22C55E', borderRadius: '50%', width: '8px', height: '8px', flexShrink: 0 }} />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>
-              En stock — Envío gratis a todo el país
+          {/* Price */}
+          <div style={{ marginBottom: '14px' }}>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '40px', fontWeight: '800', lineHeight: 1 }}>
+              {product.price}
             </span>
           </div>
 
+          {/* Payment method tags */}
+          <div className="flex items-center" style={{ gap: '8px', marginBottom: '20px' }}>
+            <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 12px' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600' }}>MercadoPago</span>
+            </div>
+            <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 12px' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600' }}>BTC · ETH · USDT</span>
+            </div>
+            <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 12px' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600' }}>Transferencia</span>
+            </div>
+          </div>
+
+          {/* Stock + shipping */}
+          <div className="flex items-center" style={{ gap: '20px', marginBottom: '20px' }}>
+            <div className="flex items-center" style={{ gap: '6px' }}>
+              <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: product.stock > 0 ? '#22C55E' : '#EF4444', flexShrink: 0 }} />
+              <span style={{ color: product.stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+                {product.stock > 0 ? 'En stock' : 'Sin stock'}
+              </span>
+            </div>
+            <div className="flex items-center" style={{ gap: '6px' }}>
+              <Truck size={14} color="#24A8F5" />
+              <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>Envío gratis a todo el país</span>
+            </div>
+          </div>
+
+          {/* Quick specs */}
           {quickSpecs.length > 0 && (
-            <div className="flex flex-col" style={{ gap: '8px' }}>
+            <div className="flex flex-col" style={{ gap: '8px', marginBottom: '24px' }}>
               {[quickSpecs.slice(0, 2), quickSpecs.slice(2, 4)].filter((r) => r.length > 0).map((row, ri) => (
                 <div key={ri} className="flex" style={{ gap: '8px' }}>
                   {row.map(({ icon: Icon, label, value }) => (
                     <div
                       key={label}
                       className="flex flex-1 items-center"
-                      style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px', gap: '10px' }}
+                      style={{ backgroundColor: '#0A0C14', borderRadius: '10px', padding: '11px 14px', gap: '10px', border: '1px solid rgba(255,255,255,0.06)' }}
                     >
-                      <Icon size={16} color="#24A8F5" />
+                      <Icon size={15} color="#24A8F5" />
                       <div className="flex flex-col" style={{ gap: '2px' }}>
-                        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '1px' }}>
+                        <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '1px' }}>
                           {label}
                         </span>
                         <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '700' }}>
@@ -264,279 +306,60 @@ const ProductDetail = () => {
             </div>
           )}
 
-          <div className="flex items-center" style={{ gap: '16px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>Cantidad:</span>
-            <div className="flex" style={{ backgroundColor: '#0E1424', border: '1px solid #1B2333', borderRadius: '8px', overflow: 'hidden' }}>
+          {/* Quantity */}
+          <div className="flex items-center" style={{ gap: '14px', marginBottom: '16px' }}>
+            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>Cantidad:</span>
+            <div className="flex items-center" style={{ backgroundColor: '#0A0C14', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', overflow: 'hidden' }}>
               <button
                 onClick={() => setQty((q) => Math.max(1, q - 1))}
-                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '18px', cursor: 'pointer' }}
+                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: 'pointer' }}
               >
                 −
               </button>
-              <div className="flex items-center justify-center" style={{ width: '48px', height: '40px' }}>
-                <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>{qty}</span>
+              <div
+                className="flex items-center justify-center"
+                style={{ width: '44px', height: '40px', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}
+              >
+                <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
               </div>
               <button
                 onClick={() => setQty((q) => q + 1)}
-                style={{ width: '40px', height: '40px', backgroundColor: '#24A8F5', border: 'none', color: '#FFFFFF', fontSize: '18px', cursor: 'pointer', borderRadius: '0 8px 8px 0' }}
+                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#24A8F5', fontSize: '20px', cursor: 'pointer' }}
               >
                 +
               </button>
             </div>
           </div>
 
-          <button
-            className="flex items-center justify-center"
-            style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '54px', border: 'none', cursor: 'pointer', gap: '12px', width: '100%' }}
-          >
-            <ShoppingCart size={20} color="#FFFFFF" />
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>Agregar al carrito</span>
-          </button>
-
-          <button
-            className="flex items-center justify-center"
-            style={{ backgroundColor: '#0E1424', borderRadius: '12px', height: '54px', border: '2px solid #24A8F5', cursor: 'pointer', width: '100%' }}
-          >
-            <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>Comprar ahora</span>
-          </button>
-
-          <div className="flex" style={{ paddingTop: '12px', justifyContent: 'space-around' }}>
-            {[
-              { icon: ShieldCheck, color: '#22C55E', label: 'Compra segura' },
-              { icon: Truck, color: '#24A8F5', label: 'Envío gratis' },
-              { icon: RefreshCw, color: '#F59E0B', label: '30 días devolución' },
-            ].map(({ icon: Icon, color, label }) => (
-              <div key={label} className="flex items-center" style={{ gap: '8px' }}>
-                <Icon size={16} color={color} />
-                <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>{label}</span>
-              </div>
-            ))}
+          {/* CTAs */}
+          <div className="flex flex-col" style={{ gap: '10px', marginBottom: '24px' }}>
+            <button
+              className="flex items-center justify-center"
+              style={{ backgroundColor: '#00C8FF', borderRadius: '10px', height: '54px', border: 'none', cursor: 'pointer', gap: '12px', width: '100%' }}
+            >
+              <ShoppingCart size={18} color="#060810" />
+              <span style={{ color: '#060810', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
+                Agregar al carrito
+              </span>
+            </button>
+            <button
+              className="flex items-center justify-center"
+              style={{ backgroundColor: 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: 'pointer', width: '100%' }}
+            >
+              <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+                Comprar ahora
+              </span>
+            </button>
           </div>
+
+          {/* Trust badges */}
+          <TrustBadges size={15} layout="row" />
         </div>
       </div>
 
-      {/* ═══════════════ MOBILE PRODUCT INFO ═══════════════ */}
-      <div className="flex md:hidden flex-col w-full" style={{ padding: '16px', gap: '16px' }}>
-        {/* Badges */}
-        <div className="flex items-center" style={{ gap: '8px' }}>
-          <div style={{ backgroundColor: '#22C55E', borderRadius: '5px', padding: '4px 10px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>NUEVO</span>
-          </div>
-          <div style={{ backgroundColor: '#EF4444', borderRadius: '5px', padding: '4px 10px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>MAS VENDIDO</span>
-          </div>
-        </div>
-
-        {/* Brand */}
-        <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
-          {product.brand}
-        </span>
-
-        {/* Name */}
-        <h1 style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '20px', fontWeight: '800', lineHeight: '1.25', margin: 0 }}>
-          {product.name}
-        </h1>
-
-        {/* Rating */}
-        <div className="flex items-center" style={{ gap: '6px' }}>
-          <Star size={14} color="#F59E0B" fill="#F59E0B" />
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}>4.8</span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>(127 reseñas)</span>
-        </div>
-
-        {/* Price */}
-        <div className="flex flex-col" style={{ gap: '4px' }}>
-          <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '28px', fontWeight: '800' }}>{product.price}</span>
-          <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '13px' }}>
-            12 cuotas sin interés de $ 241.666
-          </span>
-        </div>
-
-        {/* Quick Specs 2x2 */}
-        {quickSpecs.length > 0 && (
-          <div className="flex flex-col" style={{ gap: '8px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
-              Especificaciones principales
-            </span>
-            {[quickSpecs.slice(0, 2), quickSpecs.slice(2, 4)].filter((r) => r.length > 0).map((row, ri) => (
-              <div key={ri} className="flex" style={{ gap: '8px' }}>
-                {row.map(({ icon: Icon, label, value }) => (
-                  <div
-                    key={label}
-                    className="flex flex-1 items-center"
-                    style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px', gap: '10px' }}
-                  >
-                    <Icon size={16} color="#24A8F5" />
-                    <div className="flex flex-col" style={{ gap: '2px' }}>
-                      <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '8px', fontWeight: '700', letterSpacing: '1px' }}>
-                        {label}
-                      </span>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700' }}>
-                        {value}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Qty + Buttons */}
-        <div className="flex flex-col" style={{ gap: '12px' }}>
-          <div className="flex items-center" style={{ gap: '16px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Cantidad:</span>
-            <div className="flex" style={{ backgroundColor: '#0E1424', border: '1px solid #1B2333', borderRadius: '8px', overflow: 'hidden' }}>
-              <button
-                onClick={() => setQty((q) => Math.max(1, q - 1))}
-                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '18px', cursor: 'pointer' }}
-              >
-                −
-              </button>
-              <div className="flex items-center justify-center" style={{ width: '48px', height: '40px' }}>
-                <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>{qty}</span>
-              </div>
-              <button
-                onClick={() => setQty((q) => q + 1)}
-                style={{ width: '40px', height: '40px', backgroundColor: '#24A8F5', border: 'none', color: '#FFFFFF', fontSize: '18px', cursor: 'pointer', borderRadius: '0 8px 8px 0' }}
-              >
-                +
-              </button>
-            </div>
-          </div>
-
-          <button
-            className="flex items-center justify-center"
-            style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '50px', border: 'none', cursor: 'pointer', gap: '10px', width: '100%' }}
-          >
-            <ShoppingCart size={18} color="#FFFFFF" />
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '15px', fontWeight: '800' }}>Agregar al carrito</span>
-          </button>
-
-          <button
-            className="flex items-center justify-center"
-            style={{ backgroundColor: '#0E1424', borderRadius: '12px', height: '50px', border: '2px solid #24A8F5', cursor: 'pointer', width: '100%' }}
-          >
-            <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '15px', fontWeight: '800' }}>Comprar ahora</span>
-          </button>
-        </div>
-
-        {/* Descripción (accordion) */}
-        <div style={{ backgroundColor: '#0E1424', borderRadius: '12px', overflow: 'hidden' }}>
-          <button
-            onClick={() => setDescOpen(!descOpen)}
-            className="flex items-center justify-between w-full border-none cursor-pointer"
-            style={{ backgroundColor: 'transparent', padding: '16px' }}
-          >
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
-              Descripción
-            </span>
-            <ChevronDown
-              size={18}
-              color="#AAB3C5"
-              style={{
-                transform: descOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                transition: 'transform 0.2s',
-                flexShrink: 0,
-              }}
-            />
-          </button>
-          {descOpen && (
-            <div style={{ padding: '0 16px 16px' }}>
-              <p style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', lineHeight: '1.6', margin: 0, whiteSpace: 'pre-line' }}>
-                {product.description}
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Ficha técnica (accordion) */}
-        <div style={{ backgroundColor: '#0E1424', borderRadius: '12px', overflow: 'hidden' }}>
-          <button
-            onClick={() => setSpecsOpen(!specsOpen)}
-            className="flex items-center justify-between w-full border-none cursor-pointer"
-            style={{ backgroundColor: 'transparent', padding: '16px' }}
-          >
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
-              Ficha técnica completa
-            </span>
-            <ChevronDown
-              size={18}
-              color="#AAB3C5"
-              style={{
-                transform: specsOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                transition: 'transform 0.2s',
-                flexShrink: 0,
-              }}
-            />
-          </button>
-          {specsOpen && (
-            <div style={{ padding: '0 16px 16px' }}>
-              <div style={{ backgroundColor: '#070B16', borderRadius: '10px', overflow: 'hidden' }}>
-                {detailSpecs.map((row, i) => (
-                  <div key={row.label}>
-                    <div className="flex items-center" style={{ padding: '12px 14px' }}>
-                      <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>{row.label}</span>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600', textAlign: 'right' }}>{row.value}</span>
-                    </div>
-                    {i < detailSpecs.length - 1 && <div style={{ backgroundColor: '#1B2333', height: '1px' }} />}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Related Products */}
-        <div className="flex flex-col" style={{ gap: '12px' }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800', textAlign: 'center' }}>
-            También te puede gustar
-          </span>
-          <div className="grid grid-cols-2" style={{ gap: '10px' }}>
-            {relatedProducts.slice(0, 2).map((p) => (
-              <Link
-                key={p.id}
-                to={`/product/${p.id}`}
-                className="flex flex-col no-underline"
-                style={{ backgroundColor: '#0E1424', borderRadius: '14px', border: '1px solid #1B2333', overflow: 'hidden' }}
-              >
-                <div style={{ backgroundColor: '#1E2232', height: '100px' }} />
-                <div className="flex flex-col" style={{ padding: '10px', gap: '6px' }}>
-                  <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
-                    {p.brand}
-                  </span>
-                  <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '700', lineHeight: '1.3' }}>
-                    {p.name}
-                  </span>
-                  <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '800' }}>
-                    {p.price}
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Trust badges */}
-        <div className="flex items-center justify-center" style={{ gap: '20px', padding: '8px 0 16px' }}>
-          <div className="flex flex-col items-center" style={{ gap: '4px' }}>
-            <ShieldCheck size={20} color="#22C55E" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Compra segura</span>
-          </div>
-          <div className="flex flex-col items-center" style={{ gap: '4px' }}>
-            <Truck size={20} color="#24A8F5" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Envío gratis</span>
-          </div>
-          <div className="flex flex-col items-center" style={{ gap: '4px' }}>
-            <RefreshCw size={20} color="#F59E0B" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>30 días devolución</span>
-          </div>
-        </div>
-      </div>
-
-      {/* ═══════════════ DESKTOP TABS ═══════════════ */}
-      <div className="hidden md:flex flex-col w-full" style={{ padding: '0 80px 40px' }}>
-        <div className="flex" style={{ borderBottom: '1px solid #1B2333' }}>
+      {/* ═══ DESKTOP TABS ═══ */}
+      <div className="hidden md:flex flex-col w-full" style={{ padding: '0 400px 48px' }}>
+        <div className="flex" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', marginBottom: '32px' }}>
           {tabs.map((tab, i) => {
             const isActive = activeTab === i
             return (
@@ -545,94 +368,93 @@ const ProductDetail = () => {
                 onClick={() => setActiveTab(i)}
                 className="flex items-center justify-center border-none cursor-pointer"
                 style={{
-                  backgroundColor: isActive ? '#0E1424' : '#070B16',
-                  height: '48px',
-                  padding: '0 28px',
+                  backgroundColor: 'transparent',
+                  height: '46px',
+                  padding: '0 24px',
                   borderBottom: isActive ? '2px solid #24A8F5' : '2px solid transparent',
                   marginBottom: '-1px',
                 }}
               >
-                <span style={{ color: isActive ? '#24A8F5' : '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', fontWeight: isActive ? '700' : '500' }}>
+                <span style={{ color: isActive ? '#24A8F5' : '#8890A4', fontFamily: 'Inter', fontSize: '14px', fontWeight: isActive ? '700' : '500' }}>
                   {tab}
                 </span>
               </button>
             )
           })}
         </div>
-        <div className="flex w-full" style={{ paddingTop: '32px', gap: '48px' }}>
-          {activeTab === 0 && (
-            <>
-              <p style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', lineHeight: '1.7', flex: 1, whiteSpace: 'pre-line', margin: 0 }}>
-                {product.description}
-              </p>
-              <div style={{ backgroundColor: '#0E1424', borderRadius: '12px', width: '380px', flexShrink: 0, overflow: 'hidden' }}>
-                {detailSpecs.map((row, i) => (
-                  <div key={row.label}>
-                    <div className="flex items-center" style={{ padding: '12px 16px' }}>
-                      <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>{row.label}</span>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>{row.value}</span>
-                    </div>
-                    {i < detailSpecs.length - 1 && <div style={{ backgroundColor: '#1B2333', height: '1px' }} />}
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
 
-          {activeTab === 1 && (
-            <div className="flex w-full" style={{ gap: '12px', flexWrap: 'wrap' }}>
-              {[...quickSpecs.map((s) => ({ label: s.label, value: s.value })), ...detailSpecs].map((row) => (
-                <div
-                  key={row.label}
-                  style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '14px 16px', minWidth: '220px', flex: 1 }}
-                >
-                  <div style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '1px', marginBottom: '6px' }}>
-                    {row.label}
+        {activeTab === 0 && (
+          <div className="flex w-full" style={{ gap: '48px', alignItems: 'flex-start' }}>
+            <p style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', lineHeight: '1.75', flex: 1, whiteSpace: 'pre-line', margin: 0 }}>
+              {product.description}
+            </p>
+            <div style={{ width: '360px', flexShrink: 0, backgroundColor: '#0A0C14', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}>
+              {detailSpecs.map((row, i) => (
+                <div key={row.label}>
+                  <div className="flex items-center" style={{ padding: '11px 16px' }}>
+                    <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px', flex: 1 }}>{row.label}</span>
+                    <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600', textAlign: 'right' }}>{row.value}</span>
                   </div>
-                  <div style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
-                    {row.value}
-                  </div>
+                  {i < detailSpecs.length - 1 && <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.04)' }} />}
                 </div>
               ))}
             </div>
-          )}
+          </div>
+        )}
 
-          {activeTab === 2 && (
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>
-              Las reseñas estarán disponibles próximamente.
-            </span>
-          )}
-        </div>
+        {activeTab === 1 && (
+          <div style={{ backgroundColor: '#0A0C14', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}>
+            {detailSpecs.map((row, i) => (
+              <div key={row.label}>
+                <div className="flex items-baseline" style={{ padding: '13px 24px' }}>
+                  <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px', width: '260px', flexShrink: 0 }}>
+                    {row.label}
+                  </span>
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+                    {row.value}
+                  </span>
+                </div>
+                {i < detailSpecs.length - 1 && <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.04)' }} />}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === 2 && (
+          <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '14px' }}>
+            Las reseñas estarán disponibles próximamente.
+          </span>
+        )}
       </div>
 
-      {/* ═══════════════ DESKTOP RELATED ═══════════════ */}
-      <div className="hidden md:flex flex-col w-full" style={{ padding: '0 80px 20px', gap: '20px' }}>
-        <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
+      {/* ═══ DESKTOP RELATED ═══ */}
+      <div className="hidden md:flex flex-col w-full" style={{ padding: '0 400px 24px', gap: '20px' }}>
+        <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
         <div className="flex items-center">
-          <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '20px', fontWeight: '800' }}>
+          <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '800' }}>
             También te puede gustar
           </span>
-          <Link to="#" className="no-underline" style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>
+          <Link to="#" className="no-underline" style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
             Ver todos →
           </Link>
         </div>
       </div>
-      <div className="hidden md:flex w-full" style={{ padding: '0 56px 56px', gap: '32px' }}>
+      <div className="hidden md:flex w-full" style={{ padding: '0 400px 56px', gap: '20px' }}>
         {relatedProducts.map((p) => (
           <Link
             key={p.id}
             to={`/product/${p.id}`}
             className="flex flex-col flex-1 no-underline"
-            style={{ backgroundColor: '#0E1424', borderRadius: '14px', border: '1px solid #1B2333', overflow: 'hidden' }}
+            style={{ backgroundColor: '#0E1424', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}
           >
-            <div style={{ height: '180px', overflow: 'hidden' }}>
-              <ImgOrPlaceholder src={p.image_url} brand={p.brand} name={p.name} style={{ backgroundColor: '#1E2232' }} />
+            <div style={{ height: '180px', overflow: 'hidden', backgroundColor: '#0A0C14' }}>
+              <ImgOrPlaceholder src={p.image_url} brand={p.brand} name={p.name} style={{ backgroundColor: '#0A0C14' }} />
             </div>
-            <div className="flex flex-col" style={{ padding: '14px', gap: '8px' }}>
+            <div className="flex flex-col" style={{ padding: '14px', gap: '6px' }}>
               <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
                 {p.brand}
               </span>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700', lineHeight: '1.3' }}>
                 {p.name}
               </span>
               <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
@@ -641,6 +463,181 @@ const ProductDetail = () => {
             </div>
           </Link>
         ))}
+      </div>
+
+      {/* ═══ MOBILE PRODUCT INFO ═══ */}
+      <div className="flex md:hidden flex-col w-full" style={{ padding: '16px', gap: '16px' }}>
+
+        {product.badge && (
+          <div className="flex" style={{ gap: '8px' }}>
+            <div style={{ backgroundColor: product.badge === 'NUEVO' ? '#22C55E' : '#EF4444', borderRadius: '5px', padding: '4px 10px' }}>
+              <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>
+                {product.badge}
+              </span>
+            </div>
+          </div>
+        )}
+
+        <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
+          {product.brand}
+        </span>
+
+        <h1 style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '20px', fontWeight: '800', lineHeight: '1.25', margin: 0 }}>
+          {product.name}
+        </h1>
+
+        <div className="flex items-center" style={{ gap: '5px' }}>
+          <Star size={13} color="#F59E0B" fill="#F59E0B" />
+          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', marginLeft: '2px' }}>4.8</span>
+          <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px' }}>(127 reseñas)</span>
+        </div>
+
+        <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
+
+        <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '30px', fontWeight: '800' }}>{product.price}</span>
+
+        <div className="flex items-center" style={{ gap: '6px' }}>
+          <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: product.stock > 0 ? '#22C55E' : '#EF4444', flexShrink: 0 }} />
+          <span style={{ color: product.stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+            {product.stock > 0 ? 'En stock' : 'Sin stock'}
+          </span>
+        </div>
+
+        {quickSpecs.length > 0 && (
+          <div className="flex flex-col" style={{ gap: '8px' }}>
+            {[quickSpecs.slice(0, 2), quickSpecs.slice(2, 4)].filter((r) => r.length > 0).map((row, ri) => (
+              <div key={ri} className="flex" style={{ gap: '8px' }}>
+                {row.map(({ icon: Icon, label, value }) => (
+                  <div
+                    key={label}
+                    className="flex flex-1 items-center"
+                    style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '11px 12px', gap: '8px', border: '1px solid rgba(255,255,255,0.06)' }}
+                  >
+                    <Icon size={14} color="#24A8F5" />
+                    <div className="flex flex-col" style={{ gap: '2px' }}>
+                      <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '8px', fontWeight: '700', letterSpacing: '1px' }}>{label}</span>
+                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700' }}>{value}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="flex flex-col" style={{ gap: '10px' }}>
+          <div className="flex items-center" style={{ gap: '14px' }}>
+            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>Cantidad:</span>
+            <div className="flex items-center" style={{ backgroundColor: '#0A0C14', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', overflow: 'hidden' }}>
+              <button
+                onClick={() => setQty((q) => Math.max(1, q - 1))}
+                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: 'pointer' }}
+              >
+                −
+              </button>
+              <div className="flex items-center justify-center" style={{ width: '44px', height: '40px', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
+                <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
+              </div>
+              <button
+                onClick={() => setQty((q) => q + 1)}
+                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#24A8F5', fontSize: '20px', cursor: 'pointer' }}
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <button
+            className="flex items-center justify-center"
+            style={{ backgroundColor: '#00C8FF', borderRadius: '10px', height: '52px', border: 'none', cursor: 'pointer', gap: '10px', width: '100%' }}
+          >
+            <ShoppingCart size={18} color="#060810" />
+            <span style={{ color: '#060810', fontFamily: 'Inter', fontSize: '15px', fontWeight: '800' }}>Agregar al carrito</span>
+          </button>
+
+          <button
+            className="flex items-center justify-center"
+            style={{ backgroundColor: 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: 'pointer', width: '100%' }}
+          >
+            <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>Comprar ahora</span>
+          </button>
+        </div>
+
+        {/* Descripción accordion */}
+        <div style={{ backgroundColor: '#0E1424', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}>
+          <button
+            onClick={() => setDescOpen(!descOpen)}
+            className="flex items-center justify-between w-full border-none cursor-pointer"
+            style={{ backgroundColor: 'transparent', padding: '16px' }}
+          >
+            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>Descripción</span>
+            <ChevronDown size={18} color="#8890A4" style={{ transform: descOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }} />
+          </button>
+          {descOpen && (
+            <div style={{ padding: '0 16px 16px' }}>
+              <p style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', lineHeight: '1.65', margin: 0, whiteSpace: 'pre-line' }}>
+                {product.description}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Ficha técnica accordion */}
+        <div style={{ backgroundColor: '#0E1424', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}>
+          <button
+            onClick={() => setSpecsOpen(!specsOpen)}
+            className="flex items-center justify-between w-full border-none cursor-pointer"
+            style={{ backgroundColor: 'transparent', padding: '16px' }}
+          >
+            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>Ficha técnica</span>
+            <ChevronDown size={18} color="#8890A4" style={{ transform: specsOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }} />
+          </button>
+          {specsOpen && (
+            <div style={{ padding: '0 16px 16px' }}>
+              <div style={{ backgroundColor: '#070B16', borderRadius: '10px', overflow: 'hidden' }}>
+                {detailSpecs.map((row, i) => (
+                  <div key={row.label}>
+                    <div className="flex items-center" style={{ padding: '11px 14px' }}>
+                      <span className="flex-1" style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px' }}>{row.label}</span>
+                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600', textAlign: 'right' }}>{row.value}</span>
+                    </div>
+                    {i < detailSpecs.length - 1 && <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.04)' }} />}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Related */}
+        <div className="flex flex-col" style={{ gap: '12px' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
+            También te puede gustar
+          </span>
+          <div className="grid grid-cols-2" style={{ gap: '10px' }}>
+            {relatedProducts.slice(0, 2).map((p) => (
+              <Link
+                key={p.id}
+                to={`/product/${p.id}`}
+                className="flex flex-col no-underline"
+                style={{ backgroundColor: '#0E1424', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}
+              >
+                <div style={{ height: '100px', overflow: 'hidden', backgroundColor: '#0A0C14' }}>
+                  <ImgOrPlaceholder src={p.image_url} brand={p.brand} name={p.name} />
+                </div>
+                <div className="flex flex-col" style={{ padding: '10px', gap: '4px' }}>
+                  <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>{p.brand}</span>
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '700', lineHeight: '1.3' }}>{p.name}</span>
+                  <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '800' }}>{p.price}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ padding: '8px 0 16px' }}>
+          <TrustBadges size={20} layout="row" />
+        </div>
       </div>
 
       <Footer />

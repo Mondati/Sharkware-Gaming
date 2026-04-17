@@ -1,7 +1,8 @@
-import { ChevronRight, CreditCard, Bitcoin, ShieldCheck, Truck, RefreshCw, X, ArrowLeft } from 'lucide-react'
+import { ChevronRight, CreditCard, Bitcoin, ShieldCheck, X, ArrowLeft } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import TrustBadges from '../components/TrustBadges'
 
 /* ── Shared summary panel (desktop) ── */
 const SummaryPanel = ({ ctaEnabled }) => (
@@ -27,7 +28,7 @@ const SummaryPanel = ({ ctaEnabled }) => (
     <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '12px' }}>en 12 cuotas sin interés de $391.583</span>
     <div
       className="flex items-center justify-center"
-      style={{ backgroundColor: ctaEnabled ? '#24A8F5' : '#1B2333', borderRadius: '12px', height: '52px', cursor: ctaEnabled ? 'pointer' : 'default' }}
+      style={{ backgroundColor: ctaEnabled ? '#00C8FF' : '#1B2333', borderRadius: '12px', height: '52px', cursor: ctaEnabled ? 'pointer' : 'default' }}
     >
       <span style={{ color: ctaEnabled ? '#FFFFFF' : '#AAB3C5', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
         {ctaEnabled ? 'Continuar' : 'Seleccioná un método de pago'}
@@ -166,19 +167,8 @@ const Checkout = () => {
         </button>
 
         {/* Trust badges */}
-        <div className="flex items-center justify-center" style={{ gap: '16px', padding: '16px 0' }}>
-          <div className="flex items-center" style={{ gap: '4px' }}>
-            <ShieldCheck size={14} color="#22C55E" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Pago seguro</span>
-          </div>
-          <div className="flex items-center" style={{ gap: '4px' }}>
-            <Truck size={14} color="#22C55E" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Envío gratis</span>
-          </div>
-          <div className="flex items-center" style={{ gap: '4px' }}>
-            <RefreshCw size={14} color="#22C55E" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>30 días de devolución</span>
-          </div>
+        <div style={{ padding: '16px 0' }}>
+          <TrustBadges size={14} layout="row" />
         </div>
       </div>
 
