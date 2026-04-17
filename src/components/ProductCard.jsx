@@ -109,6 +109,7 @@ const ProductCard = ({
           borderRadius: '12px',
           padding: '12px',
           gap: '8px',
+          height: '100%',
           position: 'relative',
           overflow: 'hidden',
           border: '1px solid rgba(255,255,255,0.06)',
@@ -143,7 +144,7 @@ const ProductCard = ({
           {name}
         </span>
 
-        <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '11px', lineHeight: '1.3' }}>
+        <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '11px', lineHeight: '1.3', flex: 1 }}>
           {spec}
         </span>
 
@@ -188,6 +189,7 @@ const ProductCard = ({
         padding: '14px',
         gap: '10px',
         flex: 1,
+        height: '100%',
         position: 'relative',
         border: '1px solid rgba(255,255,255,0.06)',
         transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
@@ -222,7 +224,7 @@ const ProductCard = ({
         {name}
       </span>
 
-      <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px' }}>
+      <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px', flex: 1 }}>
         {spec}
       </span>
 

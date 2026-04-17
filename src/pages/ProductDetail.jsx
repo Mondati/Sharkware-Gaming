@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import TrustBadges from '../components/TrustBadges'
 import { products } from '../data/products'
+import { useWindowWidth } from '../hooks/useWindowWidth'
 
 const tabs = ['Descripción', 'Especificaciones', 'Reseñas (127)']
 
@@ -46,6 +47,7 @@ const ProductDetail = () => {
   const [descOpen, setDescOpen] = useState(false)
   const [specsOpen, setSpecsOpen] = useState(false)
   const [touchStartX, setTouchStartX] = useState(null)
+  const { sidePadding } = useWindowWidth()
 
   if (!product) {
     return (
@@ -164,7 +166,7 @@ const ProductDetail = () => {
       </div>
 
       {/* ═══ DESKTOP MAIN ═══ */}
-      <div className="hidden md:flex w-full" style={{ padding: '40px 400px 48px', gap: '56px', alignItems: 'flex-start' }}>
+      <div className="hidden md:flex w-full" style={{ padding: `40px ${sidePadding} 48px`, gap: '56px', alignItems: 'flex-start' }}>
 
         {/* LEFT — Gallery */}
         <div className="flex flex-col" style={{ width: '460px', flexShrink: 0, gap: '12px' }}>
@@ -358,7 +360,7 @@ const ProductDetail = () => {
       </div>
 
       {/* ═══ DESKTOP TABS ═══ */}
-      <div className="hidden md:flex flex-col w-full" style={{ padding: '0 400px 48px' }}>
+      <div className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 48px` }}>
         <div className="flex" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', marginBottom: '32px' }}>
           {tabs.map((tab, i) => {
             const isActive = activeTab === i
@@ -428,7 +430,7 @@ const ProductDetail = () => {
       </div>
 
       {/* ═══ DESKTOP RELATED ═══ */}
-      <div className="hidden md:flex flex-col w-full" style={{ padding: '0 400px 24px', gap: '20px' }}>
+      <div className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 24px`, gap: '20px' }}>
         <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
         <div className="flex items-center">
           <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '800' }}>
@@ -439,7 +441,7 @@ const ProductDetail = () => {
           </Link>
         </div>
       </div>
-      <div className="hidden md:flex w-full" style={{ padding: '0 400px 56px', gap: '20px' }}>
+      <div className="hidden md:flex w-full" style={{ padding: `0 ${sidePadding} 56px`, gap: '20px' }}>
         {relatedProducts.map((p) => (
           <Link
             key={p.id}

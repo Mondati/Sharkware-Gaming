@@ -6,6 +6,7 @@ import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
 import { categories } from '../data/categories'
 import { products, newProducts, notebooksList, monitorsList } from '../data/products'
+import { useWindowWidth } from '../hooks/useWindowWidth'
 
 const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard }
 
@@ -25,6 +26,7 @@ const Home = () => {
   const [hoveredNbFilter, setHoveredNbFilter] = useState(null)
   const [heroBtnHovered, setHeroBtnHovered] = useState(false)
   const [heroBtn2Hovered, setHeroBtn2Hovered] = useState(false)
+  const { sidePadding, cardFlex } = useWindowWidth()
 
   const filteredByCategory = activeCategory === 'all'
     ? null
@@ -46,7 +48,7 @@ const Home = () => {
         style={{
           background: 'linear-gradient(130deg, #071530 0%, #0D1A40 40%, #0A0C14 100%)',
           height: '480px',
-          padding: '0 400px',
+          padding: `0 ${sidePadding}`,
           gap: '48px',
         }}
       >
@@ -63,7 +65,7 @@ const Home = () => {
           <h1 style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '72px', fontWeight: '900', letterSpacing: '-4px', lineHeight: 1, margin: 0 }}>
             RTX 5090
           </h1>
-          <p style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '16px', width: '520px', lineHeight: '1.5', margin: 0 }}>
+          <p style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '16px', maxWidth: '520px', lineHeight: '1.5', margin: 0 }}>
             Build Personalizada Pro Edition — El poder definitivo para gaming extremo
           </p>
           <div className="flex flex-col" style={{ gap: '4px' }}>
@@ -149,9 +151,13 @@ const Home = () => {
           backgroundColor: '#070B16',
           borderBottom: '1px solid #1B2333',
           height: '76px',
-          padding: '14px 400px',
+          padding: `14px ${sidePadding}`,
           gap: '10px',
-          justifyContent: 'space-between',
+          overflowX: 'auto',
+          scrollbarWidth: 'none',
+          position: 'sticky',
+          top: '70px',
+          zIndex: 10,
         }}
       >
         {categories.map(({ id, label, icon }) => {
@@ -164,7 +170,7 @@ const Home = () => {
               onClick={() => setActiveCategory(id)}
               onMouseEnter={() => setHoveredCategory(id)}
               onMouseLeave={() => setHoveredCategory(null)}
-              className="flex items-center border-none cursor-pointer"
+              className="flex items-center border-none cursor-pointer flex-shrink-0"
               style={{
                 backgroundColor: isActive ? '#00C8FF' : isHovered ? '#252840' : '#1E2232',
                 borderRadius: '20px',
@@ -225,7 +231,7 @@ const Home = () => {
       {filteredByCategory ? (
         <>
           {/* Desktop — categoría filtrada */}
-          <section className="hidden md:flex flex-col w-full" style={{ padding: '40px 400px', gap: '20px' }}>
+          <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
             <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
               {categories.find((c) => c.id === activeCategory)?.label}
             </span>
@@ -236,7 +242,7 @@ const Home = () => {
             ) : (
               <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
                 {filteredByCategory.map((p) => (
-                  <div key={p.id} style={{ flex: '1 0 calc(20% - 13px)', minWidth: 'calc(20% - 13px)' }}>
+                  <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                     <ProductCard {...p} imgHeight={210} />
                   </div>
                 ))}
@@ -267,7 +273,7 @@ const Home = () => {
           {/* ── Nuevos Productos ─────────────────────────────────────────── */}
 
           {/* Desktop */}
-          <section className="hidden md:flex flex-col w-full" style={{ padding: '40px 400px', gap: '20px' }}>
+          <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
             <div className="flex items-center w-full">
               <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
                 Nuevos Productos
@@ -278,7 +284,7 @@ const Home = () => {
             </div>
             <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
               {newProducts.map((p) => (
-                <div key={p.id} style={{ flex: '1 0 calc(20% - 13px)', minWidth: 'calc(20% - 13px)' }}>
+                <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                   <ProductCard {...p} />
                 </div>
               ))}
@@ -305,7 +311,7 @@ const Home = () => {
           {/* ── Notebooks Gamer ──────────────────────────────────────────── */}
 
           {/* Desktop */}
-          <section className="hidden md:flex flex-col w-full" style={{ padding: '0 400px 40px', gap: '20px' }}>
+          <section className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 40px`, gap: '20px' }}>
             <div className="flex items-center w-full">
               <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
                 Notebooks Gamer
@@ -348,7 +354,7 @@ const Home = () => {
             ) : (
               <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
                 {filteredNotebooks.map((p) => (
-                  <div key={p.id} style={{ flex: '1 0 calc(20% - 13px)', minWidth: 'calc(20% - 13px)' }}>
+                  <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                     <ProductCard {...p} imgHeight={210} />
                   </div>
                 ))}
@@ -376,7 +382,7 @@ const Home = () => {
           {/* ── Monitores Gaming ─────────────────────────────────────────── */}
 
           {/* Desktop */}
-          <section className="hidden md:flex flex-col w-full" style={{ padding: '0 400px 40px', gap: '20px' }}>
+          <section className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 40px`, gap: '20px' }}>
             <div className="flex items-center w-full">
               <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
                 Monitores Gaming
@@ -387,7 +393,7 @@ const Home = () => {
             </div>
             <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
               {monitorsList.map((p) => (
-                <div key={p.id} style={{ flex: '1 0 calc(20% - 13px)', minWidth: 'calc(20% - 13px)' }}>
+                <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                   <ProductCard {...p} imgHeight={210} />
                 </div>
               ))}
