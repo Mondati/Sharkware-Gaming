@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Bot, ChevronRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
@@ -21,7 +21,8 @@ const NB_FILTER_MAP = {
 }
 
 const Home = () => {
-  const [activeCategory, setActiveCategory] = useState('all')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const activeCategory = searchParams.get('cat') ?? 'all'
   const [activeNbFilter, setActiveNbFilter] = useState('Todos')
   const [sortOrder, setSortOrder] = useState('relevance')
   const [hoveredCategory, setHoveredCategory] = useState(null)
@@ -175,7 +176,7 @@ const Home = () => {
           return (
             <button
               key={id}
-              onClick={() => setActiveCategory(id)}
+              onClick={() => id === 'all' ? setSearchParams({}) : setSearchParams({ cat: id })}
               onMouseEnter={() => setHoveredCategory(id)}
               onMouseLeave={() => setHoveredCategory(null)}
               className="flex items-center border-none cursor-pointer flex-shrink-0"
@@ -215,7 +216,7 @@ const Home = () => {
           return (
             <button
               key={id}
-              onClick={() => setActiveCategory(id)}
+              onClick={() => id === 'all' ? setSearchParams({}) : setSearchParams({ cat: id })}
               className="flex items-center border-none cursor-pointer flex-shrink-0"
               style={{
                 backgroundColor: isActive ? '#00C8FF' : '#1E2232',

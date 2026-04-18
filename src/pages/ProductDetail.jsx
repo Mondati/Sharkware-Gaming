@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import TrustBadges from '../components/TrustBadges'
 import { products } from '../data/products'
+import { categories } from '../data/categories'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 
 const tabs = ['Descripción', 'Especificaciones', 'Reseñas (127)']
@@ -78,6 +79,8 @@ const ProductDetail = () => {
     label: key.charAt(0).toUpperCase() + key.slice(1),
     value,
   }))
+
+  const categoryLabel = categories.find((c) => c.id === product.category_id)?.label ?? product.category_id
 
   const relatedProducts = products
     .filter((p) => p.category_id === product.category_id && p.id !== product.id)
@@ -156,8 +159,8 @@ const ProductDetail = () => {
           Inicio
         </Link>
         <ChevronRight size={13} color="#2A3347" />
-        <Link to="#" className="no-underline" style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>
-          {product.category_id}
+        <Link to={`/?cat=${product.category_id}`} className="no-underline" style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>
+          {categoryLabel}
         </Link>
         <ChevronRight size={13} color="#2A3347" />
         <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
