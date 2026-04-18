@@ -1,4 +1,5 @@
 import { useState, Fragment } from 'react'
+import { useWindowWidth } from '../hooks/useWindowWidth'
 import {
   ChevronRight, Tag, ArrowLeft, Lock,
   Minus, Plus, Trash2, X,
@@ -17,6 +18,7 @@ const initialItems = [
 const fmt = (n) => '$' + n.toLocaleString('es-AR')
 
 const Cart = () => {
+  const { sidePadding } = useWindowWidth()
   const [items, setItems] = useState(initialItems)
   const [coupon, setCoupon] = useState('')
 
@@ -61,7 +63,7 @@ const Cart = () => {
       {/* ═══════════════ DESKTOP BREADCRUMB ═══════════════ */}
       <div
         className="hidden md:flex items-center w-full"
-        style={{ backgroundColor: '#0A0F1C', height: '44px', padding: '0 80px', gap: '8px' }}
+        style={{ backgroundColor: '#0A0F1C', height: '44px', padding: `0 ${sidePadding}`, gap: '8px' }}
       >
         <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>
           Inicio
@@ -235,7 +237,7 @@ const Cart = () => {
       </div>
 
       {/* ═══════════════ DESKTOP CONTENT ═══════════════ */}
-      <div className="hidden md:flex w-full" style={{ padding: '40px 80px', gap: '32px' }}>
+      <div className="hidden md:flex w-full" style={{ padding: `40px ${sidePadding}`, gap: '32px' }}>
 
         {/* ── Left column ── */}
         <div className="flex flex-col" style={{ flex: 1, gap: '20px' }}>
