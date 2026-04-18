@@ -77,13 +77,8 @@ const Navbar = ({ cartCount = 0 }) => {
         ) : (
           /* ── Mobile normal mode ── */
           <>
-            <Link to="/" className="flex flex-col no-underline" style={{ gap: '0' }}>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', letterSpacing: '1px' }}>
-                SHARKWARE
-              </span>
-              <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '7px', fontWeight: '700', letterSpacing: '2px', marginTop: '-2px' }}>
-                GAMING
-              </span>
+            <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+              <img src="/images/logo.png" alt="Sharkware Gaming" style={{ height: '44px', width: 'auto', display: 'block' }} />
             </Link>
 
             <div className="flex-1" />
@@ -159,13 +154,8 @@ const Navbar = ({ cartCount = 0 }) => {
         className="hidden md:flex items-center w-full"
         style={{ backgroundColor: '#060810', height: '70px', padding: `0 ${sidePadding}`, gap: '40px', position: 'sticky', top: 0, zIndex: 50 }}
       >
-        <Link to="/" className="flex flex-col no-underline">
-          <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '700', letterSpacing: '1px' }}>
-            SHARKWARE
-          </span>
-          <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
-            GAMING
-          </span>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="/images/logo.png" alt="Sharkware Gaming" style={{ height: '54px', width: 'auto', display: 'block' }} />
         </Link>
 
         <div className="flex-1" />
