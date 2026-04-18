@@ -19,9 +19,16 @@ const NB_FILTER_MAP = {
   'Ryzen 9': (p) => p.spec.includes('Ryzen 9'),
 }
 
+const SORT_OPTIONS = [
+  { value: 'relevance', label: 'Relevancia' },
+  { value: 'price_asc', label: 'Precio: menor a mayor' },
+  { value: 'price_desc', label: 'Precio: mayor a menor' },
+]
+
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState('all')
   const [activeNbFilter, setActiveNbFilter] = useState('Todos')
+  const [sortOrder, setSortOrder] = useState('relevance')
   const [hoveredCategory, setHoveredCategory] = useState(null)
   const [hoveredNbFilter, setHoveredNbFilter] = useState(null)
   const [heroBtnHovered, setHeroBtnHovered] = useState(false)
@@ -32,6 +39,14 @@ const Home = () => {
   const filteredByCategory = activeCategory === 'all'
     ? null
     : products.filter((p) => p.category_id === activeCategory && p.active)
+
+  const sortedFilteredByCategory = filteredByCategory
+    ? [...filteredByCategory].sort((a, b) => {
+        if (sortOrder === 'price_asc') return a.price_ars - b.price_ars
+        if (sortOrder === 'price_desc') return b.price_ars - a.price_ars
+        return 0
+      })
+    : null
 
   const filteredNotebooks = activeNbFilter === 'Todos'
     ? notebooksList
@@ -230,16 +245,37 @@ const Home = () => {
         <>
           {/* Desktop — categoría filtrada */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
-              {categories.find((c) => c.id === activeCategory)?.label}
-            </span>
-            {filteredByCategory.length === 0 ? (
+            <div className="flex items-center w-full">
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
+                {categories.find((c) => c.id === activeCategory)?.label}
+              </span>
+              <select
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value)}
+                style={{
+                  backgroundColor: '#1E2232',
+                  border: '1px solid #1B2333',
+                  borderRadius: '8px',
+                  padding: '7px 12px',
+                  color: '#AAB3C5',
+                  fontFamily: 'Inter',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  outline: 'none',
+                }}
+              >
+                {SORT_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+            </div>
+            {sortedFilteredByCategory.length === 0 ? (
               <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>
                 No hay productos en esta categoría.
               </span>
             ) : (
               <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
-                {filteredByCategory.map((p) => (
+                {sortedFilteredByCategory.map((p) => (
                   <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                     <ProductCard {...p} imgHeight={210} />
                   </div>
@@ -250,16 +286,37 @@ const Home = () => {
 
           {/* Mobile — categoría filtrada */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
-              {categories.find((c) => c.id === activeCategory)?.label}
-            </span>
-            {filteredByCategory.length === 0 ? (
+            <div className="flex items-center w-full">
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
+                {categories.find((c) => c.id === activeCategory)?.label}
+              </span>
+              <select
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value)}
+                style={{
+                  backgroundColor: '#1E2232',
+                  border: '1px solid #1B2333',
+                  borderRadius: '8px',
+                  padding: '6px 10px',
+                  color: '#AAB3C5',
+                  fontFamily: 'Inter',
+                  fontSize: '12px',
+                  cursor: 'pointer',
+                  outline: 'none',
+                }}
+              >
+                {SORT_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+            </div>
+            {sortedFilteredByCategory.length === 0 ? (
               <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>
                 No hay productos en esta categoría.
               </span>
             ) : (
               <div className="grid grid-cols-2" style={{ gap: '10px' }}>
-                {filteredByCategory.map((p) => (
+                {sortedFilteredByCategory.map((p) => (
                   <ProductCard key={p.id} {...p} mobile />
                 ))}
               </div>
