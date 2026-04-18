@@ -150,7 +150,7 @@ const ProductDetail = () => {
       {/* ═══ DESKTOP BREADCRUMB ═══ */}
       <div
         className="hidden md:flex items-center w-full"
-        style={{ backgroundColor: '#0A0F1C', height: '44px', padding: '0 80px', gap: '8px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}
+        style={{ backgroundColor: '#0A0F1C', height: '44px', padding: `0 ${sidePadding}`, gap: '8px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}
       >
         <Link to="/" className="no-underline" style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>
           Inicio
