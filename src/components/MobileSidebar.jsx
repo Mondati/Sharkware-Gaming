@@ -1,21 +1,12 @@
 import { useState, useEffect } from 'react'
 import {
-  X, Search, User, Package, Headphones, ChevronRight,
-  Monitor, Cpu, Zap, MemoryStick, HardDrive, Keyboard, Armchair,
+  X, Search, User, Package, Headphones, ChevronRight, Laptop,
+  Monitor, Cpu, Zap, MemoryStick, HardDrive, Keyboard,
 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
+import { categories } from '../data/categories'
 
-const categories = [
-  { id: 'notebooks',  label: 'Notebooks Gaming',      icon: Monitor    },
-  { id: 'cpu',        label: 'Procesadores',           icon: Cpu        },
-  { id: 'monitors',   label: 'Monitores Gaming',       icon: Monitor    },
-  { id: 'gpu',        label: 'GPU / Placas de Video',  icon: Zap        },
-  { id: 'ram',        label: 'Memorias RAM',           icon: MemoryStick },
-  { id: 'storage',    label: 'Almacenamiento SSD',     icon: HardDrive  },
-  { id: 'audio',      label: 'Auriculares & Audio',    icon: Headphones },
-  { id: 'peripherals',label: 'Teclados & Mouse',       icon: Keyboard   },
-  { id: 'chairs',     label: 'Sillas Gamer',           icon: Armchair   },
-]
+const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard }
 
 const accountLinks = [
   { icon: User,       label: 'Mi cuenta',   to: '/login' },
@@ -136,10 +127,12 @@ const MobileSidebar = ({ isOpen, onClose }) => {
               CATEGORÍAS
             </span>
           </div>
-          {categories.map(({ id, label, icon: Icon }) => (
+          {categories.filter((c) => c.id !== 'all').map(({ id, label, icon }) => {
+            const Icon = ICON_MAP[icon] ?? null
+            return (
             <Link
               key={id}
-              to="/"
+              to={`/?cat=${id}`}
               className="flex items-center no-underline"
               onClick={onClose}
               onMouseEnter={() => setHoveredItem(id)}
@@ -170,7 +163,8 @@ const MobileSidebar = ({ isOpen, onClose }) => {
               </span>
               <ChevronRight size={15} color="#454E64" />
             </Link>
-          ))}
+            )
+          })}
         </div>
 
         {/* Account links */}
