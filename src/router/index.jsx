@@ -13,7 +13,8 @@ import ProtectedRoute from '../components/ProtectedRoute'
 
 const SearchResultsRoute = () => {
   const location = useLocation()
-  return <SearchResults key={location.search} />
+  const q = new URLSearchParams(location.search).get('q') ?? ''
+  return <SearchResults key={q} />
 }
 
 const router = createBrowserRouter([
