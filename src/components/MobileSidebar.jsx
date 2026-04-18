@@ -3,7 +3,7 @@ import {
   X, Search, User, Package, Headphones, ChevronRight,
   Monitor, Cpu, Zap, MemoryStick, HardDrive, Keyboard, Armchair,
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const categories = [
   { id: 'notebooks',  label: 'Notebooks Gaming',      icon: Monitor    },
@@ -25,6 +25,17 @@ const accountLinks = [
 
 const MobileSidebar = ({ isOpen, onClose }) => {
   const [hoveredItem, setHoveredItem] = useState(null)
+  const [searchTerm, setSearchTerm] = useState('')
+  const navigate = useNavigate()
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    const q = searchTerm.trim()
+    if (!q) return
+    navigate(`/search?q=${encodeURIComponent(q)}`)
+    setSearchTerm('')
+    onClose()
+  }
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
@@ -84,7 +95,8 @@ const MobileSidebar = ({ isOpen, onClose }) => {
         </div>
 
         {/* Search */}
-        <div
+        <form
+          onSubmit={handleSearch}
           className="flex items-center"
           style={{
             backgroundColor: '#0E1424',
@@ -93,11 +105,29 @@ const MobileSidebar = ({ isOpen, onClose }) => {
             gap: '10px',
           }}
         >
-          <Search size={18} color="#8890A4" />
-          <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '14px' }}>
-            Buscar productos...
-          </span>
-        </div>
+          <button
+            type="submit"
+            style={{ background: 'transparent', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+          >
+            <Search size={18} color="#8890A4" />
+          </button>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Buscar productos..."
+            style={{
+              background: 'transparent',
+              border: 'none',
+              outline: 'none',
+              color: '#F5F7FA',
+              fontFamily: 'Inter',
+              fontSize: '14px',
+              flex: 1,
+              minWidth: 0,
+            }}
+          />
+        </form>
 
         {/* Categories */}
         <div className="flex flex-col" style={{ padding: '12px 0' }}>

@@ -6,6 +6,7 @@ import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
 import { categories } from '../data/categories'
 import { products, newProducts, notebooksList, monitorsList } from '../data/products'
+import { SORT_OPTIONS } from '../data/sortOptions'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 
 const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard }
@@ -18,12 +19,6 @@ const NB_FILTER_MAP = {
   'Ryzen 7': (p) => p.spec.includes('Ryzen 7'),
   'Ryzen 9': (p) => p.spec.includes('Ryzen 9'),
 }
-
-const SORT_OPTIONS = [
-  { value: 'relevance', label: 'Relevancia' },
-  { value: 'price_asc', label: 'Precio: menor a mayor' },
-  { value: 'price_desc', label: 'Precio: mayor a menor' },
-]
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState('all')
