@@ -20,8 +20,10 @@ const FilterPanel = ({
   const [localMin, setLocalMin] = useState(minParam)
   const [localMax, setLocalMax] = useState(maxParam)
 
-  useEffect(() => { setLocalMin(minParam) }, [minParam])
-  useEffect(() => { setLocalMax(maxParam) }, [maxParam])
+  useEffect(() => {
+    setLocalMin(minParam)
+    setLocalMax(maxParam)
+  }, [minParam, maxParam])
 
   const priceRangeInvalid =
     localMin !== '' && localMax !== '' && Number(localMin) > Number(localMax)

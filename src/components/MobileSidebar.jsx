@@ -27,6 +27,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
       {/* Overlay */}
       <div
         className="fixed inset-0 z-40"
+        aria-hidden="true"
         onClick={onClose}
         style={{
           backgroundColor: 'rgba(0,0,0,0.6)',

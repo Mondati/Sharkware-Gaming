@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { Link } from 'react-router-dom'
 import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard } from 'lucide-react'
 
@@ -258,4 +258,4 @@ const ProductCard = ({
   )
 }
 
-export default ProductCard
+export default memo(ProductCard)

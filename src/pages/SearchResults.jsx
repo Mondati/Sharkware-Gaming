@@ -12,6 +12,85 @@ import { useWindowWidth } from '../hooks/useWindowWidth'
 
 const FILTER_DEFAULTS = { category: 'all', brand: '', minPrice: '', maxPrice: '', sort: 'relevance' }
 
+const EmptyState = ({ isMobile, hasActiveFilters, onClear }) => (
+  <div
+    className="flex flex-col items-center justify-center"
+    style={{ gap: '16px', padding: isMobile ? '60px 0' : '80px 0' }}
+  >
+    <SearchX size={isMobile ? 44 : 52} color="#454E64" />
+    <div className="flex flex-col items-center" style={{ gap: '8px' }}>
+      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: isMobile ? '16px' : '18px', fontWeight: '700', textAlign: 'center' }}>
+        {hasActiveFilters
+          ? 'No se encontraron productos con los filtros seleccionados'
+          : 'No se encontraron productos'}
+      </span>
+      <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: isMobile ? '13px' : '14px', textAlign: 'center' }}>
+        {hasActiveFilters
+          ? 'Probá cambiando o eliminando los filtros'
+          : 'Probá con otros términos de búsqueda'}
+      </span>
+    </div>
+    {hasActiveFilters ? (
+      <button
+        onClick={onClear}
+        style={{
+          backgroundColor: '#00C8FF',
+          color: '#060810',
+          fontFamily: 'Inter',
+          fontSize: '14px',
+          fontWeight: '700',
+          borderRadius: '8px',
+          padding: '12px 24px',
+          border: 'none',
+          cursor: 'pointer',
+          marginTop: '8px',
+        }}
+      >
+        Limpiar filtros
+      </button>
+    ) : (
+      <Link
+        to="/"
+        style={{
+          backgroundColor: '#00C8FF',
+          color: '#060810',
+          fontFamily: 'Inter',
+          fontSize: '14px',
+          fontWeight: '700',
+          borderRadius: '8px',
+          padding: '12px 24px',
+          textDecoration: 'none',
+          marginTop: '8px',
+        }}
+      >
+        Ver catálogo
+      </Link>
+    )}
+  </div>
+)
+
+const SortSelect = ({ isMobile, sortOrder, onChange }) => (
+  <select
+    value={sortOrder}
+    onChange={e => onChange('sort', e.target.value)}
+    style={{
+      backgroundColor: '#1E2232',
+      border: '1px solid #1B2333',
+      borderRadius: '8px',
+      padding: isMobile ? '6px 10px' : '7px 12px',
+      color: '#AAB3C5',
+      fontFamily: 'Inter',
+      fontSize: isMobile ? '12px' : '13px',
+      cursor: 'pointer',
+      outline: 'none',
+    }}
+  >
+    {SORT_OPTIONS.map(o => (
+      <option key={o.value} value={o.value}>{o.label}</option>
+    ))}
+  </select>
+)
+
 const SearchResults = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const q          = searchParams.get('q') ?? ''
@@ -123,63 +202,6 @@ const SearchResults = () => {
     </div>
   )
 
-  const emptyState = (isMobile) => (
-    <div
-      className="flex flex-col items-center justify-center"
-      style={{ gap: '16px', padding: isMobile ? '60px 0' : '80px 0' }}
-    >
-      <SearchX size={isMobile ? 44 : 52} color="#454E64" />
-      <div className="flex flex-col items-center" style={{ gap: '8px' }}>
-        <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: isMobile ? '16px' : '18px', fontWeight: '700', textAlign: 'center' }}>
-          {hasActiveFilters
-            ? 'No se encontraron productos con los filtros seleccionados'
-            : 'No se encontraron productos'}
-        </span>
-        <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: isMobile ? '13px' : '14px', textAlign: 'center' }}>
-          {hasActiveFilters
-            ? 'Probá cambiando o eliminando los filtros'
-            : 'Probá con otros términos de búsqueda'}
-        </span>
-      </div>
-      {hasActiveFilters ? (
-        <button
-          onClick={clearFilters}
-          style={{
-            backgroundColor: '#00C8FF',
-            color: '#060810',
-            fontFamily: 'Inter',
-            fontSize: '14px',
-            fontWeight: '700',
-            borderRadius: '8px',
-            padding: '12px 24px',
-            border: 'none',
-            cursor: 'pointer',
-            marginTop: '8px',
-          }}
-        >
-          Limpiar filtros
-        </button>
-      ) : (
-        <Link
-          to="/"
-          style={{
-            backgroundColor: '#00C8FF',
-            color: '#060810',
-            fontFamily: 'Inter',
-            fontSize: '14px',
-            fontWeight: '700',
-            borderRadius: '8px',
-            padding: '12px 24px',
-            textDecoration: 'none',
-            marginTop: '8px',
-          }}
-        >
-          Ver catálogo
-        </Link>
-      )}
-    </div>
-  )
-
   const filterPanelProps = {
     availableBrands,
     catalogMin,
@@ -192,28 +214,6 @@ const SearchResults = () => {
     onFilterChange: updateFilter,
     onClearFilters: clearFilters,
   }
-
-  const sortSelect = (isMobile) => (
-    <select
-      value={sortOrder}
-      onChange={e => updateFilter('sort', e.target.value)}
-      style={{
-        backgroundColor: '#1E2232',
-        border: '1px solid #1B2333',
-        borderRadius: '8px',
-        padding: isMobile ? '6px 10px' : '7px 12px',
-        color: '#AAB3C5',
-        fontFamily: 'Inter',
-        fontSize: isMobile ? '12px' : '13px',
-        cursor: 'pointer',
-        outline: 'none',
-      }}
-    >
-      {SORT_OPTIONS.map(o => (
-        <option key={o.value} value={o.value}>{o.label}</option>
-      ))}
-    </select>
-  )
 
   return (
     <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#0A0C14' }}>
@@ -233,7 +233,7 @@ const SearchResults = () => {
               {countLabel}
             </span>
           </div>
-          {sortSelect(false)}
+          <SortSelect isMobile={false} sortOrder={sortOrder} onChange={updateFilter} />
         </div>
       </section>
 
@@ -251,7 +251,7 @@ const SearchResults = () => {
               {countLabel}
             </span>
           </div>
-          {sortSelect(true)}
+          <SortSelect isMobile sortOrder={sortOrder} onChange={updateFilter} />
         </div>
       </section>
 
@@ -264,7 +264,7 @@ const SearchResults = () => {
         <div className="flex flex-col flex-1" style={{ minWidth: 0, gap: '16px' }}>
           {chips}
           {sorted.length === 0
-            ? emptyState(false)
+            ? <EmptyState isMobile={false} hasActiveFilters={hasActiveFilters} onClear={clearFilters} />
             : (
               <div
                 className="flex sw-scroll"
@@ -289,7 +289,7 @@ const SearchResults = () => {
         <FilterPanel {...filterPanelProps} />
         {chips}
         {sorted.length === 0
-          ? emptyState(true)
+          ? <EmptyState isMobile hasActiveFilters={hasActiveFilters} onClear={clearFilters} />
           : (
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
               {sorted.map(p => (
