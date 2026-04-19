@@ -135,14 +135,16 @@ const ProductDetail = () => {
         </div>
         {displayGallery.length > 1 && (
           <div className="flex items-center justify-center" style={{ gap: '6px', position: 'absolute', bottom: '12px', width: '100%' }}>
-            {displayGallery.map((_, i) => (
-              <div
-                key={i}
+            {displayGallery.map((url, i) => (
+              <button
+                key={url}
                 onClick={() => setActiveThumb(i)}
+                aria-label={`Imagen ${i + 1}`}
+                className="border-none cursor-pointer p-0"
                 style={{
                   width: '8px', height: '8px', borderRadius: '50%',
                   backgroundColor: activeThumb === i ? '#00C8FF' : '#1B2333',
-                  flexShrink: 0, cursor: 'pointer',
+                  flexShrink: 0,
                 }}
               />
             ))}
@@ -196,15 +198,16 @@ const ProductDetail = () => {
           </div>
           <div className="flex" style={{ gap: '10px' }}>
             {displayGallery.map((url, i) => (
-              <div
-                key={i}
+              <button
+                key={url}
                 onClick={() => setActiveThumb(i)}
+                aria-label={`Ver imagen ${i + 1}`}
+                className="border-none cursor-pointer p-0"
                 style={{
                   backgroundColor: '#0E1424',
                   borderRadius: '8px',
                   height: '68px',
                   width: '68px',
-                  cursor: 'pointer',
                   border: activeThumb === i ? '2px solid #24A8F5' : '1px solid rgba(255,255,255,0.06)',
                   flexShrink: 0,
                   overflow: 'hidden',
@@ -212,7 +215,7 @@ const ProductDetail = () => {
                 }}
               >
                 <ImgOrPlaceholder src={url} brand={product.brand} name="" />
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -240,8 +243,8 @@ const ProductDetail = () => {
 
           {/* Rating */}
           <div className="flex items-center" style={{ gap: '5px', marginBottom: '20px' }}>
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} size={13} color="#F59E0B" fill="#F59E0B" />
+            {[1,2,3,4,5].map((n) => (
+              <Star key={n} size={13} color="#F59E0B" fill="#F59E0B" />
             ))}
             <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', marginLeft: '4px' }}>4.8</span>
             <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px' }}>(127 reseñas)</span>

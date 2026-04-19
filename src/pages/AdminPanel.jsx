@@ -23,6 +23,171 @@ const CATEGORIES = ['GPU', 'CPU', 'Monitor', 'RAM', 'Placa Madre', 'Almacenamien
 
 const emptyForm = { nombre: '', marca: '', desc: '', espec: '', precio: '', stock: '', cat: '', activo: true }
 
+const MobileModalBody = ({ isEdit, product, onClose, onSave, form, onChange, onToggleActivo }) => (
+  <div className="flex md:hidden flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
+    {/* Header */}
+    <div
+      className="flex items-center justify-between w-full"
+      style={{ height: '56px', padding: '0 16px', backgroundColor: '#0A0F1C', borderBottom: '1px solid #1B2333', flexShrink: 0 }}
+    >
+      <button
+        onClick={onClose}
+        className="flex items-center justify-center border-none cursor-pointer"
+        style={{ width: '36px', height: '36px', backgroundColor: '#1E2232', borderRadius: '8px' }}
+      >
+        <X size={18} color="#F5F7FA" />
+      </button>
+      <div className="flex flex-col items-center">
+        <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+          {isEdit ? 'Editar Producto' : 'Agregar Producto'}
+        </span>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px' }}>
+          {isEdit ? product?.name : 'Nuevo producto'}
+        </span>
+      </div>
+      <div style={{ width: '36px' }} />
+    </div>
+
+    {/* Scrollable form */}
+    <div className="flex flex-col" style={{ flex: 1, padding: '16px', gap: '14px', overflowY: 'auto', paddingBottom: '80px' }}>
+
+      {/* Image upload */}
+      <div
+        className="flex flex-col items-center justify-center"
+        style={{ height: '140px', borderRadius: '12px', gap: '8px', border: `1px dashed ${isEdit ? '#24A8F5' : '#1B2333'}`, backgroundColor: isEdit ? '#0D2035' : '#0E1424' }}
+      >
+        {isEdit ? <Image size={32} color="#24A8F5" /> : <Upload size={28} color="#AAB3C5" />}
+        <span style={{ color: isEdit ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '500' }}>
+          {isEdit ? 'Imagen actual cargada' : 'Subí una imagen del producto'}
+        </span>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px' }}>JPG, PNG, WEBP · Máx 5MB</span>
+      </div>
+
+      {/* Nombre + Marca */}
+      <div className="flex" style={{ gap: '10px' }}>
+        <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Nombre del producto *</span>
+          <input
+            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
+            value={form.nombre} onChange={onChange('nombre')} placeholder="Ej: RTX 5090 24GB GDDR7"
+          />
+        </div>
+        <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Marca *</span>
+          <input
+            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
+            value={form.marca} onChange={onChange('marca')} placeholder="Ej: NVIDIA"
+          />
+        </div>
+      </div>
+
+      {/* Descripción */}
+      <div className="flex flex-col" style={{ gap: '6px' }}>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Descripción</span>
+        <textarea
+          rows={3}
+          style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none', resize: 'none' }}
+          value={form.desc} onChange={onChange('desc')} placeholder="Describí el producto brevemente..."
+        />
+      </div>
+
+      {/* Especificaciones */}
+      <div className="flex flex-col" style={{ gap: '6px' }}>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Especificaciones técnicas</span>
+        <textarea
+          rows={3}
+          style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none', resize: 'none' }}
+          value={form.espec} onChange={onChange('espec')} placeholder="Ej: GPU Nativa 16384 CUDA Cores..."
+        />
+      </div>
+
+      {/* Precio + Stock */}
+      <div className="flex" style={{ gap: '10px' }}>
+        <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Precio (USD) *</span>
+          <input
+            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
+            value={form.precio} onChange={onChange('precio')} placeholder="0.00"
+          />
+        </div>
+        <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Stock *</span>
+          <input
+            type="number"
+            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
+            value={form.stock} onChange={onChange('stock')} placeholder="0"
+          />
+        </div>
+      </div>
+
+      {/* Categoría */}
+      <div className="flex flex-col" style={{ gap: '6px' }}>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Categoría *</span>
+        <div
+          className="flex items-center justify-between"
+          style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', cursor: 'pointer' }}
+        >
+          <select
+            value={form.cat}
+            onChange={onChange('cat')}
+            style={{ background: 'none', border: 'none', outline: 'none', color: form.cat ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', width: '100%', cursor: 'pointer', appearance: 'none' }}
+          >
+            <option value="" disabled>Seleccioná una categoría</option>
+            {CATEGORIES.map(c => <option key={c} value={c} style={{ backgroundColor: '#0E1424' }}>{c}</option>)}
+          </select>
+          <ChevronDown size={14} color="#AAB3C5" style={{ pointerEvents: 'none', flexShrink: 0 }} />
+        </div>
+      </div>
+
+      {/* Estado toggle */}
+      <div className="flex items-center justify-between" style={{ padding: '4px 0' }}>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>Estado del producto</span>
+        <div className="flex flex-col items-end" style={{ gap: '3px' }}>
+          <button
+            onClick={onToggleActivo}
+            className="flex items-center border-none cursor-pointer"
+            style={{
+              width: '44px', height: '24px', borderRadius: '12px',
+              backgroundColor: form.activo ? '#24A8F5' : '#1B2333',
+              padding: '0 3px',
+              justifyContent: form.activo ? 'flex-end' : 'flex-start',
+            }}
+          >
+            <div style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#FFFFFF' }} />
+          </button>
+          <span style={{ color: form.activo ? '#22C55E' : '#AAB3C5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '600' }}>
+            {form.activo ? 'Activo' : 'Inactivo'}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    {/* Fixed footer */}
+    <div
+      className="flex items-center justify-between w-full"
+      style={{ position: 'fixed', bottom: '64px', left: 0, right: 0, padding: '12px 16px', gap: '10px', backgroundColor: '#0E1424', borderTop: '1px solid #1B2333', zIndex: 55 }}
+    >
+      <button
+        onClick={onClose}
+        className="flex items-center justify-center flex-1 border-none cursor-pointer"
+        style={{ backgroundColor: '#1B2333', borderRadius: '10px', height: '46px' }}
+      >
+        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>Cancelar</span>
+      </button>
+      <button
+        onClick={() => { onSave(form); onClose() }}
+        className="flex items-center justify-center flex-1 border-none cursor-pointer"
+        style={{ backgroundColor: '#24A8F5', borderRadius: '10px', height: '46px', gap: '8px' }}
+      >
+        <Save size={16} color="#FFFFFF" />
+        <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+          {isEdit ? 'Guardar Cambios' : 'Guardar Producto'}
+        </span>
+      </button>
+    </div>
+  </div>
+)
+
 const ProductModal = ({ mode, product, onClose, onSave }) => {
   const isEdit = mode === 'edit'
   const [form, setForm] = useState(
@@ -45,173 +210,6 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
   }
   const labelStyle = { color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '500' }
 
-  /* ──────────────── MOBILE VERSION (full-screen) ──────────────── */
-
-  const MobileModalBody = () => (
-    <div className="flex md:hidden flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
-      {/* Header */}
-      <div
-        className="flex items-center justify-between w-full"
-        style={{ height: '56px', padding: '0 16px', backgroundColor: '#0A0F1C', borderBottom: '1px solid #1B2333', flexShrink: 0 }}
-      >
-        <button
-          onClick={onClose}
-          className="flex items-center justify-center border-none cursor-pointer"
-          style={{ width: '36px', height: '36px', backgroundColor: '#1E2232', borderRadius: '8px' }}
-        >
-          <X size={18} color="#F5F7FA" />
-        </button>
-        <div className="flex flex-col items-center">
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
-            {isEdit ? 'Editar Producto' : 'Agregar Producto'}
-          </span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px' }}>
-            {isEdit ? product?.name : 'Nuevo producto'}
-          </span>
-        </div>
-        <div style={{ width: '36px' }} />
-      </div>
-
-      {/* Scrollable form */}
-      <div className="flex flex-col" style={{ flex: 1, padding: '16px', gap: '14px', overflowY: 'auto', paddingBottom: '80px' }}>
-
-        {/* Image upload */}
-        <div
-          className="flex flex-col items-center justify-center"
-          style={{ height: '140px', borderRadius: '12px', gap: '8px', border: `1px dashed ${isEdit ? '#24A8F5' : '#1B2333'}`, backgroundColor: isEdit ? '#0D2035' : '#0E1424' }}
-        >
-          {isEdit ? <Image size={32} color="#24A8F5" /> : <Upload size={28} color="#AAB3C5" />}
-          <span style={{ color: isEdit ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '500' }}>
-            {isEdit ? 'Imagen actual cargada' : 'Subí una imagen del producto'}
-          </span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px' }}>JPG, PNG, WEBP · Máx 5MB</span>
-        </div>
-
-        {/* Nombre + Marca */}
-        <div className="flex" style={{ gap: '10px' }}>
-          <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Nombre del producto *</span>
-            <input
-              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
-              value={form.nombre} onChange={set('nombre')} placeholder="Ej: RTX 5090 24GB GDDR7"
-            />
-          </div>
-          <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Marca *</span>
-            <input
-              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
-              value={form.marca} onChange={set('marca')} placeholder="Ej: NVIDIA"
-            />
-          </div>
-        </div>
-
-        {/* Descripción */}
-        <div className="flex flex-col" style={{ gap: '6px' }}>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Descripción</span>
-          <textarea
-            rows={3}
-            style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none', resize: 'none' }}
-            value={form.desc} onChange={set('desc')} placeholder="Describí el producto brevemente..."
-          />
-        </div>
-
-        {/* Especificaciones */}
-        <div className="flex flex-col" style={{ gap: '6px' }}>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Especificaciones técnicas</span>
-          <textarea
-            rows={3}
-            style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none', resize: 'none' }}
-            value={form.espec} onChange={set('espec')} placeholder="Ej: GPU Nativa 16384 CUDA Cores..."
-          />
-        </div>
-
-        {/* Precio + Stock */}
-        <div className="flex" style={{ gap: '10px' }}>
-          <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Precio (USD) *</span>
-            <input
-              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
-              value={form.precio} onChange={set('precio')} placeholder="0.00"
-            />
-          </div>
-          <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Stock *</span>
-            <input
-              type="number"
-              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
-              value={form.stock} onChange={set('stock')} placeholder="0"
-            />
-          </div>
-        </div>
-
-        {/* Categoría */}
-        <div className="flex flex-col" style={{ gap: '6px' }}>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Categoría *</span>
-          <div
-            className="flex items-center justify-between"
-            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', cursor: 'pointer' }}
-          >
-            <select
-              value={form.cat}
-              onChange={set('cat')}
-              style={{ background: 'none', border: 'none', outline: 'none', color: form.cat ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', width: '100%', cursor: 'pointer', appearance: 'none' }}
-            >
-              <option value="" disabled>Seleccioná una categoría</option>
-              {CATEGORIES.map(c => <option key={c} value={c} style={{ backgroundColor: '#0E1424' }}>{c}</option>)}
-            </select>
-            <ChevronDown size={14} color="#AAB3C5" style={{ pointerEvents: 'none', flexShrink: 0 }} />
-          </div>
-        </div>
-
-        {/* Estado toggle */}
-        <div className="flex items-center justify-between" style={{ padding: '4px 0' }}>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>Estado del producto</span>
-          <div className="flex flex-col items-end" style={{ gap: '3px' }}>
-            <button
-              onClick={() => setForm(f => ({ ...f, activo: !f.activo }))}
-              className="flex items-center border-none cursor-pointer"
-              style={{
-                width: '44px', height: '24px', borderRadius: '12px',
-                backgroundColor: form.activo ? '#24A8F5' : '#1B2333',
-                padding: '0 3px',
-                justifyContent: form.activo ? 'flex-end' : 'flex-start',
-              }}
-            >
-              <div style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#FFFFFF' }} />
-            </button>
-            <span style={{ color: form.activo ? '#22C55E' : '#AAB3C5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '600' }}>
-              {form.activo ? 'Activo' : 'Inactivo'}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Fixed footer */}
-      <div
-        className="flex items-center justify-between w-full"
-        style={{ position: 'fixed', bottom: '64px', left: 0, right: 0, padding: '12px 16px', gap: '10px', backgroundColor: '#0E1424', borderTop: '1px solid #1B2333', zIndex: 55 }}
-      >
-        <button
-          onClick={onClose}
-          className="flex items-center justify-center flex-1 border-none cursor-pointer"
-          style={{ backgroundColor: '#1B2333', borderRadius: '10px', height: '46px' }}
-        >
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>Cancelar</span>
-        </button>
-        <button
-          onClick={() => { onSave(form); onClose() }}
-          className="flex items-center justify-center flex-1 border-none cursor-pointer"
-          style={{ backgroundColor: '#24A8F5', borderRadius: '10px', height: '46px', gap: '8px' }}
-        >
-          <Save size={16} color="#FFFFFF" />
-          <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
-            {isEdit ? 'Guardar Cambios' : 'Guardar Producto'}
-          </span>
-        </button>
-      </div>
-    </div>
-  )
-
   return (
     <>
       {/* ── MOBILE: full-screen overlay ── */}
@@ -219,17 +217,29 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
         className="flex md:hidden items-start justify-center"
         style={{ position: 'fixed', inset: 0, backgroundColor: '#070B16', zIndex: 60 }}
       >
-        <MobileModalBody />
+        <MobileModalBody
+          isEdit={isEdit}
+          product={product}
+          onClose={onClose}
+          onSave={onSave}
+          form={form}
+          onChange={set}
+          onToggleActivo={() => setForm(f => ({ ...f, activo: !f.activo }))}
+        />
       </div>
 
       {/* ── DESKTOP: modal overlay ── */}
       <div
         className="hidden md:flex items-start justify-center"
-      style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(7,6,16,0.97)', zIndex: 50, paddingTop: '85px' }}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
-    >
+        aria-hidden="true"
+        style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(7,6,16,0.97)', zIndex: 50, paddingTop: '85px' }}
+        onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
+      >
       {/* Modal */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Producto"
         className="flex flex-col"
         style={{ width: '820px', height: '730px', backgroundColor: '#0E1424', borderRadius: '12px', border: '1px solid #1B2333', overflow: 'hidden' }}
         onClick={(e) => e.stopPropagation()}
@@ -811,14 +821,14 @@ const AdminPanel = () => {
               </span>
               <div className="flex items-center" style={{ gap: '4px' }}>
                 {[
-                  { label: <ChevronLeft size={14} />, active: false },
-                  { label: '1', active: true },
-                  { label: '2', active: false },
-                  { label: '3', active: false },
-                  { label: <ChevronRight size={14} />, active: false },
-                ].map((btn, i) => (
+                  { id: 'prev', label: <ChevronLeft size={14} />, active: false },
+                  { id: '1',    label: '1', active: true },
+                  { id: '2',    label: '2', active: false },
+                  { id: '3',    label: '3', active: false },
+                  { id: 'next', label: <ChevronRight size={14} />, active: false },
+                ].map((btn) => (
                   <div
-                    key={i}
+                    key={btn.id}
                     className="flex items-center justify-center cursor-pointer"
                     style={{ width: '28px', height: '28px', backgroundColor: btn.active ? '#24A8F5' : '#1B2333', borderRadius: '4px', color: '#F5F7FA' }}
                   >
