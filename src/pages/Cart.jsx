@@ -85,59 +85,63 @@ const Cart = () => {
               className="flex items-start"
               style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '14px', gap: '12px', border: '1px solid #1B2333' }}
             >
-              {/* Image */}
-              <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '80px', height: '80px', flexShrink: 0 }} />
-
-              {/* Info */}
-              <div className="flex flex-col flex-1" style={{ gap: '4px' }}>
-                <div className="flex items-start justify-between">
-                  <div className="flex flex-col" style={{ gap: '2px', flex: 1 }}>
-                    <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
-                      {item.brand}
-                    </span>
-                    <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', lineHeight: '1.3' }}>
-                      {item.name}
-                    </span>
-                    <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>
-                      {item.spec}
-                    </span>
-                  </div>
-                  {/* Delete */}
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="flex items-center justify-center border-none cursor-pointer"
-                    style={{ background: 'none', padding: '4px' }}
-                  >
-                    <Trash2 size={16} color="#EF4444" />
-                  </button>
-                </div>
-
-                {/* Price + Qty row */}
-                <div className="flex items-center justify-between" style={{ marginTop: '4px' }}>
-                  <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
-                    {fmt(item.price * item.qty)}
+              {/* Image + info → clickeable */}
+              <Link
+                to={`/product/${item.id}`}
+                className="flex items-start no-underline"
+                style={{ gap: '12px', flex: 1 }}
+              >
+                <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '80px', height: '80px', flexShrink: 0 }} />
+                <div className="flex flex-col" style={{ gap: '2px' }}>
+                  <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
+                    {item.brand}
                   </span>
-                  <div className="flex items-center" style={{ backgroundColor: '#070B16', borderRadius: '8px', overflow: 'hidden' }}>
-                    <button
-                      onClick={() => updateQty(item.id, -1)}
-                      className="flex items-center justify-center border-none cursor-pointer"
-                      style={{ width: '30px', height: '30px', background: 'none' }}
-                    >
-                      <Minus size={12} color="#AAB3C5" />
-                    </button>
-                    <div className="flex items-center justify-center" style={{ width: '32px', height: '30px' }}>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}>
-                        {item.qty}
-                      </span>
-                    </div>
-                    <button
-                      onClick={() => updateQty(item.id, 1)}
-                      className="flex items-center justify-center border-none cursor-pointer"
-                      style={{ width: '30px', height: '30px', backgroundColor: '#24A8F5' }}
-                    >
-                      <Plus size={12} color="#FFFFFF" />
-                    </button>
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', lineHeight: '1.3' }}>
+                    {item.name}
+                  </span>
+                  <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>
+                    {item.spec}
+                  </span>
+                </div>
+              </Link>
+
+              {/* Controls column */}
+              <div className="flex flex-col items-end" style={{ gap: '8px', flexShrink: 0 }}>
+                {/* Delete */}
+                <button
+                  onClick={() => removeItem(item.id)}
+                  className="flex items-center justify-center border-none cursor-pointer"
+                  style={{ background: 'none', padding: '4px' }}
+                >
+                  <Trash2 size={16} color="#EF4444" />
+                </button>
+
+                {/* Price */}
+                <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
+                  {fmt(item.price * item.qty)}
+                </span>
+
+                {/* Qty */}
+                <div className="flex items-center" style={{ backgroundColor: '#070B16', borderRadius: '8px', overflow: 'hidden' }}>
+                  <button
+                    onClick={() => updateQty(item.id, -1)}
+                    className="flex items-center justify-center border-none cursor-pointer"
+                    style={{ width: '30px', height: '30px', background: 'none' }}
+                  >
+                    <Minus size={12} color="#AAB3C5" />
+                  </button>
+                  <div className="flex items-center justify-center" style={{ width: '32px', height: '30px' }}>
+                    <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}>
+                      {item.qty}
+                    </span>
                   </div>
+                  <button
+                    onClick={() => updateQty(item.id, 1)}
+                    className="flex items-center justify-center border-none cursor-pointer"
+                    style={{ width: '30px', height: '30px', backgroundColor: '#24A8F5' }}
+                  >
+                    <Plus size={12} color="#FFFFFF" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -270,18 +274,25 @@ const Cart = () => {
                   <div style={{ backgroundColor: '#1B2333', height: '1px', width: '100%' }} />
                 )}
                 <div className="flex items-center" style={{ gap: '16px', width: '100%' }}>
-                  <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '90px', height: '90px', flexShrink: 0 }} />
-                  <div className="flex flex-col" style={{ flex: 1, gap: '4px' }}>
-                    <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
-                      {item.brand}
-                    </span>
-                    <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
-                      {item.name}
-                    </span>
-                    <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>
-                      {item.spec}
-                    </span>
-                  </div>
+                  {/* Image + info → clickeable */}
+                  <Link
+                    to={`/product/${item.id}`}
+                    className="flex items-center no-underline"
+                    style={{ flex: 1, gap: '16px' }}
+                  >
+                    <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '90px', height: '90px', flexShrink: 0 }} />
+                    <div className="flex flex-col" style={{ gap: '4px' }}>
+                      <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
+                        {item.brand}
+                      </span>
+                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+                        {item.name}
+                      </span>
+                      <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>
+                        {item.spec}
+                      </span>
+                    </div>
+                  </Link>
                   <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800', flexShrink: 0 }}>
                     {fmt(item.price * item.qty)}
                   </span>

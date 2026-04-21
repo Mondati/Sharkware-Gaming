@@ -307,7 +307,7 @@ const SearchResults = () => {
               <>
                 <div
                   className="flex sw-scroll"
-                  style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}
+                  style={{ gap: '16px', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}
                 >
                   {paginated.map(p => (
                     <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>

@@ -270,7 +270,7 @@ const Home = () => {
                 No hay productos en esta categoría.
               </span>
             ) : (
-              <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
+              <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
                 {sortedFilteredByCategory.map((p) => (
                   <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                     <ProductCard {...p} imgHeight={210} />
@@ -350,7 +350,7 @@ const Home = () => {
                 <ChevronRight size={12} />
               </Link>
             </div>
-            <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
+            <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
               {newProducts.map((p) => (
                 <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                   <ProductCard {...p} />
@@ -454,7 +454,7 @@ const Home = () => {
                 Sin resultados para este filtro.
               </span>
             ) : (
-              <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
+              <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
                 {filteredNotebooks.map((p) => (
                   <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                     <ProductCard {...p} imgHeight={210} />
@@ -527,7 +527,7 @@ const Home = () => {
                 <ChevronRight size={12} />
               </Link>
             </div>
-            <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}>
+            <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
               {monitorsList.map((p) => (
                 <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                   <ProductCard {...p} imgHeight={210} />
