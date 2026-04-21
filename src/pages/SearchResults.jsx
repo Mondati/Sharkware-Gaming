@@ -1,15 +1,18 @@
+import { useEffect } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { SearchX } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
 import FilterPanel from '../components/FilterPanel'
+import Pagination from '../components/Pagination'
 import { products } from '../data/products'
 import { categories } from '../data/categories'
 import { SORT_OPTIONS } from '../data/sortOptions'
 import { searchProducts } from '../utils/search'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 
+const LIMIT = 1
 const FILTER_DEFAULTS = { category: 'all', brand: '', minPrice: '', maxPrice: '', sort: 'relevance' }
 
 const EmptyState = ({ isMobile, hasActiveFilters, onClear }) => (
@@ -113,7 +116,6 @@ const SearchResults = () => {
     const next = new URLSearchParams(searchParams)
     ;['category', 'brand', 'minPrice', 'maxPrice'].forEach(k => next.delete(k))
     next.delete('page')
-    // q y sort quedan intactos
     setSearchParams(next)
   }
 
@@ -141,7 +143,42 @@ const SearchResults = () => {
     return 0
   })
 
-  // ── Dynamic filter options (derived from searched, not byBrand/byCat) ──
+  // ── Pagination ────────────────────────────────────────────────
+  const rawPage = Number(searchParams.get('page'))
+  const parsedPage = Number.isFinite(rawPage) && rawPage >= 1 ? Math.floor(rawPage) : 1
+  const totalPages = Math.max(1, Math.ceil(sorted.length / LIMIT))
+  const currentPage = Math.min(parsedPage, totalPages)
+  const start = (currentPage - 1) * LIMIT
+  const end = currentPage * LIMIT
+  const paginated = sorted.slice(start, end)
+
+  // Normaliza la URL si page estaba fuera de rango (ej: page=999 con 2 páginas → page=2)
+  useEffect(() => {
+    if (parsedPage !== currentPage) {
+      const next = new URLSearchParams(searchParams)
+      if (currentPage === 1) next.delete('page')
+      else next.set('page', String(currentPage))
+      setSearchParams(next, { replace: true })
+    }
+  }, [parsedPage, currentPage])
+
+  const goToPage = (n) => {
+    const next = new URLSearchParams(searchParams)
+    if (n === 1) next.delete('page')
+    else next.set('page', String(n))
+    setSearchParams(next)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const from = sorted.length === 0 ? 0 : start + 1
+  const to = Math.min(end, sorted.length)
+  const countLabel = sorted.length === 0
+    ? 'Sin resultados'
+    : totalPages > 1
+      ? `Mostrando ${from}–${to} de ${sorted.length} productos`
+      : sorted.length === 1 ? '1 producto' : `${sorted.length} productos`
+
+  // ── Dynamic filter options ────────────────────────────────────
   const availableBrands = searched.length > 0
     ? [...new Set(searched.map(p => p.brand))].sort()
     : []
@@ -149,7 +186,6 @@ const SearchResults = () => {
   const catalogMax = searched.length > 0 ? Math.max(...searched.map(p => p.price_ars)) : null
 
   const hasActiveFilters = catParam !== 'all' || !!brandParam || !!minParam || !!maxParam
-  const countLabel = sorted.length === 1 ? '1 producto' : `${sorted.length} productos`
 
   // ── Active chips ──────────────────────────────────────────────
   const activeChips = []
@@ -215,6 +251,8 @@ const SearchResults = () => {
     onClearFilters: clearFilters,
   }
 
+  const showPagination = sorted.length > 0 && totalPages > 1
+
   return (
     <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#0A0C14' }}>
       <Navbar cartCount={0} />
@@ -247,7 +285,7 @@ const SearchResults = () => {
             <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
               {q ? <>&ldquo;{q}&rdquo;</> : 'Todos los productos'}
             </span>
-            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px' }}>
+            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {countLabel}
             </span>
           </div>
@@ -266,16 +304,26 @@ const SearchResults = () => {
           {sorted.length === 0
             ? <EmptyState isMobile={false} hasActiveFilters={hasActiveFilters} onClear={clearFilters} />
             : (
-              <div
-                className="flex sw-scroll"
-                style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}
-              >
-                {sorted.map(p => (
-                  <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
-                    <ProductCard {...p} imgHeight={210} />
-                  </div>
-                ))}
-              </div>
+              <>
+                <div
+                  className="flex sw-scroll"
+                  style={{ gap: '16px', overflowX: 'auto', paddingBottom: '8px' }}
+                >
+                  {paginated.map(p => (
+                    <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
+                      <ProductCard {...p} imgHeight={210} />
+                    </div>
+                  ))}
+                </div>
+                {showPagination && (
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPage={goToPage}
+                    isMobile={false}
+                  />
+                )}
+              </>
             )
           }
         </div>
@@ -291,11 +339,21 @@ const SearchResults = () => {
         {sorted.length === 0
           ? <EmptyState isMobile hasActiveFilters={hasActiveFilters} onClear={clearFilters} />
           : (
-            <div className="grid grid-cols-2" style={{ gap: '10px' }}>
-              {sorted.map(p => (
-                <ProductCard key={p.id} {...p} mobile />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-2" style={{ gap: '10px' }}>
+                {paginated.map(p => (
+                  <ProductCard key={p.id} {...p} mobile />
+                ))}
+              </div>
+              {showPagination && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPage={goToPage}
+                  isMobile
+                />
+              )}
+            </>
           )
         }
       </div>
