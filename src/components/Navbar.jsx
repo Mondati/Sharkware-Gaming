@@ -67,7 +67,7 @@ const Navbar = ({ cartCount = 0 }) => {
                 borderRadius: '20px',
                 padding: '8px 14px',
                 color: '#F5F7FA',
-                fontFamily: 'Inter',
+                fontFamily: 'Poppins',
                 fontSize: '13px',
               }}
             />
@@ -186,7 +186,7 @@ const Navbar = ({ cartCount = 0 }) => {
               border: 'none',
               outline: 'none',
               color: '#F5F7FA',
-              fontFamily: 'Inter',
+              fontFamily: 'Poppins',
               fontSize: '13px',
               flex: 1,
               minWidth: 0,
@@ -202,7 +202,7 @@ const Navbar = ({ cartCount = 0 }) => {
           style={{ backgroundColor: hoveredBtn === 'login' ? '#252840' : '#1E2232', borderRadius: '20px', padding: '8px 16px', gap: '8px', transition: 'background-color 0.15s ease' }}
         >
           <UserRound size={15} color="#AAB3C5" />
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
             Ingresar
           </span>
         </Link>
@@ -214,7 +214,7 @@ const Navbar = ({ cartCount = 0 }) => {
           className="flex items-center no-underline"
           style={{ backgroundColor: hoveredBtn === 'cartDesktop' ? '#00B8EF' : '#00C8FF', borderRadius: '20px', padding: '8px 20px', transition: 'background-color 0.15s ease' }}
         >
-          <span style={{ color: '#060810', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}>
+          <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>
             🛒&nbsp;&nbsp;Carrito ({cartCount})
           </span>
         </Link>

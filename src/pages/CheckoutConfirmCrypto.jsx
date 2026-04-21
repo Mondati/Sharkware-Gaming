@@ -43,10 +43,10 @@ const CheckoutConfirmCrypto = () => {
           <ArrowLeft size={20} color="#F5F7FA" />
         </Link>
         <div className="flex flex-col items-center">
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
             Pagar con Bitcoin
           </span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
             Confirmá tu transferencia
           </span>
         </div>
@@ -57,9 +57,9 @@ const CheckoutConfirmCrypto = () => {
 
       {/* ═══════════════ DESKTOP BREADCRUMB ═══════════════ */}
       <div className="hidden md:flex items-center w-full" style={{ backgroundColor: '#0A0F1C', height: '44px', padding: '0 80px', gap: '8px' }}>
-        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Inicio</Link>
+        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Inicio</Link>
         <ChevronRight size={14} color="#1B2333" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>Confirmá tu transferencia</span>
+        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Confirmá tu transferencia</span>
       </div>
 
       {/* ═══════════════ TIMER BANNER (both mobile & desktop) ═══════════════ */}
@@ -68,7 +68,7 @@ const CheckoutConfirmCrypto = () => {
         style={{ backgroundColor: '#1A1000', padding: '10px 16px', gap: '8px' }}
       >
         <Hourglass size={14} color="#F59E0B" />
-        <span style={{ color: '#F59E0B', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>
+        <span style={{ color: '#F59E0B', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>
           Este pago expira en {mm}:{ss} — No cerrés esta pantalla
         </span>
       </div>
@@ -87,16 +87,16 @@ const CheckoutConfirmCrypto = () => {
           >
             <QrCode size={132} color="#000000" />
           </div>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', textAlign: 'center' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', textAlign: 'center' }}>
             Escaneá para transferir exactamente:
           </span>
           <div className="flex items-center justify-center" style={{ gap: '8px' }}>
             <Bitcoin size={20} color="#F59E0B" />
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '22px', fontWeight: '700' }}>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '700' }}>
               0.00094 BTC
             </span>
           </div>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
             ≈ $4.698.996 ARS
           </span>
         </div>
@@ -106,11 +106,11 @@ const CheckoutConfirmCrypto = () => {
           className="flex flex-col"
           style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '14px', gap: '8px', border: '1px solid #1B2333' }}
         >
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
             Dirección de Bitcoin
           </span>
           <div className="flex items-center" style={{ gap: '8px' }}>
-            <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Inter', fontSize: '11px', wordBreak: 'break-all' }}>
+            <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '11px', wordBreak: 'break-all' }}>
               {BTC_ADDRESS}
             </span>
             <button
@@ -129,7 +129,7 @@ const CheckoutConfirmCrypto = () => {
           style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '50px', gap: '10px' }}
         >
           <CircleCheckBig size={18} color="#FFFFFF" />
-          <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+          <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
             Ya realicé la transferencia
           </span>
         </button>
@@ -138,15 +138,15 @@ const CheckoutConfirmCrypto = () => {
         <div className="flex items-center justify-center" style={{ gap: '16px', padding: '8px 0' }}>
           <div className="flex items-center" style={{ gap: '4px' }}>
             <ShieldCheck size={14} color="#22C55E" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Pago seguro</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>Pago seguro</span>
           </div>
           <div className="flex items-center" style={{ gap: '4px' }}>
             <Package size={14} color="#22C55E" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Envío gratis</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>Envío gratis</span>
           </div>
           <div className="flex items-center" style={{ gap: '4px' }}>
             <RotateCw size={14} color="#22C55E" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>30 días de devolución</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>30 días de devolución</span>
           </div>
         </div>
       </div>
@@ -157,8 +157,8 @@ const CheckoutConfirmCrypto = () => {
         {/* Left */}
         <div className="flex flex-col" style={{ flex: 1, gap: '24px' }}>
           <div className="flex flex-col" style={{ gap: '8px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '28px', fontWeight: '800' }}>Confirmá tu transferencia</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '15px' }}>Pagar con Bitcoin · Paso 3 de 3</span>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '28px', fontWeight: '800' }}>Confirmá tu transferencia</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '15px' }}>Pagar con Bitcoin · Paso 3 de 3</span>
           </div>
 
           {/* QR card */}
@@ -173,14 +173,14 @@ const CheckoutConfirmCrypto = () => {
               >
                 <QrCode size={132} color="#000000" />
               </div>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
                 Escaneá para transferir exactamente:
               </span>
               <div className="flex items-center justify-center" style={{ gap: '8px' }}>
                 <Bitcoin size={20} color="#F59E0B" />
-                <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>0.00094 BTC</span>
+                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>0.00094 BTC</span>
               </div>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>≈ $4.698.996 ARS</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>≈ $4.698.996 ARS</span>
             </div>
           </div>
 
@@ -189,9 +189,9 @@ const CheckoutConfirmCrypto = () => {
             className="flex flex-col"
             style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '16px', gap: '10px', border: '1px solid #1B2333' }}
           >
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>Dirección de Bitcoin</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>Dirección de Bitcoin</span>
             <div className="flex items-center" style={{ gap: '8px' }}>
-              <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', wordBreak: 'break-all' }}>
+              <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', wordBreak: 'break-all' }}>
                 {BTC_ADDRESS}
               </span>
               <button
@@ -208,15 +208,15 @@ const CheckoutConfirmCrypto = () => {
           <div className="flex items-center justify-center" style={{ gap: '24px' }}>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <ShieldCheck size={14} color="#22C55E" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>Pago seguro</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>Pago seguro</span>
             </div>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <Package size={14} color="#22C55E" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>Envío gratis</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>Envío gratis</span>
             </div>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <RotateCw size={14} color="#22C55E" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>30 días de devolución</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>30 días de devolución</span>
             </div>
           </div>
         </div>
@@ -226,29 +226,29 @@ const CheckoutConfirmCrypto = () => {
           className="flex flex-col"
           style={{ width: '380px', flexShrink: 0, backgroundColor: '#0E1424', borderRadius: '14px', padding: '21px 24px 30px 24px', gap: '16px', border: '1px solid #1B2333' }}
         >
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '800' }}>Resumen del pedido</span>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Resumen del pedido</span>
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
           <div className="flex items-center">
-            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>Subtotal (4 ítems)</span>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>$4.698.996</span>
+            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Subtotal (4 ítems)</span>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>$4.698.996</span>
           </div>
           <div className="flex items-center">
-            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>Envío</span>
-            <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>Gratis</span>
+            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Envío</span>
+            <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Gratis</span>
           </div>
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
           <div className="flex items-center">
-            <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '800' }}>Total</span>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '22px', fontWeight: '800' }}>$4.698.996</span>
+            <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Total</span>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>$4.698.996</span>
           </div>
-          <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '12px' }}>en 12 cuotas sin interés de $391.583</span>
+          <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '12px' }}>en 12 cuotas sin interés de $391.583</span>
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
           <div className="flex flex-col" style={{ gap: '8px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>Método de pago</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>Método de pago</span>
             <div className="flex items-center" style={{ gap: '8px' }}>
               <Bitcoin size={18} color="#F59E0B" />
-              <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>Bitcoin (BTC)</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>0.00094 BTC</span>
+              <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Bitcoin (BTC)</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>0.00094 BTC</span>
             </div>
           </div>
           <button
@@ -256,7 +256,7 @@ const CheckoutConfirmCrypto = () => {
             style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '52px', gap: '10px', width: '100%' }}
           >
             <CircleCheckBig size={18} color="#FFFFFF" />
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
               Ya realicé la transferencia
             </span>
           </button>

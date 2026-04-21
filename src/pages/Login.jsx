@@ -44,10 +44,10 @@ const Login = () => {
           </button>
           <div className="flex-1" />
           <div className="flex flex-col items-center" style={{ gap: '0' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700', letterSpacing: '1px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700', letterSpacing: '1px' }}>
               SHARKWARE
             </span>
-            <span style={{ color: '#37C3FF', fontFamily: 'Inter', fontSize: '7px', fontWeight: '700', letterSpacing: '2px' }}>
+            <span style={{ color: '#37C3FF', fontFamily: 'Poppins', fontSize: '7px', fontWeight: '700', letterSpacing: '2px' }}>
               GAMING
             </span>
           </div>
@@ -64,10 +64,10 @@ const Login = () => {
 
           {/* Title */}
           <div className="flex flex-col items-center" style={{ gap: '8px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '24px', fontWeight: '800' }}>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
               Bienvenido
             </span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', textAlign: 'center' }}>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', textAlign: 'center' }}>
               Ingresá a tu cuenta o creá una nueva
             </span>
           </div>
@@ -85,7 +85,7 @@ const Login = () => {
                 borderRadius: '8px',
                 backgroundColor: activeTab === 'login' ? '#24A8F5' : 'transparent',
                 color: activeTab === 'login' ? '#FFFFFF' : '#AAB3C5',
-                fontFamily: 'Inter',
+                fontFamily: 'Poppins',
                 fontSize: '14px',
                 fontWeight: activeTab === 'login' ? '700' : 'normal',
               }}
@@ -100,7 +100,7 @@ const Login = () => {
                 borderRadius: '8px',
                 backgroundColor: activeTab === 'register' ? '#24A8F5' : 'transparent',
                 color: activeTab === 'register' ? '#FFFFFF' : '#AAB3C5',
-                fontFamily: 'Inter',
+                fontFamily: 'Poppins',
                 fontSize: '14px',
                 fontWeight: activeTab === 'register' ? '700' : 'normal',
               }}
@@ -111,7 +111,7 @@ const Login = () => {
 
           {/* Email */}
           <div className="flex flex-col w-full" style={{ gap: '6px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>Email</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Email</span>
             <div
               className="flex items-center"
               style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
@@ -123,14 +123,14 @@ const Login = () => {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 className="bg-transparent border-none outline-none w-full"
-                style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px' }}
+                style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
               />
             </div>
           </div>
 
           {/* Password */}
           <div className="flex flex-col w-full" style={{ gap: '6px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>Contraseña</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Contraseña</span>
             <div
               className="flex items-center"
               style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
@@ -142,7 +142,7 @@ const Login = () => {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 className="bg-transparent border-none outline-none w-full"
-                style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px' }}
+                style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
               />
               <button
                 onClick={() => setShowPassword(v => !v)}
@@ -157,7 +157,7 @@ const Login = () => {
           {/* Forgot password */}
           <div className="flex justify-end w-full">
             <button className="border-none cursor-pointer" style={{ background: 'none', padding: 0 }}>
-              <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+              <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
                 ¿Olvidaste tu contraseña?
               </span>
             </button>
@@ -165,7 +165,7 @@ const Login = () => {
 
           {/* Error */}
           {error && (
-            <span style={{ color: '#EF4444', fontFamily: 'Inter', fontSize: '13px', textAlign: 'center' }}>
+            <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '13px', textAlign: 'center' }}>
               {error}
             </span>
           )}
@@ -177,7 +177,7 @@ const Login = () => {
             style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '52px', gap: '10px' }}
           >
             <LogIn size={18} color="#FFFFFF" />
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
               Ingresar
             </span>
           </button>
@@ -185,7 +185,7 @@ const Login = () => {
           {/* Divider */}
           <div className="flex items-center w-full" style={{ gap: '12px' }}>
             <div style={{ flex: 1, height: '1px', backgroundColor: '#1B2333' }} />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>o continúa con</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>o continúa con</span>
             <div style={{ flex: 1, height: '1px', backgroundColor: '#1B2333' }} />
           </div>
 
@@ -196,20 +196,20 @@ const Login = () => {
               style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', gap: '8px', border: '1px solid #1B2333' }}
             >
               <Globe size={18} color="#F5F7FA" />
-              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>Google</span>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Google</span>
             </button>
             <button
               className="flex flex-1 items-center justify-center border-none cursor-pointer"
               style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', gap: '8px', border: '1px solid #1B2333' }}
             >
               <Smartphone size={18} color="#F5F7FA" />
-              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>Apple</span>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Apple</span>
             </button>
           </div>
 
           {/* Register link */}
           <div className="flex items-center justify-center" style={{ gap: '6px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
               ¿No tenés cuenta?
             </span>
             <button
@@ -217,7 +217,7 @@ const Login = () => {
               className="border-none cursor-pointer"
               style={{ background: 'none', padding: 0 }}
             >
-              <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+              <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                 Registrate
               </span>
             </button>
@@ -225,10 +225,10 @@ const Login = () => {
 
           {/* Terms */}
           <div className="flex flex-col items-center" style={{ gap: '4px', marginTop: 'auto' }}>
-            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px', textAlign: 'center' }}>
+            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px', textAlign: 'center' }}>
               Al continuar aceptás nuestros
             </span>
-            <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '12px', textAlign: 'center' }}>
+            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '12px', textAlign: 'center' }}>
               Términos y Política de Privacidad
             </span>
           </div>
@@ -247,40 +247,40 @@ const Login = () => {
           <div className="flex flex-col" style={{ gap: '4px' }}>
             <div className="flex items-center" style={{ gap: '8px' }}>
               <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#37C3FF', flexShrink: 0 }} />
-              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '20px', fontWeight: '800', letterSpacing: '1px' }}>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '20px', fontWeight: '800', letterSpacing: '1px' }}>
                 SHARKWARE
               </span>
             </div>
-            <span style={{ color: '#37C3FF', fontFamily: 'Inter', fontSize: '11px', fontWeight: '800', letterSpacing: '4px', paddingLeft: '18px' }}>
+            <span style={{ color: '#37C3FF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '800', letterSpacing: '4px', paddingLeft: '18px' }}>
               GAMING
             </span>
           </div>
 
           {/* Headline */}
-          <h1 style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '36px', fontWeight: '800', lineHeight: '1.25', margin: 0 }}>
+          <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '36px', fontWeight: '800', lineHeight: '1.25', margin: 0 }}>
             Tu gear, a un click de distancia
           </h1>
 
           {/* Subtext */}
-          <p style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '16px', lineHeight: '1.6', margin: 0 }}>
+          <p style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '16px', lineHeight: '1.6', margin: 0 }}>
             Accedé a las mejores ofertas en gaming gear, notebooks, GPUs y periféricos de última generación.
           </p>
 
           {/* Stats */}
           <div className="flex items-center" style={{ gap: '24px' }}>
             <div className="flex flex-col items-center" style={{ gap: '4px' }}>
-              <span style={{ color: '#37C3FF', fontFamily: 'Inter', fontSize: '28px', fontWeight: '800' }}>10K+</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Clientes</span>
+              <span style={{ color: '#37C3FF', fontFamily: 'Poppins', fontSize: '28px', fontWeight: '800' }}>10K+</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Clientes</span>
             </div>
             <div style={{ width: '1px', height: '40px', backgroundColor: '#1B2333' }} />
             <div className="flex flex-col items-center" style={{ gap: '4px' }}>
-              <span style={{ color: '#37C3FF', fontFamily: 'Inter', fontSize: '28px', fontWeight: '800' }}>500+</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Productos</span>
+              <span style={{ color: '#37C3FF', fontFamily: 'Poppins', fontSize: '28px', fontWeight: '800' }}>500+</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Productos</span>
             </div>
             <div style={{ width: '1px', height: '40px', backgroundColor: '#1B2333' }} />
             <div className="flex flex-col items-center" style={{ gap: '4px' }}>
-              <span style={{ color: '#37C3FF', fontFamily: 'Inter', fontSize: '28px', fontWeight: '800' }}>4.9★</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Rating</span>
+              <span style={{ color: '#37C3FF', fontFamily: 'Poppins', fontSize: '28px', fontWeight: '800' }}>4.9★</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Rating</span>
             </div>
           </div>
 
@@ -288,15 +288,15 @@ const Login = () => {
           <div className="flex items-center" style={{ gap: '20px' }}>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <ShieldCheck size={16} color="#22C55E" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Compra segura</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Compra segura</span>
             </div>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <Truck size={16} color="#24A8F5" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Envío gratis</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Envío gratis</span>
             </div>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <RefreshCw size={16} color="#F59E0B" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>30 días devolución</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>30 días devolución</span>
             </div>
           </div>
         </div>
@@ -314,10 +314,10 @@ const Login = () => {
             {/* Form Header */}
             <div className="flex flex-col items-center" style={{ gap: '8px' }}>
               <UserRound size={40} color="#24A8F5" />
-              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '24px', fontWeight: '800' }}>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
                 Bienvenido de vuelta
               </span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', textAlign: 'center' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', textAlign: 'center' }}>
                 Ingresá a tu cuenta de Sharkware Gaming
               </span>
             </div>
@@ -335,7 +335,7 @@ const Login = () => {
                   borderRadius: '8px',
                   backgroundColor: activeTab === 'login' ? '#24A8F5' : 'transparent',
                   color: activeTab === 'login' ? '#FFFFFF' : '#AAB3C5',
-                  fontFamily: 'Inter',
+                  fontFamily: 'Poppins',
                   fontSize: '14px',
                   fontWeight: activeTab === 'login' ? '700' : 'normal',
                 }}
@@ -350,7 +350,7 @@ const Login = () => {
                   borderRadius: '8px',
                   backgroundColor: activeTab === 'register' ? '#24A8F5' : 'transparent',
                   color: activeTab === 'register' ? '#FFFFFF' : '#AAB3C5',
-                  fontFamily: 'Inter',
+                  fontFamily: 'Poppins',
                   fontSize: '14px',
                   fontWeight: activeTab === 'register' ? '700' : 'normal',
                 }}
@@ -361,7 +361,7 @@ const Login = () => {
 
             {/* Email */}
             <div className="flex flex-col" style={{ gap: '6px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>Email</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Email</span>
               <div
                 className="flex items-center"
                 style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
@@ -373,14 +373,14 @@ const Login = () => {
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   className="bg-transparent border-none outline-none w-full"
-                  style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px' }}
+                  style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
                 />
               </div>
             </div>
 
             {/* Password */}
             <div className="flex flex-col" style={{ gap: '6px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>Contraseña</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Contraseña</span>
               <div
                 className="flex items-center"
                 style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
@@ -392,7 +392,7 @@ const Login = () => {
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   className="bg-transparent border-none outline-none w-full"
-                  style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px' }}
+                  style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
                 />
                 <button
                   onClick={() => setShowPassword(v => !v)}
@@ -407,7 +407,7 @@ const Login = () => {
             {/* Forgot password */}
             <div className="flex justify-end">
               <button className="border-none cursor-pointer" style={{ background: 'none', padding: 0 }}>
-                <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+                <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
                   ¿Olvidaste tu contraseña?
                 </span>
               </button>
@@ -415,7 +415,7 @@ const Login = () => {
 
             {/* Error */}
             {error && (
-              <span style={{ color: '#EF4444', fontFamily: 'Inter', fontSize: '13px', textAlign: 'center' }}>
+              <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '13px', textAlign: 'center' }}>
                 {error}
               </span>
             )}
@@ -427,7 +427,7 @@ const Login = () => {
               style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '52px', gap: '10px', width: '100%' }}
             >
               <LogIn size={18} color="#FFFFFF" />
-              <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
+              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
                 {activeTab === 'login' ? 'Ingresar' : 'Crear cuenta'}
               </span>
             </button>
@@ -435,7 +435,7 @@ const Login = () => {
             {/* Divider */}
             <div className="flex items-center" style={{ gap: '12px' }}>
               <div style={{ flex: 1, height: '1px', backgroundColor: '#1B2333' }} />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>o continúa con</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>o continúa con</span>
               <div style={{ flex: 1, height: '1px', backgroundColor: '#1B2333' }} />
             </div>
 
@@ -446,20 +446,20 @@ const Login = () => {
                 style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '44px', gap: '8px', border: '1px solid #1B2333' }}
               >
                 <Globe size={18} color="#F5F7FA" />
-                <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>Google</span>
+                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Google</span>
               </button>
               <button
                 className="flex flex-1 items-center justify-center border-none cursor-pointer"
                 style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '44px', gap: '8px', border: '1px solid #1B2333' }}
               >
                 <Smartphone size={18} color="#F5F7FA" />
-                <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>Apple</span>
+                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Apple</span>
               </button>
             </div>
 
             {/* Register / Login link */}
             <div className="flex items-center justify-center" style={{ gap: '6px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
                 {activeTab === 'login' ? '¿No tenés cuenta?' : '¿Ya tenés cuenta?'}
               </span>
               <button
@@ -467,7 +467,7 @@ const Login = () => {
                 className="border-none cursor-pointer"
                 style={{ background: 'none', padding: 0 }}
               >
-                <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+                <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                   {activeTab === 'login' ? 'Registrate' : 'Iniciá sesión'}
                 </span>
               </button>

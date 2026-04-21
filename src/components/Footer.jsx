@@ -42,21 +42,21 @@ const Footer = () => {
         {/* Brand */}
         <div className="flex flex-col" style={{ gap: '8px' }}>
           <div className="flex flex-col">
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '700', letterSpacing: '1px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700', letterSpacing: '1px' }}>
               SHARKWARE
             </span>
-            <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '8px', fontWeight: '700', letterSpacing: '2px' }}>
+            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '8px', fontWeight: '700', letterSpacing: '2px' }}>
               GAMING
             </span>
           </div>
-          <p style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px', lineHeight: '1.5', margin: 0 }}>
+          <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px', lineHeight: '1.5', margin: 0 }}>
             Tu tienda gamer de confianza — Sharkware Gaming
           </p>
         </div>
 
         {/* Newsletter */}
         <div className="flex flex-col" style={{ gap: '10px' }}>
-          <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+          <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
             Suscribite al Newsletter
           </span>
           <div
@@ -67,12 +67,12 @@ const Footer = () => {
               type="email"
               placeholder="Tu email"
               className="bg-transparent border-none outline-none w-full"
-              style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}
+              style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}
             />
           </div>
           <button
             className="cursor-pointer border-none"
-            style={{ backgroundColor: '#00C8FF', borderRadius: '7px', padding: '10px 0', color: '#060810', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}
+            style={{ backgroundColor: '#00C8FF', borderRadius: '7px', padding: '10px 0', color: '#060810', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}
           >
             Suscribirme
           </button>
@@ -82,7 +82,7 @@ const Footer = () => {
         <div className="flex" style={{ gap: '32px' }}>
           {Object.entries(mobileLinks).map(([heading, links]) => (
             <div key={heading} className="flex flex-col" style={{ gap: '8px' }}>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '12px', fontWeight: '700' }}>
+              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '700' }}>
                 {heading}
               </span>
               {links.map((link) => (
@@ -92,7 +92,7 @@ const Footer = () => {
                   className="no-underline"
                   onMouseEnter={() => setHoveredLink(link)}
                   onMouseLeave={() => setHoveredLink(null)}
-                  style={{ color: hoveredLink === link ? '#F5F7FA' : '#8890A4', fontFamily: 'Inter', fontSize: '12px', transition: 'color 0.15s ease' }}
+                  style={{ color: hoveredLink === link ? '#F5F7FA' : '#8890A4', fontFamily: 'Poppins', fontSize: '12px', transition: 'color 0.15s ease' }}
                 >
                   {link}
                 </Link>
@@ -107,14 +107,14 @@ const Footer = () => {
             {mobilePayments.map((method) => (
               <span
                 key={method}
-                style={{ backgroundColor: '#1E2232', borderRadius: '6px', padding: '5px 10px', color: '#FFFFFF', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700' }}
+                style={{ backgroundColor: '#1E2232', borderRadius: '6px', padding: '5px 10px', color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700' }}
               >
                 {method}
               </span>
             ))}
           </div>
         </div>
-        <span style={{ color: '#454E64', fontFamily: 'Inter', fontSize: '11px' }}>
+        <span style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '11px' }}>
           © 2025 Sharkware Gaming. Todos los derechos reservados.
         </span>
       </footer>
@@ -132,14 +132,14 @@ const Footer = () => {
           {/* Brand */}
           <div className="flex flex-col" style={{ gap: '16px', width: '260px', flexShrink: 0 }}>
             <div className="flex flex-col">
-              <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700', letterSpacing: '1px' }}>
+              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700', letterSpacing: '1px' }}>
                 SHARKWARE
               </span>
-              <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
+              <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
                 GAMING
               </span>
             </div>
-            <p style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px', width: '240px', lineHeight: '1.5' }}>
+            <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', width: '240px', lineHeight: '1.5' }}>
               Tu tienda gamer de confianza. Componentes, notebooks, desktops y periféricos al mejor precio — Sharkware Gaming.
             </p>
             {/* Socials */}
@@ -163,7 +163,7 @@ const Footer = () => {
           <div className="flex flex-1" style={{ gap: '48px' }}>
             {Object.entries(desktopLinks).map(([heading, links]) => (
               <div key={heading} className="flex flex-col" style={{ gap: '12px' }}>
-                <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}>
+                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>
                   {heading}
                 </span>
                 {links.map((link) => (
@@ -173,7 +173,7 @@ const Footer = () => {
                     className="no-underline"
                     onMouseEnter={() => setHoveredLink(link)}
                     onMouseLeave={() => setHoveredLink(null)}
-                    style={{ color: hoveredLink === link ? '#F5F7FA' : '#8890A4', fontFamily: 'Inter', fontSize: '13px', transition: 'color 0.15s ease' }}
+                    style={{ color: hoveredLink === link ? '#F5F7FA' : '#8890A4', fontFamily: 'Poppins', fontSize: '13px', transition: 'color 0.15s ease' }}
                   >
                     {link}
                   </Link>
@@ -183,10 +183,10 @@ const Footer = () => {
 
             {/* Newsletter */}
             <div className="flex flex-col" style={{ gap: '12px', width: '220px' }}>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}>
+              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>
                 Newsletter
               </span>
-              <p style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px', width: '200px', lineHeight: '1.5' }}>
+              <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', width: '200px', lineHeight: '1.5' }}>
                 Recibí ofertas y novedades exclusivas.
               </p>
               <div
@@ -197,12 +197,12 @@ const Footer = () => {
                   type="email"
                   placeholder="Tu email"
                   className="bg-transparent border-none outline-none w-full"
-                  style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}
+                  style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}
                 />
               </div>
               <button
                 className="cursor-pointer border-none"
-                style={{ backgroundColor: '#00C8FF', borderRadius: '7px', padding: '10px 0', color: '#060810', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}
+                style={{ backgroundColor: '#00C8FF', borderRadius: '7px', padding: '10px 0', color: '#060810', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}
               >
                 Suscribirse
               </button>
@@ -216,14 +216,14 @@ const Footer = () => {
             {paymentMethods.map((method) => (
               <span
                 key={method}
-                style={{ backgroundColor: '#1E2232', borderRadius: '6px', padding: '6px 12px', color: '#FFFFFF', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700' }}
+                style={{ backgroundColor: '#1E2232', borderRadius: '6px', padding: '6px 12px', color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700' }}
               >
                 {method}
               </span>
             ))}
           </div>
           <div className="flex-1" />
-          <span style={{ color: '#454E64', fontFamily: 'Inter', fontSize: '12px' }}>
+          <span style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '12px' }}>
             © 2025 Sharkware Gaming Store. Todos los derechos reservados.
           </span>
         </div>

@@ -38,10 +38,10 @@ const MobileModalBody = ({ isEdit, product, onClose, onSave, form, onChange, onT
         <X size={18} color="#F5F7FA" />
       </button>
       <div className="flex flex-col items-center">
-        <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
           {isEdit ? 'Editar Producto' : 'Agregar Producto'}
         </span>
-        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px' }}>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px' }}>
           {isEdit ? product?.name : 'Nuevo producto'}
         </span>
       </div>
@@ -57,25 +57,25 @@ const MobileModalBody = ({ isEdit, product, onClose, onSave, form, onChange, onT
         style={{ height: '140px', borderRadius: '12px', gap: '8px', border: `1px dashed ${isEdit ? '#24A8F5' : '#1B2333'}`, backgroundColor: isEdit ? '#0D2035' : '#0E1424' }}
       >
         {isEdit ? <Image size={32} color="#24A8F5" /> : <Upload size={28} color="#AAB3C5" />}
-        <span style={{ color: isEdit ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '500' }}>
+        <span style={{ color: isEdit ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
           {isEdit ? 'Imagen actual cargada' : 'Subí una imagen del producto'}
         </span>
-        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px' }}>JPG, PNG, WEBP · Máx 5MB</span>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px' }}>JPG, PNG, WEBP · Máx 5MB</span>
       </div>
 
       {/* Nombre + Marca */}
       <div className="flex" style={{ gap: '10px' }}>
         <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Nombre del producto *</span>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Nombre del producto *</span>
           <input
-            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
+            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', outline: 'none' }}
             value={form.nombre} onChange={onChange('nombre')} placeholder="Ej: RTX 5090 24GB GDDR7"
           />
         </div>
         <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Marca *</span>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Marca *</span>
           <input
-            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
+            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', outline: 'none' }}
             value={form.marca} onChange={onChange('marca')} placeholder="Ej: NVIDIA"
           />
         </div>
@@ -83,20 +83,20 @@ const MobileModalBody = ({ isEdit, product, onClose, onSave, form, onChange, onT
 
       {/* Descripción */}
       <div className="flex flex-col" style={{ gap: '6px' }}>
-        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Descripción</span>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Descripción</span>
         <textarea
           rows={3}
-          style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none', resize: 'none' }}
+          style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', outline: 'none', resize: 'none' }}
           value={form.desc} onChange={onChange('desc')} placeholder="Describí el producto brevemente..."
         />
       </div>
 
       {/* Especificaciones */}
       <div className="flex flex-col" style={{ gap: '6px' }}>
-        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Especificaciones técnicas</span>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Especificaciones técnicas</span>
         <textarea
           rows={3}
-          style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none', resize: 'none' }}
+          style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', outline: 'none', resize: 'none' }}
           value={form.espec} onChange={onChange('espec')} placeholder="Ej: GPU Nativa 16384 CUDA Cores..."
         />
       </div>
@@ -104,17 +104,17 @@ const MobileModalBody = ({ isEdit, product, onClose, onSave, form, onChange, onT
       {/* Precio + Stock */}
       <div className="flex" style={{ gap: '10px' }}>
         <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Precio (USD) *</span>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Precio (USD) *</span>
           <input
-            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
+            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', outline: 'none' }}
             value={form.precio} onChange={onChange('precio')} placeholder="0.00"
           />
         </div>
         <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Stock *</span>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Stock *</span>
           <input
             type="number"
-            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', outline: 'none' }}
+            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', outline: 'none' }}
             value={form.stock} onChange={onChange('stock')} placeholder="0"
           />
         </div>
@@ -122,7 +122,7 @@ const MobileModalBody = ({ isEdit, product, onClose, onSave, form, onChange, onT
 
       {/* Categoría */}
       <div className="flex flex-col" style={{ gap: '6px' }}>
-        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Categoría *</span>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Categoría *</span>
         <div
           className="flex items-center justify-between"
           style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', border: '1px solid #1B2333', cursor: 'pointer' }}
@@ -130,7 +130,7 @@ const MobileModalBody = ({ isEdit, product, onClose, onSave, form, onChange, onT
           <select
             value={form.cat}
             onChange={onChange('cat')}
-            style={{ background: 'none', border: 'none', outline: 'none', color: form.cat ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', width: '100%', cursor: 'pointer', appearance: 'none' }}
+            style={{ background: 'none', border: 'none', outline: 'none', color: form.cat ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', width: '100%', cursor: 'pointer', appearance: 'none' }}
           >
             <option value="" disabled>Seleccioná una categoría</option>
             {CATEGORIES.map(c => <option key={c} value={c} style={{ backgroundColor: '#0E1424' }}>{c}</option>)}
@@ -141,7 +141,7 @@ const MobileModalBody = ({ isEdit, product, onClose, onSave, form, onChange, onT
 
       {/* Estado toggle */}
       <div className="flex items-center justify-between" style={{ padding: '4px 0' }}>
-        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>Estado del producto</span>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Estado del producto</span>
         <div className="flex flex-col items-end" style={{ gap: '3px' }}>
           <button
             onClick={onToggleActivo}
@@ -155,7 +155,7 @@ const MobileModalBody = ({ isEdit, product, onClose, onSave, form, onChange, onT
           >
             <div style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#FFFFFF' }} />
           </button>
-          <span style={{ color: form.activo ? '#22C55E' : '#AAB3C5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '600' }}>
+          <span style={{ color: form.activo ? '#22C55E' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600' }}>
             {form.activo ? 'Activo' : 'Inactivo'}
           </span>
         </div>
@@ -172,7 +172,7 @@ const MobileModalBody = ({ isEdit, product, onClose, onSave, form, onChange, onT
         className="flex items-center justify-center flex-1 border-none cursor-pointer"
         style={{ backgroundColor: '#1B2333', borderRadius: '10px', height: '46px' }}
       >
-        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>Cancelar</span>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Cancelar</span>
       </button>
       <button
         onClick={() => { onSave(form); onClose() }}
@@ -180,7 +180,7 @@ const MobileModalBody = ({ isEdit, product, onClose, onSave, form, onChange, onT
         style={{ backgroundColor: '#24A8F5', borderRadius: '10px', height: '46px', gap: '8px' }}
       >
         <Save size={16} color="#FFFFFF" />
-        <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+        <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
           {isEdit ? 'Guardar Cambios' : 'Guardar Producto'}
         </span>
       </button>
@@ -202,13 +202,13 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
   const inputStyle = {
     backgroundColor: inputBg, borderRadius: '6px', height: '38px',
     padding: '0 12px', border: '1px solid #1B2333', color: '#F5F7FA',
-    fontFamily: 'Inter', fontSize: '13px', width: '100%', outline: 'none',
+    fontFamily: 'Poppins', fontSize: '13px', width: '100%', outline: 'none',
   }
   const textareaStyle = {
     ...inputStyle, height: '72px', padding: '10px 12px',
     resize: 'none', display: 'block',
   }
-  const labelStyle = { color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '500' }
+  const labelStyle = { color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }
 
   return (
     <>
@@ -250,10 +250,10 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
           style={{ height: '64px', padding: '0 24px', borderBottom: '1px solid #1B2333', flexShrink: 0 }}
         >
           <div className="flex flex-col" style={{ gap: '3px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '16px', fontWeight: '700' }}>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>
               {isEdit ? 'Editar Producto' : 'Agregar Producto'}
             </span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
               {isEdit ? product?.name : 'Completá los datos del nuevo producto'}
             </span>
           </div>
@@ -273,7 +273,7 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
             className="flex flex-col"
             style={{ width: '280px', flexShrink: 0, backgroundColor: '#080D1A', padding: '24px', gap: '16px', borderRight: '1px solid #1B2333' }}
           >
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>
               Imagen del producto
             </span>
             <div
@@ -288,20 +288,20 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
                 ? <Image size={40} color="#24A8F5" />
                 : <Upload size={36} color="#AAB3C5" />
               }
-              <span style={{ color: isEdit ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '500' }}>
+              <span style={{ color: isEdit ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
                 {isEdit ? 'Imagen actual cargada' : 'Arrastrá la imagen aquí'}
               </span>
-              {!isEdit && <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>o</span>}
+              {!isEdit && <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>o</span>}
               <button
                 className="border-none cursor-pointer"
                 style={{ backgroundColor: '#0D2035', borderRadius: '6px', padding: '7px 14px', border: '1px solid #24A8F5' }}
               >
-                <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600' }}>
+                <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
                   {isEdit ? 'Cambiar imagen' : 'Examinar archivos'}
                 </span>
               </button>
             </div>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px', textAlign: 'center' }}>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', textAlign: 'center' }}>
               JPG, PNG, WEBP · Máx 5MB
             </span>
           </div>
@@ -364,7 +364,7 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
                 <select
                   value={form.cat}
                   onChange={set('cat')}
-                  style={{ background: 'none', border: 'none', outline: 'none', color: form.cat ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', width: '100%', cursor: 'pointer', appearance: 'none' }}
+                  style={{ background: 'none', border: 'none', outline: 'none', color: form.cat ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', width: '100%', cursor: 'pointer', appearance: 'none' }}
                 >
                   <option value="" disabled>Seleccioná una categoría</option>
                   {CATEGORIES.map(c => <option key={c} value={c} style={{ backgroundColor: '#0E1424' }}>{c}</option>)}
@@ -389,7 +389,7 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
                 >
                   <div style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#FFFFFF' }} />
                 </button>
-                <span style={{ color: form.activo ? '#22C55E' : '#AAB3C5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '600' }}>
+                <span style={{ color: form.activo ? '#22C55E' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600' }}>
                   {form.activo ? 'Activo' : 'Inactivo'}
                 </span>
               </div>
@@ -408,7 +408,7 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
             className="flex items-center justify-center border-none cursor-pointer"
             style={{ backgroundColor: '#1B2333', borderRadius: '6px', height: '38px', padding: '0 20px' }}
           >
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>Cancelar</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Cancelar</span>
           </button>
           <button
             onClick={() => { onSave(form); onClose() }}
@@ -416,7 +416,7 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
             style={{ backgroundColor: '#24A8F5', borderRadius: '6px', height: '38px', padding: '0 20px', gap: '8px' }}
           >
             <Save size={14} color="#FFFFFF" />
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
               {isEdit ? 'Guardar Cambios' : 'Guardar Producto'}
             </span>
           </button>
@@ -443,11 +443,11 @@ const StatCard = ({ label, value, sub, subColor, icon: Icon, iconColor }) => (
     style={{ flex: 1, backgroundColor: '#0E1424', borderRadius: '8px', padding: '18px', gap: '6px', border: '1px solid #1B2333' }}
   >
     <div className="flex items-center justify-between">
-      <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '500' }}>{label}</span>
+      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>{label}</span>
       <Icon size={16} color={iconColor} />
     </div>
-    <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '28px', fontWeight: '800' }}>{value}</span>
-    <span style={{ color: subColor, fontFamily: 'Inter', fontSize: '11px' }}>{sub}</span>
+    <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '28px', fontWeight: '800' }}>{value}</span>
+    <span style={{ color: subColor, fontFamily: 'Poppins', fontSize: '11px' }}>{sub}</span>
   </div>
 )
 
@@ -461,11 +461,11 @@ const MobileStatCard = ({ label, value, sub, subColor, icon: Icon, iconColor }) 
         <Icon size={18} color={iconColor} />
       </div>
       <div className="flex flex-col" style={{ gap: '2px', flex: 1 }}>
-        <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '500' }}>{label}</span>
-        <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '24px', fontWeight: '800' }}>{value}</span>
+        <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '500' }}>{label}</span>
+        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>{value}</span>
       </div>
     </div>
-    <span style={{ color: subColor, fontFamily: 'Inter', fontSize: '11px' }}>{sub}</span>
+    <span style={{ color: subColor, fontFamily: 'Poppins', fontSize: '11px' }}>{sub}</span>
   </div>
 )
 
@@ -510,11 +510,11 @@ const AdminPanel = () => {
         <div className="flex items-center" style={{ padding: '20px 24px', gap: '12px' }}>
           <Zap size={22} color="#24A8F5" />
           <div className="flex flex-col" style={{ gap: '1px', flex: 1 }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}>SHARKWARE</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '600' }}>GAMING</span>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>SHARKWARE</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '600' }}>GAMING</span>
           </div>
           <div style={{ backgroundColor: '#0D2035', borderRadius: '4px', padding: '4px 8px' }}>
-            <span style={{ color: '#37C3FF', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600' }}>Admin</span>
+            <span style={{ color: '#37C3FF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Admin</span>
           </div>
         </div>
 
@@ -523,7 +523,7 @@ const AdminPanel = () => {
         {/* Nav */}
         <div className="flex flex-col" style={{ padding: '16px 0', gap: '4px' }}>
           <div style={{ padding: '0 24px 8px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700' }}>MENÚ PRINCIPAL</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700' }}>MENÚ PRINCIPAL</span>
           </div>
           {NAV_ITEMS.map(({ icon: Icon, label, active }) => (
             <div
@@ -536,7 +536,7 @@ const AdminPanel = () => {
               }}
             >
               <Icon size={18} color={active ? '#24A8F5' : '#AAB3C5'} />
-              <span style={{ color: active ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', fontWeight: active ? '600' : 'normal' }}>
+              <span style={{ color: active ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: active ? '600' : 'normal' }}>
                 {label}
               </span>
             </div>
@@ -552,8 +552,8 @@ const AdminPanel = () => {
             <UserRound size={18} color="#24A8F5" />
           </div>
           <div className="flex flex-col" style={{ flex: 1, gap: '1px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Administrador</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px' }}>admin@sharkware.com</span>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Administrador</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px' }}>admin@sharkware.com</span>
           </div>
           <LogOut size={16} color="#AAB3C5" style={{ cursor: 'pointer', flexShrink: 0 }} />
         </div>
@@ -575,8 +575,8 @@ const AdminPanel = () => {
               <Menu size={18} color="#F5F7FA" />
             </button>
             <div className="flex flex-col" style={{ gap: '0' }}>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>Gestión de Productos</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px' }}>Panel Admin / Productos</span>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Gestión de Productos</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px' }}>Panel Admin / Productos</span>
             </div>
           </div>
           <div className="flex items-center" style={{ gap: '8px' }}>
@@ -593,8 +593,8 @@ const AdminPanel = () => {
           style={{ height: '60px', flexShrink: 0, backgroundColor: '#0E1424', padding: '0 28px', borderBottom: '1px solid #1B2333' }}
         >
           <div className="flex flex-col" style={{ gap: '2px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '17px', fontWeight: '700' }}>Gestión de Productos</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Panel Admin &nbsp;/&nbsp; Productos</span>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '17px', fontWeight: '700' }}>Gestión de Productos</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>Panel Admin &nbsp;/&nbsp; Productos</span>
           </div>
           <div className="flex items-center" style={{ gap: '16px' }}>
             <Bell size={20} color="#AAB3C5" />
@@ -626,8 +626,8 @@ const AdminPanel = () => {
           {/* Mobile Action bar */}
           <div className="md:hidden flex items-center justify-between" style={{ gap: '10px' }}>
             <div className="flex flex-col" style={{ gap: '2px', flex: 1 }}>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '16px', fontWeight: '700' }}>Lista de Productos</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>{filtered.length} de {products.length} productos</span>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>Lista de Productos</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{filtered.length} de {products.length} productos</span>
             </div>
             <button
               onClick={() => setModal('add')}
@@ -646,15 +646,15 @@ const AdminPanel = () => {
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="bg-transparent border-none outline-none w-full"
-              style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}
+              style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}
             />
           </div>
 
           {/* Desktop Action bar */}
           <div className="hidden md:flex items-center justify-between">
             <div className="flex flex-col" style={{ gap: '3px' }}>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>Lista de Productos</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>Administrá el catálogo completo de la tienda</span>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>Lista de Productos</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>Administrá el catálogo completo de la tienda</span>
             </div>
             <div className="flex items-center" style={{ gap: '10px' }}>
               <div
@@ -667,7 +667,7 @@ const AdminPanel = () => {
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   className="bg-transparent border-none outline-none w-full"
-                  style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}
+                  style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}
                 />
               </div>
               <button
@@ -676,7 +676,7 @@ const AdminPanel = () => {
                 style={{ backgroundColor: '#24A8F5', borderRadius: '6px', height: '36px', padding: '0 16px', gap: '8px' }}
               >
                 <Plus size={14} color="#FFFFFF" />
-                <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Agregar Producto</span>
+                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Agregar Producto</span>
               </button>
             </div>
           </div>
@@ -691,34 +691,34 @@ const AdminPanel = () => {
               >
                 {/* Name + SKU */}
                 <div className="flex flex-col" style={{ gap: '2px' }}>
-                  <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>{p.name}</span>
-                  <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>SKU: {p.sku}</span>
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{p.name}</span>
+                  <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>SKU: {p.sku}</span>
                 </div>
 
                 {/* Category + Price row */}
                 <div className="flex items-center" style={{ gap: '12px' }}>
                   <div className="flex flex-col" style={{ gap: '2px' }}>
-                    <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '600' }}>Categoría</span>
-                    <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>{p.cat}</span>
+                    <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600' }}>Categoría</span>
+                    <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>{p.cat}</span>
                   </div>
                   <div style={{ flex: 1 }} />
                   <div className="flex flex-col" style={{ gap: '2px', alignItems: 'flex-end' }}>
-                    <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '600' }}>Precio</span>
-                    <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>{p.price}</span>
+                    <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600' }}>Precio</span>
+                    <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{p.price}</span>
                   </div>
                 </div>
 
                 {/* Stock + Status row */}
                 <div className="flex items-center" style={{ gap: '12px' }}>
                   <div className="flex items-center" style={{ gap: '6px' }}>
-                    <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Stock:</span>
-                    <span style={{ color: p.stock === 0 ? '#EF4444' : '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: p.stock === 0 ? '700' : '600' }}>
+                    <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>Stock:</span>
+                    <span style={{ color: p.stock === 0 ? '#EF4444' : '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: p.stock === 0 ? '700' : '600' }}>
                       {p.stock} un.
                     </span>
                   </div>
                   <div style={{ flex: 1 }} />
                   <div style={{ backgroundColor: p.active ? '#0F3D22' : '#2D1010', borderRadius: '5px', padding: '4px 10px' }}>
-                    <span style={{ color: p.active ? '#22C55E' : '#EF4444', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600' }}>
+                    <span style={{ color: p.active ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
                       {p.active ? 'Activo' : 'Agotado'}
                     </span>
                   </div>
@@ -732,7 +732,7 @@ const AdminPanel = () => {
                     style={{ backgroundColor: '#0D2035', borderRadius: '8px', height: '36px', gap: '6px' }}
                   >
                     <Pencil size={14} color="#24A8F5" />
-                    <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Editar</span>
+                    <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Editar</span>
                   </button>
                   <button
                     onClick={() => deleteProduct(p.id)}
@@ -740,7 +740,7 @@ const AdminPanel = () => {
                     style={{ backgroundColor: '#2D1010', borderRadius: '8px', height: '36px', gap: '6px' }}
                   >
                     <Trash2 size={14} color="#EF4444" />
-                    <span style={{ color: '#EF4444', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600' }}>Eliminar</span>
+                    <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Eliminar</span>
                   </button>
                 </div>
               </div>
@@ -764,7 +764,7 @@ const AdminPanel = () => {
               ].map(({ label, flex, w }) => (
                 <span
                   key={label}
-                  style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600', flex, width: w, flexShrink: w ? 0 : undefined }}
+                  style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', flex, width: w, flexShrink: w ? 0 : undefined }}
                 >
                   {label}
                 </span>
@@ -780,21 +780,21 @@ const AdminPanel = () => {
               >
                 {/* Name + SKU */}
                 <div className="flex flex-col" style={{ flex: 1, gap: '2px' }}>
-                  <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>{p.name}</span>
-                  <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>SKU: {p.sku}</span>
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>{p.name}</span>
+                  <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>SKU: {p.sku}</span>
                 </div>
                 {/* Category */}
-                <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', width: '120px', flexShrink: 0 }}>{p.cat}</span>
+                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', width: '120px', flexShrink: 0 }}>{p.cat}</span>
                 {/* Price */}
-                <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600', width: '110px', flexShrink: 0 }}>{p.price}</span>
+                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600', width: '110px', flexShrink: 0 }}>{p.price}</span>
                 {/* Stock */}
-                <span style={{ color: p.stock === 0 ? '#EF4444' : '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: p.stock === 0 ? '600' : 'normal', width: '85px', flexShrink: 0 }}>
+                <span style={{ color: p.stock === 0 ? '#EF4444' : '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: p.stock === 0 ? '600' : 'normal', width: '85px', flexShrink: 0 }}>
                   {p.stock} un.
                 </span>
                 {/* Status badge */}
                 <div style={{ width: '100px', flexShrink: 0 }}>
                   <div style={{ display: 'inline-flex', backgroundColor: p.active ? '#0F3D22' : '#2D1010', borderRadius: '4px', padding: '3px 10px' }}>
-                    <span style={{ color: p.active ? '#22C55E' : '#EF4444', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600' }}>
+                    <span style={{ color: p.active ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
                       {p.active ? 'Activo' : 'Agotado'}
                     </span>
                   </div>
@@ -816,7 +816,7 @@ const AdminPanel = () => {
               className="flex items-center justify-between"
               style={{ backgroundColor: '#080D1A', padding: '10px 16px' }}
             >
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
                 Mostrando 1–{filtered.length} de {products.length} productos
               </span>
               <div className="flex items-center" style={{ gap: '4px' }}>
@@ -833,7 +833,7 @@ const AdminPanel = () => {
                     style={{ width: '28px', height: '28px', backgroundColor: btn.active ? '#24A8F5' : '#1B2333', borderRadius: '4px', color: '#F5F7FA' }}
                   >
                     {typeof btn.label === 'string'
-                      ? <span style={{ fontFamily: 'Inter', fontSize: '12px', fontWeight: btn.active ? '700' : 'normal' }}>{btn.label}</span>
+                      ? <span style={{ fontFamily: 'Poppins', fontSize: '12px', fontWeight: btn.active ? '700' : 'normal' }}>{btn.label}</span>
                       : btn.label}
                   </div>
                 ))}

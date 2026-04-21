@@ -59,10 +59,10 @@ const ProductImage = ({ image_url, brand, name, height, category_id }) => {
       }}
     >
       {Icon && <Icon size={24} color="#24A8F5" style={{ opacity: 0.5 }} />}
-      <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
+      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
         {brand}
       </span>
-      <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600', textAlign: 'center', lineHeight: '1.3' }}>
+      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', textAlign: 'center', lineHeight: '1.3' }}>
         {name}
       </span>
     </div>
@@ -78,7 +78,7 @@ const StockDot = ({ stock }) => (
       backgroundColor: stock > 0 ? '#22C55E' : '#EF4444',
       flexShrink: 0,
     }} />
-    <span style={{ color: stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Inter', fontSize: '10px', fontWeight: '600' }}>
+    <span style={{ color: stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600' }}>
       {stock > 0 ? 'En stock' : 'Sin stock'}
     </span>
   </div>
@@ -132,25 +132,25 @@ const ProductCard = ({
               padding: '3px 8px',
             }}
           >
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '0.5px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '0.5px' }}>
               {badge}
             </span>
           </div>
         )}
 
-        <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '600', letterSpacing: '1px' }}>
+        <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '600', letterSpacing: '1px' }}>
           {brand}
         </span>
 
-        <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', lineHeight: '1.3' }}>
+        <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', lineHeight: '1.3' }}>
           {name}
         </span>
 
-        <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '11px', lineHeight: '1.3', flex: 1 }}>
+        <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px', lineHeight: '1.3', flex: 1 }}>
           {spec}
         </span>
 
-        <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+        <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
           {price}
         </span>
 
@@ -193,26 +193,26 @@ const ProductCard = ({
               padding: '3px 8px',
             }}
           >
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '0.5px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '0.5px' }}>
               {badge}
             </span>
           </div>
         )}
       </div>
 
-      <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '600', letterSpacing: '1px' }}>
+      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600', letterSpacing: '1px' }}>
         {brand}
       </span>
 
-      <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+      <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
         {name}
       </span>
 
-      <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px', flex: 1 }}>
+      <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px', flex: 1 }}>
         {spec}
       </span>
 
-      <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+      <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
         {price}
       </span>
 

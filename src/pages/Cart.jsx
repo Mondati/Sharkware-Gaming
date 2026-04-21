@@ -48,10 +48,10 @@ const Cart = () => {
           <ArrowLeft size={20} color="#F5F7FA" />
         </Link>
         <div className="flex flex-col items-center">
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
             Mi carrito
           </span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
             {totalQty} {totalQty === 1 ? 'producto' : 'productos'}
           </span>
         </div>
@@ -65,11 +65,11 @@ const Cart = () => {
         className="hidden md:flex items-center w-full"
         style={{ backgroundColor: '#0A0F1C', height: '44px', padding: `0 ${sidePadding}`, gap: '8px' }}
       >
-        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>
+        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
           Inicio
         </Link>
         <ChevronRight size={14} color="#1B2333" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
           Mi Carrito
         </span>
       </div>
@@ -93,13 +93,13 @@ const Cart = () => {
               >
                 <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '80px', height: '80px', flexShrink: 0 }} />
                 <div className="flex flex-col" style={{ gap: '2px' }}>
-                  <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
+                  <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
                     {item.brand}
                   </span>
-                  <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', lineHeight: '1.3' }}>
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', lineHeight: '1.3' }}>
                     {item.name}
                   </span>
-                  <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>
+                  <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
                     {item.spec}
                   </span>
                 </div>
@@ -117,7 +117,7 @@ const Cart = () => {
                 </button>
 
                 {/* Price */}
-                <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
+                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
                   {fmt(item.price * item.qty)}
                 </span>
 
@@ -131,7 +131,7 @@ const Cart = () => {
                     <Minus size={12} color="#AAB3C5" />
                   </button>
                   <div className="flex items-center justify-center" style={{ width: '32px', height: '30px' }}>
-                    <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}>
+                    <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>
                       {item.qty}
                     </span>
                   </div>
@@ -161,14 +161,14 @@ const Cart = () => {
               value={coupon}
               onChange={e => setCoupon(e.target.value)}
               className="bg-transparent border-none outline-none w-full"
-              style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}
+              style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}
             />
           </div>
           <button
             className="flex items-center justify-center border-none cursor-pointer"
             style={{ backgroundColor: '#1B2333', borderRadius: '10px', height: '44px', padding: '0 18px', flexShrink: 0 }}
           >
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}>Aplicar</span>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>Aplicar</span>
           </button>
         </div>
 
@@ -177,39 +177,39 @@ const Cart = () => {
           className="flex flex-col"
           style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '16px', gap: '12px', border: '1px solid #1B2333' }}
         >
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
             Resumen del pedido
           </span>
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
 
           <div className="flex items-center">
-            <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>
+            <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
               Subtotal ({totalQty} {totalQty === 1 ? 'ítem' : 'ítems'})
             </span>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
               {fmt(subtotal)}
             </span>
           </div>
 
           <div className="flex items-center">
-            <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Envío</span>
-            <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}>Gratis</span>
+            <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Envío</span>
+            <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>Gratis</span>
           </div>
 
           <div className="flex items-center">
-            <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Descuento</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700' }}>− $0</span>
+            <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Descuento</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>− $0</span>
           </div>
 
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
 
           <div className="flex items-center">
-            <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>Total</span>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '22px', fontWeight: '800' }}>
+            <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>Total</span>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>
               {fmt(subtotal)}
             </span>
           </div>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
             en 12 cuotas sin interés de {fmt(Math.round(subtotal / 12))}
           </span>
 
@@ -220,7 +220,7 @@ const Cart = () => {
             style={{ backgroundColor: '#00C8FF', borderRadius: '12px', height: '50px', gap: '10px', width: '100%' }}
           >
             <Lock size={18} color="#FFFFFF" />
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '15px', fontWeight: '800' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>
               Finalizar compra
             </span>
           </Link>
@@ -228,7 +228,7 @@ const Cart = () => {
           {/* Keep shopping */}
           <Link to="/" className="flex items-center justify-center no-underline" style={{ gap: '6px' }}>
             <ArrowLeft size={14} color="#24A8F5" />
-            <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
               Seguir comprando
             </span>
           </Link>
@@ -248,11 +248,11 @@ const Cart = () => {
 
           {/* Header */}
           <div className="flex items-center" style={{ width: '100%' }}>
-            <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Inter', fontSize: '24px', fontWeight: '800' }}>
+            <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
               Mi Carrito
             </span>
             <div style={{ backgroundColor: '#1B2333', borderRadius: '20px', padding: '4px 12px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
                 {totalQty} {totalQty === 1 ? 'producto' : 'productos'}
               </span>
             </div>
@@ -264,7 +264,7 @@ const Cart = () => {
             style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '20px', gap: '12px', border: '1px solid #1B2333' }}
           >
             {items.length === 0 && (
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', textAlign: 'center', padding: '20px 0' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', textAlign: 'center', padding: '20px 0' }}>
                 Tu carrito está vacío.
               </span>
             )}
@@ -282,18 +282,18 @@ const Cart = () => {
                   >
                     <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '90px', height: '90px', flexShrink: 0 }} />
                     <div className="flex flex-col" style={{ gap: '4px' }}>
-                      <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
+                      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
                         {item.brand}
                       </span>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+                      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                         {item.name}
                       </span>
-                      <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>
+                      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
                         {item.spec}
                       </span>
                     </div>
                   </Link>
-                  <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800', flexShrink: 0 }}>
+                  <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800', flexShrink: 0 }}>
                     {fmt(item.price * item.qty)}
                   </span>
                   <div className="flex items-center" style={{ backgroundColor: '#070B16', borderRadius: '8px', flexShrink: 0 }}>
@@ -305,7 +305,7 @@ const Cart = () => {
                       <Minus size={14} color="#AAB3C5" />
                     </button>
                     <div className="flex items-center justify-center" style={{ width: '36px', height: '34px' }}>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+                      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                         {item.qty}
                       </span>
                     </div>
@@ -342,21 +342,21 @@ const Cart = () => {
                 value={coupon}
                 onChange={e => setCoupon(e.target.value)}
                 className="bg-transparent border-none outline-none w-full"
-                style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}
+                style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}
               />
             </div>
             <button
               className="flex items-center justify-center border-none cursor-pointer"
               style={{ backgroundColor: '#1B2333', borderRadius: '10px', height: '44px', padding: '0 20px' }}
             >
-              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>Aplicar</span>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Aplicar</span>
             </button>
           </div>
 
           {/* Keep shopping */}
           <Link to="/" className="flex items-center no-underline" style={{ gap: '8px' }}>
             <ArrowLeft size={16} color="#24A8F5" />
-            <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>
+            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
               Seguir comprando
             </span>
           </Link>
@@ -367,39 +367,39 @@ const Cart = () => {
           className="flex flex-col"
           style={{ width: '380px', flexShrink: 0, backgroundColor: '#0E1424', borderRadius: '14px', padding: '11px 24px 24px 24px', gap: '16px', border: '1px solid #1B2333' }}
         >
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '800' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>
             Resumen del pedido
           </span>
           <div style={{ backgroundColor: '#1B2333', height: '1px', width: '100%' }} />
 
           <div className="flex items-center" style={{ width: '100%' }}>
-            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>
+            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
               Subtotal ({totalQty} {totalQty === 1 ? 'ítem' : 'ítems'})
             </span>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
               {fmt(subtotal)}
             </span>
           </div>
 
           <div className="flex items-center" style={{ width: '100%' }}>
-            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>Envío</span>
-            <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>Gratis</span>
+            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Envío</span>
+            <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Gratis</span>
           </div>
 
           <div className="flex items-center" style={{ width: '100%' }}>
-            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>Descuento</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>−$0</span>
+            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Descuento</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>−$0</span>
           </div>
 
           <div style={{ backgroundColor: '#1B2333', height: '1px', width: '100%' }} />
 
           <div className="flex items-center" style={{ width: '100%' }}>
-            <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '800' }}>Total</span>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '22px', fontWeight: '800' }}>
+            <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Total</span>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>
               {fmt(subtotal)}
             </span>
           </div>
-          <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '12px' }}>
+          <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '12px' }}>
             en 12 cuotas sin interés de {fmt(Math.round(subtotal / 12))}
           </span>
 
@@ -409,7 +409,7 @@ const Cart = () => {
             style={{ backgroundColor: '#00C8FF', borderRadius: '12px', height: '52px', gap: '10px' }}
           >
             <Lock size={18} color="#FFFFFF" />
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '15px', fontWeight: '800' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>
               Finalizar compra
             </span>
           </Link>

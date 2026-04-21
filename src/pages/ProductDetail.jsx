@@ -28,10 +28,10 @@ const ImgOrPlaceholder = ({ src, brand, name, style }) => {
   }
   return (
     <div className="flex flex-col items-center justify-center w-full h-full" style={{ gap: '8px', ...style }}>
-      <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', letterSpacing: '2px' }}>
+      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', letterSpacing: '2px' }}>
         {brand}
       </span>
-      <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600', textAlign: 'center', lineHeight: '1.3', padding: '0 16px' }}>
+      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600', textAlign: 'center', lineHeight: '1.3', padding: '0 16px' }}>
         {name}
       </span>
     </div>
@@ -55,10 +55,10 @@ const ProductDetail = () => {
       <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
         <Navbar />
         <div className="flex flex-col flex-1 items-center justify-center" style={{ gap: '16px' }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
             Producto no encontrado
           </span>
-          <Link to="/" style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '14px' }}>
+          <Link to="/" style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px' }}>
             ← Volver al inicio
           </Link>
         </div>
@@ -97,7 +97,7 @@ const ProductDetail = () => {
         <Link to="/" className="flex items-center no-underline">
           <ArrowLeft size={20} color="#F5F7FA" />
         </Link>
-        <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '600' }}>
+        <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '600' }}>
           Detalle del Producto
         </span>
         <button
@@ -157,15 +157,15 @@ const ProductDetail = () => {
         className="hidden md:flex items-center w-full"
         style={{ backgroundColor: '#0A0F1C', height: '44px', padding: `0 ${sidePadding}`, gap: '8px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}
       >
-        <Link to="/" className="no-underline" style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>
+        <Link to="/" className="no-underline" style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>
           Inicio
         </Link>
         <ChevronRight size={13} color="#2A3347" />
-        <Link to={`/?cat=${product.category_id}`} className="no-underline" style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>
+        <Link to={`/?cat=${product.category_id}`} className="no-underline" style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>
           {categoryLabel}
         </Link>
         <ChevronRight size={13} color="#2A3347" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
           {product.name}
         </span>
       </div>
@@ -190,7 +190,7 @@ const ProductDetail = () => {
                 backgroundColor: product.badge === 'NUEVO' ? '#22C55E' : '#EF4444',
                 borderRadius: '5px', padding: '4px 10px',
               }}>
-                <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>
+                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>
                   {product.badge}
                 </span>
               </div>
@@ -225,7 +225,7 @@ const ProductDetail = () => {
 
           {/* Brand + actions */}
           <div className="flex items-center" style={{ gap: '8px', marginBottom: '10px' }}>
-            <span className="flex-1" style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
+            <span className="flex-1" style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
               {product.brand}
             </span>
             <button style={{ backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '7px', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -237,7 +237,7 @@ const ProductDetail = () => {
           </div>
 
           {/* Title */}
-          <h1 style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '26px', fontWeight: '800', lineHeight: '1.25', margin: '0 0 10px 0' }}>
+          <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '26px', fontWeight: '800', lineHeight: '1.25', margin: '0 0 10px 0' }}>
             {product.name}
           </h1>
 
@@ -246,8 +246,8 @@ const ProductDetail = () => {
             {[1,2,3,4,5].map((n) => (
               <Star key={n} size={13} color="#F59E0B" fill="#F59E0B" />
             ))}
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', marginLeft: '4px' }}>4.8</span>
-            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px' }}>(127 reseñas)</span>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', marginLeft: '4px' }}>4.8</span>
+            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px' }}>(127 reseñas)</span>
           </div>
 
           {/* Divider */}
@@ -255,7 +255,7 @@ const ProductDetail = () => {
 
           {/* Price */}
           <div style={{ marginBottom: '14px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '40px', fontWeight: '800', lineHeight: 1 }}>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '40px', fontWeight: '800', lineHeight: 1 }}>
               {product.price}
             </span>
           </div>
@@ -263,13 +263,13 @@ const ProductDetail = () => {
           {/* Payment method tags */}
           <div className="flex items-center" style={{ gap: '8px', marginBottom: '20px' }}>
             <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 12px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600' }}>MercadoPago</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>MercadoPago</span>
             </div>
             <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 12px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600' }}>BTC · ETH · USDT</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>BTC · ETH · USDT</span>
             </div>
             <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 12px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600' }}>Transferencia</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Transferencia</span>
             </div>
           </div>
 
@@ -277,13 +277,13 @@ const ProductDetail = () => {
           <div className="flex items-center" style={{ gap: '20px', marginBottom: '20px' }}>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: product.stock > 0 ? '#22C55E' : '#EF4444', flexShrink: 0 }} />
-              <span style={{ color: product.stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+              <span style={{ color: product.stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
                 {product.stock > 0 ? 'En stock' : 'Sin stock'}
               </span>
             </div>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <Truck size={14} color="#24A8F5" />
-              <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>Envío gratis a todo el país</span>
+              <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>Envío gratis a todo el país</span>
             </div>
           </div>
 
@@ -300,10 +300,10 @@ const ProductDetail = () => {
                     >
                       <Icon size={15} color="#24A8F5" />
                       <div className="flex flex-col" style={{ gap: '2px' }}>
-                        <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '1px' }}>
+                        <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '1px' }}>
                           {label}
                         </span>
-                        <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '700' }}>
+                        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '700' }}>
                           {value}
                         </span>
                       </div>
@@ -316,7 +316,7 @@ const ProductDetail = () => {
 
           {/* Quantity */}
           <div className="flex items-center" style={{ gap: '14px', marginBottom: '16px' }}>
-            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>Cantidad:</span>
+            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>Cantidad:</span>
             <div className="flex items-center" style={{ backgroundColor: '#0A0C14', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', overflow: 'hidden' }}>
               <button
                 onClick={() => setQty((q) => Math.max(1, q - 1))}
@@ -328,7 +328,7 @@ const ProductDetail = () => {
                 className="flex items-center justify-center"
                 style={{ width: '44px', height: '40px', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}
               >
-                <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
+                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
               </div>
               <button
                 onClick={() => setQty((q) => q + 1)}
@@ -346,7 +346,7 @@ const ProductDetail = () => {
               style={{ backgroundColor: '#00C8FF', borderRadius: '10px', height: '54px', border: 'none', cursor: 'pointer', gap: '12px', width: '100%' }}
             >
               <ShoppingCart size={18} color="#060810" />
-              <span style={{ color: '#060810', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
+              <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
                 Agregar al carrito
               </span>
             </button>
@@ -354,7 +354,7 @@ const ProductDetail = () => {
               className="flex items-center justify-center"
               style={{ backgroundColor: 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: 'pointer', width: '100%' }}
             >
-              <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+              <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                 Comprar ahora
               </span>
             </button>
@@ -383,7 +383,7 @@ const ProductDetail = () => {
                   marginBottom: '-1px',
                 }}
               >
-                <span style={{ color: isActive ? '#24A8F5' : '#8890A4', fontFamily: 'Inter', fontSize: '14px', fontWeight: isActive ? '700' : '500' }}>
+                <span style={{ color: isActive ? '#24A8F5' : '#8890A4', fontFamily: 'Poppins', fontSize: '14px', fontWeight: isActive ? '700' : '500' }}>
                   {tab}
                 </span>
               </button>
@@ -393,15 +393,15 @@ const ProductDetail = () => {
 
         {activeTab === 0 && (
           <div className="flex w-full" style={{ gap: '48px', alignItems: 'flex-start' }}>
-            <p style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', lineHeight: '1.75', flex: 1, whiteSpace: 'pre-line', margin: 0 }}>
+            <p style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', lineHeight: '1.75', flex: 1, whiteSpace: 'pre-line', margin: 0 }}>
               {product.description}
             </p>
             <div style={{ width: '360px', flexShrink: 0, backgroundColor: '#0A0C14', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}>
               {detailSpecs.map((row, i) => (
                 <div key={row.label}>
                   <div className="flex items-center" style={{ padding: '11px 16px' }}>
-                    <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px', flex: 1 }}>{row.label}</span>
-                    <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600', textAlign: 'right' }}>{row.value}</span>
+                    <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', flex: 1 }}>{row.label}</span>
+                    <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600', textAlign: 'right' }}>{row.value}</span>
                   </div>
                   {i < detailSpecs.length - 1 && <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.04)' }} />}
                 </div>
@@ -415,10 +415,10 @@ const ProductDetail = () => {
             {detailSpecs.map((row, i) => (
               <div key={row.label}>
                 <div className="flex items-baseline" style={{ padding: '13px 24px' }}>
-                  <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px', width: '260px', flexShrink: 0 }}>
+                  <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', width: '260px', flexShrink: 0 }}>
                     {row.label}
                   </span>
-                  <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
                     {row.value}
                   </span>
                 </div>
@@ -429,7 +429,7 @@ const ProductDetail = () => {
         )}
 
         {activeTab === 2 && (
-          <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '14px' }}>
+          <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '14px' }}>
             Las reseñas estarán disponibles próximamente.
           </span>
         )}
@@ -439,10 +439,10 @@ const ProductDetail = () => {
       <div className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 24px`, gap: '20px' }}>
         <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
         <div className="flex items-center">
-          <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '800' }}>
+          <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>
             También te puede gustar
           </span>
-          <Link to="#" className="no-underline" style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+          <Link to="#" className="no-underline" style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
             Ver todos →
           </Link>
         </div>
@@ -459,13 +459,13 @@ const ProductDetail = () => {
               <ImgOrPlaceholder src={p.image_url} brand={p.brand} name={p.name} style={{ backgroundColor: '#0A0C14' }} />
             </div>
             <div className="flex flex-col" style={{ padding: '14px', gap: '6px' }}>
-              <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
+              <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
                 {p.brand}
               </span>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700', lineHeight: '1.3' }}>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700', lineHeight: '1.3' }}>
                 {p.name}
               </span>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
+              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
                 {p.price}
               </span>
             </div>
@@ -479,34 +479,34 @@ const ProductDetail = () => {
         {product.badge && (
           <div className="flex" style={{ gap: '8px' }}>
             <div style={{ backgroundColor: product.badge === 'NUEVO' ? '#22C55E' : '#EF4444', borderRadius: '5px', padding: '4px 10px' }}>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>
+              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>
                 {product.badge}
               </span>
             </div>
           </div>
         )}
 
-        <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
+        <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
           {product.brand}
         </span>
 
-        <h1 style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '20px', fontWeight: '800', lineHeight: '1.25', margin: 0 }}>
+        <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '20px', fontWeight: '800', lineHeight: '1.25', margin: 0 }}>
           {product.name}
         </h1>
 
         <div className="flex items-center" style={{ gap: '5px' }}>
           <Star size={13} color="#F59E0B" fill="#F59E0B" />
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', marginLeft: '2px' }}>4.8</span>
-          <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px' }}>(127 reseñas)</span>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', marginLeft: '2px' }}>4.8</span>
+          <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px' }}>(127 reseñas)</span>
         </div>
 
         <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
 
-        <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '30px', fontWeight: '800' }}>{product.price}</span>
+        <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '30px', fontWeight: '800' }}>{product.price}</span>
 
         <div className="flex items-center" style={{ gap: '6px' }}>
           <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: product.stock > 0 ? '#22C55E' : '#EF4444', flexShrink: 0 }} />
-          <span style={{ color: product.stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>
+          <span style={{ color: product.stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
             {product.stock > 0 ? 'En stock' : 'Sin stock'}
           </span>
         </div>
@@ -523,8 +523,8 @@ const ProductDetail = () => {
                   >
                     <Icon size={14} color="#24A8F5" />
                     <div className="flex flex-col" style={{ gap: '2px' }}>
-                      <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '8px', fontWeight: '700', letterSpacing: '1px' }}>{label}</span>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700' }}>{value}</span>
+                      <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '8px', fontWeight: '700', letterSpacing: '1px' }}>{label}</span>
+                      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700' }}>{value}</span>
                     </div>
                   </div>
                 ))}
@@ -535,7 +535,7 @@ const ProductDetail = () => {
 
         <div className="flex flex-col" style={{ gap: '10px' }}>
           <div className="flex items-center" style={{ gap: '14px' }}>
-            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>Cantidad:</span>
+            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>Cantidad:</span>
             <div className="flex items-center" style={{ backgroundColor: '#0A0C14', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', overflow: 'hidden' }}>
               <button
                 onClick={() => setQty((q) => Math.max(1, q - 1))}
@@ -544,7 +544,7 @@ const ProductDetail = () => {
                 −
               </button>
               <div className="flex items-center justify-center" style={{ width: '44px', height: '40px', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
-                <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
+                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
               </div>
               <button
                 onClick={() => setQty((q) => q + 1)}
@@ -560,14 +560,14 @@ const ProductDetail = () => {
             style={{ backgroundColor: '#00C8FF', borderRadius: '10px', height: '52px', border: 'none', cursor: 'pointer', gap: '10px', width: '100%' }}
           >
             <ShoppingCart size={18} color="#060810" />
-            <span style={{ color: '#060810', fontFamily: 'Inter', fontSize: '15px', fontWeight: '800' }}>Agregar al carrito</span>
+            <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>Agregar al carrito</span>
           </button>
 
           <button
             className="flex items-center justify-center"
             style={{ backgroundColor: 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: 'pointer', width: '100%' }}
           >
-            <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>Comprar ahora</span>
+            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Comprar ahora</span>
           </button>
         </div>
 
@@ -578,12 +578,12 @@ const ProductDetail = () => {
             className="flex items-center justify-between w-full border-none cursor-pointer"
             style={{ backgroundColor: 'transparent', padding: '16px' }}
           >
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>Descripción</span>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Descripción</span>
             <ChevronDown size={18} color="#8890A4" style={{ transform: descOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }} />
           </button>
           {descOpen && (
             <div style={{ padding: '0 16px 16px' }}>
-              <p style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', lineHeight: '1.65', margin: 0, whiteSpace: 'pre-line' }}>
+              <p style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', lineHeight: '1.65', margin: 0, whiteSpace: 'pre-line' }}>
                 {product.description}
               </p>
             </div>
@@ -597,7 +597,7 @@ const ProductDetail = () => {
             className="flex items-center justify-between w-full border-none cursor-pointer"
             style={{ backgroundColor: 'transparent', padding: '16px' }}
           >
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>Ficha técnica</span>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Ficha técnica</span>
             <ChevronDown size={18} color="#8890A4" style={{ transform: specsOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }} />
           </button>
           {specsOpen && (
@@ -606,8 +606,8 @@ const ProductDetail = () => {
                 {detailSpecs.map((row, i) => (
                   <div key={row.label}>
                     <div className="flex items-center" style={{ padding: '11px 14px' }}>
-                      <span className="flex-1" style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px' }}>{row.label}</span>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '600', textAlign: 'right' }}>{row.value}</span>
+                      <span className="flex-1" style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px' }}>{row.label}</span>
+                      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600', textAlign: 'right' }}>{row.value}</span>
                     </div>
                     {i < detailSpecs.length - 1 && <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.04)' }} />}
                   </div>
@@ -619,7 +619,7 @@ const ProductDetail = () => {
 
         {/* Related */}
         <div className="flex flex-col" style={{ gap: '12px' }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '16px', fontWeight: '800' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
             También te puede gustar
           </span>
           <div className="grid grid-cols-2" style={{ gap: '10px' }}>
@@ -634,9 +634,9 @@ const ProductDetail = () => {
                   <ImgOrPlaceholder src={p.image_url} brand={p.brand} name={p.name} />
                 </div>
                 <div className="flex flex-col" style={{ padding: '10px', gap: '4px' }}>
-                  <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>{p.brand}</span>
-                  <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '12px', fontWeight: '700', lineHeight: '1.3' }}>{p.name}</span>
-                  <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '800' }}>{p.price}</span>
+                  <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>{p.brand}</span>
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '700', lineHeight: '1.3' }}>{p.name}</span>
+                  <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '800' }}>{p.price}</span>
                 </div>
               </Link>
             ))}
