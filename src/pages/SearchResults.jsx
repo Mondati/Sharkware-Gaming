@@ -12,7 +12,7 @@ import { SORT_OPTIONS } from '../data/sortOptions'
 import { searchProducts } from '../utils/search'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 
-const LIMIT = 1
+const LIMIT = 3
 const FILTER_DEFAULTS = { category: 'all', brand: '', minPrice: '', maxPrice: '', sort: 'relevance' }
 
 const EmptyState = ({ isMobile, hasActiveFilters, onClear }) => (

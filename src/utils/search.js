@@ -3,6 +3,6 @@ export const searchProducts = (query, products) => {
   if (!q) return []
   return products.filter((p) => {
     if (!p.active) return false
-    return `${p.name} ${p.brand}`.toLowerCase().includes(q)
+    return `${p.name} ${p.brand} ${p.spec}`.toLowerCase().includes(q)
   })
 }
