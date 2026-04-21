@@ -50,7 +50,7 @@ const FilterPanel = ({
 
       {/* Categoría */}
       <div className="flex flex-col" style={{ gap: '8px' }}>
-        <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+        <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
           Categoría
         </span>
         <div className="flex flex-col" style={{ gap: '2px' }}>
@@ -66,7 +66,7 @@ const FilterPanel = ({
                   borderRadius: '6px',
                   padding: '7px 10px',
                   color: isActive ? '#24A8F5' : '#AAB3C5',
-                  fontFamily: 'Inter',
+                  fontFamily: 'Poppins',
                   fontSize: '13px',
                   cursor: 'pointer',
                   textAlign: 'left',
@@ -83,7 +83,7 @@ const FilterPanel = ({
       {/* Marca */}
       {availableBrands.length > 0 && (
         <div className="flex flex-col" style={{ gap: '8px' }}>
-          <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
             Marca
           </span>
           <div className="flex flex-col" style={{ gap: '2px' }}>
@@ -99,7 +99,7 @@ const FilterPanel = ({
                     borderRadius: '6px',
                     padding: '7px 10px',
                     color: isActive ? '#24A8F5' : '#AAB3C5',
-                    fontFamily: 'Inter',
+                    fontFamily: 'Poppins',
                     fontSize: '13px',
                     cursor: 'pointer',
                     textAlign: 'left',
@@ -116,7 +116,7 @@ const FilterPanel = ({
 
       {/* Precio */}
       <div className="flex flex-col" style={{ gap: '8px' }}>
-        <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+        <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
           Precio (ARS)
         </span>
         <div className="flex flex-col" style={{ gap: '6px' }}>
@@ -134,7 +134,7 @@ const FilterPanel = ({
               borderRadius: '6px',
               padding: '7px 10px',
               color: '#F5F7FA',
-              fontFamily: 'Inter',
+              fontFamily: 'Poppins',
               fontSize: '13px',
               outline: 'none',
               width: '100%',
@@ -155,7 +155,7 @@ const FilterPanel = ({
               borderRadius: '6px',
               padding: '7px 10px',
               color: '#F5F7FA',
-              fontFamily: 'Inter',
+              fontFamily: 'Poppins',
               fontSize: '13px',
               outline: 'none',
               width: '100%',
@@ -163,7 +163,7 @@ const FilterPanel = ({
             }}
           />
           {priceRangeInvalid && (
-            <span style={{ color: '#EF4444', fontFamily: 'Inter', fontSize: '11px' }}>
+            <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '11px' }}>
               El mínimo no puede superar el máximo
             </span>
           )}
@@ -180,7 +180,7 @@ const FilterPanel = ({
             borderRadius: '6px',
             padding: '8px 12px',
             color: '#EF4444',
-            fontFamily: 'Inter',
+            fontFamily: 'Poppins',
             fontSize: '13px',
             cursor: 'pointer',
             textAlign: 'center',
@@ -211,7 +211,7 @@ const FilterPanel = ({
       >
         <div className="flex items-center" style={{ gap: '8px', marginBottom: '20px' }}>
           <SlidersHorizontal size={15} color="#AAB3C5" />
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
             Filtros
           </span>
         </div>
@@ -228,7 +228,7 @@ const FilterPanel = ({
             borderRadius: mobileOpen ? '12px 12px 0 0' : '12px',
             padding: '12px 16px',
             color: '#F5F7FA',
-            fontFamily: 'Inter',
+            fontFamily: 'Poppins',
             fontSize: '14px',
             fontWeight: '600',
             cursor: 'pointer',

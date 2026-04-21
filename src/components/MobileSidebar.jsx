@@ -58,11 +58,11 @@ const MobileSidebar = ({ isOpen, onClose }) => {
           <div className="flex flex-col" style={{ gap: '2px' }}>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#00C8FF', flexShrink: 0 }} />
-              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '16px', fontWeight: '700', letterSpacing: '1px' }}>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700', letterSpacing: '1px' }}>
                 SHARKWARE
               </span>
             </div>
-            <span style={{ color: '#24A8F5', fontFamily: 'Inter', fontSize: '9px', fontWeight: '700', letterSpacing: '2px', paddingLeft: '14px' }}>
+            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '2px', paddingLeft: '14px' }}>
               GAMING
             </span>
           </div>
@@ -78,7 +78,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
         {/* Categories */}
         <div className="flex flex-col" style={{ padding: '12px 0' }}>
           <div style={{ padding: '0 16px 8px' }}>
-            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
+            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
               CATEGORÍAS
             </span>
           </div>
@@ -113,7 +113,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
               >
                 <Icon size={16} color="#24A8F5" />
               </div>
-              <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>
+              <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
                 {label}
               </span>
               <ChevronRight size={15} color="#454E64" />
@@ -141,7 +141,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
               }}
             >
               <Icon size={18} color="#8890A4" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px', fontWeight: '500' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '500' }}>
                 {label}
               </span>
             </Link>

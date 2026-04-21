@@ -22,12 +22,12 @@ const EmptyState = ({ isMobile, hasActiveFilters, onClear }) => (
   >
     <SearchX size={isMobile ? 44 : 52} color="#454E64" />
     <div className="flex flex-col items-center" style={{ gap: '8px' }}>
-      <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: isMobile ? '16px' : '18px', fontWeight: '700', textAlign: 'center' }}>
+      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: isMobile ? '16px' : '18px', fontWeight: '700', textAlign: 'center' }}>
         {hasActiveFilters
           ? 'No se encontraron productos con los filtros seleccionados'
           : 'No se encontraron productos'}
       </span>
-      <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: isMobile ? '13px' : '14px', textAlign: 'center' }}>
+      <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: isMobile ? '13px' : '14px', textAlign: 'center' }}>
         {hasActiveFilters
           ? 'Probá cambiando o eliminando los filtros'
           : 'Probá con otros términos de búsqueda'}
@@ -39,7 +39,7 @@ const EmptyState = ({ isMobile, hasActiveFilters, onClear }) => (
         style={{
           backgroundColor: '#00C8FF',
           color: '#060810',
-          fontFamily: 'Inter',
+          fontFamily: 'Poppins',
           fontSize: '14px',
           fontWeight: '700',
           borderRadius: '8px',
@@ -57,7 +57,7 @@ const EmptyState = ({ isMobile, hasActiveFilters, onClear }) => (
         style={{
           backgroundColor: '#00C8FF',
           color: '#060810',
-          fontFamily: 'Inter',
+          fontFamily: 'Poppins',
           fontSize: '14px',
           fontWeight: '700',
           borderRadius: '8px',
@@ -82,7 +82,7 @@ const SortSelect = ({ isMobile, sortOrder, onChange }) => (
       borderRadius: '8px',
       padding: isMobile ? '6px 10px' : '7px 12px',
       color: '#AAB3C5',
-      fontFamily: 'Inter',
+      fontFamily: 'Poppins',
       fontSize: isMobile ? '12px' : '13px',
       cursor: 'pointer',
       outline: 'none',
@@ -209,7 +209,7 @@ const SearchResults = () => {
             borderRadius: '20px',
             padding: '4px 12px',
             color: '#AAB3C5',
-            fontFamily: 'Inter',
+            fontFamily: 'Poppins',
             fontSize: '12px',
             cursor: 'pointer',
             display: 'flex',
@@ -227,7 +227,7 @@ const SearchResults = () => {
           backgroundColor: 'transparent',
           border: 'none',
           color: '#24A8F5',
-          fontFamily: 'Inter',
+          fontFamily: 'Poppins',
           fontSize: '12px',
           cursor: 'pointer',
           padding: '4px 6px',
@@ -264,10 +264,10 @@ const SearchResults = () => {
       >
         <div className="flex items-center w-full" style={{ gap: '12px' }}>
           <div className="flex flex-col flex-1" style={{ gap: '4px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
               {q ? <>Resultados para &ldquo;{q}&rdquo;</> : 'Todos los productos'}
             </span>
-            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>
+            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>
               {countLabel}
             </span>
           </div>
@@ -282,10 +282,10 @@ const SearchResults = () => {
       >
         <div className="flex items-center w-full" style={{ gap: '10px' }}>
           <div className="flex flex-col flex-1" style={{ gap: '2px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
               {q ? <>&ldquo;{q}&rdquo;</> : 'Todos los productos'}
             </span>
-            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {countLabel}
             </span>
           </div>

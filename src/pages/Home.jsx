@@ -70,38 +70,38 @@ const Home = () => {
             style={{ backgroundColor: '#00C8FF22', borderRadius: '5px', padding: '5px 14px', gap: '8px' }}
           >
             <div style={{ backgroundColor: '#00C8FF', borderRadius: '50%', width: '6px', height: '6px', flexShrink: 0 }} />
-            <span style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '11px', fontWeight: '600', letterSpacing: '2px' }}>
+            <span style={{ color: '#00C8FF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '2px' }}>
               NUEVO LANZAMIENTO
             </span>
           </div>
-          <h1 style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '72px', fontWeight: '900', letterSpacing: '-4px', lineHeight: 1, margin: 0 }}>
+          <h1 style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '72px', fontWeight: '900', letterSpacing: '-4px', lineHeight: 1, margin: 0 }}>
             RTX 5090
           </h1>
-          <p style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '16px', maxWidth: '520px', lineHeight: '1.5', margin: 0 }}>
+          <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '16px', maxWidth: '520px', lineHeight: '1.5', margin: 0 }}>
             Build Personalizada Pro Edition — El poder definitivo para gaming extremo
           </p>
           <div className="flex flex-col" style={{ gap: '4px' }}>
-            <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '12px' }}>Precio desde</span>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '32px', fontWeight: '800' }}>$2.499.999 ARS</span>
+            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px' }}>Precio desde</span>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '32px', fontWeight: '800' }}>$2.499.999 ARS</span>
           </div>
           <div className="flex items-center" style={{ gap: '14px' }}>
             <button
               onMouseEnter={() => setHeroBtnHovered(true)}
               onMouseLeave={() => setHeroBtnHovered(false)}
-              style={{ backgroundColor: heroBtnHovered ? '#00B8EF' : '#00C8FF', borderRadius: '8px', padding: '14px 28px', color: '#060810', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700', border: 'none', cursor: 'pointer', transition: 'background-color 0.15s ease' }}
+              style={{ backgroundColor: heroBtnHovered ? '#00B8EF' : '#00C8FF', borderRadius: '8px', padding: '14px 28px', color: '#060810', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700', border: 'none', cursor: 'pointer', transition: 'background-color 0.15s ease' }}
             >
               Comprar ahora
             </button>
             <button
               onMouseEnter={() => setHeroBtn2Hovered(true)}
               onMouseLeave={() => setHeroBtn2Hovered(false)}
-              style={{ backgroundColor: heroBtn2Hovered ? '#252840' : '#1E2232', borderRadius: '8px', padding: '14px 28px', color: '#FFFFFF', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600', border: 'none', cursor: 'pointer', transition: 'background-color 0.15s ease' }}
+              style={{ backgroundColor: heroBtn2Hovered ? '#252840' : '#1E2232', borderRadius: '8px', padding: '14px 28px', color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600', border: 'none', cursor: 'pointer', transition: 'background-color 0.15s ease' }}
             >
               Ver especificaciones
             </button>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <Cpu size={14} color="#8890A4" />
-              <span style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px' }}>Builds Personalizadas</span>
+              <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>Builds Personalizadas</span>
             </div>
           </div>
         </div>
@@ -109,7 +109,7 @@ const Home = () => {
           className="flex items-center justify-center"
           style={{ backgroundColor: '#1E2232', borderRadius: '20px', width: '400px', height: '380px', flexShrink: 0 }}
         >
-          <span style={{ color: '#00C8FF44', fontFamily: 'Inter', fontSize: '48px', fontWeight: '900' }}>RTX 5090</span>
+          <span style={{ color: '#00C8FF44', fontFamily: 'Poppins', fontSize: '48px', fontWeight: '900' }}>RTX 5090</span>
         </div>
       </section>
 
@@ -127,27 +127,27 @@ const Home = () => {
           style={{ backgroundColor: '#00C8FF22', borderRadius: '5px', padding: '4px 12px', gap: '6px' }}
         >
           <div style={{ backgroundColor: '#00C8FF', borderRadius: '50%', width: '5px', height: '5px', flexShrink: 0 }} />
-          <span style={{ color: '#00C8FF', fontFamily: 'Inter', fontSize: '9px', fontWeight: '600', letterSpacing: '2px' }}>
+          <span style={{ color: '#00C8FF', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '600', letterSpacing: '2px' }}>
             NUEVO LANZAMIENTO
           </span>
         </div>
-        <h1 style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '40px', fontWeight: '900', letterSpacing: '-2px', lineHeight: 1, margin: 0 }}>
+        <h1 style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '40px', fontWeight: '900', letterSpacing: '-2px', lineHeight: 1, margin: 0 }}>
           RTX 5090
         </h1>
-        <p style={{ color: '#8890A4', fontFamily: 'Inter', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
+        <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
           Build Personalizada
         </p>
         <div className="flex flex-col" style={{ gap: '2px' }}>
-          <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '800' }}>$2.499.999 ARS</span>
+          <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>$2.499.999 ARS</span>
         </div>
         <div className="flex items-center" style={{ gap: '10px' }}>
           <button
-            style={{ backgroundColor: '#00C8FF', borderRadius: '8px', padding: '12px 24px', color: '#060810', fontFamily: 'Inter', fontSize: '13px', fontWeight: '700', border: 'none', cursor: 'pointer' }}
+            style={{ backgroundColor: '#00C8FF', borderRadius: '8px', padding: '12px 24px', color: '#060810', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', border: 'none', cursor: 'pointer' }}
           >
             Comprar
           </button>
           <button
-            style={{ backgroundColor: '#1E2232', borderRadius: '8px', padding: '12px 20px', color: '#FFFFFF', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600', border: 'none', cursor: 'pointer' }}
+            style={{ backgroundColor: '#1E2232', borderRadius: '8px', padding: '12px 20px', color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600', border: 'none', cursor: 'pointer' }}
           >
             Ver specs
           </button>
@@ -190,7 +190,7 @@ const Home = () => {
               }}
             >
               {Icon && <Icon size={14} color={isActive ? '#060810' : '#AAB3C5'} />}
-              <span style={{ color: isActive ? '#060810' : '#AAB3C5', fontFamily: 'Inter', fontSize: '13px', fontWeight: isActive ? '700' : '600' }}>
+              <span style={{ color: isActive ? '#060810' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: isActive ? '700' : '600' }}>
                 {label}
               </span>
             </button>
@@ -227,7 +227,7 @@ const Home = () => {
               }}
             >
               {Icon && <Icon size={12} color={isActive ? '#060810' : '#AAB3C5'} />}
-              <span style={{ color: isActive ? '#060810' : '#AAB3C5', fontFamily: 'Inter', fontSize: '12px', fontWeight: isActive ? '700' : '600' }}>
+              <span style={{ color: isActive ? '#060810' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: isActive ? '700' : '600' }}>
                 {label}
               </span>
             </button>
@@ -242,7 +242,7 @@ const Home = () => {
           {/* Desktop — categoría filtrada */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
                 {categories.find((c) => c.id === activeCategory)?.label}
               </span>
               <select
@@ -254,7 +254,7 @@ const Home = () => {
                   borderRadius: '8px',
                   padding: '7px 12px',
                   color: '#AAB3C5',
-                  fontFamily: 'Inter',
+                  fontFamily: 'Poppins',
                   fontSize: '13px',
                   cursor: 'pointer',
                   outline: 'none',
@@ -266,7 +266,7 @@ const Home = () => {
               </select>
             </div>
             {sortedFilteredByCategory.length === 0 ? (
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
                 No hay productos en esta categoría.
               </span>
             ) : (
@@ -283,7 +283,7 @@ const Home = () => {
           {/* Mobile — categoría filtrada */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
                 {categories.find((c) => c.id === activeCategory)?.label}
               </span>
               <select
@@ -295,7 +295,7 @@ const Home = () => {
                   borderRadius: '8px',
                   padding: '6px 10px',
                   color: '#AAB3C5',
-                  fontFamily: 'Inter',
+                  fontFamily: 'Poppins',
                   fontSize: '12px',
                   cursor: 'pointer',
                   outline: 'none',
@@ -307,7 +307,7 @@ const Home = () => {
               </select>
             </div>
             {sortedFilteredByCategory.length === 0 ? (
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
                 No hay productos en esta categoría.
               </span>
             ) : (
@@ -326,7 +326,7 @@ const Home = () => {
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
                 Nuevos Productos
               </span>
               <Link
@@ -340,7 +340,7 @@ const Home = () => {
                   borderRadius: '4px',
                   border: hoveredVerTodos === 'nuevos-d' ? '1px solid #24A8F5' : '1px solid #1B2333',
                   color: hoveredVerTodos === 'nuevos-d' ? '#00C8FF' : '#8890A4',
-                  fontFamily: 'Inter',
+                  fontFamily: 'Poppins',
                   fontSize: '12px',
                   fontWeight: '600',
                   transition: 'color 0.15s ease, border-color 0.15s ease',
@@ -362,7 +362,7 @@ const Home = () => {
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
                 Nuevos Productos
               </span>
               <Link
@@ -376,7 +376,7 @@ const Home = () => {
                   borderRadius: '4px',
                   border: hoveredVerTodos === 'nuevos-m' ? '1px solid #24A8F5' : '1px solid #1B2333',
                   color: hoveredVerTodos === 'nuevos-m' ? '#00C8FF' : '#8890A4',
-                  fontFamily: 'Inter',
+                  fontFamily: 'Poppins',
                   fontSize: '11px',
                   fontWeight: '600',
                   transition: 'color 0.15s ease, border-color 0.15s ease',
@@ -398,7 +398,7 @@ const Home = () => {
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 40px`, gap: '20px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
                 Notebooks Gamer
               </span>
               <Link
@@ -412,7 +412,7 @@ const Home = () => {
                   borderRadius: '4px',
                   border: hoveredVerTodos === 'notebooks-d' ? '1px solid #24A8F5' : '1px solid #1B2333',
                   color: hoveredVerTodos === 'notebooks-d' ? '#00C8FF' : '#8890A4',
-                  fontFamily: 'Inter',
+                  fontFamily: 'Poppins',
                   fontSize: '12px',
                   fontWeight: '600',
                   transition: 'color 0.15s ease, border-color 0.15s ease',
@@ -438,7 +438,7 @@ const Home = () => {
                       borderRadius: '20px',
                       padding: '6px 16px',
                       color: isActive ? '#060810' : '#AAB3C5',
-                      fontFamily: 'Inter',
+                      fontFamily: 'Poppins',
                       fontSize: '12px',
                       fontWeight: isActive ? '700' : 'normal',
                       transition: 'background-color 0.15s ease',
@@ -450,7 +450,7 @@ const Home = () => {
               })}
             </div>
             {filteredNotebooks.length === 0 ? (
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
                 Sin resultados para este filtro.
               </span>
             ) : (
@@ -467,7 +467,7 @@ const Home = () => {
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
                 Notebooks Gamer
               </span>
               <Link
@@ -481,7 +481,7 @@ const Home = () => {
                   borderRadius: '4px',
                   border: hoveredVerTodos === 'notebooks-m' ? '1px solid #24A8F5' : '1px solid #1B2333',
                   color: hoveredVerTodos === 'notebooks-m' ? '#00C8FF' : '#8890A4',
-                  fontFamily: 'Inter',
+                  fontFamily: 'Poppins',
                   fontSize: '11px',
                   fontWeight: '600',
                   transition: 'color 0.15s ease, border-color 0.15s ease',
@@ -503,7 +503,7 @@ const Home = () => {
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 40px`, gap: '20px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '24px', fontWeight: '700' }}>
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
                 Monitores Gaming
               </span>
               <Link
@@ -517,7 +517,7 @@ const Home = () => {
                   borderRadius: '4px',
                   border: hoveredVerTodos === 'monitores-d' ? '1px solid #24A8F5' : '1px solid #1B2333',
                   color: hoveredVerTodos === 'monitores-d' ? '#00C8FF' : '#8890A4',
-                  fontFamily: 'Inter',
+                  fontFamily: 'Poppins',
                   fontSize: '12px',
                   fontWeight: '600',
                   transition: 'color 0.15s ease, border-color 0.15s ease',
@@ -539,7 +539,7 @@ const Home = () => {
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '18px', fontWeight: '700' }}>
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
                 Monitores Gaming
               </span>
               <Link
@@ -553,7 +553,7 @@ const Home = () => {
                   borderRadius: '4px',
                   border: hoveredVerTodos === 'monitores-m' ? '1px solid #24A8F5' : '1px solid #1B2333',
                   color: hoveredVerTodos === 'monitores-m' ? '#00C8FF' : '#8890A4',
-                  fontFamily: 'Inter',
+                  fontFamily: 'Poppins',
                   fontSize: '11px',
                   fontWeight: '600',
                   transition: 'color 0.15s ease, border-color 0.15s ease',

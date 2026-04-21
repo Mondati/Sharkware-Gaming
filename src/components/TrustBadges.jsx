@@ -13,7 +13,7 @@ const TrustBadges = ({ size = 18, layout = 'row' }) => {
         {badges.map(({ icon: Icon, color, label }) => (
           <div key={label} className="flex flex-col items-center" style={{ gap: '4px' }}>
             <Icon size={size} color={color} />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>{label}</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{label}</span>
           </div>
         ))}
       </div>
@@ -25,7 +25,7 @@ const TrustBadges = ({ size = 18, layout = 'row' }) => {
       {badges.map(({ icon: Icon, color, label }) => (
         <div key={label} className="flex items-center" style={{ gap: '4px' }}>
           <Icon size={size} color={color} />
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>{label}</span>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{label}</span>
         </div>
       ))}
     </div>

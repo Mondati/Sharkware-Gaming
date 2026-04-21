@@ -17,7 +17,7 @@ const buildPageItems = (currentPage, totalPages) => {
 const Pagination = ({ currentPage, totalPages, onPage, isMobile }) => {
   const items = buildPageItems(currentPage, totalPages)
   const btnBase = {
-    fontFamily: 'Inter',
+    fontFamily: 'Poppins',
     fontSize: isMobile ? '13px' : '14px',
     fontWeight: '600',
     borderRadius: '8px',
@@ -52,7 +52,7 @@ const Pagination = ({ currentPage, totalPages, onPage, isMobile }) => {
         item === '...' ? (
           <span
             key={`ellipsis-${i}`}
-            style={{ color: '#454E64', fontFamily: 'Inter', fontSize: '14px', padding: '0 4px' }}
+            style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '14px', padding: '0 4px' }}
           >
             …
           </span>

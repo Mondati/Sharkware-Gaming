@@ -45,7 +45,7 @@ const AdminBottomNav = () => {
           <span
             style={{
               color: active ? '#24A8F5' : '#AAB3C5',
-              fontFamily: 'Inter',
+              fontFamily: 'Poppins',
               fontSize: '10px',
               fontWeight: active ? '700' : '500',
             }}

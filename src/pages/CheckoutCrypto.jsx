@@ -31,10 +31,10 @@ const CheckoutCrypto = () => {
           <ArrowLeft size={20} color="#F5F7FA" />
         </Link>
         <div className="flex flex-col items-center">
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
             Elegí tu cripto
           </span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
             Paso 3 de 3
           </span>
         </div>
@@ -45,11 +45,11 @@ const CheckoutCrypto = () => {
 
       {/* ═══════════════ DESKTOP BREADCRUMB ═══════════════ */}
       <div className="hidden md:flex items-center w-full" style={{ backgroundColor: '#0A0F1C', height: '44px', padding: '0 80px', gap: '8px' }}>
-        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Inicio</Link>
+        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Inicio</Link>
         <ChevronRight size={14} color="#1B2333" />
-        <Link to="/checkout" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>Método de pago</Link>
+        <Link to="/checkout" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Método de pago</Link>
         <ChevronRight size={14} color="#1B2333" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '13px', fontWeight: '600' }}>Pagar con cripto</span>
+        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Pagar con cripto</span>
       </div>
 
       {/* ═══════════════ MOBILE CONTENT ═══════════════ */}
@@ -62,9 +62,9 @@ const CheckoutCrypto = () => {
         >
           <CreditCard size={18} color="#24A8F5" />
           <div className="flex-1">
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>4 productos en tu carrito</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>4 productos en tu carrito</span>
           </div>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
             Total: $4.698.996
           </span>
           <ChevronRight size={16} color="#AAB3C5" />
@@ -72,10 +72,10 @@ const CheckoutCrypto = () => {
 
         {/* Title */}
         <div className="flex flex-col" style={{ gap: '4px' }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '20px', fontWeight: '800' }}>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '20px', fontWeight: '800' }}>
             Seleccioná tu criptomoneda
           </span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
             Tu pago será convertido al tipo de cambio actual
           </span>
         </div>
@@ -102,14 +102,14 @@ const CheckoutCrypto = () => {
                   <Icon size={22} color={opt.iconColor} />
                 </div>
                 <div className="flex flex-col flex-1" style={{ gap: '2px' }}>
-                  <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
                     {opt.label}
                   </span>
-                  <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>
+                  <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
                     {opt.ticker}
                   </span>
                 </div>
-                <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700', flexShrink: 0 }}>
+                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700', flexShrink: 0 }}>
                   {opt.amount}
                 </span>
                 <ChevronRight size={18} color={isActive ? opt.borderActive : '#AAB3C5'} style={{ flexShrink: 0 }} />
@@ -122,15 +122,15 @@ const CheckoutCrypto = () => {
         <div className="flex items-center justify-center" style={{ gap: '16px', padding: '16px 0' }}>
           <div className="flex items-center" style={{ gap: '4px' }}>
             <ShieldCheck size={14} color="#22C55E" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Pago seguro</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>Pago seguro</span>
           </div>
           <div className="flex items-center" style={{ gap: '4px' }}>
             <Truck size={14} color="#22C55E" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>Envío gratis</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>Envío gratis</span>
           </div>
           <div className="flex items-center" style={{ gap: '4px' }}>
             <RefreshCw size={14} color="#22C55E" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '11px' }}>30 días de devolución</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>30 días de devolución</span>
           </div>
         </div>
       </div>
@@ -141,8 +141,8 @@ const CheckoutCrypto = () => {
         {/* Left */}
         <div className="flex flex-col" style={{ flex: 1, gap: '24px' }}>
           <div className="flex flex-col" style={{ gap: '6px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '28px', fontWeight: '800' }}>Pagar con criptomonedas</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '15px' }}>Seleccioná la moneda con la que querés pagar</span>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '28px', fontWeight: '800' }}>Pagar con criptomonedas</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '15px' }}>Seleccioná la moneda con la que querés pagar</span>
           </div>
 
           <div className="flex flex-col" style={{ gap: '12px' }}>
@@ -167,10 +167,10 @@ const CheckoutCrypto = () => {
                     <Icon size={24} color={opt.iconColor} />
                   </div>
                   <div className="flex flex-col" style={{ flex: 1, gap: '4px' }}>
-                    <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '16px', fontWeight: '700' }}>
+                    <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>
                       {opt.label} <span style={{ color: '#AAB3C5', fontWeight: '400' }}>({opt.ticker})</span>
                     </span>
-                    <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '13px' }}>
+                    <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
                       Equivalente: {opt.amount}
                     </span>
                   </div>
@@ -193,27 +193,27 @@ const CheckoutCrypto = () => {
           className="flex flex-col"
           style={{ width: '380px', flexShrink: 0, backgroundColor: '#0E1424', borderRadius: '14px', padding: '24px', gap: '16px', border: '1px solid #1B2333' }}
         >
-          <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '800' }}>Resumen del pedido</span>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Resumen del pedido</span>
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
           <div className="flex items-center">
-            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>Subtotal (4 ítems)</span>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>$4.698.996</span>
+            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Subtotal (4 ítems)</span>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>$4.698.996</span>
           </div>
           <div className="flex items-center">
-            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Inter', fontSize: '14px' }}>Envío</span>
-            <span style={{ color: '#22C55E', fontFamily: 'Inter', fontSize: '14px', fontWeight: '700' }}>Gratis</span>
+            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Envío</span>
+            <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Gratis</span>
           </div>
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
           <div className="flex items-center">
-            <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Inter', fontSize: '18px', fontWeight: '800' }}>Total</span>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '22px', fontWeight: '800' }}>$4.698.996</span>
+            <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Total</span>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>$4.698.996</span>
           </div>
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
           <div className="flex items-center" style={{ gap: '10px' }}>
             <active.icon size={18} color={active.iconColor} />
             <div className="flex flex-col" style={{ gap: '2px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Inter', fontSize: '12px' }}>Pagás con</span>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Inter', fontSize: '14px', fontWeight: '600' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>Pagás con</span>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
                 {active.amount}
               </span>
             </div>
@@ -223,7 +223,7 @@ const CheckoutCrypto = () => {
             className="flex items-center justify-center border-none cursor-pointer"
             style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '52px', width: '100%' }}
           >
-            <span style={{ color: '#FFFFFF', fontFamily: 'Inter', fontSize: '15px', fontWeight: '700' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
               Continuar con {active.label}
             </span>
           </button>
