@@ -96,12 +96,12 @@ const ProductCard = ({
   stock = 1, category_id = null,
 }) => {
   const [hovered, setHovered] = useState(false)
-  const [ctaHovered, setCtaHovered] = useState(false)
 
   if (mobile) {
     return (
-      <div
-        className="flex flex-col"
+      <Link
+        to={`/product/${id}`}
+        className="flex flex-col no-underline"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
@@ -112,9 +112,11 @@ const ProductCard = ({
           height: '100%',
           position: 'relative',
           overflow: 'hidden',
-          border: '1px solid rgba(255,255,255,0.06)',
+          border: `1px solid ${hovered ? 'rgba(36,168,245,0.3)' : 'rgba(255,255,255,0.06)'}`,
+          boxShadow: hovered ? '0 4px 16px rgba(36,168,245,0.08)' : 'none',
           transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
-          transition: 'transform 0.2s ease',
+          transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
+          cursor: 'pointer',
         }}
       >
         <ProductImage image_url={image_url} brand={brand} name={name} height={160} category_id={category_id} />
@@ -153,34 +155,14 @@ const ProductCard = ({
         </span>
 
         <StockDot stock={stock} />
-
-        <Link
-          to={`/product/${id}`}
-          className="no-underline"
-          onMouseEnter={() => setCtaHovered(true)}
-          onMouseLeave={() => setCtaHovered(false)}
-          style={{
-            backgroundColor: ctaHovered ? '#00B8EF' : '#00C8FF',
-            borderRadius: '7px',
-            padding: '8px 0',
-            color: '#060810',
-            fontFamily: 'Inter',
-            fontSize: '12px',
-            fontWeight: '700',
-            textAlign: 'center',
-            display: 'block',
-            transition: 'background-color 0.15s ease',
-          }}
-        >
-          Ver detalle
-        </Link>
-      </div>
+      </Link>
     )
   }
 
   return (
-    <div
-      className="flex flex-col"
+    <Link
+      to={`/product/${id}`}
+      className="flex flex-col no-underline"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -191,9 +173,11 @@ const ProductCard = ({
         flex: 1,
         height: '100%',
         position: 'relative',
-        border: '1px solid rgba(255,255,255,0.06)',
+        border: `1px solid ${hovered ? 'rgba(36,168,245,0.3)' : 'rgba(255,255,255,0.06)'}`,
+        boxShadow: hovered ? '0 4px 16px rgba(36,168,245,0.08)' : 'none',
         transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
-        transition: 'transform 0.2s ease',
+        transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
+        cursor: 'pointer',
       }}
     >
       <div style={{ position: 'relative' }}>
@@ -233,28 +217,7 @@ const ProductCard = ({
       </span>
 
       <StockDot stock={stock} />
-
-      <Link
-        to={`/product/${id}`}
-        className="no-underline"
-        onMouseEnter={() => setCtaHovered(true)}
-        onMouseLeave={() => setCtaHovered(false)}
-        style={{
-          backgroundColor: ctaHovered ? '#00B8EF' : '#00C8FF',
-          borderRadius: '7px',
-          padding: '9px 0',
-          color: '#060810',
-          fontFamily: 'Inter',
-          fontSize: '13px',
-          fontWeight: '700',
-          textAlign: 'center',
-          display: 'block',
-          transition: 'background-color 0.15s ease',
-        }}
-      >
-        Ver detalle
-      </Link>
-    </div>
+    </Link>
   )
 }
 
