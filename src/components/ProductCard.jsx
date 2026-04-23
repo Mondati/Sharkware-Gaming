@@ -1,6 +1,7 @@
-import { useState, memo } from 'react'
+import { useState, memo, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard } from 'lucide-react'
+import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, ShoppingCart, Check } from 'lucide-react'
+import { useCart } from '../context/CartContext'
 
 const CATEGORY_ICON = {
   notebooks: Laptop,
@@ -91,11 +92,24 @@ const badgeColor = (badge) => {
 }
 
 const ProductCard = ({
-  id, brand, name, spec, price, image_url,
+  id, brand, name, spec, price, price_ars, image_url,
   imgHeight = 210, mobile = false, badge = null,
   stock = 1, category_id = null,
 }) => {
   const [hovered, setHovered] = useState(false)
+  const [added, setAdded] = useState(false)
+  const timerRef = useRef(null)
+  const { addItem } = useCart()
+
+  const handleAddToCart = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (stock === 0 || added) return
+    addItem({ id, brand, name, spec, price_ars, image_url, stock }, 1)
+    setAdded(true)
+    clearTimeout(timerRef.current)
+    timerRef.current = setTimeout(() => setAdded(false), 1500)
+  }
 
   if (mobile) {
     return (
@@ -119,7 +133,34 @@ const ProductCard = ({
           cursor: 'pointer',
         }}
       >
-        <ProductImage image_url={image_url} brand={brand} name={name} height={160} category_id={category_id} />
+        <div style={{ position: 'relative' }}>
+          <ProductImage image_url={image_url} brand={brand} name={name} height={160} category_id={category_id} />
+          <button
+            onClick={handleAddToCart}
+            disabled={stock === 0}
+            style={{
+              position: 'absolute',
+              bottom: '6px',
+              right: '6px',
+              width: '28px',
+              height: '28px',
+              borderRadius: '7px',
+              border: 'none',
+              cursor: stock === 0 ? 'not-allowed' : 'pointer',
+              backgroundColor: added ? '#22C55E' : '#00C8FF',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'background-color 0.2s ease',
+              opacity: stock === 0 ? 0.4 : 1,
+            }}
+          >
+            {added
+              ? <Check size={13} color="#FFFFFF" />
+              : <ShoppingCart size={13} color="#060810" />
+            }
+          </button>
+        </div>
 
         {badge && (
           <div
@@ -198,6 +239,31 @@ const ProductCard = ({
             </span>
           </div>
         )}
+        <button
+          onClick={handleAddToCart}
+          disabled={stock === 0}
+          style={{
+            position: 'absolute',
+            bottom: '8px',
+            right: '8px',
+            width: '32px',
+            height: '32px',
+            borderRadius: '8px',
+            border: 'none',
+            cursor: stock === 0 ? 'not-allowed' : 'pointer',
+            backgroundColor: added ? '#22C55E' : '#00C8FF',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'background-color 0.2s ease',
+            opacity: stock === 0 ? 0.4 : 1,
+          }}
+        >
+          {added
+            ? <Check size={15} color="#FFFFFF" />
+            : <ShoppingCart size={15} color="#060810" />
+          }
+        </button>
       </div>
 
       <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600', letterSpacing: '1px' }}>

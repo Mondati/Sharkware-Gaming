@@ -5,12 +5,12 @@ import {
   ChevronRight, ChevronDown, ArrowLeft, Truck,
 } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
-import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import TrustBadges from '../components/TrustBadges'
 import { products } from '../data/products'
 import { categories } from '../data/categories'
 import { useWindowWidth } from '../hooks/useWindowWidth'
+import { useCart } from '../context/CartContext'
 
 const tabs = ['Descripción', 'Especificaciones', 'Reseñas (127)']
 
@@ -49,11 +49,15 @@ const ProductDetail = () => {
   const [specsOpen, setSpecsOpen] = useState(false)
   const [touchStartX, setTouchStartX] = useState(null)
   const { sidePadding } = useWindowWidth()
+  const { addItem } = useCart()
+
+  const handleAddToCart = () => {
+    addItem(product, qty)
+  }
 
   if (!product) {
     return (
-      <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
-        <Navbar />
+      <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
         <div className="flex flex-col flex-1 items-center justify-center" style={{ gap: '16px' }}>
           <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
             Producto no encontrado
@@ -87,7 +91,7 @@ const ProductDetail = () => {
     .slice(0, 3)
 
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
+    <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
 
       {/* ═══ MOBILE HEADER ═══ */}
       <div
@@ -113,9 +117,6 @@ const ProductDetail = () => {
           <Share2 size={18} color="#AAB3C5" />
         </button>
       </div>
-
-      {/* ═══ DESKTOP NAVBAR ═══ */}
-      <Navbar />
 
       {/* ═══ MOBILE IMAGE ═══ */}
       <div
@@ -291,7 +292,7 @@ const ProductDetail = () => {
           {quickSpecs.length > 0 && (
             <div className="flex flex-col" style={{ gap: '8px', marginBottom: '24px' }}>
               {[quickSpecs.slice(0, 2), quickSpecs.slice(2, 4)].filter((r) => r.length > 0).map((row, ri) => (
-                <div key={ri} className="flex" style={{ gap: '8px' }}>
+                <div key={row.map(s => s.label).join('-')} className="flex" style={{ gap: '8px' }}>
                   {row.map(({ icon: Icon, label, value }) => (
                     <div
                       key={label}
@@ -342,8 +343,10 @@ const ProductDetail = () => {
           {/* CTAs */}
           <div className="flex flex-col" style={{ gap: '10px', marginBottom: '24px' }}>
             <button
+              onClick={handleAddToCart}
+              disabled={product.stock === 0}
               className="flex items-center justify-center"
-              style={{ backgroundColor: '#00C8FF', borderRadius: '10px', height: '54px', border: 'none', cursor: 'pointer', gap: '12px', width: '100%' }}
+              style={{ backgroundColor: '#00C8FF', borderRadius: '10px', height: '54px', border: 'none', cursor: product.stock === 0 ? 'not-allowed' : 'pointer', gap: '12px', width: '100%', opacity: product.stock === 0 ? 0.5 : 1 }}
             >
               <ShoppingCart size={18} color="#060810" />
               <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
@@ -514,7 +517,7 @@ const ProductDetail = () => {
         {quickSpecs.length > 0 && (
           <div className="flex flex-col" style={{ gap: '8px' }}>
             {[quickSpecs.slice(0, 2), quickSpecs.slice(2, 4)].filter((r) => r.length > 0).map((row, ri) => (
-              <div key={ri} className="flex" style={{ gap: '8px' }}>
+              <div key={row.map(s => s.label).join('-')} className="flex" style={{ gap: '8px' }}>
                 {row.map(({ icon: Icon, label, value }) => (
                   <div
                     key={label}
@@ -556,8 +559,10 @@ const ProductDetail = () => {
           </div>
 
           <button
+            onClick={handleAddToCart}
+            disabled={product.stock === 0}
             className="flex items-center justify-center"
-            style={{ backgroundColor: '#00C8FF', borderRadius: '10px', height: '52px', border: 'none', cursor: 'pointer', gap: '10px', width: '100%' }}
+            style={{ backgroundColor: '#00C8FF', borderRadius: '10px', height: '52px', border: 'none', cursor: product.stock === 0 ? 'not-allowed' : 'pointer', gap: '10px', width: '100%', opacity: product.stock === 0 ? 0.5 : 1 }}
           >
             <ShoppingCart size={18} color="#060810" />
             <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>Agregar al carrito</span>
@@ -649,6 +654,7 @@ const ProductDetail = () => {
       </div>
 
       <Footer />
+
     </div>
   )
 }

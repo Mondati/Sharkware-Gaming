@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Bot, ChevronRight } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
-import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
 import { categories } from '../data/categories'
@@ -49,8 +48,7 @@ const Home = () => {
     : notebooksList.filter(NB_FILTER_MAP[activeNbFilter] ?? (() => true))
 
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#0A0C14' }}>
-      <Navbar cartCount={0} />
+    <div className="flex flex-col flex-1" style={{ backgroundColor: '#0A0C14' }}>
 
       {/* ═══════════════ HERO ═══════════════ */}
 

@@ -1,8 +1,73 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { SlidersHorizontal, ChevronDown, ChevronUp } from 'lucide-react'
 import { categories } from '../data/categories'
 
 const filterCategories = categories.filter(c => c.id !== 'all')
+
+const PriceRangeInputs = ({ catalogMin, catalogMax, minParam, maxParam, onApply, noProducts }) => {
+  const [localMin, setLocalMin] = useState(minParam)
+  const [localMax, setLocalMax] = useState(maxParam)
+
+  const priceRangeInvalid =
+    localMin !== '' && localMax !== '' && Number(localMin) > Number(localMax)
+  const inputBorder = priceRangeInvalid ? '1px solid #EF4444' : '1px solid #1B2333'
+
+  const apply = () => {
+    if (!priceRangeInvalid) onApply(localMin, localMax)
+  }
+
+  return (
+    <div className="flex flex-col" style={{ gap: '6px' }}>
+      <input
+        type="number"
+        value={localMin}
+        onChange={e => setLocalMin(e.target.value)}
+        onBlur={apply}
+        onKeyDown={e => e.key === 'Enter' && apply()}
+        disabled={noProducts}
+        placeholder={catalogMin !== null ? `Mín. ${catalogMin.toLocaleString('es-AR')}` : 'Mínimo'}
+        style={{
+          backgroundColor: '#0A0C14',
+          border: inputBorder,
+          borderRadius: '6px',
+          padding: '7px 10px',
+          color: '#F5F7FA',
+          fontFamily: 'Poppins',
+          fontSize: '13px',
+          outline: 'none',
+          width: '100%',
+          opacity: noProducts ? 0.4 : 1,
+        }}
+      />
+      <input
+        type="number"
+        value={localMax}
+        onChange={e => setLocalMax(e.target.value)}
+        onBlur={apply}
+        onKeyDown={e => e.key === 'Enter' && apply()}
+        disabled={noProducts}
+        placeholder={catalogMax !== null ? `Máx. ${catalogMax.toLocaleString('es-AR')}` : 'Máximo'}
+        style={{
+          backgroundColor: '#0A0C14',
+          border: inputBorder,
+          borderRadius: '6px',
+          padding: '7px 10px',
+          color: '#F5F7FA',
+          fontFamily: 'Poppins',
+          fontSize: '13px',
+          outline: 'none',
+          width: '100%',
+          opacity: noProducts ? 0.4 : 1,
+        }}
+      />
+      {priceRangeInvalid && (
+        <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '11px' }}>
+          El mínimo no puede superar el máximo
+        </span>
+      )}
+    </div>
+  )
+}
 
 const FilterPanel = ({
   availableBrands,
@@ -17,23 +82,7 @@ const FilterPanel = ({
   onClearFilters,
 }) => {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [localMin, setLocalMin] = useState(minParam)
-  const [localMax, setLocalMax] = useState(maxParam)
-
-  useEffect(() => {
-    setLocalMin(minParam)
-    setLocalMax(maxParam)
-  }, [minParam, maxParam])
-
-  const priceRangeInvalid =
-    localMin !== '' && localMax !== '' && Number(localMin) > Number(localMax)
-
-  const applyPrice = () => {
-    if (!priceRangeInvalid) {
-      onFilterChange('minPrice', localMin)
-      onFilterChange('maxPrice', localMax)
-    }
-  }
+  const noProducts = catalogMin === null
 
   const activeFilterCount = [
     catParam !== 'all' && catParam,
@@ -41,9 +90,6 @@ const FilterPanel = ({
     minParam,
     maxParam,
   ].filter(Boolean).length
-
-  const inputBorder = priceRangeInvalid ? '1px solid #EF4444' : '1px solid #1B2333'
-  const noProducts = catalogMin === null
 
   const panelContent = (
     <div className="flex flex-col" style={{ gap: '20px' }}>
@@ -119,55 +165,18 @@ const FilterPanel = ({
         <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
           Precio (ARS)
         </span>
-        <div className="flex flex-col" style={{ gap: '6px' }}>
-          <input
-            type="number"
-            value={localMin}
-            onChange={e => setLocalMin(e.target.value)}
-            onBlur={applyPrice}
-            onKeyDown={e => e.key === 'Enter' && applyPrice()}
-            disabled={noProducts}
-            placeholder={catalogMin !== null ? `Mín. ${catalogMin.toLocaleString('es-AR')}` : 'Mínimo'}
-            style={{
-              backgroundColor: '#0A0C14',
-              border: inputBorder,
-              borderRadius: '6px',
-              padding: '7px 10px',
-              color: '#F5F7FA',
-              fontFamily: 'Poppins',
-              fontSize: '13px',
-              outline: 'none',
-              width: '100%',
-              opacity: noProducts ? 0.4 : 1,
-            }}
-          />
-          <input
-            type="number"
-            value={localMax}
-            onChange={e => setLocalMax(e.target.value)}
-            onBlur={applyPrice}
-            onKeyDown={e => e.key === 'Enter' && applyPrice()}
-            disabled={noProducts}
-            placeholder={catalogMax !== null ? `Máx. ${catalogMax.toLocaleString('es-AR')}` : 'Máximo'}
-            style={{
-              backgroundColor: '#0A0C14',
-              border: inputBorder,
-              borderRadius: '6px',
-              padding: '7px 10px',
-              color: '#F5F7FA',
-              fontFamily: 'Poppins',
-              fontSize: '13px',
-              outline: 'none',
-              width: '100%',
-              opacity: noProducts ? 0.4 : 1,
-            }}
-          />
-          {priceRangeInvalid && (
-            <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '11px' }}>
-              El mínimo no puede superar el máximo
-            </span>
-          )}
-        </div>
+        <PriceRangeInputs
+          key={`${minParam}-${maxParam}`}
+          catalogMin={catalogMin}
+          catalogMax={catalogMax}
+          minParam={minParam}
+          maxParam={maxParam}
+          noProducts={noProducts}
+          onApply={(min, max) => {
+            onFilterChange('minPrice', min)
+            onFilterChange('maxPrice', max)
+          }}
+        />
       </div>
 
       {/* Limpiar */}

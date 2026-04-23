@@ -51,7 +51,7 @@ const Pagination = ({ currentPage, totalPages, onPage, isMobile }) => {
       {items.map((item, i) =>
         item === '...' ? (
           <span
-            key={`ellipsis-${i}`}
+            key={`sep-after-${items[i - 1]}`}
             style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '14px', padding: '0 4px' }}
           >
             …

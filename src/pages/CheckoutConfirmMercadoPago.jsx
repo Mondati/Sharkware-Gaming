@@ -3,13 +3,11 @@ import {
   ShieldCheck, Truck, RefreshCw, X, ArrowLeft, Lock,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 const CheckoutConfirmMercadoPago = () => {
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
-      <Navbar />
+    <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
 
       {/* ═══════════════ MOBILE HEADER ═══════════════ */}
       <div
