@@ -16,8 +16,13 @@ export const products = [
     badge: 'NUEVO',
     stock: 10,
     category_id: 'gpu',
-    image_url: '/images/products/rtx-5080-super.jpg',
-    gallery: [],
+    image_url: '/images/products/rtx-5080-super.webp',
+    gallery: [
+      '/images/products/rtx-5080-super.webp',
+      '/images/products/rtx-5080-super-2.webp',
+      '/images/products/rtx-5080-super-3.webp',
+      '/images/products/rtx-5080-super-4.webp',
+    ],
     specs: {
       chipset: 'NVIDIA RTX 5080 Super',
       vram: '16GB GDDR7',

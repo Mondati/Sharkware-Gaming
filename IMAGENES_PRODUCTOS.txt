@@ -10,9 +10,12 @@ INSTRUCCIONES:
 4. Avísame cuando estén listas
 
 ================================================================================
-GPUS (1 imagen)
+GPUS (1 imagen + 3 de galería = 4 total) ✅ COMPLETADO
 ================================================================================
-rtx-5080-super.jpg
+✅ rtx-5080-super.webp
+✅ rtx-5080-super-2.webp
+✅ rtx-5080-super-3.webp
+✅ rtx-5080-super-4.webp
 
 ================================================================================
 NOTEBOOKS (11 imágenes + 3 de galería = 14 total)
@@ -39,11 +42,12 @@ aw3225qf-32-4k.jpg
 ================================================================================
 RESUMEN TOTAL
 ================================================================================
-GPUs:              1 archivo
-Notebooks:        10 archivos principales + 3 de galería
-Monitores:         4 archivos
+GPUs:              4 archivos ✅ COMPLETADO
+Notebooks:        10 archivos principales + 3 de galería (PENDIENTE)
+Monitores:         4 archivos (PENDIENTE)
 ─────────────────────────────
-TOTAL:            15 archivos
+COMPLETADO:        4 / 15 archivos
+PENDIENTE:        11 / 15 archivos
 
 Formatos recomendados: .jpg, .webp, .png
 
