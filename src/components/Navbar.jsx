@@ -3,8 +3,10 @@ import { Search, UserRound, ShoppingCart, Menu, X } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import MobileSidebar from './MobileSidebar'
 import { useWindowWidth } from '../hooks/useWindowWidth'
+import { useCart } from '../context/CartContext'
 
-const Navbar = ({ cartCount = 0 }) => {
+const Navbar = () => {
+  const { cartCount } = useCart()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [hoveredBtn, setHoveredBtn] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')

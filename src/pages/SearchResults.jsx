@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { SearchX } from 'lucide-react'
-import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
 import FilterPanel from '../components/FilterPanel'
@@ -254,8 +253,7 @@ const SearchResults = () => {
   const showPagination = sorted.length > 0 && totalPages > 1
 
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#0A0C14' }}>
-      <Navbar cartCount={0} />
+    <div className="flex flex-col flex-1" style={{ backgroundColor: '#0A0C14' }}>
 
       {/* ── Desktop header ── */}
       <section

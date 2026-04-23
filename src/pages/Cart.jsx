@@ -2,42 +2,27 @@ import { useState, Fragment } from 'react'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import {
   ChevronRight, Tag, ArrowLeft, Lock,
-  Minus, Plus, Trash2, X,
+  Minus, Plus, Trash2, X, ShoppingBag,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import TrustBadges from '../components/TrustBadges'
-
-const initialItems = [
-  { id: 1, brand: 'NVIDIA', name: 'GeForce RTX 5080 Super', spec: '16GB GDDR7', price: 1899999, qty: 1 },
-  { id: 2, brand: 'MSI', name: 'Katana 17 B13VGK', spec: 'i7-13620H · RTX 4060 · 16GB', price: 1099999, qty: 2 },
-  { id: 9, brand: 'SAMSUNG', name: 'Odyssey G7 32" 240Hz', spec: 'QHD · 1ms · HDR600', price: 599999, qty: 1 },
-]
+import { useCart } from '../context/CartContext'
 
 const fmt = (n) => '$' + n.toLocaleString('es-AR')
 
 const Cart = () => {
   const { sidePadding } = useWindowWidth()
-  const [items, setItems] = useState(initialItems)
+  const { items, removeItem, updateQty, cartCount } = useCart()
   const [coupon, setCoupon] = useState('')
 
-  const updateQty = (id, delta) => {
-    setItems(prev =>
-      prev.map(item => item.id === id ? { ...item, qty: Math.max(1, item.qty + delta) } : item)
-    )
-  }
-
-  const removeItem = (id) => setItems(prev => prev.filter(item => item.id !== id))
-
-  const totalQty = items.reduce((a, i) => a + i.qty, 0)
-  const subtotal = items.reduce((a, i) => a + i.price * i.qty, 0)
+  const totalQty = cartCount
+  const subtotal = items.reduce((a, i) => a + i.price_ars * i.quantity, 0)
 
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
+    <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
 
       {/* ═══════════════ DESKTOP NAVBAR ═══════════════ */}
-      <Navbar cartCount={totalQty} />
 
       {/* ═══════════════ MOBILE HEADER ═══════════════ */}
       <div
@@ -79,6 +64,17 @@ const Cart = () => {
 
         {/* Items list */}
         <div className="flex flex-col" style={{ gap: '12px' }}>
+          {items.length === 0 && (
+            <div className="flex flex-col items-center justify-center" style={{ padding: '48px 0', gap: '12px' }}>
+              <ShoppingBag size={40} color="#1E2232" />
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', textAlign: 'center' }}>
+                Tu carrito está vacío.
+              </span>
+              <Link to="/" className="no-underline" style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+                Ver catálogo →
+              </Link>
+            </div>
+          )}
           {items.map((item) => (
             <div
               key={item.id}
@@ -118,13 +114,13 @@ const Cart = () => {
 
                 {/* Price */}
                 <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
-                  {fmt(item.price * item.qty)}
+                  {fmt(item.price_ars * item.quantity)}
                 </span>
 
                 {/* Qty */}
                 <div className="flex items-center" style={{ backgroundColor: '#070B16', borderRadius: '8px', overflow: 'hidden' }}>
                   <button
-                    onClick={() => updateQty(item.id, -1)}
+                    onClick={() => updateQty(item.id, item.quantity - 1)}
                     className="flex items-center justify-center border-none cursor-pointer"
                     style={{ width: '30px', height: '30px', background: 'none' }}
                   >
@@ -132,11 +128,11 @@ const Cart = () => {
                   </button>
                   <div className="flex items-center justify-center" style={{ width: '32px', height: '30px' }}>
                     <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>
-                      {item.qty}
+                      {item.quantity}
                     </span>
                   </div>
                   <button
-                    onClick={() => updateQty(item.id, 1)}
+                    onClick={() => updateQty(item.id, item.quantity + 1)}
                     className="flex items-center justify-center border-none cursor-pointer"
                     style={{ width: '30px', height: '30px', backgroundColor: '#24A8F5' }}
                   >
@@ -264,9 +260,15 @@ const Cart = () => {
             style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '20px', gap: '12px', border: '1px solid #1B2333' }}
           >
             {items.length === 0 && (
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', textAlign: 'center', padding: '20px 0' }}>
-                Tu carrito está vacío.
-              </span>
+              <div className="flex flex-col items-center" style={{ padding: '32px 0', gap: '12px' }}>
+                <ShoppingBag size={36} color="#1E2232" />
+                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', textAlign: 'center' }}>
+                  Tu carrito está vacío.
+                </span>
+                <Link to="/" className="no-underline" style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+                  Ver catálogo →
+                </Link>
+              </div>
             )}
             {items.map((item, idx) => (
               <Fragment key={item.id}>
@@ -294,11 +296,11 @@ const Cart = () => {
                     </div>
                   </Link>
                   <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800', flexShrink: 0 }}>
-                    {fmt(item.price * item.qty)}
+                    {fmt(item.price_ars * item.quantity)}
                   </span>
                   <div className="flex items-center" style={{ backgroundColor: '#070B16', borderRadius: '8px', flexShrink: 0 }}>
                     <button
-                      onClick={() => updateQty(item.id, -1)}
+                      onClick={() => updateQty(item.id, item.quantity - 1)}
                       className="flex items-center justify-center border-none cursor-pointer"
                       style={{ width: '34px', height: '34px', background: 'none' }}
                     >
@@ -306,11 +308,11 @@ const Cart = () => {
                     </button>
                     <div className="flex items-center justify-center" style={{ width: '36px', height: '34px' }}>
                       <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
-                        {item.qty}
+                        {item.quantity}
                       </span>
                     </div>
                     <button
-                      onClick={() => updateQty(item.id, 1)}
+                      onClick={() => updateQty(item.id, item.quantity + 1)}
                       className="flex items-center justify-center border-none cursor-pointer"
                       style={{ width: '34px', height: '34px', backgroundColor: '#24A8F5', borderRadius: '0 8px 8px 0' }}
                     >

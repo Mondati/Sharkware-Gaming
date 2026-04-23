@@ -4,7 +4,6 @@ import {
   ShieldCheck, Truck, RefreshCw, X, ArrowLeft, CreditCard,
 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
-import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 const cryptoOptions = [
@@ -19,8 +18,7 @@ const CheckoutCrypto = () => {
   const active = cryptoOptions.find(c => c.id === selected)
 
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
-      <Navbar />
+    <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
 
       {/* ═══════════════ MOBILE HEADER ═══════════════ */}
       <div
