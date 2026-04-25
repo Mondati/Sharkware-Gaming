@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Bot, ChevronRight } from 'lucide-react'
+import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, ChevronRight } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
@@ -588,25 +588,6 @@ const Home = () => {
 
       <Footer />
 
-      {/* Chatbot FAB */}
-      <button
-        className="flex items-center justify-center border-none cursor-pointer"
-        aria-label="Chatbot"
-        style={{
-          position: 'fixed',
-          bottom: '32px',
-          right: '32px',
-          width: '64px',
-          height: '64px',
-          borderRadius: '999px',
-          backgroundColor: '#0E1424',
-          border: '1px solid rgba(0,200,255,0.2)',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,200,255,0.60), 0 0 20px rgba(0,200,255,0.12)',
-          zIndex: 50,
-        }}
-      >
-        <Bot size={32} color="#FFFFFF" />
-      </button>
     </div>
   )
 }
