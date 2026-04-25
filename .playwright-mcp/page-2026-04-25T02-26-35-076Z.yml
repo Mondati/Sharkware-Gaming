@@ -1,0 +1,292 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - link "Sharkware Gaming" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - img "Sharkware Gaming" [ref=e6]
+    - generic [ref=e7]:
+      - button [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+      - textbox "Buscar productos..." [ref=e12]
+    - link "Ingresar" [ref=e13] [cursor=pointer]:
+      - /url: /login
+      - img [ref=e14]
+      - generic [ref=e17]: Ingresar
+    - link "🛒 Carrito (0)" [ref=e18] [cursor=pointer]:
+      - /url: /cart
+      - generic [ref=e19]: 🛒 Carrito (0)
+  - generic [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e25]: SHARKWARE
+        - generic [ref=e26]: GAMING
+      - button [ref=e27] [cursor=pointer]:
+        - img [ref=e28]
+    - generic [ref=e31]:
+      - generic [ref=e32]: CATEGORÍAS
+      - link "Notebooks" [ref=e33] [cursor=pointer]:
+        - /url: /?cat=notebooks
+        - img [ref=e35]
+        - generic [ref=e37]: Notebooks
+        - img [ref=e38]
+      - link "Procesadores" [ref=e40] [cursor=pointer]:
+        - /url: /?cat=cpu
+        - img [ref=e42]
+        - generic [ref=e45]: Procesadores
+        - img [ref=e46]
+      - link "GPU / Placas de Video" [ref=e48] [cursor=pointer]:
+        - /url: /?cat=gpu
+        - img [ref=e50]
+        - generic [ref=e52]: GPU / Placas de Video
+        - img [ref=e53]
+      - link "Memorias RAM" [ref=e55] [cursor=pointer]:
+        - /url: /?cat=ram
+        - img [ref=e57]
+        - generic [ref=e59]: Memorias RAM
+        - img [ref=e60]
+      - link "Monitores" [ref=e62] [cursor=pointer]:
+        - /url: /?cat=monitors
+        - img [ref=e64]
+        - generic [ref=e66]: Monitores
+        - img [ref=e67]
+      - link "Almacenamiento" [ref=e69] [cursor=pointer]:
+        - /url: /?cat=storage
+        - img [ref=e71]
+        - generic [ref=e73]: Almacenamiento
+        - img [ref=e74]
+      - link "Periféricos" [ref=e76] [cursor=pointer]:
+        - /url: /?cat=peripherals
+        - img [ref=e78]
+        - generic [ref=e80]: Periféricos
+        - img [ref=e81]
+    - generic [ref=e83]:
+      - link "Mi cuenta" [ref=e84] [cursor=pointer]:
+        - /url: /login
+        - img [ref=e85]
+        - generic [ref=e88]: Mi cuenta
+      - link "Mis pedidos" [ref=e89] [cursor=pointer]:
+        - /url: /
+        - img [ref=e90]
+        - generic [ref=e94]: Mis pedidos
+      - link "Soporte" [ref=e95] [cursor=pointer]:
+        - /url: /
+        - img [ref=e96]
+        - generic [ref=e98]: Soporte
+  - generic [ref=e99]:
+    - generic [ref=e100]:
+      - link "Inicio" [ref=e101] [cursor=pointer]:
+        - /url: /
+      - img [ref=e102]
+      - link "Notebooks" [ref=e104] [cursor=pointer]:
+        - /url: /?cat=notebooks
+      - img [ref=e105]
+      - generic [ref=e107]: Legion 5i Pro
+    - generic [ref=e108]:
+      - generic [ref=e109]:
+        - generic [ref=e110]:
+          - generic [ref=e111]:
+            - generic [ref=e112]: LENOVO
+            - generic [ref=e113]: Legion 5i Pro
+          - generic [ref=e114]: HOT
+        - button "Ver imagen 1" [ref=e116] [cursor=pointer]:
+          - generic [ref=e118]: LENOVO
+      - generic [ref=e119]:
+        - generic [ref=e120]:
+          - generic [ref=e121]: LENOVO
+          - button [ref=e122] [cursor=pointer]:
+            - img [ref=e123]
+          - button [ref=e125] [cursor=pointer]:
+            - img [ref=e126]
+        - heading "Legion 5i Pro" [level=1] [ref=e132]
+        - generic [ref=e133]:
+          - img [ref=e134]
+          - img [ref=e136]
+          - img [ref=e138]
+          - img [ref=e140]
+          - img [ref=e142]
+          - generic [ref=e144]: "4.8"
+          - generic [ref=e145]: (127 reseñas)
+        - generic [ref=e147]: $1.299.999
+        - generic [ref=e148]:
+          - generic [ref=e149]: MercadoPago
+          - generic [ref=e150]: BTC · ETH · USDT
+          - generic [ref=e151]: Transferencia
+        - generic [ref=e152]:
+          - generic [ref=e155]: En stock
+          - generic [ref=e156]:
+            - img [ref=e157]
+            - generic [ref=e162]: Envío gratis a todo el país
+        - generic [ref=e163]:
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - img [ref=e166]
+              - generic [ref=e169]:
+                - generic [ref=e170]: PROCESADOR
+                - generic [ref=e171]: Intel Core i7-13620H
+            - generic [ref=e172]:
+              - img [ref=e173]
+              - generic [ref=e175]:
+                - generic [ref=e176]: GPU
+                - generic [ref=e177]: NVIDIA RTX 4060 8GB
+          - generic [ref=e178]:
+            - generic [ref=e179]:
+              - img [ref=e180]
+              - generic [ref=e182]:
+                - generic [ref=e183]: RAM / VRAM
+                - generic [ref=e184]: 16GB DDR5 4800MHz
+            - generic [ref=e185]:
+              - img [ref=e186]
+              - generic [ref=e188]:
+                - generic [ref=e189]: ALMACENAMIENTO
+                - generic [ref=e190]: 512GB NVMe SSD
+        - generic [ref=e191]:
+          - generic [ref=e192]: "Cantidad:"
+          - generic [ref=e193]:
+            - button "−" [ref=e194] [cursor=pointer]
+            - generic [ref=e196]: "1"
+            - button "+" [ref=e197] [cursor=pointer]
+        - generic [ref=e198]:
+          - button "Agregar al carrito" [ref=e199] [cursor=pointer]:
+            - img [ref=e200]
+            - generic [ref=e204]: Agregar al carrito
+          - button "Comprar ahora" [ref=e205] [cursor=pointer]:
+            - generic [ref=e206]: Comprar ahora
+        - generic [ref=e207]:
+          - generic [ref=e208]:
+            - img [ref=e209]
+            - generic [ref=e212]: Compra segura
+          - generic [ref=e213]:
+            - img [ref=e214]
+            - generic [ref=e219]: Envío gratis
+          - generic [ref=e220]:
+            - img [ref=e221]
+            - generic [ref=e226]: 30 días devolución
+    - generic [ref=e227]:
+      - generic [ref=e228]:
+        - button "Descripción" [ref=e229] [cursor=pointer]:
+          - generic [ref=e230]: Descripción
+        - button "Especificaciones" [ref=e231] [cursor=pointer]:
+          - generic [ref=e232]: Especificaciones
+        - button "Reseñas (127)" [ref=e233] [cursor=pointer]:
+          - generic [ref=e234]: Reseñas (127)
+      - generic [ref=e235]:
+        - paragraph [ref=e236]: La Lenovo Legion 5i Pro ofrece una excelente relación precio-performance con el i7-13620H y RTX 4060. Ideal para gaming 1080p y trabajo creativo con su pantalla IPS de 165Hz.
+        - generic [ref=e237]:
+          - generic [ref=e239]:
+            - generic [ref=e240]: Cpu
+            - generic [ref=e241]: Intel Core i7-13620H
+          - generic [ref=e244]:
+            - generic [ref=e245]: Gpu
+            - generic [ref=e246]: NVIDIA RTX 4060 8GB
+          - generic [ref=e249]:
+            - generic [ref=e250]: Ram
+            - generic [ref=e251]: 16GB DDR5 4800MHz
+          - generic [ref=e254]:
+            - generic [ref=e255]: Storage
+            - generic [ref=e256]: 512GB NVMe SSD
+          - generic [ref=e259]:
+            - generic [ref=e260]: Display
+            - generic [ref=e261]: 16" IPS 165Hz
+          - generic [ref=e264]:
+            - generic [ref=e265]: Os
+            - generic [ref=e266]: Windows 11 Home
+          - generic [ref=e269]:
+            - generic [ref=e270]: Battery
+            - generic [ref=e271]: 80Whr
+          - generic [ref=e274]:
+            - generic [ref=e275]: Connectivity
+            - generic [ref=e276]: WiFi 6, BT 5.1
+          - generic [ref=e279]:
+            - generic [ref=e280]: Weight
+            - generic [ref=e281]: 2.4 kg
+    - generic [ref=e284]:
+      - generic [ref=e285]: También te puede gustar
+      - link "Ver todos →" [ref=e286] [cursor=pointer]:
+        - /url: /product/5
+    - generic [ref=e287]:
+      - link "ROG Strix G16 2025 ASUS ROG Strix G16 2025 $2.099.999" [ref=e288] [cursor=pointer]:
+        - /url: /product/2
+        - img "ROG Strix G16 2025" [ref=e290]
+        - generic [ref=e291]:
+          - generic [ref=e292]: ASUS
+          - generic [ref=e293]: ROG Strix G16 2025
+          - generic [ref=e294]: $2.099.999
+      - link "LENOVO Legion 7i Pro 2025 LENOVO Legion 7i Pro 2025 $1.699.999" [ref=e295] [cursor=pointer]:
+        - /url: /product/3
+        - generic [ref=e297]:
+          - generic [ref=e298]: LENOVO
+          - generic [ref=e299]: Legion 7i Pro 2025
+        - generic [ref=e300]:
+          - generic [ref=e301]: LENOVO
+          - generic [ref=e302]: Legion 7i Pro 2025
+          - generic [ref=e303]: $1.699.999
+      - link "MSI Titan GT77 HX 17\" MSI Titan GT77 HX 17\" $3.199.999" [ref=e304] [cursor=pointer]:
+        - /url: /product/4
+        - generic [ref=e306]:
+          - generic [ref=e307]: MSI
+          - generic [ref=e308]: Titan GT77 HX 17"
+        - generic [ref=e309]:
+          - generic [ref=e310]: MSI
+          - generic [ref=e311]: Titan GT77 HX 17"
+          - generic [ref=e312]: $3.199.999
+    - contentinfo [ref=e313]:
+      - generic [ref=e315]:
+        - generic [ref=e316]:
+          - generic [ref=e317]:
+            - generic [ref=e318]: SHARKWARE
+            - generic [ref=e319]: GAMING
+          - paragraph [ref=e320]: Tu tienda gamer de confianza. Componentes, notebooks, desktops y periféricos al mejor precio — Sharkware Gaming.
+          - generic [ref=e321]:
+            - button "Instagram" [ref=e322] [cursor=pointer]:
+              - img [ref=e323]
+            - button "Twitter" [ref=e326] [cursor=pointer]:
+              - img [ref=e327]
+            - button "YouTube" [ref=e330] [cursor=pointer]:
+              - img [ref=e331]
+            - button "TikTok" [ref=e333] [cursor=pointer]:
+              - img [ref=e334]
+        - generic [ref=e337]:
+          - generic [ref=e338]:
+            - generic [ref=e339]: Productos
+            - link "Notebooks Gamer" [ref=e340] [cursor=pointer]:
+              - /url: /product/5
+            - link "Desktops Gamer" [ref=e341] [cursor=pointer]:
+              - /url: /product/5
+            - link "Monitores" [ref=e342] [cursor=pointer]:
+              - /url: /product/5
+            - link "Periféricos" [ref=e343] [cursor=pointer]:
+              - /url: /product/5
+            - link "Sillas Gamer" [ref=e344] [cursor=pointer]:
+              - /url: /product/5
+          - generic [ref=e345]:
+            - generic [ref=e346]: Empresa
+            - link "Nosotros" [ref=e347] [cursor=pointer]:
+              - /url: /product/5
+            - link "Blog" [ref=e348] [cursor=pointer]:
+              - /url: /product/5
+            - link "Trabaja con nosotros" [ref=e349] [cursor=pointer]:
+              - /url: /product/5
+            - link "Prensa" [ref=e350] [cursor=pointer]:
+              - /url: /product/5
+          - generic [ref=e351]:
+            - generic [ref=e352]: Soporte
+            - link "Centro de ayuda" [ref=e353] [cursor=pointer]:
+              - /url: /product/5
+            - link "Garantía" [ref=e354] [cursor=pointer]:
+              - /url: /product/5
+            - link "Envíos" [ref=e355] [cursor=pointer]:
+              - /url: /product/5
+            - link "Devoluciones" [ref=e356] [cursor=pointer]:
+              - /url: /product/5
+          - generic [ref=e357]:
+            - generic [ref=e358]: Newsletter
+            - paragraph [ref=e359]: Recibí ofertas y novedades exclusivas.
+            - textbox "Tu email" [ref=e361]
+            - button "Suscribirse" [ref=e362] [cursor=pointer]
+      - generic [ref=e363]:
+        - generic [ref=e364]:
+          - generic [ref=e365]: VISA
+          - generic [ref=e366]: Mastercard
+          - generic [ref=e367]: AMEX
+          - generic [ref=e368]: Mercado Pago
+          - generic [ref=e369]: Naranja X
+        - generic [ref=e370]: © 2025 Sharkware Gaming Store. Todos los derechos reservados.

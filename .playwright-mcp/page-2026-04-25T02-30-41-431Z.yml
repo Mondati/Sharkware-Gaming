@@ -1,0 +1,373 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - link "Sharkware Gaming" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - img "Sharkware Gaming" [ref=e6]
+    - generic [ref=e7]:
+      - button [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+      - textbox "Buscar productos..." [ref=e12]
+    - link "Ingresar" [ref=e13] [cursor=pointer]:
+      - /url: /login
+      - img [ref=e14]
+      - generic [ref=e17]: Ingresar
+    - link "🛒 Carrito (0)" [ref=e18] [cursor=pointer]:
+      - /url: /cart
+      - generic [ref=e19]: 🛒 Carrito (0)
+  - generic [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e25]: SHARKWARE
+        - generic [ref=e26]: GAMING
+      - button [ref=e27] [cursor=pointer]:
+        - img [ref=e28]
+    - generic [ref=e31]:
+      - generic [ref=e32]: CATEGORÍAS
+      - link "Notebooks" [ref=e33] [cursor=pointer]:
+        - /url: /?cat=notebooks
+        - img [ref=e35]
+        - generic [ref=e37]: Notebooks
+        - img [ref=e38]
+      - link "Procesadores" [ref=e40] [cursor=pointer]:
+        - /url: /?cat=cpu
+        - img [ref=e42]
+        - generic [ref=e45]: Procesadores
+        - img [ref=e46]
+      - link "GPU / Placas de Video" [ref=e48] [cursor=pointer]:
+        - /url: /?cat=gpu
+        - img [ref=e50]
+        - generic [ref=e52]: GPU / Placas de Video
+        - img [ref=e53]
+      - link "Memorias RAM" [ref=e55] [cursor=pointer]:
+        - /url: /?cat=ram
+        - img [ref=e57]
+        - generic [ref=e59]: Memorias RAM
+        - img [ref=e60]
+      - link "Monitores" [ref=e62] [cursor=pointer]:
+        - /url: /?cat=monitors
+        - img [ref=e64]
+        - generic [ref=e66]: Monitores
+        - img [ref=e67]
+      - link "Almacenamiento" [ref=e69] [cursor=pointer]:
+        - /url: /?cat=storage
+        - img [ref=e71]
+        - generic [ref=e73]: Almacenamiento
+        - img [ref=e74]
+      - link "Periféricos" [ref=e76] [cursor=pointer]:
+        - /url: /?cat=peripherals
+        - img [ref=e78]
+        - generic [ref=e80]: Periféricos
+        - img [ref=e81]
+    - generic [ref=e83]:
+      - link "Mi cuenta" [ref=e84] [cursor=pointer]:
+        - /url: /login
+        - img [ref=e85]
+        - generic [ref=e88]: Mi cuenta
+      - link "Mis pedidos" [ref=e89] [cursor=pointer]:
+        - /url: /
+        - img [ref=e90]
+        - generic [ref=e94]: Mis pedidos
+      - link "Soporte" [ref=e95] [cursor=pointer]:
+        - /url: /
+        - img [ref=e96]
+        - generic [ref=e98]: Soporte
+  - generic [ref=e99]:
+    - generic [ref=e100]:
+      - generic [ref=e101]:
+        - generic [ref=e104]: NUEVO LANZAMIENTO
+        - heading "RTX 5090" [level=1] [ref=e105]
+        - paragraph [ref=e106]: Build Personalizada Pro Edition — El poder definitivo para gaming extremo
+        - generic [ref=e107]:
+          - generic [ref=e108]: Precio desde
+          - generic [ref=e109]: $2.499.999 ARS
+        - generic [ref=e110]:
+          - button "Comprar ahora" [ref=e111] [cursor=pointer]
+          - button "Ver especificaciones" [ref=e112] [cursor=pointer]
+          - generic [ref=e113]:
+            - img [ref=e114]
+            - generic [ref=e117]: Builds Personalizadas
+      - generic [ref=e119]: RTX 5090
+    - generic [ref=e121]:
+      - button "Todo" [ref=e122] [cursor=pointer]:
+        - generic [ref=e123]: Todo
+      - button "Notebooks" [ref=e124] [cursor=pointer]:
+        - img [ref=e125]
+        - generic [ref=e127]: Notebooks
+      - button "Procesadores" [ref=e128] [cursor=pointer]:
+        - img [ref=e129]
+        - generic [ref=e132]: Procesadores
+      - button "GPU / Placas de Video" [ref=e133] [cursor=pointer]:
+        - img [ref=e134]
+        - generic [ref=e136]: GPU / Placas de Video
+      - button "Memorias RAM" [ref=e137] [cursor=pointer]:
+        - img [ref=e138]
+        - generic [ref=e140]: Memorias RAM
+      - button "Monitores" [ref=e141] [cursor=pointer]:
+        - img [ref=e142]
+        - generic [ref=e144]: Monitores
+      - button "Almacenamiento" [ref=e145] [cursor=pointer]:
+        - img [ref=e146]
+        - generic [ref=e148]: Almacenamiento
+      - button "Periféricos" [ref=e149] [cursor=pointer]:
+        - img [ref=e150]
+        - generic [ref=e152]: Periféricos
+    - generic [ref=e153]:
+      - generic [ref=e154]:
+        - generic [ref=e155]: Nuevos Productos
+        - link "Ver todos" [ref=e156] [cursor=pointer]:
+          - /url: /
+          - text: Ver todos
+          - img [ref=e157]
+      - generic [ref=e159]:
+        - link "RTX 5080 Super NUEVO NVIDIA RTX 5080 Super 16GB GDDR7 · PCIe 5.0 · 285W $1.899.999 En stock" [ref=e161] [cursor=pointer]:
+          - /url: /product/1
+          - generic [ref=e162]:
+            - img "RTX 5080 Super" [ref=e164]
+            - generic [ref=e165]: NUEVO
+            - button [ref=e166]:
+              - img [ref=e167]
+          - generic [ref=e171]: NVIDIA
+          - generic [ref=e172]: RTX 5080 Super
+          - generic [ref=e173]: 16GB GDDR7 · PCIe 5.0 · 285W
+          - generic [ref=e174]: $1.899.999
+          - generic [ref=e177]: En stock
+        - link "ROG Strix G16 2025 HOT ASUS ROG Strix G16 2025 RTX 4080 · i9-14900HX · 32GB $2.099.999 En stock" [ref=e179] [cursor=pointer]:
+          - /url: /product/2
+          - generic [ref=e180]:
+            - img "ROG Strix G16 2025" [ref=e182]
+            - generic [ref=e183]: HOT
+            - button [ref=e184]:
+              - img [ref=e185]
+          - generic [ref=e189]: ASUS
+          - generic [ref=e190]: ROG Strix G16 2025
+          - generic [ref=e191]: RTX 4080 · i9-14900HX · 32GB
+          - generic [ref=e192]: $2.099.999
+          - generic [ref=e195]: En stock
+        - link "LENOVO Legion 7i Pro 2025 LENOVO Legion 7i Pro 2025 RTX 4070 Ti · i9-14900HX $1.699.999 En stock" [ref=e197] [cursor=pointer]:
+          - /url: /product/3
+          - generic [ref=e198]:
+            - generic [ref=e199]:
+              - img [ref=e200]
+              - generic [ref=e202]: LENOVO
+              - generic [ref=e203]: Legion 7i Pro 2025
+            - button [ref=e204]:
+              - img [ref=e205]
+          - generic [ref=e209]: LENOVO
+          - generic [ref=e210]: Legion 7i Pro 2025
+          - generic [ref=e211]: RTX 4070 Ti · i9-14900HX
+          - generic [ref=e212]: $1.699.999
+          - generic [ref=e215]: En stock
+        - link "MSI Titan GT77 HX 17\" OFERTA MSI Titan GT77 HX 17\" RTX 4090 · i9-14900HX · 64GB $3.199.999 En stock" [ref=e217] [cursor=pointer]:
+          - /url: /product/4
+          - generic [ref=e218]:
+            - generic [ref=e219]:
+              - img [ref=e220]
+              - generic [ref=e222]: MSI
+              - generic [ref=e223]: Titan GT77 HX 17"
+            - generic [ref=e224]: OFERTA
+            - button [ref=e225]:
+              - img [ref=e226]
+          - generic [ref=e230]: MSI
+          - generic [ref=e231]: Titan GT77 HX 17"
+          - generic [ref=e232]: RTX 4090 · i9-14900HX · 64GB
+          - generic [ref=e233]: $3.199.999
+          - generic [ref=e236]: En stock
+    - generic [ref=e237]:
+      - generic [ref=e238]:
+        - generic [ref=e239]: Notebooks Gamer
+        - link "Ver todos" [ref=e240] [cursor=pointer]:
+          - /url: /
+          - text: Ver todos
+          - img [ref=e241]
+      - generic [ref=e243]:
+        - button "Todos" [ref=e244] [cursor=pointer]
+        - button "i7 / i9" [ref=e245] [cursor=pointer]
+        - button "Ryzen 5" [ref=e246] [cursor=pointer]
+        - button "Ryzen 7" [ref=e247] [cursor=pointer]
+        - button "Ryzen 9" [ref=e248] [cursor=pointer]
+      - generic [ref=e249]:
+        - link "LENOVO Legion 5i Pro HOT LENOVO Legion 5i Pro i7-13620H · RTX 4060 · 16GB $1.299.999 En stock" [ref=e251] [cursor=pointer]:
+          - /url: /product/5
+          - generic [ref=e252]:
+            - generic [ref=e253]:
+              - img [ref=e254]
+              - generic [ref=e256]: LENOVO
+              - generic [ref=e257]: Legion 5i Pro
+            - generic [ref=e258]: HOT
+            - button [ref=e259]:
+              - img [ref=e260]
+          - generic [ref=e264]: LENOVO
+          - generic [ref=e265]: Legion 5i Pro
+          - generic [ref=e266]: i7-13620H · RTX 4060 · 16GB
+          - generic [ref=e267]: $1.299.999
+          - generic [ref=e270]: En stock
+        - link "MSI Katana 17 B13 MSI Katana 17 B13 i7-13620H · RTX 4060 $999.999 En stock" [ref=e272] [cursor=pointer]:
+          - /url: /product/6
+          - generic [ref=e273]:
+            - generic [ref=e274]:
+              - img [ref=e275]
+              - generic [ref=e277]: MSI
+              - generic [ref=e278]: Katana 17 B13
+            - button [ref=e279]:
+              - img [ref=e280]
+          - generic [ref=e284]: MSI
+          - generic [ref=e285]: Katana 17 B13
+          - generic [ref=e286]: i7-13620H · RTX 4060
+          - generic [ref=e287]: $999.999
+          - generic [ref=e290]: En stock
+        - link "ACER Predator Helios 16 ACER Predator Helios 16 i7-14700HX · RTX 4070 Ti $1.849.999 En stock" [ref=e292] [cursor=pointer]:
+          - /url: /product/7
+          - generic [ref=e293]:
+            - generic [ref=e294]:
+              - img [ref=e295]
+              - generic [ref=e297]: ACER
+              - generic [ref=e298]: Predator Helios 16
+            - button [ref=e299]:
+              - img [ref=e300]
+          - generic [ref=e304]: ACER
+          - generic [ref=e305]: Predator Helios 16
+          - generic [ref=e306]: i7-14700HX · RTX 4070 Ti
+          - generic [ref=e307]: $1.849.999
+          - generic [ref=e310]: En stock
+        - link "RAZER Blade 16 2025 RAZER Blade 16 2025 RTX 4090 · i9-14900HX · 32GB $2.999.999 En stock" [ref=e312] [cursor=pointer]:
+          - /url: /product/8
+          - generic [ref=e313]:
+            - generic [ref=e314]:
+              - img [ref=e315]
+              - generic [ref=e317]: RAZER
+              - generic [ref=e318]: Blade 16 2025
+            - button [ref=e319]:
+              - img [ref=e320]
+          - generic [ref=e324]: RAZER
+          - generic [ref=e325]: Blade 16 2025
+          - generic [ref=e326]: RTX 4090 · i9-14900HX · 32GB
+          - generic [ref=e327]: $2.999.999
+          - generic [ref=e330]: En stock
+    - generic [ref=e331]:
+      - generic [ref=e332]:
+        - generic [ref=e333]: Monitores Gaming
+        - link "Ver todos" [ref=e334] [cursor=pointer]:
+          - /url: /
+          - text: Ver todos
+          - img [ref=e335]
+      - generic [ref=e337]:
+        - link "SAMSUNG Odyssey G7 32\" SAMSUNG Odyssey G7 32\" QHD · 1ms · HDR600 $599.999 En stock" [ref=e339] [cursor=pointer]:
+          - /url: /product/9
+          - generic [ref=e340]:
+            - generic [ref=e341]:
+              - img [ref=e342]
+              - generic [ref=e344]: SAMSUNG
+              - generic [ref=e345]: Odyssey G7 32"
+            - button [ref=e346]:
+              - img [ref=e347]
+          - generic [ref=e351]: SAMSUNG
+          - generic [ref=e352]: Odyssey G7 32"
+          - generic [ref=e353]: QHD · 1ms · HDR600
+          - generic [ref=e354]: $599.999
+          - generic [ref=e357]: En stock
+        - link "LG UltraGear 27\" 165Hz LG UltraGear 27\" 165Hz FHD · 1ms · G-Sync $449.999 En stock" [ref=e359] [cursor=pointer]:
+          - /url: /product/10
+          - generic [ref=e360]:
+            - generic [ref=e361]:
+              - img [ref=e362]
+              - generic [ref=e364]: LG
+              - generic [ref=e365]: UltraGear 27" 165Hz
+            - button [ref=e366]:
+              - img [ref=e367]
+          - generic [ref=e371]: LG
+          - generic [ref=e372]: UltraGear 27" 165Hz
+          - generic [ref=e373]: FHD · 1ms · G-Sync
+          - generic [ref=e374]: $449.999
+          - generic [ref=e377]: En stock
+        - link "ASUS ROG Swift 27\" 360Hz ASUS ROG Swift 27\" 360Hz FHD · 0.5ms · OLED $849.999 En stock" [ref=e379] [cursor=pointer]:
+          - /url: /product/11
+          - generic [ref=e380]:
+            - generic [ref=e381]:
+              - img [ref=e382]
+              - generic [ref=e384]: ASUS
+              - generic [ref=e385]: ROG Swift 27" 360Hz
+            - button [ref=e386]:
+              - img [ref=e387]
+          - generic [ref=e391]: ASUS
+          - generic [ref=e392]: ROG Swift 27" 360Hz
+          - generic [ref=e393]: FHD · 0.5ms · OLED
+          - generic [ref=e394]: $849.999
+          - generic [ref=e397]: En stock
+        - link "ALIENWARE AW3225QF 32\" 4K ALIENWARE AW3225QF 32\" 4K 4K UHD · 240Hz $1.299.999 En stock" [ref=e399] [cursor=pointer]:
+          - /url: /product/12
+          - generic [ref=e400]:
+            - generic [ref=e401]:
+              - img [ref=e402]
+              - generic [ref=e404]: ALIENWARE
+              - generic [ref=e405]: AW3225QF 32" 4K
+            - button [ref=e406]:
+              - img [ref=e407]
+          - generic [ref=e411]: ALIENWARE
+          - generic [ref=e412]: AW3225QF 32" 4K
+          - generic [ref=e413]: 4K UHD · 240Hz
+          - generic [ref=e414]: $1.299.999
+          - generic [ref=e417]: En stock
+    - contentinfo [ref=e418]:
+      - generic [ref=e420]:
+        - generic [ref=e421]:
+          - generic [ref=e422]:
+            - generic [ref=e423]: SHARKWARE
+            - generic [ref=e424]: GAMING
+          - paragraph [ref=e425]: Tu tienda gamer de confianza. Componentes, notebooks, desktops y periféricos al mejor precio — Sharkware Gaming.
+          - generic [ref=e426]:
+            - button "Instagram" [ref=e427] [cursor=pointer]:
+              - img [ref=e428]
+            - button "Twitter" [ref=e431] [cursor=pointer]:
+              - img [ref=e432]
+            - button "YouTube" [ref=e435] [cursor=pointer]:
+              - img [ref=e436]
+            - button "TikTok" [ref=e438] [cursor=pointer]:
+              - img [ref=e439]
+        - generic [ref=e442]:
+          - generic [ref=e443]:
+            - generic [ref=e444]: Productos
+            - link "Notebooks Gamer" [ref=e445] [cursor=pointer]:
+              - /url: /
+            - link "Desktops Gamer" [ref=e446] [cursor=pointer]:
+              - /url: /
+            - link "Monitores" [ref=e447] [cursor=pointer]:
+              - /url: /
+            - link "Periféricos" [ref=e448] [cursor=pointer]:
+              - /url: /
+            - link "Sillas Gamer" [ref=e449] [cursor=pointer]:
+              - /url: /
+          - generic [ref=e450]:
+            - generic [ref=e451]: Empresa
+            - link "Nosotros" [ref=e452] [cursor=pointer]:
+              - /url: /
+            - link "Blog" [ref=e453] [cursor=pointer]:
+              - /url: /
+            - link "Trabaja con nosotros" [ref=e454] [cursor=pointer]:
+              - /url: /
+            - link "Prensa" [ref=e455] [cursor=pointer]:
+              - /url: /
+          - generic [ref=e456]:
+            - generic [ref=e457]: Soporte
+            - link "Centro de ayuda" [ref=e458] [cursor=pointer]:
+              - /url: /
+            - link "Garantía" [ref=e459] [cursor=pointer]:
+              - /url: /
+            - link "Envíos" [ref=e460] [cursor=pointer]:
+              - /url: /
+            - link "Devoluciones" [ref=e461] [cursor=pointer]:
+              - /url: /
+          - generic [ref=e462]:
+            - generic [ref=e463]: Newsletter
+            - paragraph [ref=e464]: Recibí ofertas y novedades exclusivas.
+            - textbox "Tu email" [ref=e466]
+            - button "Suscribirse" [ref=e467] [cursor=pointer]
+      - generic [ref=e468]:
+        - generic [ref=e469]:
+          - generic [ref=e470]: VISA
+          - generic [ref=e471]: Mastercard
+          - generic [ref=e472]: AMEX
+          - generic [ref=e473]: Mercado Pago
+          - generic [ref=e474]: Naranja X
+        - generic [ref=e475]: © 2025 Sharkware Gaming Store. Todos los derechos reservados.
+    - button "Chatbot" [ref=e476] [cursor=pointer]:
+      - img [ref=e477]

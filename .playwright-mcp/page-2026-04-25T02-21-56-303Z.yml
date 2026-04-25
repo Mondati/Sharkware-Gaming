@@ -1,0 +1,252 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - link "Sharkware Gaming" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - img "Sharkware Gaming" [ref=e6]
+    - generic [ref=e7]:
+      - button [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+      - textbox "Buscar productos..." [ref=e12]
+    - link "Ingresar" [ref=e13] [cursor=pointer]:
+      - /url: /login
+      - img [ref=e14]
+      - generic [ref=e17]: Ingresar
+    - link "🛒 Carrito (0)" [ref=e18] [cursor=pointer]:
+      - /url: /cart
+      - generic [ref=e19]: 🛒 Carrito (0)
+  - generic [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e25]: SHARKWARE
+        - generic [ref=e26]: GAMING
+      - button [ref=e27] [cursor=pointer]:
+        - img [ref=e28]
+    - generic [ref=e31]:
+      - generic [ref=e32]: CATEGORÍAS
+      - link "Notebooks" [ref=e33] [cursor=pointer]:
+        - /url: /?cat=notebooks
+        - img [ref=e35]
+        - generic [ref=e37]: Notebooks
+        - img [ref=e38]
+      - link "Procesadores" [ref=e40] [cursor=pointer]:
+        - /url: /?cat=cpu
+        - img [ref=e42]
+        - generic [ref=e45]: Procesadores
+        - img [ref=e46]
+      - link "GPU / Placas de Video" [ref=e48] [cursor=pointer]:
+        - /url: /?cat=gpu
+        - img [ref=e50]
+        - generic [ref=e52]: GPU / Placas de Video
+        - img [ref=e53]
+      - link "Memorias RAM" [ref=e55] [cursor=pointer]:
+        - /url: /?cat=ram
+        - img [ref=e57]
+        - generic [ref=e59]: Memorias RAM
+        - img [ref=e60]
+      - link "Monitores" [ref=e62] [cursor=pointer]:
+        - /url: /?cat=monitors
+        - img [ref=e64]
+        - generic [ref=e66]: Monitores
+        - img [ref=e67]
+      - link "Almacenamiento" [ref=e69] [cursor=pointer]:
+        - /url: /?cat=storage
+        - img [ref=e71]
+        - generic [ref=e73]: Almacenamiento
+        - img [ref=e74]
+      - link "Periféricos" [ref=e76] [cursor=pointer]:
+        - /url: /?cat=peripherals
+        - img [ref=e78]
+        - generic [ref=e80]: Periféricos
+        - img [ref=e81]
+    - generic [ref=e83]:
+      - link "Mi cuenta" [ref=e84] [cursor=pointer]:
+        - /url: /login
+        - img [ref=e85]
+        - generic [ref=e88]: Mi cuenta
+      - link "Mis pedidos" [ref=e89] [cursor=pointer]:
+        - /url: /
+        - img [ref=e90]
+        - generic [ref=e94]: Mis pedidos
+      - link "Soporte" [ref=e95] [cursor=pointer]:
+        - /url: /
+        - img [ref=e96]
+        - generic [ref=e98]: Soporte
+  - generic [ref=e99]:
+    - generic [ref=e100]:
+      - link "Inicio" [ref=e101] [cursor=pointer]:
+        - /url: /
+      - img [ref=e102]
+      - link "GPU / Placas de Video" [ref=e104] [cursor=pointer]:
+        - /url: /?cat=gpu
+      - img [ref=e105]
+      - generic [ref=e107]: RTX 5080 Super
+    - generic [ref=e108]:
+      - generic [ref=e109]:
+        - generic [ref=e110]:
+          - img "RTX 5080 Super" [ref=e111]
+          - generic [ref=e112]: NUEVO
+        - generic [ref=e113]:
+          - button "Ver imagen 1" [ref=e114] [cursor=pointer]
+          - button "Ver imagen 2" [ref=e115] [cursor=pointer]
+          - button "Ver imagen 3" [ref=e116] [cursor=pointer]
+          - button "Ver imagen 4" [ref=e117] [cursor=pointer]
+      - generic [ref=e118]:
+        - generic [ref=e119]:
+          - generic [ref=e120]: NVIDIA
+          - button [ref=e121] [cursor=pointer]:
+            - img [ref=e122]
+          - button [ref=e124] [cursor=pointer]:
+            - img [ref=e125]
+        - heading "RTX 5080 Super" [level=1] [ref=e131]
+        - generic [ref=e132]:
+          - img [ref=e133]
+          - img [ref=e135]
+          - img [ref=e137]
+          - img [ref=e139]
+          - img [ref=e141]
+          - generic [ref=e143]: "4.8"
+          - generic [ref=e144]: (127 reseñas)
+        - generic [ref=e146]: $1.899.999
+        - generic [ref=e147]:
+          - generic [ref=e148]: MercadoPago
+          - generic [ref=e149]: BTC · ETH · USDT
+          - generic [ref=e150]: Transferencia
+        - generic [ref=e151]:
+          - generic [ref=e154]: En stock
+          - generic [ref=e155]:
+            - img [ref=e156]
+            - generic [ref=e161]: Envío gratis a todo el país
+        - generic [ref=e162]:
+          - generic [ref=e163]:
+            - generic [ref=e164]:
+              - img [ref=e165]
+              - generic [ref=e168]:
+                - generic [ref=e169]: PROCESADOR
+                - generic [ref=e170]: NVIDIA RTX 5080 Super
+            - generic [ref=e171]:
+              - img [ref=e172]
+              - generic [ref=e174]:
+                - generic [ref=e175]: RAM / VRAM
+                - generic [ref=e176]: 16GB GDDR7
+          - generic [ref=e178]:
+            - img [ref=e179]
+            - generic [ref=e181]:
+              - generic [ref=e182]: ALMACENAMIENTO
+              - generic [ref=e183]: Hasta 7680x4320 (8K)
+        - generic [ref=e184]:
+          - generic [ref=e185]: "Cantidad:"
+          - generic [ref=e186]:
+            - button "−" [ref=e187] [cursor=pointer]
+            - generic [ref=e189]: "1"
+            - button "+" [ref=e190] [cursor=pointer]
+        - generic [ref=e191]:
+          - button "Agregar al carrito" [ref=e192] [cursor=pointer]:
+            - img [ref=e193]
+            - generic [ref=e197]: Agregar al carrito
+          - button "Comprar ahora" [ref=e198] [cursor=pointer]:
+            - generic [ref=e199]: Comprar ahora
+        - generic [ref=e200]:
+          - generic [ref=e201]:
+            - img [ref=e202]
+            - generic [ref=e205]: Compra segura
+          - generic [ref=e206]:
+            - img [ref=e207]
+            - generic [ref=e212]: Envío gratis
+          - generic [ref=e213]:
+            - img [ref=e214]
+            - generic [ref=e219]: 30 días devolución
+    - generic [ref=e220]:
+      - generic [ref=e221]:
+        - button "Descripción" [ref=e222] [cursor=pointer]:
+          - generic [ref=e223]: Descripción
+        - button "Especificaciones" [ref=e224] [cursor=pointer]:
+          - generic [ref=e225]: Especificaciones
+        - button "Reseñas (127)" [ref=e226] [cursor=pointer]:
+          - generic [ref=e227]: Reseñas (127)
+      - generic [ref=e228]:
+        - paragraph [ref=e229]: La NVIDIA RTX 5080 Super es la GPU más potente de la generación Ada Lovelace, diseñada para gaming 4K extremo y creación de contenido profesional. Con 16GB de GDDR7 y PCIe 5.0, ofrece un rendimiento sin precedentes.
+        - generic [ref=e230]:
+          - generic [ref=e232]:
+            - generic [ref=e233]: Chipset
+            - generic [ref=e234]: NVIDIA RTX 5080 Super
+          - generic [ref=e237]:
+            - generic [ref=e238]: Vram
+            - generic [ref=e239]: 16GB GDDR7
+          - generic [ref=e242]:
+            - generic [ref=e243]: Interface
+            - generic [ref=e244]: PCIe 5.0 x16
+          - generic [ref=e247]:
+            - generic [ref=e248]: Tdp
+            - generic [ref=e249]: 285W
+          - generic [ref=e252]:
+            - generic [ref=e253]: Outputs
+            - generic [ref=e254]: 3x DisplayPort 2.1, 1x HDMI 2.1
+          - generic [ref=e257]:
+            - generic [ref=e258]: Resolution
+            - generic [ref=e259]: Hasta 7680x4320 (8K)
+    - generic [ref=e262]:
+      - generic [ref=e263]: También te puede gustar
+      - link "Ver todos →" [ref=e264] [cursor=pointer]:
+        - /url: /product/1
+    - contentinfo [ref=e266]:
+      - generic [ref=e268]:
+        - generic [ref=e269]:
+          - generic [ref=e270]:
+            - generic [ref=e271]: SHARKWARE
+            - generic [ref=e272]: GAMING
+          - paragraph [ref=e273]: Tu tienda gamer de confianza. Componentes, notebooks, desktops y periféricos al mejor precio — Sharkware Gaming.
+          - generic [ref=e274]:
+            - button "Instagram" [ref=e275] [cursor=pointer]:
+              - img [ref=e276]
+            - button "Twitter" [ref=e279] [cursor=pointer]:
+              - img [ref=e280]
+            - button "YouTube" [ref=e283] [cursor=pointer]:
+              - img [ref=e284]
+            - button "TikTok" [ref=e286] [cursor=pointer]:
+              - img [ref=e287]
+        - generic [ref=e290]:
+          - generic [ref=e291]:
+            - generic [ref=e292]: Productos
+            - link "Notebooks Gamer" [ref=e293] [cursor=pointer]:
+              - /url: /product/1
+            - link "Desktops Gamer" [ref=e294] [cursor=pointer]:
+              - /url: /product/1
+            - link "Monitores" [ref=e295] [cursor=pointer]:
+              - /url: /product/1
+            - link "Periféricos" [ref=e296] [cursor=pointer]:
+              - /url: /product/1
+            - link "Sillas Gamer" [ref=e297] [cursor=pointer]:
+              - /url: /product/1
+          - generic [ref=e298]:
+            - generic [ref=e299]: Empresa
+            - link "Nosotros" [ref=e300] [cursor=pointer]:
+              - /url: /product/1
+            - link "Blog" [ref=e301] [cursor=pointer]:
+              - /url: /product/1
+            - link "Trabaja con nosotros" [ref=e302] [cursor=pointer]:
+              - /url: /product/1
+            - link "Prensa" [ref=e303] [cursor=pointer]:
+              - /url: /product/1
+          - generic [ref=e304]:
+            - generic [ref=e305]: Soporte
+            - link "Centro de ayuda" [ref=e306] [cursor=pointer]:
+              - /url: /product/1
+            - link "Garantía" [ref=e307] [cursor=pointer]:
+              - /url: /product/1
+            - link "Envíos" [ref=e308] [cursor=pointer]:
+              - /url: /product/1
+            - link "Devoluciones" [ref=e309] [cursor=pointer]:
+              - /url: /product/1
+          - generic [ref=e310]:
+            - generic [ref=e311]: Newsletter
+            - paragraph [ref=e312]: Recibí ofertas y novedades exclusivas.
+            - textbox "Tu email" [ref=e314]
+            - button "Suscribirse" [ref=e315] [cursor=pointer]
+      - generic [ref=e316]:
+        - generic [ref=e317]:
+          - generic [ref=e318]: VISA
+          - generic [ref=e319]: Mastercard
+          - generic [ref=e320]: AMEX
+          - generic [ref=e321]: Mercado Pago
+          - generic [ref=e322]: Naranja X
+        - generic [ref=e323]: © 2025 Sharkware Gaming Store. Todos los derechos reservados.

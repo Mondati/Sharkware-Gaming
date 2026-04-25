@@ -24,11 +24,6 @@ const Home = () => {
   const activeCategory = searchParams.get('cat') ?? 'all'
   const [activeNbFilter, setActiveNbFilter] = useState('Todos')
   const [sortOrder, setSortOrder] = useState('relevance')
-  const [hoveredCategory, setHoveredCategory] = useState(null)
-  const [hoveredNbFilter, setHoveredNbFilter] = useState(null)
-  const [heroBtnHovered, setHeroBtnHovered] = useState(false)
-  const [heroBtn2Hovered, setHeroBtn2Hovered] = useState(false)
-  const [hoveredVerTodos, setHoveredVerTodos] = useState(null)
   const { sidePadding, cardFlex } = useWindowWidth()
 
   const filteredByCategory = activeCategory === 'all'
@@ -82,24 +77,22 @@ const Home = () => {
             <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px' }}>Precio desde</span>
             <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '32px', fontWeight: '800' }}>$2.499.999 ARS</span>
           </div>
-          <div className="flex items-center" style={{ gap: '14px' }}>
+          <div className="flex items-center flex-wrap" style={{ gap: '14px' }}>
             <button
-              onMouseEnter={() => setHeroBtnHovered(true)}
-              onMouseLeave={() => setHeroBtnHovered(false)}
-              style={{ backgroundColor: heroBtnHovered ? '#00B8EF' : '#00C8FF', borderRadius: '8px', padding: '14px 28px', color: '#060810', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700', border: 'none', cursor: 'pointer', transition: 'background-color 0.15s ease' }}
+              className="sw-hero-primary"
+              style={{ borderRadius: '8px', padding: '14px 28px', color: '#060810', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' }}
             >
               Comprar ahora
             </button>
             <button
-              onMouseEnter={() => setHeroBtn2Hovered(true)}
-              onMouseLeave={() => setHeroBtn2Hovered(false)}
-              style={{ backgroundColor: heroBtn2Hovered ? '#252840' : '#1E2232', borderRadius: '8px', padding: '14px 28px', color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600', border: 'none', cursor: 'pointer', transition: 'background-color 0.15s ease' }}
+              className="sw-hero-secondary"
+              style={{ borderRadius: '8px', padding: '14px 28px', color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' }}
             >
               Ver especificaciones
             </button>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <Cpu size={14} color="#8890A4" />
-              <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>Builds Personalizadas</span>
+              <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', whiteSpace: 'nowrap' }}>Builds Personalizadas</span>
             </div>
           </div>
         </div>
@@ -155,11 +148,10 @@ const Home = () => {
       {/* ═══════════════ CATEGORY BAR ═══════════════ */}
 
       {/* Desktop Category Bar */}
+      <div className="hidden md:block w-full" style={{ position: 'relative', backgroundColor: '#070B16', borderBottom: '1px solid #1B2333' }}>
       <div
-        className="hidden md:flex items-center w-full"
+        className="flex items-center w-full"
         style={{
-          backgroundColor: '#070B16',
-          borderBottom: '1px solid #1B2333',
           height: '76px',
           padding: `14px ${sidePadding}`,
           gap: '10px',
@@ -169,22 +161,18 @@ const Home = () => {
       >
         {categories.map(({ id, label, icon }) => {
           const isActive = activeCategory === id
-          const isHovered = hoveredCategory === id
           const Icon = ICON_MAP[icon] ?? null
           return (
             <button
               key={id}
               onClick={() => id === 'all' ? setSearchParams({}) : setSearchParams({ cat: id })}
-              onMouseEnter={() => setHoveredCategory(id)}
-              onMouseLeave={() => setHoveredCategory(null)}
-              className="flex items-center border-none cursor-pointer flex-shrink-0"
+              className="sw-pill flex items-center border-none cursor-pointer flex-shrink-0"
               style={{
-                backgroundColor: isActive ? '#00C8FF' : isHovered ? '#252840' : '#1E2232',
+                backgroundColor: isActive ? '#00C8FF' : undefined,
                 borderRadius: '20px',
                 padding: '8px 18px',
                 gap: '6px',
                 whiteSpace: 'nowrap',
-                transition: 'background-color 0.15s ease',
               }}
             >
               {Icon && <Icon size={14} color={isActive ? '#060810' : '#AAB3C5'} />}
@@ -194,6 +182,8 @@ const Home = () => {
             </button>
           )
         })}
+      </div>
+      <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '48px', background: 'linear-gradient(to right, transparent, #070B16)', pointerEvents: 'none' }} />
       </div>
 
       {/* Mobile Category Bar — horizontal scroll */}
@@ -329,20 +319,8 @@ const Home = () => {
               </span>
               <Link
                 to="#"
-                className="no-underline flex items-center"
-                onMouseEnter={() => setHoveredVerTodos('nuevos-d')}
-                onMouseLeave={() => setHoveredVerTodos(null)}
-                style={{
-                  gap: '4px',
-                  padding: '5px 12px',
-                  borderRadius: '4px',
-                  border: hoveredVerTodos === 'nuevos-d' ? '1px solid #24A8F5' : '1px solid #1B2333',
-                  color: hoveredVerTodos === 'nuevos-d' ? '#00C8FF' : '#8890A4',
-                  fontFamily: 'Poppins',
-                  fontSize: '12px',
-                  fontWeight: '600',
-                  transition: 'color 0.15s ease, border-color 0.15s ease',
-                }}
+                className="no-underline flex items-center sw-ver-todos"
+                style={{ gap: '4px', padding: '5px 12px', borderRadius: '4px', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}
               >
                 Ver todos
                 <ChevronRight size={12} />
@@ -365,20 +343,8 @@ const Home = () => {
               </span>
               <Link
                 to="#"
-                className="no-underline flex items-center"
-                onMouseEnter={() => setHoveredVerTodos('nuevos-m')}
-                onMouseLeave={() => setHoveredVerTodos(null)}
-                style={{
-                  gap: '3px',
-                  padding: '4px 10px',
-                  borderRadius: '4px',
-                  border: hoveredVerTodos === 'nuevos-m' ? '1px solid #24A8F5' : '1px solid #1B2333',
-                  color: hoveredVerTodos === 'nuevos-m' ? '#00C8FF' : '#8890A4',
-                  fontFamily: 'Poppins',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  transition: 'color 0.15s ease, border-color 0.15s ease',
-                }}
+                className="no-underline flex items-center sw-ver-todos"
+                style={{ gap: '3px', padding: '4px 10px', borderRadius: '4px', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}
               >
                 Ver todos
                 <ChevronRight size={11} />
@@ -401,20 +367,8 @@ const Home = () => {
               </span>
               <Link
                 to="#"
-                className="no-underline flex items-center"
-                onMouseEnter={() => setHoveredVerTodos('notebooks-d')}
-                onMouseLeave={() => setHoveredVerTodos(null)}
-                style={{
-                  gap: '4px',
-                  padding: '5px 12px',
-                  borderRadius: '4px',
-                  border: hoveredVerTodos === 'notebooks-d' ? '1px solid #24A8F5' : '1px solid #1B2333',
-                  color: hoveredVerTodos === 'notebooks-d' ? '#00C8FF' : '#8890A4',
-                  fontFamily: 'Poppins',
-                  fontSize: '12px',
-                  fontWeight: '600',
-                  transition: 'color 0.15s ease, border-color 0.15s ease',
-                }}
+                className="no-underline flex items-center sw-ver-todos"
+                style={{ gap: '4px', padding: '5px 12px', borderRadius: '4px', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}
               >
                 Ver todos
                 <ChevronRight size={12} />
@@ -423,23 +377,19 @@ const Home = () => {
             <div className="flex" style={{ gap: '8px' }}>
               {notebookFilters.map((f) => {
                 const isActive = activeNbFilter === f
-                const isHovered = hoveredNbFilter === f
                 return (
                   <button
                     key={f}
                     onClick={() => setActiveNbFilter(f)}
-                    onMouseEnter={() => setHoveredNbFilter(f)}
-                    onMouseLeave={() => setHoveredNbFilter(null)}
-                    className="border-none cursor-pointer"
+                    className="sw-pill border-none cursor-pointer"
                     style={{
-                      backgroundColor: isActive ? '#00C8FF' : isHovered ? '#252840' : '#1E2232',
+                      backgroundColor: isActive ? '#00C8FF' : undefined,
                       borderRadius: '20px',
                       padding: '6px 16px',
                       color: isActive ? '#060810' : '#AAB3C5',
                       fontFamily: 'Poppins',
                       fontSize: '12px',
                       fontWeight: isActive ? '700' : 'normal',
-                      transition: 'background-color 0.15s ease',
                     }}
                   >
                     {f}
@@ -470,20 +420,8 @@ const Home = () => {
               </span>
               <Link
                 to="#"
-                className="no-underline flex items-center"
-                onMouseEnter={() => setHoveredVerTodos('notebooks-m')}
-                onMouseLeave={() => setHoveredVerTodos(null)}
-                style={{
-                  gap: '3px',
-                  padding: '4px 10px',
-                  borderRadius: '4px',
-                  border: hoveredVerTodos === 'notebooks-m' ? '1px solid #24A8F5' : '1px solid #1B2333',
-                  color: hoveredVerTodos === 'notebooks-m' ? '#00C8FF' : '#8890A4',
-                  fontFamily: 'Poppins',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  transition: 'color 0.15s ease, border-color 0.15s ease',
-                }}
+                className="no-underline flex items-center sw-ver-todos"
+                style={{ gap: '3px', padding: '4px 10px', borderRadius: '4px', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}
               >
                 Ver todos
                 <ChevronRight size={11} />
@@ -506,20 +444,8 @@ const Home = () => {
               </span>
               <Link
                 to="#"
-                className="no-underline flex items-center"
-                onMouseEnter={() => setHoveredVerTodos('monitores-d')}
-                onMouseLeave={() => setHoveredVerTodos(null)}
-                style={{
-                  gap: '4px',
-                  padding: '5px 12px',
-                  borderRadius: '4px',
-                  border: hoveredVerTodos === 'monitores-d' ? '1px solid #24A8F5' : '1px solid #1B2333',
-                  color: hoveredVerTodos === 'monitores-d' ? '#00C8FF' : '#8890A4',
-                  fontFamily: 'Poppins',
-                  fontSize: '12px',
-                  fontWeight: '600',
-                  transition: 'color 0.15s ease, border-color 0.15s ease',
-                }}
+                className="no-underline flex items-center sw-ver-todos"
+                style={{ gap: '4px', padding: '5px 12px', borderRadius: '4px', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}
               >
                 Ver todos
                 <ChevronRight size={12} />
@@ -542,20 +468,8 @@ const Home = () => {
               </span>
               <Link
                 to="#"
-                className="no-underline flex items-center"
-                onMouseEnter={() => setHoveredVerTodos('monitores-m')}
-                onMouseLeave={() => setHoveredVerTodos(null)}
-                style={{
-                  gap: '3px',
-                  padding: '4px 10px',
-                  borderRadius: '4px',
-                  border: hoveredVerTodos === 'monitores-m' ? '1px solid #24A8F5' : '1px solid #1B2333',
-                  color: hoveredVerTodos === 'monitores-m' ? '#00C8FF' : '#8890A4',
-                  fontFamily: 'Poppins',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  transition: 'color 0.15s ease, border-color 0.15s ease',
-                }}
+                className="no-underline flex items-center sw-ver-todos"
+                style={{ gap: '3px', padding: '4px 10px', borderRadius: '4px', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}
               >
                 Ver todos
                 <ChevronRight size={11} />

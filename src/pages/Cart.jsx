@@ -205,9 +205,11 @@ const Cart = () => {
               {fmt(subtotal)}
             </span>
           </div>
+          {subtotal > 0 && (
           <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
             en 12 cuotas sin interés de {fmt(Math.round(subtotal / 12))}
           </span>
+          )}
 
           {/* Checkout button */}
           <Link
@@ -401,9 +403,11 @@ const Cart = () => {
               {fmt(subtotal)}
             </span>
           </div>
+          {subtotal > 0 && (
           <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '12px' }}>
             en 12 cuotas sin interés de {fmt(Math.round(subtotal / 12))}
           </span>
+          )}
 
           <Link
             to="/checkout"

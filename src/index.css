@@ -36,3 +36,12 @@ body {
 .sw-scroll::-webkit-scrollbar-thumb:hover {
   background: #24A8F5;
 }
+
+.sw-hero-primary { background-color: #00C8FF; transition: background-color 0.15s ease; }
+.sw-hero-primary:hover { background-color: #00B8EF; }
+.sw-hero-secondary { background-color: #1E2232; transition: background-color 0.15s ease; }
+.sw-hero-secondary:hover { background-color: #252840; }
+.sw-pill { background-color: #1E2232; transition: background-color 0.15s ease; }
+.sw-pill:hover { background-color: #252840; }
+.sw-ver-todos { border: 1px solid #1B2333; color: #8890A4; transition: color 0.15s ease, border-color 0.15s ease; }
+.sw-ver-todos:hover { border-color: #24A8F5; color: #00C8FF; }

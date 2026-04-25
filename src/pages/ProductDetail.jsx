@@ -439,6 +439,7 @@ const ProductDetail = () => {
       </div>
 
       {/* ═══ DESKTOP RELATED ═══ */}
+      {relatedProducts.length > 0 && (
       <div className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 24px`, gap: '20px' }}>
         <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
         <div className="flex items-center">
@@ -450,6 +451,8 @@ const ProductDetail = () => {
           </Link>
         </div>
       </div>
+      )}
+      {relatedProducts.length > 0 && (
       <div className="hidden md:flex w-full" style={{ padding: `0 ${sidePadding} 56px`, gap: '20px' }}>
         {relatedProducts.map((p) => (
           <Link
@@ -475,6 +478,7 @@ const ProductDetail = () => {
           </Link>
         ))}
       </div>
+      )}
 
       {/* ═══ MOBILE PRODUCT INFO ═══ */}
       <div className="flex md:hidden flex-col w-full" style={{ padding: '16px', gap: '16px' }}>
@@ -623,6 +627,7 @@ const ProductDetail = () => {
         </div>
 
         {/* Related */}
+        {relatedProducts.length > 0 && (
         <div className="flex flex-col" style={{ gap: '12px' }}>
           <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
             También te puede gustar
@@ -647,6 +652,7 @@ const ProductDetail = () => {
             ))}
           </div>
         </div>
+        )}
 
         <div style={{ padding: '8px 0 16px' }}>
           <TrustBadges size={20} layout="row" />
