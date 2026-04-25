@@ -1,102 +1,487 @@
 ================================================================================
-LISTA DE NOMBRES DE ARCHIVO PARA PRODUCTOS SIN IMAGENES
-Sharkware-Gaming - Proyecto E-commerce
+LISTA DE IMÁGENES POR PRODUCTO — Sharkware Gaming
 ================================================================================
 
 INSTRUCCIONES:
 1. Descarga las imágenes de los productos
-2. Renómbralas exactamente como aparece en esta lista (respeta mayúsculas y guiones)
+2. Renómbralas exactamente como aparece en esta lista (respeta guiones y minúsculas)
 3. Colócalas en: public/images/products/
-4. Avísame cuando estén listas
+4. Cada producto tiene 4 imágenes: principal + -2, -3, -4
 
 ================================================================================
-GPUS
+NUEVOS — IDs 1–4 (sección home)
 ================================================================================
-✅ LISTO: RTX 5080 Super (4 imágenes)
-rtx-5080-super.webp
-rtx-5080-super-2.webp
-rtx-5080-super-3.webp
-rtx-5080-super-4.webp
 
-================================================================================
-NOTEBOOKS
-================================================================================
-✅ LISTO: ASUS ROG Strix G16 2025 (4 imágenes)
-rog-strix-g16-2025.webp
-rog-strix-g16-2025-2.webp
-rog-strix-g16-2025-3.webp
-rog-strix-g16-2025-4.webp
+[ID 1]  NVIDIA RTX 5080 Super — GPU ✅ COMPLETO
+  ✅ rtx-5080-super.webp
+  ✅ rtx-5080-super-2.webp
+  ✅ rtx-5080-super-3.webp
+  ✅ rtx-5080-super-4.webp
 
-✅ LISTO: LENOVO Legion 7i Pro 2025 (4 imágenes)
-legion-7i-pro-2025.webp
-legion-7i-pro-2025-2.webp
-legion-7i-pro-2025-3.webp
-legion-7i-pro-2025-4.webp
+[ID 2]  ASUS ROG Strix G16 2025 — Notebook ✅ COMPLETO
+  ✅ rog-strix-g16-2025.webp
+  ✅ rog-strix-g16-2025-2.webp
+  ✅ rog-strix-g16-2025-3.webp
+  ✅ rog-strix-g16-2025-4.webp
 
-✅ LISTO: MSI Titan GT77 HX 17" (4 imágenes)
-msi-titan-gt77-hx-17.webp
-msi-titan-gt77-hx-17-2.webp
-msi-titan-gt77-hx-17-3.webp
-msi-titan-gt77-hx-17-4.webp
+[ID 3]  LENOVO Legion 7i Pro 2025 — Notebook ✅ COMPLETO
+  ✅ legion-7i-pro-2025.webp
+  ✅ legion-7i-pro-2025-2.webp
+  ✅ legion-7i-pro-2025-3.webp
+  ✅ legion-7i-pro-2025-4.webp
 
-✅ LISTO: LENOVO Legion 5i Pro (4 imágenes)
-lenovo-legion-5i-pro.webp
-lenovo-legion-5i-pro-2.webp
-lenovo-legion-5i-pro-3.webp
-lenovo-legion-5i-pro-4.webp
-
-✅ LISTO: MSI Katana 17 B13 (4 imágenes)
-msi-katana-17-b13.webp
-msi-katana-17-b13-2.webp
-msi-katana-17-b13-3.webp
-msi-katana-17-b13-4.webp
-
-✅ LISTO: ACER Predator Helios 16 (4 imágenes)
-acer-predator-helios-16.webp
-acer-predator-helios-16-2.webp
-acer-predator-helios-16-3.webp
-acer-predator-helios-16-4.webp
-
-✅ LISTO: RAZER Blade 16 2025 (4 imágenes)
-razer-blade-16-2025.webp
-razer-blade-16-2025-2.webp
-razer-blade-16-2025-3.webp
-razer-blade-16-2025-4.webp
-
-✅ LISTO: MSI Raider GE78 HX 17" (4 imágenes)
-msi-raider-ge78-hx-17.webp
-msi-raider-ge78-hx-17-2.webp
-msi-raider-ge78-hx-17-3.webp
-msi-raider-ge78-hx-17-4.webp
+[ID 4]  MSI Titan GT77 HX 17" — Notebook ✅ COMPLETO
+  ✅ msi-titan-gt77-hx-17.webp
+  ✅ msi-titan-gt77-hx-17-2.webp
+  ✅ msi-titan-gt77-hx-17-3.webp
+  ✅ msi-titan-gt77-hx-17-4.webp
 
 ================================================================================
-MONITORES
+NOTEBOOKS GAMER — IDs 5–8, 13–15
 ================================================================================
-✅ LISTO: Samsung Odyssey G7 32" (4 imágenes)
-odyssey-g7-32.webp
-odyssey-g7-32-2.webp
-odyssey-g7-32-3.webp
-odyssey-g7-32-4.webp
 
-❌ PENDIENTE: LG UltraGear 27" 165Hz
-ultragear-27-165hz.jpg
+[ID 5]  LENOVO Legion 5i Pro ✅ COMPLETO
+  ✅ lenovo-legion-5i-pro.webp
+  ✅ lenovo-legion-5i-pro-2.webp
+  ✅ lenovo-legion-5i-pro-3.webp
+  ✅ lenovo-legion-5i-pro-4.webp
 
-❌ PENDIENTE: ASUS ROG Swift 27" 360Hz
-rog-swift-27-360hz.jpg
+[ID 6]  MSI Katana 17 B13 ✅ COMPLETO
+  ✅ msi-katana-17-b13.webp
+  ✅ msi-katana-17-b13-2.webp
+  ✅ msi-katana-17-b13-3.webp
+  ✅ msi-katana-17-b13-4.webp
 
-❌ PENDIENTE: Dell AW3225QF 32" 4K
-aw3225qf-32-4k.jpg
+[ID 7]  ACER Predator Helios 16 ✅ COMPLETO
+  ✅ acer-predator-helios-16.webp
+  ✅ acer-predator-helios-16-2.webp
+  ✅ acer-predator-helios-16-3.webp
+  ✅ acer-predator-helios-16-4.webp
+
+[ID 8]  RAZER Blade 16 2025 ✅ COMPLETO
+  ✅ razer-blade-16-2025.webp
+  ✅ razer-blade-16-2025-2.webp
+  ✅ razer-blade-16-2025-3.webp
+  ✅ razer-blade-16-2025-4.webp
+
+[ID 13] MSI Raider GE78 HX 17" ✅ COMPLETO
+  ✅ msi-raider-ge78-hx-17.webp
+  ✅ msi-raider-ge78-hx-17-2.webp
+  ✅ msi-raider-ge78-hx-17-3.webp
+  ✅ msi-raider-ge78-hx-17-4.webp
+
+[ID 14] HP Omen 16 2024 ❌ PENDIENTE
+  ❌ hp-omen-16-2024.jpg
+  ❌ hp-omen-16-2024-2.jpg
+  ❌ hp-omen-16-2024-3.jpg
+  ❌ hp-omen-16-2024-4.jpg
+
+[ID 15] ASUS TUF Gaming A15 2024 ❌ PENDIENTE
+  ❌ tuf-gaming-a15-2024.jpg
+  ❌ tuf-gaming-a15-2024-2.jpg
+  ❌ tuf-gaming-a15-2024-3.jpg
+  ❌ tuf-gaming-a15-2024-4.jpg
 
 ================================================================================
-RESUMEN TOTAL
+GPUs — IDs 1, 16–24
 ================================================================================
-GPUs:              1 LISTO (4 imágenes) / 0 PENDIENTE
-Notebooks:         8 LISTO (32 imágenes) / 0 PENDIENTE
-Monitores:         1 LISTO (4 imágenes) / 3 PENDIENTE (3 imágenes)
-─────────────────────────────
-COMPLETADO:        40 / 43 archivos ✅ 93%
-PENDIENTE:         3 / 43 archivos ❌ 7%
 
-Formatos recomendados: .jpg, .webp, .png
+[ID 1]  NVIDIA RTX 5080 Super ✅ COMPLETO (ver sección Nuevos)
+
+[ID 16] NVIDIA RTX 4090 Founders Edition ❌ PENDIENTE
+  ❌ rtx-4090-founders-edition.jpg
+  ❌ rtx-4090-founders-edition-2.jpg
+  ❌ rtx-4090-founders-edition-3.jpg
+  ❌ rtx-4090-founders-edition-4.jpg
+
+[ID 17] ASUS ROG Strix RTX 4080 Super ❌ PENDIENTE
+  ❌ rog-strix-rtx-4080-super.jpg
+  ❌ rog-strix-rtx-4080-super-2.jpg
+  ❌ rog-strix-rtx-4080-super-3.jpg
+  ❌ rog-strix-rtx-4080-super-4.jpg
+
+[ID 18] MSI Gaming X Trio RTX 4070 Ti Super ❌ PENDIENTE
+  ❌ msi-rtx-4070-ti-super.jpg
+  ❌ msi-rtx-4070-ti-super-2.jpg
+  ❌ msi-rtx-4070-ti-super-3.jpg
+  ❌ msi-rtx-4070-ti-super-4.jpg
+
+[ID 19] GIGABYTE Gaming OC RTX 4070 Super ❌ PENDIENTE
+  ❌ gigabyte-rtx-4070-super.jpg
+  ❌ gigabyte-rtx-4070-super-2.jpg
+  ❌ gigabyte-rtx-4070-super-3.jpg
+  ❌ gigabyte-rtx-4070-super-4.jpg
+
+[ID 20] NVIDIA RTX 4060 Ti Founders Edition ❌ PENDIENTE
+  ❌ rtx-4060-ti-founders-edition.jpg
+  ❌ rtx-4060-ti-founders-edition-2.jpg
+  ❌ rtx-4060-ti-founders-edition-3.jpg
+  ❌ rtx-4060-ti-founders-edition-4.jpg
+
+[ID 21] AMD RX 7900 XTX ❌ PENDIENTE
+  ❌ amd-rx-7900-xtx.jpg
+  ❌ amd-rx-7900-xtx-2.jpg
+  ❌ amd-rx-7900-xtx-3.jpg
+  ❌ amd-rx-7900-xtx-4.jpg
+
+[ID 22] SAPPHIRE Nitro+ RX 7800 XT ❌ PENDIENTE
+  ❌ sapphire-nitro-rx-7800-xt.jpg
+  ❌ sapphire-nitro-rx-7800-xt-2.jpg
+  ❌ sapphire-nitro-rx-7800-xt-3.jpg
+  ❌ sapphire-nitro-rx-7800-xt-4.jpg
+
+[ID 23] AMD RX 7600 XT ❌ PENDIENTE
+  ❌ amd-rx-7600-xt.jpg
+  ❌ amd-rx-7600-xt-2.jpg
+  ❌ amd-rx-7600-xt-3.jpg
+  ❌ amd-rx-7600-xt-4.jpg
+
+[ID 24] MSI Ventus 3X RTX 4060 ❌ PENDIENTE
+  ❌ msi-rtx-4060-ventus-3x.jpg
+  ❌ msi-rtx-4060-ventus-3x-2.jpg
+  ❌ msi-rtx-4060-ventus-3x-3.jpg
+  ❌ msi-rtx-4060-ventus-3x-4.jpg
+
+================================================================================
+MONITORES — IDs 9–12, 25–30
+================================================================================
+
+[ID 9]  SAMSUNG Odyssey G7 32" ✅ COMPLETO
+  ✅ odyssey-g7-32.webp
+  ✅ odyssey-g7-32-2.webp
+  ✅ odyssey-g7-32-3.webp
+  ✅ odyssey-g7-32-4.webp
+
+[ID 10] LG UltraGear 27" 165Hz ❌ PENDIENTE
+  ❌ ultragear-27-165hz.jpg
+  ❌ ultragear-27-165hz-2.jpg
+  ❌ ultragear-27-165hz-3.jpg
+  ❌ ultragear-27-165hz-4.jpg
+
+[ID 11] ASUS ROG Swift 27" 360Hz ❌ PENDIENTE
+  ❌ rog-swift-27-360hz.jpg
+  ❌ rog-swift-27-360hz-2.jpg
+  ❌ rog-swift-27-360hz-3.jpg
+  ❌ rog-swift-27-360hz-4.jpg
+
+[ID 12] ALIENWARE AW3225QF 32" 4K ❌ PENDIENTE
+  ❌ aw3225qf-32-4k.jpg
+  ❌ aw3225qf-32-4k-2.jpg
+  ❌ aw3225qf-32-4k-3.jpg
+  ❌ aw3225qf-32-4k-4.jpg
+
+[ID 25] AOC 24G2 24" 144Hz ❌ PENDIENTE
+  ❌ aoc-24g2-144hz.jpg
+  ❌ aoc-24g2-144hz-2.jpg
+  ❌ aoc-24g2-144hz-3.jpg
+  ❌ aoc-24g2-144hz-4.jpg
+
+[ID 26] MSI MAG274QRF-QD 27" QHD ❌ PENDIENTE
+  ❌ msi-mag274qrf-qd.jpg
+  ❌ msi-mag274qrf-qd-2.jpg
+  ❌ msi-mag274qrf-qd-3.jpg
+  ❌ msi-mag274qrf-qd-4.jpg
+
+[ID 27] LG UltraGear 32" 4K 144Hz ❌ PENDIENTE
+  ❌ lg-ultragear-32-4k-144hz.jpg
+  ❌ lg-ultragear-32-4k-144hz-2.jpg
+  ❌ lg-ultragear-32-4k-144hz-3.jpg
+  ❌ lg-ultragear-32-4k-144hz-4.jpg
+
+[ID 28] SAMSUNG Odyssey Neo G9 49" ❌ PENDIENTE
+  ❌ odyssey-neo-g9-49.jpg
+  ❌ odyssey-neo-g9-49-2.jpg
+  ❌ odyssey-neo-g9-49-3.jpg
+  ❌ odyssey-neo-g9-49-4.jpg
+
+[ID 29] ACER Nitro XV272U 27" QHD ❌ PENDIENTE
+  ❌ acer-nitro-xv272u.jpg
+  ❌ acer-nitro-xv272u-2.jpg
+  ❌ acer-nitro-xv272u-3.jpg
+  ❌ acer-nitro-xv272u-4.jpg
+
+[ID 30] ASUS TUF Gaming VG32AQA1A 32" ❌ PENDIENTE
+  ❌ asus-tuf-vg32aqa1a.jpg
+  ❌ asus-tuf-vg32aqa1a-2.jpg
+  ❌ asus-tuf-vg32aqa1a-3.jpg
+  ❌ asus-tuf-vg32aqa1a-4.jpg
+
+================================================================================
+PROCESADORES — IDs 31–40
+================================================================================
+
+[ID 31] INTEL Core i9-14900K ❌ PENDIENTE
+  ❌ intel-i9-14900k.jpg
+  ❌ intel-i9-14900k-2.jpg
+  ❌ intel-i9-14900k-3.jpg
+  ❌ intel-i9-14900k-4.jpg
+
+[ID 32] INTEL Core i7-14700K ❌ PENDIENTE
+  ❌ intel-i7-14700k.jpg
+  ❌ intel-i7-14700k-2.jpg
+  ❌ intel-i7-14700k-3.jpg
+  ❌ intel-i7-14700k-4.jpg
+
+[ID 33] INTEL Core i5-14600K ❌ PENDIENTE
+  ❌ intel-i5-14600k.jpg
+  ❌ intel-i5-14600k-2.jpg
+  ❌ intel-i5-14600k-3.jpg
+  ❌ intel-i5-14600k-4.jpg
+
+[ID 34] INTEL Core i9-13900KS ❌ PENDIENTE
+  ❌ intel-i9-13900ks.jpg
+  ❌ intel-i9-13900ks-2.jpg
+  ❌ intel-i9-13900ks-3.jpg
+  ❌ intel-i9-13900ks-4.jpg
+
+[ID 35] INTEL Core i5-13600K ❌ PENDIENTE
+  ❌ intel-i5-13600k.jpg
+  ❌ intel-i5-13600k-2.jpg
+  ❌ intel-i5-13600k-3.jpg
+  ❌ intel-i5-13600k-4.jpg
+
+[ID 36] AMD Ryzen 9 7950X ❌ PENDIENTE
+  ❌ amd-ryzen-9-7950x.jpg
+  ❌ amd-ryzen-9-7950x-2.jpg
+  ❌ amd-ryzen-9-7950x-3.jpg
+  ❌ amd-ryzen-9-7950x-4.jpg
+
+[ID 37] AMD Ryzen 9 7900X ❌ PENDIENTE
+  ❌ amd-ryzen-9-7900x.jpg
+  ❌ amd-ryzen-9-7900x-2.jpg
+  ❌ amd-ryzen-9-7900x-3.jpg
+  ❌ amd-ryzen-9-7900x-4.jpg
+
+[ID 38] AMD Ryzen 7 7700X ❌ PENDIENTE
+  ❌ amd-ryzen-7-7700x.jpg
+  ❌ amd-ryzen-7-7700x-2.jpg
+  ❌ amd-ryzen-7-7700x-3.jpg
+  ❌ amd-ryzen-7-7700x-4.jpg
+
+[ID 39] AMD Ryzen 5 7600X ❌ PENDIENTE
+  ❌ amd-ryzen-5-7600x.jpg
+  ❌ amd-ryzen-5-7600x-2.jpg
+  ❌ amd-ryzen-5-7600x-3.jpg
+  ❌ amd-ryzen-5-7600x-4.jpg
+
+[ID 40] AMD Ryzen 9 5900X ❌ PENDIENTE
+  ❌ amd-ryzen-9-5900x.jpg
+  ❌ amd-ryzen-9-5900x-2.jpg
+  ❌ amd-ryzen-9-5900x-3.jpg
+  ❌ amd-ryzen-9-5900x-4.jpg
+
+================================================================================
+MEMORIAS RAM — IDs 41–50
+================================================================================
+
+[ID 41] CORSAIR Vengeance DDR5 32GB 5600MHz ❌ PENDIENTE
+  ❌ corsair-vengeance-ddr5-32gb.jpg
+  ❌ corsair-vengeance-ddr5-32gb-2.jpg
+  ❌ corsair-vengeance-ddr5-32gb-3.jpg
+  ❌ corsair-vengeance-ddr5-32gb-4.jpg
+
+[ID 42] G.SKILL Trident Z5 RGB 32GB 6000MHz ❌ PENDIENTE
+  ❌ gskill-trident-z5-rgb-32gb.jpg
+  ❌ gskill-trident-z5-rgb-32gb-2.jpg
+  ❌ gskill-trident-z5-rgb-32gb-3.jpg
+  ❌ gskill-trident-z5-rgb-32gb-4.jpg
+
+[ID 43] KINGSTON Fury Beast DDR5 16GB 5200MHz ❌ PENDIENTE
+  ❌ kingston-fury-beast-ddr5-16gb.jpg
+  ❌ kingston-fury-beast-ddr5-16gb-2.jpg
+  ❌ kingston-fury-beast-ddr5-16gb-3.jpg
+  ❌ kingston-fury-beast-ddr5-16gb-4.jpg
+
+[ID 44] CORSAIR Dominator Platinum RGB DDR5 64GB ❌ PENDIENTE
+  ❌ corsair-dominator-platinum-ddr5-64gb.jpg
+  ❌ corsair-dominator-platinum-ddr5-64gb-2.jpg
+  ❌ corsair-dominator-platinum-ddr5-64gb-3.jpg
+  ❌ corsair-dominator-platinum-ddr5-64gb-4.jpg
+
+[ID 45] G.SKILL Ripjaws V DDR4 32GB 3600MHz ❌ PENDIENTE
+  ❌ gskill-ripjaws-v-ddr4-32gb.jpg
+  ❌ gskill-ripjaws-v-ddr4-32gb-2.jpg
+  ❌ gskill-ripjaws-v-ddr4-32gb-3.jpg
+  ❌ gskill-ripjaws-v-ddr4-32gb-4.jpg
+
+[ID 46] KINGSTON Fury Beast DDR4 16GB 3200MHz ❌ PENDIENTE
+  ❌ kingston-fury-beast-ddr4-16gb.jpg
+  ❌ kingston-fury-beast-ddr4-16gb-2.jpg
+  ❌ kingston-fury-beast-ddr4-16gb-3.jpg
+  ❌ kingston-fury-beast-ddr4-16gb-4.jpg
+
+[ID 47] TEAM GROUP T-Force Delta RGB DDR5 32GB 6400MHz ❌ PENDIENTE
+  ❌ teamgroup-tforce-delta-ddr5-32gb.jpg
+  ❌ teamgroup-tforce-delta-ddr5-32gb-2.jpg
+  ❌ teamgroup-tforce-delta-ddr5-32gb-3.jpg
+  ❌ teamgroup-tforce-delta-ddr5-32gb-4.jpg
+
+[ID 48] CORSAIR Vengeance RGB DDR4 64GB 3600MHz ❌ PENDIENTE
+  ❌ corsair-vengeance-rgb-ddr4-64gb.jpg
+  ❌ corsair-vengeance-rgb-ddr4-64gb-2.jpg
+  ❌ corsair-vengeance-rgb-ddr4-64gb-3.jpg
+  ❌ corsair-vengeance-rgb-ddr4-64gb-4.jpg
+
+[ID 49] G.SKILL Trident Z Neo DDR4 32GB 3600MHz ❌ PENDIENTE
+  ❌ gskill-trident-z-neo-ddr4-32gb.jpg
+  ❌ gskill-trident-z-neo-ddr4-32gb-2.jpg
+  ❌ gskill-trident-z-neo-ddr4-32gb-3.jpg
+  ❌ gskill-trident-z-neo-ddr4-32gb-4.jpg
+
+[ID 50] KINGSTON Fury Renegade DDR5 32GB 6000MHz ❌ PENDIENTE
+  ❌ kingston-fury-renegade-ddr5-32gb.jpg
+  ❌ kingston-fury-renegade-ddr5-32gb-2.jpg
+  ❌ kingston-fury-renegade-ddr5-32gb-3.jpg
+  ❌ kingston-fury-renegade-ddr5-32gb-4.jpg
+
+================================================================================
+ALMACENAMIENTO — IDs 51–60
+================================================================================
+
+[ID 51] SAMSUNG 990 Pro 2TB NVMe M.2 ❌ PENDIENTE
+  ❌ samsung-990-pro-2tb.jpg
+  ❌ samsung-990-pro-2tb-2.jpg
+  ❌ samsung-990-pro-2tb-3.jpg
+  ❌ samsung-990-pro-2tb-4.jpg
+
+[ID 52] WD Black SN850X 1TB ❌ PENDIENTE
+  ❌ wd-black-sn850x-1tb.jpg
+  ❌ wd-black-sn850x-1tb-2.jpg
+  ❌ wd-black-sn850x-1tb-3.jpg
+  ❌ wd-black-sn850x-1tb-4.jpg
+
+[ID 53] SEAGATE FireCuda 530 2TB NVMe ❌ PENDIENTE
+  ❌ seagate-firecuda-530-2tb.jpg
+  ❌ seagate-firecuda-530-2tb-2.jpg
+  ❌ seagate-firecuda-530-2tb-3.jpg
+  ❌ seagate-firecuda-530-2tb-4.jpg
+
+[ID 54] KINGSTON KC3000 1TB NVMe PCIe 4.0 ❌ PENDIENTE
+  ❌ kingston-kc3000-1tb.jpg
+  ❌ kingston-kc3000-1tb-2.jpg
+  ❌ kingston-kc3000-1tb-3.jpg
+  ❌ kingston-kc3000-1tb-4.jpg
+
+[ID 55] CRUCIAL P5 Plus 1TB NVMe PCIe 4.0 ❌ PENDIENTE
+  ❌ crucial-p5-plus-1tb.jpg
+  ❌ crucial-p5-plus-1tb-2.jpg
+  ❌ crucial-p5-plus-1tb-3.jpg
+  ❌ crucial-p5-plus-1tb-4.jpg
+
+[ID 56] SAMSUNG 870 EVO 1TB SATA ❌ PENDIENTE
+  ❌ samsung-870-evo-1tb.jpg
+  ❌ samsung-870-evo-1tb-2.jpg
+  ❌ samsung-870-evo-1tb-3.jpg
+  ❌ samsung-870-evo-1tb-4.jpg
+
+[ID 57] WD Blue 2TB SATA SSD ❌ PENDIENTE
+  ❌ wd-blue-2tb-sata-ssd.jpg
+  ❌ wd-blue-2tb-sata-ssd-2.jpg
+  ❌ wd-blue-2tb-sata-ssd-3.jpg
+  ❌ wd-blue-2tb-sata-ssd-4.jpg
+
+[ID 58] SEAGATE Barracuda 4TB HDD ❌ PENDIENTE
+  ❌ seagate-barracuda-4tb.jpg
+  ❌ seagate-barracuda-4tb-2.jpg
+  ❌ seagate-barracuda-4tb-3.jpg
+  ❌ seagate-barracuda-4tb-4.jpg
+
+[ID 59] WD Red Pro 6TB NAS ❌ PENDIENTE
+  ❌ wd-red-pro-6tb.jpg
+  ❌ wd-red-pro-6tb-2.jpg
+  ❌ wd-red-pro-6tb-3.jpg
+  ❌ wd-red-pro-6tb-4.jpg
+
+[ID 60] SAMSUNG 990 Pro 4TB NVMe M.2 ❌ PENDIENTE
+  ❌ samsung-990-pro-4tb.jpg
+  ❌ samsung-990-pro-4tb-2.jpg
+  ❌ samsung-990-pro-4tb-3.jpg
+  ❌ samsung-990-pro-4tb-4.jpg
+
+================================================================================
+PERIFÉRICOS — IDs 61–70
+================================================================================
+
+[ID 61] LOGITECH G Pro X Superlight 2 ❌ PENDIENTE
+  ❌ logitech-g-pro-x-superlight-2.jpg
+  ❌ logitech-g-pro-x-superlight-2-2.jpg
+  ❌ logitech-g-pro-x-superlight-2-3.jpg
+  ❌ logitech-g-pro-x-superlight-2-4.jpg
+
+[ID 62] RAZER DeathAdder V3 HyperSpeed ❌ PENDIENTE
+  ❌ razer-deathadder-v3-hyperspeed.jpg
+  ❌ razer-deathadder-v3-hyperspeed-2.jpg
+  ❌ razer-deathadder-v3-hyperspeed-3.jpg
+  ❌ razer-deathadder-v3-hyperspeed-4.jpg
+
+[ID 63] CORSAIR K100 RGB Óptico ❌ PENDIENTE
+  ❌ corsair-k100-rgb.jpg
+  ❌ corsair-k100-rgb-2.jpg
+  ❌ corsair-k100-rgb-3.jpg
+  ❌ corsair-k100-rgb-4.jpg
+
+[ID 64] STEELSERIES Apex Pro TKL 2023 ❌ PENDIENTE
+  ❌ steelseries-apex-pro-tkl.jpg
+  ❌ steelseries-apex-pro-tkl-2.jpg
+  ❌ steelseries-apex-pro-tkl-3.jpg
+  ❌ steelseries-apex-pro-tkl-4.jpg
+
+[ID 65] HYPERX Cloud Alpha Wireless ❌ PENDIENTE
+  ❌ hyperx-cloud-alpha-wireless.jpg
+  ❌ hyperx-cloud-alpha-wireless-2.jpg
+  ❌ hyperx-cloud-alpha-wireless-3.jpg
+  ❌ hyperx-cloud-alpha-wireless-4.jpg
+
+[ID 66] RAZER BlackShark V2 Pro 2023 ❌ PENDIENTE
+  ❌ razer-blackshark-v2-pro-2023.jpg
+  ❌ razer-blackshark-v2-pro-2023-2.jpg
+  ❌ razer-blackshark-v2-pro-2023-3.jpg
+  ❌ razer-blackshark-v2-pro-2023-4.jpg
+
+[ID 67] LOGITECH G640 Mousepad XL ❌ PENDIENTE
+  ❌ logitech-g640-mousepad.jpg
+  ❌ logitech-g640-mousepad-2.jpg
+  ❌ logitech-g640-mousepad-3.jpg
+  ❌ logitech-g640-mousepad-4.jpg
+
+[ID 68] CORSAIR MM700 RGB Extended XL ❌ PENDIENTE
+  ❌ corsair-mm700-rgb-xl.jpg
+  ❌ corsair-mm700-rgb-xl-2.jpg
+  ❌ corsair-mm700-rgb-xl-3.jpg
+  ❌ corsair-mm700-rgb-xl-4.jpg
+
+[ID 69] RAZER Kraken V3 HyperSense ❌ PENDIENTE
+  ❌ razer-kraken-v3-hypersense.jpg
+  ❌ razer-kraken-v3-hypersense-2.jpg
+  ❌ razer-kraken-v3-hypersense-3.jpg
+  ❌ razer-kraken-v3-hypersense-4.jpg
+
+[ID 70] STEELSERIES Rival 650 Wireless ❌ PENDIENTE
+  ❌ steelseries-rival-650-wireless.jpg
+  ❌ steelseries-rival-650-wireless-2.jpg
+  ❌ steelseries-rival-650-wireless-3.jpg
+  ❌ steelseries-rival-650-wireless-4.jpg
+
+================================================================================
+RESUMEN
+================================================================================
+
+Categoría        | Productos | Imágenes | Completos | Pendientes
+─────────────────────────────────────────────────────────────────
+Notebooks        |    11     |    44    |   10 ✅   |    8 ❌
+GPUs             |     9     |    36    |    4 ✅   |   32 ❌
+Monitores        |    10     |    40    |    4 ✅   |   36 ❌
+Procesadores     |    10     |    40    |    0      |   40 ❌
+RAM              |    10     |    40    |    0      |   40 ❌
+Almacenamiento   |    10     |    40    |    0      |   40 ❌
+Periféricos      |    10     |    40    |    0      |   40 ❌
+─────────────────────────────────────────────────────────────────
+TOTAL            |    70     |   280    |   40 ✅   |  240 ❌
+
+COMPLETADO:   40 / 280 imágenes  (14%)
+PENDIENTE:   240 / 280 imágenes  (86%)
+
+Productos completos: ID 1, 2, 3, 4, 5, 6, 7, 8, 9, 13
+Productos pendientes: ID 10–12, 14–70
 
 ================================================================================
