@@ -109,8 +109,13 @@ export const products = [
     badge: 'OFERTA',
     stock: 3,
     category_id: 'notebooks',
-    image_url: '/images/products/titan-gt77-hx.jpg',
-    gallery: [],
+    image_url: '/images/products/msi-titan-gt77-hx-17.webp',
+    gallery: [
+      '/images/products/msi-titan-gt77-hx-17.webp',
+      '/images/products/msi-titan-gt77-hx-17-2.webp',
+      '/images/products/msi-titan-gt77-hx-17-3.webp',
+      '/images/products/msi-titan-gt77-hx-17-4.webp',
+    ],
     specs: {
       cpu: 'Intel Core i9-14900HX',
       gpu: 'NVIDIA RTX 4090 16GB',
@@ -138,8 +143,13 @@ export const products = [
     badge: 'HOT',
     stock: 12,
     category_id: 'notebooks',
-    image_url: '/images/products/legion-5i-pro.jpg',
-    gallery: [],
+    image_url: '/images/products/lenovo-legion-5i-pro.webp',
+    gallery: [
+      '/images/products/lenovo-legion-5i-pro.webp',
+      '/images/products/lenovo-legion-5i-pro-2.webp',
+      '/images/products/lenovo-legion-5i-pro-3.webp',
+      '/images/products/lenovo-legion-5i-pro-4.webp',
+    ],
     specs: {
       cpu: 'Intel Core i7-13620H',
       gpu: 'NVIDIA RTX 4060 8GB',
@@ -165,8 +175,13 @@ export const products = [
     badge: null,
     stock: 7,
     category_id: 'notebooks',
-    image_url: '/images/products/katana-17-b13.jpg',
-    gallery: [],
+    image_url: '/images/products/msi-katana-17-b13.webp',
+    gallery: [
+      '/images/products/msi-katana-17-b13.webp',
+      '/images/products/msi-katana-17-b13-2.webp',
+      '/images/products/msi-katana-17-b13-3.webp',
+      '/images/products/msi-katana-17-b13-4.webp',
+    ],
     specs: {
       cpu: 'Intel Core i7-13620H',
       gpu: 'NVIDIA RTX 4060 8GB',
@@ -192,8 +207,13 @@ export const products = [
     badge: null,
     stock: 4,
     category_id: 'notebooks',
-    image_url: '/images/products/predator-helios-16.jpg',
-    gallery: [],
+    image_url: '/images/products/acer-predator-helios-16.webp',
+    gallery: [
+      '/images/products/acer-predator-helios-16.webp',
+      '/images/products/acer-predator-helios-16-2.webp',
+      '/images/products/acer-predator-helios-16-3.webp',
+      '/images/products/acer-predator-helios-16-4.webp',
+    ],
     specs: {
       cpu: 'Intel Core i7-14700HX',
       gpu: 'NVIDIA RTX 4070 Ti Super 12GB',
@@ -219,8 +239,13 @@ export const products = [
     badge: null,
     stock: 2,
     category_id: 'notebooks',
-    image_url: '/images/products/blade-16-2025.jpg',
-    gallery: [],
+    image_url: '/images/products/razer-blade-16-2025.webp',
+    gallery: [
+      '/images/products/razer-blade-16-2025.webp',
+      '/images/products/razer-blade-16-2025-2.webp',
+      '/images/products/razer-blade-16-2025-3.webp',
+      '/images/products/razer-blade-16-2025-4.webp',
+    ],
     specs: {
       cpu: 'Intel Core i9-14900HX',
       gpu: 'NVIDIA RTX 4090 16GB',
@@ -248,8 +273,13 @@ export const products = [
     badge: null,
     stock: 9,
     category_id: 'monitors',
-    image_url: '/images/products/odyssey-g7-32.jpg',
-    gallery: [],
+    image_url: '/images/products/odyssey-g7-32.webp',
+    gallery: [
+      '/images/products/odyssey-g7-32.webp',
+      '/images/products/odyssey-g7-32-2.webp',
+      '/images/products/odyssey-g7-32-3.webp',
+      '/images/products/odyssey-g7-32-4.webp',
+    ],
     specs: {
       panel: 'VA Curvo 1000R',
       resolution: '2560x1440 (QHD)',
@@ -273,7 +303,9 @@ export const products = [
     stock: 15,
     category_id: 'monitors',
     image_url: '/images/products/ultragear-27-165hz.jpg',
-    gallery: [],
+    gallery: [
+      '/images/products/ultragear-27-165hz.jpg',
+    ],
     specs: {
       panel: 'IPS',
       resolution: '1920x1080 (FHD)',
@@ -297,7 +329,9 @@ export const products = [
     stock: 6,
     category_id: 'monitors',
     image_url: '/images/products/rog-swift-27-360hz.jpg',
-    gallery: [],
+    gallery: [
+      '/images/products/rog-swift-27-360hz.jpg',
+    ],
     specs: {
       panel: 'OLED',
       resolution: '1920x1080 (FHD)',
@@ -321,7 +355,9 @@ export const products = [
     stock: 3,
     category_id: 'monitors',
     image_url: '/images/products/aw3225qf-32-4k.jpg',
-    gallery: [],
+    gallery: [
+      '/images/products/aw3225qf-32-4k.jpg',
+    ],
     specs: {
       panel: 'QD-OLED',
       resolution: '3840x2160 (4K UHD)',
@@ -346,12 +382,12 @@ export const products = [
     badge: 'NUEVO',
     stock: 5,
     category_id: 'notebooks',
-    image_url: '/images/products/raider-ge78-hx.jpg',
+    image_url: '/images/products/msi-raider-ge78-hx-17.webp',
     gallery: [
-      '/images/products/raider-ge78-hx.jpg',
-      '/images/products/raider-ge78-hx-2.jpg',
-      '/images/products/raider-ge78-hx-3.jpg',
-      '/images/products/raider-ge78-hx-4.jpg',
+      '/images/products/msi-raider-ge78-hx-17.webp',
+      '/images/products/msi-raider-ge78-hx-17-2.webp',
+      '/images/products/msi-raider-ge78-hx-17-3.webp',
+      '/images/products/msi-raider-ge78-hx-17-4.webp',
     ],
     specs: {
       cpu: 'Intel Core i9-14900HX',
