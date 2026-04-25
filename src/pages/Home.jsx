@@ -499,7 +499,7 @@ const Home = () => {
           borderRadius: '999px',
           backgroundColor: '#0E1424',
           border: '1px solid rgba(0,200,255,0.2)',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,200,255,0.60), 0 0 20px rgba(0,200,255,0.12)',
           zIndex: 50,
         }}
       >

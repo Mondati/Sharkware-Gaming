@@ -87,7 +87,9 @@ const Cart = () => {
                 className="flex items-start no-underline"
                 style={{ gap: '12px', flex: 1 }}
               >
-                <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '80px', height: '80px', flexShrink: 0 }} />
+                <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '80px', height: '80px', flexShrink: 0, overflow: 'hidden' }}>
+                  <img src={item.image_url} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display = 'none' }} />
+                </div>
                 <div className="flex flex-col" style={{ gap: '2px' }}>
                   <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
                     {item.brand}
@@ -113,6 +115,9 @@ const Cart = () => {
                 </button>
 
                 {/* Price */}
+                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
+                  c/u {fmt(item.price_ars)}
+                </span>
                 <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
                   {fmt(item.price_ars * item.quantity)}
                 </span>
@@ -284,7 +289,9 @@ const Cart = () => {
                     className="flex items-center no-underline"
                     style={{ flex: 1, gap: '16px' }}
                   >
-                    <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '90px', height: '90px', flexShrink: 0 }} />
+                    <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '90px', height: '90px', flexShrink: 0, overflow: 'hidden' }}>
+                    <img src={item.image_url} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display = 'none' }} />
+                  </div>
                     <div className="flex flex-col" style={{ gap: '4px' }}>
                       <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
                         {item.brand}
@@ -297,9 +304,14 @@ const Cart = () => {
                       </span>
                     </div>
                   </Link>
-                  <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800', flexShrink: 0 }}>
-                    {fmt(item.price_ars * item.quantity)}
-                  </span>
+                  <div className="flex flex-col items-end" style={{ flexShrink: 0 }}>
+                    <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
+                      {fmt(item.price_ars * item.quantity)}
+                    </span>
+                    <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
+                      c/u {fmt(item.price_ars)}
+                    </span>
+                  </div>
                   <div className="flex items-center" style={{ backgroundColor: '#070B16', borderRadius: '8px', flexShrink: 0 }}>
                     <button
                       onClick={() => updateQty(item.id, item.quantity - 1)}
