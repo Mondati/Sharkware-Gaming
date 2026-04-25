@@ -77,8 +77,13 @@ export const products = [
     badge: null,
     stock: 8,
     category_id: 'notebooks',
-    image_url: '/images/products/legion-7i-pro-2025.jpg',
-    gallery: [],
+    image_url: '/images/products/legion-7i-pro-2025.webp',
+    gallery: [
+      '/images/products/legion-7i-pro-2025.webp',
+      '/images/products/legion-7i-pro-2025-2.webp',
+      '/images/products/legion-7i-pro-2025-3.webp',
+      '/images/products/legion-7i-pro-2025-4.webp',
+    ],
     specs: {
       cpu: 'Intel Core i9-14900HX',
       gpu: 'NVIDIA RTX 4070 Ti Super 16GB',

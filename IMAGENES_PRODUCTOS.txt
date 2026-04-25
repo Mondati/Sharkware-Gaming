@@ -18,18 +18,18 @@ GPUS (1 imagen + 3 de galería = 4 total) ✅ COMPLETADO
 ✅ rtx-5080-super-4.webp
 
 ================================================================================
-NOTEBOOKS (11 imágenes + 3 de galería = 14 total)
+NOTEBOOKS (10 imágenes + 3 de galería = 14 total)
 ================================================================================
-legion-7i-pro-2025.jpg
-titan-gt77-hx.jpg
-legion-5i-pro.jpg
-katana-17-b13.jpg
-predator-helios-16.jpg
-blade-16-2025.jpg
-raider-ge78-hx.jpg
-raider-ge78-hx-2.jpg
-raider-ge78-hx-3.jpg
-raider-ge78-hx-4.jpg
+✅ ASUS ROG Strix G16 2025 (4 imágenes)
+✅ LENOVO Legion 7i Pro 2025 (4 imágenes)
+
+PENDIENTE:
+MSI Titan GT77 HX 17"
+LENOVO Legion 5i Pro
+MSI Katana 17 B13
+ACER Predator Helios 16
+RAZER Blade 16 2025
+MSI Raider GE78 HX 17" (+ 3 de galería)
 
 ================================================================================
 MONITORES (4 imágenes)
@@ -43,11 +43,11 @@ aw3225qf-32-4k.jpg
 RESUMEN TOTAL
 ================================================================================
 GPUs:              4 archivos ✅ COMPLETADO
-Notebooks:        10 archivos principales + 3 de galería (PENDIENTE)
-Monitores:         4 archivos (PENDIENTE)
+Notebooks:         8 archivos ✅ COMPLETADO (6 pendientes)
+Monitores:         0 archivos (4 PENDIENTE)
 ─────────────────────────────
-COMPLETADO:        4 / 15 archivos
-PENDIENTE:        11 / 15 archivos
+COMPLETADO:        12 / 15 archivos
+PENDIENTE:         3 / 15 archivos (solo monitores)
 
 Formatos recomendados: .jpg, .webp, .png
 
