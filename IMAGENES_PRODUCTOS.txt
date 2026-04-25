@@ -10,44 +10,92 @@ INSTRUCCIONES:
 4. Avísame cuando estén listas
 
 ================================================================================
-GPUS (1 imagen + 3 de galería = 4 total) ✅ COMPLETADO
+GPUS
 ================================================================================
-✅ rtx-5080-super.webp
-✅ rtx-5080-super-2.webp
-✅ rtx-5080-super-3.webp
-✅ rtx-5080-super-4.webp
+✅ LISTO: RTX 5080 Super (4 imágenes)
+rtx-5080-super.webp
+rtx-5080-super-2.webp
+rtx-5080-super-3.webp
+rtx-5080-super-4.webp
 
 ================================================================================
-NOTEBOOKS (10 imágenes + 3 de galería = 14 total)
+NOTEBOOKS
 ================================================================================
-✅ ASUS ROG Strix G16 2025 (4 imágenes)
-✅ LENOVO Legion 7i Pro 2025 (4 imágenes)
+✅ LISTO: ASUS ROG Strix G16 2025 (4 imágenes)
+rog-strix-g16-2025.webp
+rog-strix-g16-2025-2.webp
+rog-strix-g16-2025-3.webp
+rog-strix-g16-2025-4.webp
 
-PENDIENTE:
-MSI Titan GT77 HX 17"
-LENOVO Legion 5i Pro
-MSI Katana 17 B13
-ACER Predator Helios 16
-RAZER Blade 16 2025
-MSI Raider GE78 HX 17" (+ 3 de galería)
+✅ LISTO: LENOVO Legion 7i Pro 2025 (4 imágenes)
+legion-7i-pro-2025.webp
+legion-7i-pro-2025-2.webp
+legion-7i-pro-2025-3.webp
+legion-7i-pro-2025-4.webp
+
+✅ LISTO: MSI Titan GT77 HX 17" (4 imágenes)
+msi-titan-gt77-hx-17.webp
+msi-titan-gt77-hx-17-2.webp
+msi-titan-gt77-hx-17-3.webp
+msi-titan-gt77-hx-17-4.webp
+
+✅ LISTO: LENOVO Legion 5i Pro (4 imágenes)
+lenovo-legion-5i-pro.webp
+lenovo-legion-5i-pro-2.webp
+lenovo-legion-5i-pro-3.webp
+lenovo-legion-5i-pro-4.webp
+
+✅ LISTO: MSI Katana 17 B13 (4 imágenes)
+msi-katana-17-b13.webp
+msi-katana-17-b13-2.webp
+msi-katana-17-b13-3.webp
+msi-katana-17-b13-4.webp
+
+✅ LISTO: ACER Predator Helios 16 (4 imágenes)
+acer-predator-helios-16.webp
+acer-predator-helios-16-2.webp
+acer-predator-helios-16-3.webp
+acer-predator-helios-16-4.webp
+
+✅ LISTO: RAZER Blade 16 2025 (4 imágenes)
+razer-blade-16-2025.webp
+razer-blade-16-2025-2.webp
+razer-blade-16-2025-3.webp
+razer-blade-16-2025-4.webp
+
+✅ LISTO: MSI Raider GE78 HX 17" (4 imágenes)
+msi-raider-ge78-hx-17.webp
+msi-raider-ge78-hx-17-2.webp
+msi-raider-ge78-hx-17-3.webp
+msi-raider-ge78-hx-17-4.webp
 
 ================================================================================
-MONITORES (4 imágenes)
+MONITORES
 ================================================================================
-odyssey-g7-32.jpg
+✅ LISTO: Samsung Odyssey G7 32" (4 imágenes)
+odyssey-g7-32.webp
+odyssey-g7-32-2.webp
+odyssey-g7-32-3.webp
+odyssey-g7-32-4.webp
+
+❌ PENDIENTE: LG UltraGear 27" 165Hz
 ultragear-27-165hz.jpg
+
+❌ PENDIENTE: ASUS ROG Swift 27" 360Hz
 rog-swift-27-360hz.jpg
+
+❌ PENDIENTE: Dell AW3225QF 32" 4K
 aw3225qf-32-4k.jpg
 
 ================================================================================
 RESUMEN TOTAL
 ================================================================================
-GPUs:              4 archivos ✅ COMPLETADO
-Notebooks:         8 archivos ✅ COMPLETADO (6 pendientes)
-Monitores:         0 archivos (4 PENDIENTE)
+GPUs:              1 LISTO (4 imágenes) / 0 PENDIENTE
+Notebooks:         8 LISTO (32 imágenes) / 0 PENDIENTE
+Monitores:         1 LISTO (4 imágenes) / 3 PENDIENTE (3 imágenes)
 ─────────────────────────────
-COMPLETADO:        12 / 15 archivos
-PENDIENTE:         3 / 15 archivos (solo monitores)
+COMPLETADO:        40 / 43 archivos ✅ 93%
+PENDIENTE:         3 / 43 archivos ❌ 7%
 
 Formatos recomendados: .jpg, .webp, .png
 
