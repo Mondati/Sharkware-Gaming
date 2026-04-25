@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, ChevronRight } from 'lucide-react'
+import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
@@ -259,6 +259,7 @@ const Home = () => {
           gap: '10px',
           overflowX: 'auto',
           scrollbarWidth: 'none',
+          justifyContent: 'space-between',
         }}
       >
         {categories.map(({ id, label, icon }) => {
@@ -360,7 +361,7 @@ const Home = () => {
                 No hay productos en esta categoría.
               </span>
             ) : (
-              <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
+              <div className="flex sw-scroll" style={{ gap: '10px', justifyContent: 'space-between', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
                 {sortedFilteredByCategory.map((p) => (
                   <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                     <ProductCard {...p} imgHeight={210} />
@@ -415,20 +416,10 @@ const Home = () => {
 
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
-            <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
-                Nuevos Productos
-              </span>
-              <Link
-                to="#"
-                className="no-underline flex items-center sw-ver-todos"
-                style={{ gap: '4px', padding: '5px 12px', borderRadius: '4px', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}
-              >
-                Ver todos
-                <ChevronRight size={12} />
-              </Link>
-            </div>
-            <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
+              Nuevos Productos
+            </span>
+            <div className="flex sw-scroll" style={{ gap: '10px', justifyContent: 'space-between', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
               {newProducts.map((p) => (
                 <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                   <ProductCard {...p} />
@@ -439,19 +430,9 @@ const Home = () => {
 
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
-            <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
-                Nuevos Productos
-              </span>
-              <Link
-                to="#"
-                className="no-underline flex items-center sw-ver-todos"
-                style={{ gap: '3px', padding: '4px 10px', borderRadius: '4px', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}
-              >
-                Ver todos
-                <ChevronRight size={11} />
-              </Link>
-            </div>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
+              Nuevos Productos
+            </span>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
               {newProducts.map((p) => (
                 <ProductCard key={p.id} {...p} mobile />
@@ -463,19 +444,9 @@ const Home = () => {
 
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 40px`, gap: '20px' }}>
-            <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
-                Notebooks Gamer
-              </span>
-              <Link
-                to="#"
-                className="no-underline flex items-center sw-ver-todos"
-                style={{ gap: '4px', padding: '5px 12px', borderRadius: '4px', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}
-              >
-                Ver todos
-                <ChevronRight size={12} />
-              </Link>
-            </div>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
+              Notebooks Gamer
+            </span>
             <div className="flex" style={{ gap: '8px' }}>
               {notebookFilters.map((f) => {
                 const isActive = activeNbFilter === f
@@ -504,7 +475,7 @@ const Home = () => {
                 Sin resultados para este filtro.
               </span>
             ) : (
-              <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
+              <div className="flex sw-scroll" style={{ gap: '10px', justifyContent: 'space-between', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
                 {filteredNotebooks.map((p) => (
                   <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                     <ProductCard {...p} imgHeight={210} />
@@ -516,19 +487,9 @@ const Home = () => {
 
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
-            <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
-                Notebooks Gamer
-              </span>
-              <Link
-                to="#"
-                className="no-underline flex items-center sw-ver-todos"
-                style={{ gap: '3px', padding: '4px 10px', borderRadius: '4px', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}
-              >
-                Ver todos
-                <ChevronRight size={11} />
-              </Link>
-            </div>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
+              Notebooks Gamer
+            </span>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
               {filteredNotebooks.map((p) => (
                 <ProductCard key={p.id} {...p} mobile />
@@ -540,20 +501,10 @@ const Home = () => {
 
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 40px`, gap: '20px' }}>
-            <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
-                Monitores Gaming
-              </span>
-              <Link
-                to="#"
-                className="no-underline flex items-center sw-ver-todos"
-                style={{ gap: '4px', padding: '5px 12px', borderRadius: '4px', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}
-              >
-                Ver todos
-                <ChevronRight size={12} />
-              </Link>
-            </div>
-            <div className="flex sw-scroll" style={{ gap: '16px', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
+              Monitores Gaming
+            </span>
+            <div className="flex sw-scroll" style={{ gap: '10px', justifyContent: 'space-between', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
               {monitorsList.map((p) => (
                 <div key={p.id} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
                   <ProductCard {...p} imgHeight={210} />
@@ -564,19 +515,9 @@ const Home = () => {
 
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
-            <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
-                Monitores Gaming
-              </span>
-              <Link
-                to="#"
-                className="no-underline flex items-center sw-ver-todos"
-                style={{ gap: '3px', padding: '4px 10px', borderRadius: '4px', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}
-              >
-                Ver todos
-                <ChevronRight size={11} />
-              </Link>
-            </div>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
+              Monitores Gaming
+            </span>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
               {monitorsList.map((p) => (
                 <ProductCard key={p.id} {...p} mobile />
