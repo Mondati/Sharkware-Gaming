@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { Check, Bot } from 'lucide-react'
+import { Check, Bot, X } from 'lucide-react'
 import Navbar from './components/Navbar'
+import ChatbotPanel from './components/ChatbotPanel'
 import Home from './pages/Home'
 import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
@@ -51,6 +53,7 @@ const CartToast = () => {
 
 const App = () => {
   const location = useLocation()
+  const [chatOpen, setChatOpen] = useState(false)
   const hideNavbar = location.pathname === '/login' || location.pathname.startsWith('/admin')
   const hideChatbot = location.pathname === '/login' || location.pathname.startsWith('/admin')
   return (
@@ -77,24 +80,28 @@ const App = () => {
       </Routes>
       <CartToast />
       {!hideChatbot && (
-        <button
-          className="flex items-center justify-center border-none cursor-pointer"
-          aria-label="Chatbot"
-          style={{
-            position: 'fixed',
-            bottom: '32px',
-            right: '32px',
-            width: '64px',
-            height: '64px',
-            borderRadius: '999px',
-            backgroundColor: '#0E1424',
-            border: '1px solid rgba(0,200,255,0.2)',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,200,255,0.60), 0 0 20px rgba(0,200,255,0.12)',
-            zIndex: 50,
-          }}
-        >
-          <Bot size={32} color="#FFFFFF" />
-        </button>
+        <>
+          {chatOpen && <ChatbotPanel onClose={() => setChatOpen(false)} />}
+          <button
+            onClick={() => setChatOpen((v) => !v)}
+            className="flex items-center justify-center border-none cursor-pointer"
+            aria-label={chatOpen ? 'Cerrar chatbot' : 'Abrir chatbot'}
+            style={{
+              position: 'fixed',
+              bottom: '32px',
+              right: '32px',
+              width: '64px',
+              height: '64px',
+              borderRadius: '999px',
+              backgroundColor: '#0E1424',
+              border: '1px solid rgba(0,200,255,0.2)',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,200,255,0.60), 0 0 20px rgba(0,200,255,0.12)',
+              zIndex: 50,
+            }}
+          >
+            {chatOpen ? <X size={28} color="#FFFFFF" /> : <Bot size={32} color="#FFFFFF" />}
+          </button>
+        </>
       )}
     </div>
   )
