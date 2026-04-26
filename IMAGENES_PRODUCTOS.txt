@@ -152,17 +152,17 @@ MONITORES — IDs 9–12, 25–30
   ✅ odyssey-g7-32-3.webp
   ✅ odyssey-g7-32-4.webp
 
-[ID 10] LG UltraGear 27" 165Hz ❌ PENDIENTE
-  ❌ ultragear-27-165hz.webp
-  ❌ ultragear-27-165hz-2.webp
-  ❌ ultragear-27-165hz-3.webp
-  ❌ ultragear-27-165hz-4.webp
+[ID 10] LG UltraGear 27" 165Hz ✅ COMPLETO
+  ✅ ultragear-27-165hz.webp
+  ✅ ultragear-27-165hz-2.webp
+  ✅ ultragear-27-165hz-3.webp
+  ✅ ultragear-27-165hz-4.webp
 
-[ID 11] ASUS ROG Swift 27" 360Hz ❌ PENDIENTE
-  ❌ rog-swift-27-360hz.jpg
-  ❌ rog-swift-27-360hz-2.jpg
-  ❌ rog-swift-27-360hz-3.jpg
-  ❌ rog-swift-27-360hz-4.jpg
+[ID 11] ASUS ROG Swift 27" 360Hz ✅ COMPLETO
+  ✅ rog-swift-27-360hz.jpg
+  ✅ rog-swift-27-360hz-2.jpg
+  ✅ rog-swift-27-360hz-3.jpg
+  ✅ rog-swift-27-360hz-4.jpg
 
 [ID 12] ALIENWARE AW3225QF 32" 4K ❌ PENDIENTE
   ❌ aw3225qf-32-4k.jpg
