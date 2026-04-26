@@ -153,10 +153,10 @@ MONITORES — IDs 9–12, 25–30
   ✅ odyssey-g7-32-4.webp
 
 [ID 10] LG UltraGear 27" 165Hz ❌ PENDIENTE
-  ❌ ultragear-27-165hz.jpg
-  ❌ ultragear-27-165hz-2.jpg
-  ❌ ultragear-27-165hz-3.jpg
-  ❌ ultragear-27-165hz-4.jpg
+  ❌ ultragear-27-165hz.webp
+  ❌ ultragear-27-165hz-2.webp
+  ❌ ultragear-27-165hz-3.webp
+  ❌ ultragear-27-165hz-4.webp
 
 [ID 11] ASUS ROG Swift 27" 360Hz ❌ PENDIENTE
   ❌ rog-swift-27-360hz.jpg
@@ -183,10 +183,10 @@ MONITORES — IDs 9–12, 25–30
   ❌ msi-mag274qrf-qd-4.jpg
 
 [ID 27] LG UltraGear 32" 4K 144Hz ❌ PENDIENTE
-  ❌ lg-ultragear-32-4k-144hz.jpg
-  ❌ lg-ultragear-32-4k-144hz-2.jpg
-  ❌ lg-ultragear-32-4k-144hz-3.jpg
-  ❌ lg-ultragear-32-4k-144hz-4.jpg
+  ❌ lg-ultragear-32-4k-144hz.webp
+  ❌ lg-ultragear-32-4k-144hz-2.webp
+  ❌ lg-ultragear-32-4k-144hz-3.webp
+  ❌ lg-ultragear-32-4k-144hz-4.webp
 
 [ID 28] SAMSUNG Odyssey Neo G9 49" ❌ PENDIENTE
   ❌ odyssey-neo-g9-49.jpg

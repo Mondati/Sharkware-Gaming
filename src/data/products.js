@@ -302,9 +302,9 @@ export const products = [
     badge: null,
     stock: 15,
     category_id: 'monitors',
-    image_url: '/images/products/ultragear-27-165hz.jpg',
+    image_url: '/images/products/ultragear-27-165hz.webp',
     gallery: [
-      '/images/products/ultragear-27-165hz.jpg',
+      '/images/products/ultragear-27-165hz.webp',
     ],
     specs: {
       panel: 'IPS',
@@ -738,7 +738,7 @@ export const products = [
     badge: null,
     stock: 7,
     category_id: 'monitors',
-    image_url: '/images/products/lg-ultragear-32-4k-144hz.jpg',
+    image_url: '/images/products/lg-ultragear-32-4k-144hz.webp',
     gallery: [],
     specs: {
       panel: 'Nano IPS',
