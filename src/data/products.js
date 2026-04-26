@@ -333,7 +333,10 @@ export const products = [
     category_id: 'monitors',
     image_url: '/images/products/rog-swift-27-360hz.jpg',
     gallery: [
-      '/images/products/rog-swift-27-360hz.jpg',
+      '/images/products/rog-swift-27-360hz.webp',
+      '/images/products/rog-swift-27-360hz-2.webp',
+      '/images/products/rog-swift-27-360hz-3.webp',
+      '/images/products/rog-swift-27-360hz-4.webp',
     ],
     specs: {
       panel: 'OLED',
