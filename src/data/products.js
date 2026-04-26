@@ -305,6 +305,9 @@ export const products = [
     image_url: '/images/products/ultragear-27-165hz.webp',
     gallery: [
       '/images/products/ultragear-27-165hz.webp',
+      '/images/products/ultragear-27-165hz-2.webp',
+      '/images/products/ultragear-27-165hz-3.webp',
+      '/images/products/ultragear-27-165hz-4.webp',
     ],
     specs: {
       panel: 'IPS',
