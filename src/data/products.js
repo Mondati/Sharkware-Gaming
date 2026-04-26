@@ -331,7 +331,7 @@ export const products = [
     badge: null,
     stock: 6,
     category_id: 'monitors',
-    image_url: '/images/products/rog-swift-27-360hz.jpg',
+    image_url: '/images/products/rog-swift-27-360hz.webp',
     gallery: [
       '/images/products/rog-swift-27-360hz.webp',
       '/images/products/rog-swift-27-360hz-2.webp',
