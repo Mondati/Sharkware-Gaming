@@ -4,7 +4,7 @@ import {
   ShieldCheck, Truck, RefreshCw, X, ArrowLeft, CreditCard,
 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
-import Footer from '../components/Footer'
+import Footer from '../../components/Footer'
 
 const cryptoOptions = [
   { id: 'btc', label: 'Bitcoin', ticker: 'BTC', amount: '0.00094 BTC', icon: Bitcoin, iconColor: '#F59E0B', bg: '#1A150A', borderActive: '#F59E0B' },

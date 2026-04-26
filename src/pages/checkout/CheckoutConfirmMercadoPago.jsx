@@ -3,7 +3,7 @@ import {
   ShieldCheck, Truck, RefreshCw, X, ArrowLeft, Lock,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import Footer from '../components/Footer'
+import Footer from '../../components/Footer'
 
 const CheckoutConfirmMercadoPago = () => {
   return (

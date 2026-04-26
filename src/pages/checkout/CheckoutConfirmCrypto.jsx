@@ -5,7 +5,7 @@ import {
   X, ArrowLeft, CreditCard,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import Footer from '../components/Footer'
+import Footer from '../../components/Footer'
 
 const BTC_ADDRESS = 'bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq'
 const INITIAL_SECONDS = 14 * 60 + 59

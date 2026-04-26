@@ -4,8 +4,8 @@ import {
   UserRound, Bell, Plus, Search, Pencil, Trash2, CircleCheck, TriangleAlert,
   Layers, ChevronLeft, ChevronRight, Menu,
 } from 'lucide-react'
-import AdminBottomNav from '../components/AdminBottomNav'
-import ProductModal from '../components/ProductModal'
+import AdminBottomNav from './AdminBottomNav'
+import ProductModal from './ProductModal'
 
 /* ─────────────────────────────────────────────────────────────────── data */
 

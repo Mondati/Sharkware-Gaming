@@ -1,7 +1,7 @@
 import { ChevronRight, CreditCard, Bitcoin, ShieldCheck, X, ArrowLeft } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
-import Footer from '../components/Footer'
-import TrustBadges from '../components/TrustBadges'
+import Footer from '../../components/Footer'
+import TrustBadges from '../../components/TrustBadges'
 
 /* ── Shared summary panel (desktop) ── */
 const SummaryPanel = ({ ctaEnabled }) => (
