@@ -85,11 +85,7 @@ const StockDot = ({ stock }) => (
   </div>
 )
 
-const badgeColor = (badge) => {
-  if (badge === 'NUEVO') return '#22C55E'
-  if (badge === 'HOT' || badge === 'OFERTA') return '#EF4444'
-  return '#1E2232'
-}
+const BADGE_COLORS = { NUEVO: '#22C55E', HOT: '#DC2626', OFERTA: '#EF4444' }
 
 const ProductCard = ({
   id, brand, name, spec, price, price_ars, image_url,
@@ -168,7 +164,7 @@ const ProductCard = ({
               position: 'absolute',
               top: '8px',
               left: '8px',
-              backgroundColor: badgeColor(badge),
+              backgroundColor: BADGE_COLORS[badge] ?? '#1E2232',
               borderRadius: '4px',
               padding: '3px 8px',
             }}
@@ -229,7 +225,7 @@ const ProductCard = ({
               position: 'absolute',
               top: '8px',
               left: '8px',
-              backgroundColor: badgeColor(badge),
+              backgroundColor: BADGE_COLORS[badge] ?? '#1E2232',
               borderRadius: '4px',
               padding: '3px 8px',
             }}

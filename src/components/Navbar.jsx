@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useCallback } from 'react'
 import { Search, UserRound, ShoppingCart, Menu, X } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import MobileSidebar from './MobileSidebar'
@@ -14,11 +14,8 @@ const Navbar = () => {
   const [mobileSearchTerm, setMobileSearchTerm] = useState('')
   const { sidePadding } = useWindowWidth()
   const navigate = useNavigate()
-  const mobileSearchRef = useRef(null)
 
-  useEffect(() => {
-    if (mobileSearchOpen) mobileSearchRef.current?.focus()
-  }, [mobileSearchOpen])
+  const mobileSearchRef = useCallback((node) => { node?.focus() }, [])
 
   const handleDesktopSearch = (e) => {
     e.preventDefault()
@@ -65,7 +62,6 @@ const Navbar = () => {
                 flex: 1,
                 backgroundColor: '#1E2232',
                 border: 'none',
-                outline: 'none',
                 borderRadius: '20px',
                 padding: '8px 14px',
                 color: '#F5F7FA',
@@ -186,7 +182,6 @@ const Navbar = () => {
             style={{
               background: 'transparent',
               border: 'none',
-              outline: 'none',
               color: '#F5F7FA',
               fontFamily: 'Poppins',
               fontSize: '13px',

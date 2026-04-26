@@ -84,7 +84,6 @@ const SortSelect = ({ isMobile, sortOrder, onChange }) => (
       fontFamily: 'Poppins',
       fontSize: isMobile ? '12px' : '13px',
       cursor: 'pointer',
-      outline: 'none',
     }}
   >
     {SORT_OPTIONS.map(o => (

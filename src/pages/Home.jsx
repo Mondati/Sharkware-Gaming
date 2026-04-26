@@ -147,9 +147,9 @@ const Home = () => {
 
         {/* Dots */}
         <div style={{ position: 'absolute', bottom: '28px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px', zIndex: 10 }}>
-          {newProducts.map((_, i) => (
+          {newProducts.map((p, i) => (
             <button
-              key={i}
+              key={p.id}
               onClick={() => setActiveSlide(i)}
               style={{
                 width: i === activeSlide ? '24px' : '8px',
@@ -228,9 +228,9 @@ const Home = () => {
 
         {/* Dots */}
         <div style={{ position: 'absolute', bottom: '16px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '6px', zIndex: 10 }}>
-          {newProducts.map((_, i) => (
+          {newProducts.map((p, i) => (
             <button
-              key={i}
+              key={p.id}
               onClick={() => setActiveSlide(i)}
               style={{
                 width: i === activeSlide ? '20px' : '6px',
@@ -348,7 +348,6 @@ const Home = () => {
                   fontFamily: 'Poppins',
                   fontSize: '13px',
                   cursor: 'pointer',
-                  outline: 'none',
                 }}
               >
                 {SORT_OPTIONS.map((o) => (
@@ -389,7 +388,6 @@ const Home = () => {
                   fontFamily: 'Poppins',
                   fontSize: '12px',
                   cursor: 'pointer',
-                  outline: 'none',
                 }}
               >
                 {SORT_OPTIONS.map((o) => (
