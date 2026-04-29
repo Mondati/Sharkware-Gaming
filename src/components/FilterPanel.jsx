@@ -80,6 +80,7 @@ const FilterPanel = ({
   onClearFilters,
 }) => {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [hoveredFilter, setHoveredFilter] = useState(null)
   const noProducts = catalogMin === null
 
   const activeFilterCount = [
@@ -100,16 +101,19 @@ const FilterPanel = ({
         <div className="flex flex-col" style={{ gap: '2px' }}>
           {filterCategories.map(cat => {
             const isActive = catParam === cat.id
+            const isHovered = hoveredFilter === `cat-${cat.id}`
             return (
               <button
                 key={cat.id}
                 onClick={() => onFilterChange('category', isActive ? 'all' : cat.id)}
+                onMouseEnter={() => setHoveredFilter(`cat-${cat.id}`)}
+                onMouseLeave={() => setHoveredFilter(null)}
                 style={{
-                  backgroundColor: isActive ? '#0E1424' : 'transparent',
-                  border: `1px solid ${isActive ? '#24A8F5' : 'transparent'}`,
+                  backgroundColor: isActive ? '#0E1424' : (isHovered ? '#0A0C14' : 'transparent'),
+                  border: `1px solid ${isActive ? '#24A8F5' : (isHovered ? 'rgba(36,168,245,0.2)' : 'transparent')}`,
                   borderRadius: '6px',
                   padding: '7px 10px',
-                  color: isActive ? '#24A8F5' : '#AAB3C5',
+                  color: isActive ? '#24A8F5' : (isHovered ? '#F5F7FA' : '#AAB3C5'),
                   fontFamily: 'Poppins',
                   fontSize: '13px',
                   cursor: 'pointer',
@@ -126,23 +130,26 @@ const FilterPanel = ({
 
       {/* Marca */}
       {availableBrands.length > 0 && (
-        <div className="flex flex-col" style={{ gap: '8px' }}>
+        <div className="flex flex-col" style={{ gap: '8px', borderTop: '1px solid #1B2333', paddingTop: '20px' }}>
           <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
             Marca
           </span>
           <div className="flex flex-col" style={{ gap: '2px' }}>
             {availableBrands.map(brand => {
               const isActive = brandParam === brand
+              const isHovered = hoveredFilter === `brand-${brand}`
               return (
                 <button
                   key={brand}
                   onClick={() => onFilterChange('brand', isActive ? '' : brand)}
+                  onMouseEnter={() => setHoveredFilter(`brand-${brand}`)}
+                  onMouseLeave={() => setHoveredFilter(null)}
                   style={{
-                    backgroundColor: isActive ? '#0E1424' : 'transparent',
-                    border: `1px solid ${isActive ? '#24A8F5' : 'transparent'}`,
+                    backgroundColor: isActive ? '#0E1424' : (isHovered ? '#0A0C14' : 'transparent'),
+                    border: `1px solid ${isActive ? '#24A8F5' : (isHovered ? 'rgba(36,168,245,0.2)' : 'transparent')}`,
                     borderRadius: '6px',
                     padding: '7px 10px',
-                    color: isActive ? '#24A8F5' : '#AAB3C5',
+                    color: isActive ? '#24A8F5' : (isHovered ? '#F5F7FA' : '#AAB3C5'),
                     fontFamily: 'Poppins',
                     fontSize: '13px',
                     cursor: 'pointer',
@@ -159,7 +166,7 @@ const FilterPanel = ({
       )}
 
       {/* Precio */}
-      <div className="flex flex-col" style={{ gap: '8px' }}>
+      <div className="flex flex-col" style={{ gap: '8px', borderTop: '1px solid #1B2333', paddingTop: '20px' }}>
         <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
           Precio (ARS)
         </span>
@@ -181,12 +188,14 @@ const FilterPanel = ({
       {hasActiveFilters && (
         <button
           onClick={onClearFilters}
+          onMouseEnter={() => setHoveredFilter('clear')}
+          onMouseLeave={() => setHoveredFilter(null)}
           style={{
             backgroundColor: 'transparent',
-            border: '1px solid #1B2333',
+            border: `1px solid ${hoveredFilter === 'clear' ? '#EF4444' : '#1B2333'}`,
             borderRadius: '6px',
             padding: '8px 12px',
-            color: '#EF4444',
+            color: hoveredFilter === 'clear' ? '#F87171' : '#EF4444',
             fontFamily: 'Poppins',
             fontSize: '13px',
             cursor: 'pointer',

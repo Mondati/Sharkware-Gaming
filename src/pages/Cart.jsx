@@ -15,6 +15,7 @@ const Cart = () => {
   const { sidePadding } = useWindowWidth()
   const { items, removeItem, updateQty, cartCount } = useCart()
   const [coupon, setCoupon] = useState('')
+  const [hoveredBtn, setHoveredBtn] = useState(null)
 
   const totalQty = cartCount
   const subtotal = items.reduce((a, i) => a + i.price_ars * i.quantity, 0)
@@ -50,11 +51,11 @@ const Cart = () => {
         className="hidden md:flex items-center w-full"
         style={{ backgroundColor: '#0A0F1C', height: '44px', padding: `0 ${sidePadding}`, gap: '8px' }}
       >
-        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
+        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
           Inicio
         </Link>
-        <ChevronRight size={14} color="#1B2333" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+        <ChevronRight size={13} color="#454E64" />
+        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
           Mi Carrito
         </span>
       </div>
@@ -65,12 +66,35 @@ const Cart = () => {
         {/* Items list */}
         <div className="flex flex-col" style={{ gap: '12px' }}>
           {items.length === 0 && (
-            <div className="flex flex-col items-center justify-center" style={{ padding: '48px 0', gap: '12px' }}>
-              <ShoppingBag size={40} color="#1E2232" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', textAlign: 'center' }}>
-                Tu carrito está vacío.
-              </span>
-              <Link to="/" className="no-underline" style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+            <div className="flex flex-col items-center justify-center" style={{ padding: '48px 16px', gap: '16px' }}>
+              <div className="flex items-center justify-center" style={{
+                width: '80px', height: '80px', borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(0,200,255,0.1), transparent 70%)',
+              }}>
+                <ShoppingBag size={40} color="#2A3250" />
+              </div>
+              <div className="flex flex-col items-center" style={{ gap: '6px' }}>
+                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '600', textAlign: 'center' }}>
+                  Tu carrito está vacío
+                </span>
+                <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', textAlign: 'center' }}>
+                  Explorá nuestro catálogo de gaming hardware
+                </span>
+              </div>
+              <Link
+                to="/"
+                className="no-underline flex items-center justify-center"
+                style={{
+                  backgroundColor: '#1E2232',
+                  border: '1px solid #1B2333',
+                  borderRadius: '20px',
+                  padding: '8px 20px',
+                  color: '#24A8F5',
+                  fontFamily: 'Poppins',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                }}
+              >
                 Ver catálogo →
               </Link>
             </div>
@@ -139,9 +163,9 @@ const Cart = () => {
                   <button
                     onClick={() => updateQty(item.id, item.quantity + 1)}
                     className="flex items-center justify-center border-none cursor-pointer"
-                    style={{ width: '30px', height: '30px', backgroundColor: '#24A8F5' }}
+                    style={{ width: '30px', height: '30px', background: 'none' }}
                   >
-                    <Plus size={12} color="#FFFFFF" />
+                    <Plus size={12} color="#AAB3C5" />
                   </button>
                 </div>
               </div>
@@ -166,8 +190,10 @@ const Cart = () => {
             />
           </div>
           <button
+            onMouseEnter={() => setHoveredBtn('apply_m')}
+            onMouseLeave={() => setHoveredBtn(null)}
             className="flex items-center justify-center border-none cursor-pointer"
-            style={{ backgroundColor: '#1B2333', borderRadius: '10px', height: '44px', padding: '0 18px', flexShrink: 0 }}
+            style={{ backgroundColor: hoveredBtn === 'apply_m' ? '#252840' : '#1B2333', borderRadius: '10px', height: '44px', padding: '0 18px', flexShrink: 0 }}
           >
             <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>Aplicar</span>
           </button>
@@ -219,8 +245,10 @@ const Cart = () => {
           {/* Checkout button */}
           <Link
             to="/checkout"
+            onMouseEnter={() => setHoveredBtn('checkout_m')}
+            onMouseLeave={() => setHoveredBtn(null)}
             className="flex items-center justify-center no-underline"
-            style={{ backgroundColor: '#00C8FF', borderRadius: '12px', height: '50px', gap: '10px', width: '100%' }}
+            style={{ backgroundColor: hoveredBtn === 'checkout_m' ? '#00A8D8' : '#00C8FF', borderRadius: '12px', height: '50px', gap: '10px', width: '100%' }}
           >
             <Lock size={18} color="#FFFFFF" />
             <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>
@@ -267,12 +295,35 @@ const Cart = () => {
             style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '20px', gap: '12px', border: '1px solid #1B2333' }}
           >
             {items.length === 0 && (
-              <div className="flex flex-col items-center" style={{ padding: '32px 0', gap: '12px' }}>
-                <ShoppingBag size={36} color="#1E2232" />
-                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', textAlign: 'center' }}>
-                  Tu carrito está vacío.
-                </span>
-                <Link to="/" className="no-underline" style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+              <div className="flex flex-col items-center" style={{ padding: '40px 0', gap: '16px' }}>
+                <div className="flex items-center justify-center" style={{
+                  width: '90px', height: '90px', borderRadius: '50%',
+                  background: 'radial-gradient(circle, rgba(0,200,255,0.1), transparent 70%)',
+                }}>
+                  <ShoppingBag size={44} color="#2A3250" />
+                </div>
+                <div className="flex flex-col items-center" style={{ gap: '6px' }}>
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '600', textAlign: 'center' }}>
+                    Tu carrito está vacío
+                  </span>
+                  <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', textAlign: 'center' }}>
+                    Explorá nuestro catálogo de gaming hardware
+                  </span>
+                </div>
+                <Link
+                  to="/"
+                  className="no-underline flex items-center justify-center"
+                  style={{
+                    backgroundColor: '#1E2232',
+                    border: '1px solid #1B2333',
+                    borderRadius: '20px',
+                    padding: '8px 24px',
+                    color: '#24A8F5',
+                    fontFamily: 'Poppins',
+                    fontSize: '13px',
+                    fontWeight: '600',
+                  }}
+                >
                   Ver catálogo →
                 </Link>
               </div>
@@ -328,9 +379,9 @@ const Cart = () => {
                     <button
                       onClick={() => updateQty(item.id, item.quantity + 1)}
                       className="flex items-center justify-center border-none cursor-pointer"
-                      style={{ width: '34px', height: '34px', backgroundColor: '#24A8F5', borderRadius: '0 8px 8px 0' }}
+                      style={{ width: '34px', height: '34px', background: 'none' }}
                     >
-                      <Plus size={14} color="#FFFFFF" />
+                      <Plus size={14} color="#AAB3C5" />
                     </button>
                   </div>
                   <button
@@ -362,8 +413,10 @@ const Cart = () => {
               />
             </div>
             <button
+              onMouseEnter={() => setHoveredBtn('apply_d')}
+              onMouseLeave={() => setHoveredBtn(null)}
               className="flex items-center justify-center border-none cursor-pointer"
-              style={{ backgroundColor: '#1B2333', borderRadius: '10px', height: '44px', padding: '0 20px' }}
+              style={{ backgroundColor: hoveredBtn === 'apply_d' ? '#252840' : '#1B2333', borderRadius: '10px', height: '44px', padding: '0 20px' }}
             >
               <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Aplicar</span>
             </button>
@@ -423,8 +476,10 @@ const Cart = () => {
 
           <Link
             to="/checkout"
+            onMouseEnter={() => setHoveredBtn('checkout_d')}
+            onMouseLeave={() => setHoveredBtn(null)}
             className="flex items-center justify-center no-underline"
-            style={{ backgroundColor: '#00C8FF', borderRadius: '12px', height: '52px', gap: '10px' }}
+            style={{ backgroundColor: hoveredBtn === 'checkout_d' ? '#00A8D8' : '#00C8FF', borderRadius: '12px', height: '52px', gap: '10px' }}
           >
             <Lock size={18} color="#FFFFFF" />
             <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>
