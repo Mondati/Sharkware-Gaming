@@ -81,46 +81,6 @@ El sitio queda disponible en `http://localhost:5173`.
 > [!TIP]
 > La autenticación es mock —se valida contra valores hardcodeados y el rol queda en `localStorage`. Será reemplazada por `HttpSession` + `BCryptPasswordEncoder` en la fase backend.
 
-| Rol | Email | Contraseña | Redirige a |
-|---|---|---|---|
-| Admin | `admin@sharkware.com` | `admin123` | `/admin` |
-| Usuario | cualquier otro email | cualquier valor | `/` |
-
-## Estructura del proyecto
-
-```
-ecommerce/
-├── public/
-│   └── images/
-│       ├── logo.png             # Logo de la marca
-│       └── products/            # Galería de imágenes (.webp, 4 por producto)
-├── src/
-│   ├── App.jsx                  # Routing + layout global + chatbot flotante
-│   ├── main.jsx                 # Entry point (BrowserRouter + CartProvider)
-│   ├── index.css                # Tailwind import + estilos globales dark
-│   ├── context/
-│   │   └── CartContext.jsx      # Estado global del carrito
-│   ├── data/
-│   │   ├── categories.js        # 8 categorías
-│   │   ├── products.js          # 13 productos + helpers de catálogo
-│   │   └── sortOptions.js       # Opciones de ordenamiento
-│   ├── utils/
-│   │   └── search.js            # Función pura searchProducts(q, products)
-│   ├── hooks/
-│   │   └── useWindowWidth.js    # Padding y grid responsive por breakpoint
-│   ├── components/              # Navbar, Footer, ProductCard, FilterPanel, ...
-│   └── pages/
-│       ├── Home.jsx             # Hero carrusel + 3 secciones de productos
-│       ├── ProductDetail.jsx    # Galería + specs + relacionados
-│       ├── SearchResults.jsx    # Resultados con filtros + sort + paginación
-│       ├── Cart.jsx             # Carrito conectado a CartContext
-│       ├── Login.jsx            # Auth mock
-│       ├── checkout/            # Flujo de pago (MercadoPago + Cripto)
-│       └── admin/               # Panel administrativo
-├── CLAUDE.md                    # Contexto técnico (incl. plan de backend)
-└── package.json
-```
-
 ## Historias de usuario
 
 | HU | Descripción | Estado |
