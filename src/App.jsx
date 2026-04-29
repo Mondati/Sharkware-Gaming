@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { Check, Bot, X } from 'lucide-react'
 import Navbar from './components/Navbar'
@@ -11,10 +11,11 @@ import Checkout from './pages/checkout/Checkout'
 import CheckoutConfirmMercadoPago from './pages/checkout/CheckoutConfirmMercadoPago'
 import CheckoutCrypto from './pages/checkout/CheckoutCrypto'
 import CheckoutConfirmCrypto from './pages/checkout/CheckoutConfirmCrypto'
-import AdminPanel from './pages/admin/AdminPanel'
 import SearchResults from './pages/SearchResults'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useCart } from './context/CartContext'
+
+const AdminPanel = lazy(() => import('./pages/admin/AdminPanel'))
 
 const SearchResultsRoute = () => {
   const location = useLocation()
@@ -73,7 +74,9 @@ const App = () => {
           path="/admin"
           element={
             <ProtectedRoute role="admin">
-              <AdminPanel />
+              <Suspense fallback={null}>
+                <AdminPanel />
+              </Suspense>
             </ProtectedRoute>
           }
         />
