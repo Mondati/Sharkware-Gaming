@@ -27,6 +27,7 @@ const socials = [
 const Footer = () => {
   const [hoveredLink, setHoveredLink] = useState(null)
   const [hoveredSocial, setHoveredSocial] = useState(null)
+  const [hoveredNewsletter, setHoveredNewsletter] = useState(false)
   const { sidePadding } = useWindowWidth()
 
   return (
@@ -59,23 +60,43 @@ const Footer = () => {
           <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
             Suscribite al Newsletter
           </span>
-          <div
-            className="flex items-center"
-            style={{ backgroundColor: '#1E2232', borderRadius: '7px', padding: '10px 14px', gap: '8px' }}
-          >
+          <div className="flex items-center" style={{ height: '42px' }}>
             <input
               type="email"
-              placeholder="Tu email"
-              className="bg-transparent border-none outline-none w-full"
-              style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}
+              placeholder="Tu email gamer..."
+              className="bg-transparent border-none outline-none"
+              style={{
+                flex: 1,
+                height: '100%',
+                backgroundColor: '#1E2232',
+                borderRadius: '7px 0 0 7px',
+                padding: '0 14px',
+                color: '#AAB3C5',
+                fontFamily: 'Poppins',
+                fontSize: '13px',
+              }}
             />
+            <button
+              onMouseEnter={() => setHoveredNewsletter(true)}
+              onMouseLeave={() => setHoveredNewsletter(false)}
+              className="cursor-pointer border-none"
+              style={{
+                height: '100%',
+                padding: '0 16px',
+                background: 'linear-gradient(135deg, #00C8FF 0%, #1A9FFF 100%)',
+                borderRadius: '0 7px 7px 0',
+                color: '#060810',
+                fontFamily: 'Poppins',
+                fontSize: '13px',
+                fontWeight: '700',
+                boxShadow: hoveredNewsletter ? '0 4px 16px rgba(0,200,255,0.4)' : 'none',
+                transition: 'box-shadow 0.2s ease',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Suscribirme
+            </button>
           </div>
-          <button
-            className="cursor-pointer border-none"
-            style={{ backgroundColor: '#00C8FF', borderRadius: '7px', padding: '10px 0', color: '#060810', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}
-          >
-            Suscribirme
-          </button>
         </div>
 
         {/* Link columns */}
@@ -182,30 +203,50 @@ const Footer = () => {
             ))}
 
             {/* Newsletter */}
-            <div className="flex flex-col" style={{ gap: '12px', width: '220px' }}>
+            <div className="flex flex-col" style={{ gap: '12px', width: '240px' }}>
               <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>
                 Newsletter
               </span>
               <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', width: '200px', lineHeight: '1.5' }}>
                 Recibí ofertas y novedades exclusivas.
               </p>
-              <div
-                className="flex items-center"
-                style={{ backgroundColor: '#1E2232', borderRadius: '7px', padding: '10px 14px', gap: '8px' }}
-              >
+              <div className="flex items-center" style={{ height: '40px' }}>
                 <input
                   type="email"
-                  placeholder="Tu email"
-                  className="bg-transparent border-none outline-none w-full"
-                  style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}
+                  placeholder="Tu email gamer..."
+                  className="bg-transparent border-none outline-none"
+                  style={{
+                    flex: 1,
+                    height: '100%',
+                    backgroundColor: '#1E2232',
+                    borderRadius: '7px 0 0 7px',
+                    padding: '0 12px',
+                    color: '#AAB3C5',
+                    fontFamily: 'Poppins',
+                    fontSize: '13px',
+                  }}
                 />
+                <button
+                  onMouseEnter={() => setHoveredNewsletter(true)}
+                  onMouseLeave={() => setHoveredNewsletter(false)}
+                  className="cursor-pointer border-none"
+                  style={{
+                    height: '100%',
+                    padding: '0 14px',
+                    background: 'linear-gradient(135deg, #00C8FF 0%, #1A9FFF 100%)',
+                    borderRadius: '0 7px 7px 0',
+                    color: '#060810',
+                    fontFamily: 'Poppins',
+                    fontSize: '13px',
+                    fontWeight: '700',
+                    boxShadow: hoveredNewsletter ? '0 4px 16px rgba(0,200,255,0.4)' : 'none',
+                    transition: 'box-shadow 0.2s ease',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  Enviar
+                </button>
               </div>
-              <button
-                className="cursor-pointer border-none"
-                style={{ backgroundColor: '#00C8FF', borderRadius: '7px', padding: '10px 0', color: '#060810', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}
-              >
-                Suscribirse
-              </button>
             </div>
           </div>
         </div>

@@ -85,7 +85,7 @@ const StockDot = ({ stock }) => (
   </div>
 )
 
-const BADGE_COLORS = { NUEVO: '#22C55E', HOT: '#DC2626', OFERTA: '#EF4444' }
+const BADGE_COLORS = { NUEVO: '#22C55E', HOT: '#DC2626', OFERTA: '#FF8400' }
 
 const ProductCard = ({
   id, brand, name, spec, price, price_ars, image_url,
@@ -93,6 +93,7 @@ const ProductCard = ({
   stock = 1, category_id = null,
 }) => {
   const [hovered, setHovered] = useState(false)
+  const [cartHovered, setCartHovered] = useState(false)
   const [added, setAdded] = useState(false)
   const timerRef = useRef(null)
   const { addItem } = useCart()
@@ -122,10 +123,11 @@ const ProductCard = ({
           height: '100%',
           position: 'relative',
           overflow: 'hidden',
-          border: `1px solid ${hovered ? 'rgba(36,168,245,0.3)' : 'rgba(255,255,255,0.06)'}`,
-          boxShadow: hovered ? '0 4px 16px rgba(36,168,245,0.08)' : 'none',
+          border: `1px solid ${hovered ? 'rgba(0,200,255,0.3)' : 'rgba(255,255,255,0.06)'}`,
+          boxShadow: hovered ? '0 8px 32px rgba(0,200,255,0.2), 0 0 0 1px rgba(0,200,255,0.15)' : 'none',
           transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
-          transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
+          filter: hovered ? 'brightness(1.03)' : 'brightness(1)',
+          transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease',
           cursor: 'pointer',
         }}
       >
@@ -133,21 +135,24 @@ const ProductCard = ({
           <ProductImage image_url={image_url} brand={brand} name={name} height={160} category_id={category_id} />
           <button
             onClick={handleAddToCart}
+            onMouseEnter={() => setCartHovered(true)}
+            onMouseLeave={() => setCartHovered(false)}
             disabled={stock === 0}
             style={{
               position: 'absolute',
               bottom: '6px',
               right: '6px',
-              width: '28px',
-              height: '28px',
+              width: '30px',
+              height: '30px',
               borderRadius: '7px',
               border: 'none',
               cursor: stock === 0 ? 'not-allowed' : 'pointer',
               backgroundColor: added ? '#22C55E' : '#00C8FF',
+              boxShadow: cartHovered && !added ? '0 4px 16px rgba(0,200,255,0.5)' : 'none',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              transition: 'background-color 0.2s ease',
+              transition: 'background-color 0.2s ease, box-shadow 0.2s ease',
               opacity: stock === 0 ? 0.4 : 1,
             }}
           >
@@ -210,10 +215,11 @@ const ProductCard = ({
         flex: 1,
         height: '100%',
         position: 'relative',
-        border: `1px solid ${hovered ? 'rgba(36,168,245,0.3)' : 'rgba(255,255,255,0.06)'}`,
-        boxShadow: hovered ? '0 4px 16px rgba(36,168,245,0.08)' : 'none',
+        border: `1px solid ${hovered ? 'rgba(0,200,255,0.3)' : 'rgba(255,255,255,0.06)'}`,
+        boxShadow: hovered ? '0 8px 32px rgba(0,200,255,0.2), 0 0 0 1px rgba(0,200,255,0.15)' : 'none',
         transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
-        transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease',
+        filter: hovered ? 'brightness(1.03)' : 'brightness(1)',
+        transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease',
         cursor: 'pointer',
       }}
     >
@@ -237,21 +243,24 @@ const ProductCard = ({
         )}
         <button
           onClick={handleAddToCart}
+          onMouseEnter={() => setCartHovered(true)}
+          onMouseLeave={() => setCartHovered(false)}
           disabled={stock === 0}
           style={{
             position: 'absolute',
             bottom: '8px',
             right: '8px',
-            width: '32px',
-            height: '32px',
+            width: '34px',
+            height: '34px',
             borderRadius: '8px',
             border: 'none',
             cursor: stock === 0 ? 'not-allowed' : 'pointer',
             backgroundColor: added ? '#22C55E' : '#00C8FF',
+            boxShadow: cartHovered && !added ? '0 4px 16px rgba(0,200,255,0.5)' : 'none',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'background-color 0.2s ease',
+            transition: 'background-color 0.2s ease, box-shadow 0.2s ease',
             opacity: stock === 0 ? 0.4 : 1,
           }}
         >

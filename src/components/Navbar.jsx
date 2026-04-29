@@ -9,6 +9,7 @@ const Navbar = () => {
   const { cartCount } = useCart()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [hoveredBtn, setHoveredBtn] = useState(null)
+  const [searchFocused, setSearchFocused] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
   const [mobileSearchTerm, setMobileSearchTerm] = useState('')
@@ -81,7 +82,7 @@ const Navbar = () => {
           /* ── Mobile normal mode ── */
           <>
             <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
-              <img src="/images/logo.png" alt="Sharkware Gaming" style={{ height: '44px', width: 'auto', display: 'block' }} />
+              <img src="/images/logo.png" alt="Sharkware Gaming" style={{ height: '48px', width: 'auto', display: 'block' }} />
             </Link>
 
             <div className="flex-1" />
@@ -158,7 +159,7 @@ const Navbar = () => {
         style={{ backgroundColor: '#060810', height: '70px', padding: `0 ${sidePadding}`, gap: '40px', position: 'sticky', top: 0, zIndex: 50 }}
       >
         <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/images/logo.png" alt="Sharkware Gaming" style={{ height: '54px', width: 'auto', display: 'block' }} />
+          <img src="/images/logo.png" alt="Sharkware Gaming" style={{ height: '48px', width: 'auto', display: 'block' }} />
         </Link>
 
         <div className="flex-1" />
@@ -166,7 +167,16 @@ const Navbar = () => {
         <form
           onSubmit={handleDesktopSearch}
           className="flex items-center"
-          style={{ backgroundColor: '#1E2232', borderRadius: '20px', padding: '8px 16px', gap: '10px', width: '220px' }}
+          style={{
+            backgroundColor: '#1E2232',
+            borderRadius: '20px',
+            padding: '8px 16px',
+            gap: '10px',
+            width: '220px',
+            border: `1px solid ${searchFocused ? '#24A8F5' : 'transparent'}`,
+            boxShadow: searchFocused ? '0 0 0 3px rgba(36,168,245,0.15)' : 'none',
+            transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
+          }}
         >
           <button
             type="submit"
@@ -178,6 +188,8 @@ const Navbar = () => {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onFocus={() => setSearchFocused(true)}
+            onBlur={() => setSearchFocused(false)}
             placeholder="Buscar productos..."
             style={{
               background: 'transparent',

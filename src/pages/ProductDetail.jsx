@@ -7,6 +7,7 @@ import {
 import { Link, useParams } from 'react-router-dom'
 import Footer from '../components/Footer'
 import TrustBadges from '../components/TrustBadges'
+import ProductCard from '../components/ProductCard'
 import { products } from '../data/products'
 import { categories } from '../data/categories'
 import { useWindowWidth } from '../hooks/useWindowWidth'
@@ -48,7 +49,8 @@ const ProductDetail = () => {
   const [descOpen, setDescOpen] = useState(false)
   const [specsOpen, setSpecsOpen] = useState(false)
   const [touchStartX, setTouchStartX] = useState(null)
-  const { sidePadding } = useWindowWidth()
+  const [hoveredBtn, setHoveredBtn] = useState(null)
+  const { sidePadding, cardFlex } = useWindowWidth()
   const { addItem } = useCart()
 
   const handleAddToCart = () => {
@@ -88,7 +90,7 @@ const ProductDetail = () => {
 
   const relatedProducts = products
     .filter((p) => p.category_id === product.category_id && p.id !== product.id)
-    .slice(0, 3)
+    .slice(0, 5)
 
   return (
     <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
@@ -158,15 +160,15 @@ const ProductDetail = () => {
         className="hidden md:flex items-center w-full"
         style={{ backgroundColor: '#0A0F1C', height: '44px', padding: `0 ${sidePadding}`, gap: '8px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}
       >
-        <Link to="/" className="no-underline" style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>
+        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
           Inicio
         </Link>
-        <ChevronRight size={13} color="#2A3347" />
-        <Link to={`/?cat=${product.category_id}`} className="no-underline" style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>
+        <ChevronRight size={13} color="#454E64" />
+        <Link to={`/?cat=${product.category_id}`} className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
           {categoryLabel}
         </Link>
-        <ChevronRight size={13} color="#2A3347" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+        <ChevronRight size={13} color="#454E64" />
+        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
           {product.name}
         </span>
       </div>
@@ -333,7 +335,7 @@ const ProductDetail = () => {
               </div>
               <button
                 onClick={() => setQty((q) => q + 1)}
-                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#24A8F5', fontSize: '20px', cursor: 'pointer' }}
+                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: 'pointer' }}
               >
                 +
               </button>
@@ -344,9 +346,11 @@ const ProductDetail = () => {
           <div className="flex flex-col" style={{ gap: '10px', marginBottom: '24px' }}>
             <button
               onClick={handleAddToCart}
+              onMouseEnter={() => setHoveredBtn('add_m')}
+              onMouseLeave={() => setHoveredBtn(null)}
               disabled={product.stock === 0}
               className="flex items-center justify-center"
-              style={{ backgroundColor: '#00C8FF', borderRadius: '10px', height: '54px', border: 'none', cursor: product.stock === 0 ? 'not-allowed' : 'pointer', gap: '12px', width: '100%', opacity: product.stock === 0 ? 0.5 : 1 }}
+              style={{ backgroundColor: hoveredBtn === 'add_m' ? '#00A8D8' : '#00C8FF', borderRadius: '10px', height: '54px', border: 'none', cursor: product.stock === 0 ? 'not-allowed' : 'pointer', gap: '12px', width: '100%', opacity: product.stock === 0 ? 0.5 : 1 }}
             >
               <ShoppingCart size={18} color="#060810" />
               <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
@@ -354,8 +358,10 @@ const ProductDetail = () => {
               </span>
             </button>
             <button
+              onMouseEnter={() => setHoveredBtn('buy_m')}
+              onMouseLeave={() => setHoveredBtn(null)}
               className="flex items-center justify-center"
-              style={{ backgroundColor: 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: 'pointer', width: '100%' }}
+              style={{ backgroundColor: hoveredBtn === 'buy_m' ? 'rgba(36,168,245,0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: 'pointer', width: '100%' }}
             >
               <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                 Comprar ahora
@@ -453,29 +459,15 @@ const ProductDetail = () => {
       </div>
       )}
       {relatedProducts.length > 0 && (
-      <div className="hidden md:flex w-full" style={{ padding: `0 ${sidePadding} 56px`, gap: '20px' }}>
+      <div className="hidden md:flex sw-scroll w-full" style={{ padding: `10px ${sidePadding} 56px`, gap: '16px', overflowX: 'auto' }}>
         {relatedProducts.map((p) => (
-          <Link
-            key={p.id}
-            to={`/product/${p.id}`}
-            className="flex flex-col flex-1 no-underline"
-            style={{ backgroundColor: '#0E1424', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}
-          >
-            <div style={{ height: '180px', overflow: 'hidden', backgroundColor: '#0A0C14' }}>
-              <ImgOrPlaceholder src={p.image_url} brand={p.brand} name={p.name} style={{ backgroundColor: '#0A0C14' }} />
-            </div>
-            <div className="flex flex-col" style={{ padding: '14px', gap: '6px' }}>
-              <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
-                {p.brand}
-              </span>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700', lineHeight: '1.3' }}>
-                {p.name}
-              </span>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
-                {p.price}
-              </span>
-            </div>
-          </Link>
+          <div key={p.id} style={{
+            flex: `1 0 ${cardFlex}`,
+            minWidth: cardFlex,
+            maxWidth: relatedProducts.length < 5 ? undefined : cardFlex,
+          }}>
+            <ProductCard {...p} imgHeight={200} />
+          </div>
         ))}
       </div>
       )}
@@ -555,7 +547,7 @@ const ProductDetail = () => {
               </div>
               <button
                 onClick={() => setQty((q) => q + 1)}
-                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#24A8F5', fontSize: '20px', cursor: 'pointer' }}
+                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: 'pointer' }}
               >
                 +
               </button>
@@ -564,17 +556,21 @@ const ProductDetail = () => {
 
           <button
             onClick={handleAddToCart}
+            onMouseEnter={() => setHoveredBtn('add_2')}
+            onMouseLeave={() => setHoveredBtn(null)}
             disabled={product.stock === 0}
             className="flex items-center justify-center"
-            style={{ backgroundColor: '#00C8FF', borderRadius: '10px', height: '52px', border: 'none', cursor: product.stock === 0 ? 'not-allowed' : 'pointer', gap: '10px', width: '100%', opacity: product.stock === 0 ? 0.5 : 1 }}
+            style={{ backgroundColor: hoveredBtn === 'add_2' ? '#00A8D8' : '#00C8FF', borderRadius: '10px', height: '52px', border: 'none', cursor: product.stock === 0 ? 'not-allowed' : 'pointer', gap: '10px', width: '100%', opacity: product.stock === 0 ? 0.5 : 1 }}
           >
             <ShoppingCart size={18} color="#060810" />
             <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>Agregar al carrito</span>
           </button>
 
           <button
+            onMouseEnter={() => setHoveredBtn('buy_2')}
+            onMouseLeave={() => setHoveredBtn(null)}
             className="flex items-center justify-center"
-            style={{ backgroundColor: 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: 'pointer', width: '100%' }}
+            style={{ backgroundColor: hoveredBtn === 'buy_2' ? 'rgba(36,168,245,0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: 'pointer', width: '100%' }}
           >
             <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Comprar ahora</span>
           </button>
@@ -634,21 +630,7 @@ const ProductDetail = () => {
           </span>
           <div className="grid grid-cols-2" style={{ gap: '10px' }}>
             {relatedProducts.slice(0, 2).map((p) => (
-              <Link
-                key={p.id}
-                to={`/product/${p.id}`}
-                className="flex flex-col no-underline"
-                style={{ backgroundColor: '#0E1424', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}
-              >
-                <div style={{ height: '100px', overflow: 'hidden', backgroundColor: '#0A0C14' }}>
-                  <ImgOrPlaceholder src={p.image_url} brand={p.brand} name={p.name} />
-                </div>
-                <div className="flex flex-col" style={{ padding: '10px', gap: '4px' }}>
-                  <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>{p.brand}</span>
-                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '700', lineHeight: '1.3' }}>{p.name}</span>
-                  <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '800' }}>{p.price}</span>
-                </div>
-              </Link>
+              <ProductCard key={p.id} {...p} mobile />
             ))}
           </div>
         </div>

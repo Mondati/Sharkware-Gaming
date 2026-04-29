@@ -100,7 +100,7 @@ const Home = () => {
                     </span>
                   </div>
                 )}
-                <h1 style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '64px', fontWeight: '900', letterSpacing: '-3px', lineHeight: 1, margin: 0 }}>
+                <h1 style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '68px', fontWeight: '700', letterSpacing: '-1px', lineHeight: 1, margin: 0 }}>
                   {p.name}
                 </h1>
                 <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '16px', maxWidth: '520px', lineHeight: '1.5', margin: 0 }}>
@@ -131,13 +131,14 @@ const Home = () => {
                 className="flex items-center justify-center"
                 style={{ position: 'relative', backgroundColor: '#1E2232', borderRadius: '20px', width: '400px', height: '380px', flexShrink: 0, overflow: 'hidden' }}
               >
-                <span style={{ color: '#00C8FF18', fontFamily: 'Poppins', fontSize: '36px', fontWeight: '900', position: 'absolute', textAlign: 'center', padding: '0 16px' }}>
+                <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(0,200,255,0.12) 0%, transparent 70%)', zIndex: 0 }} />
+                <span style={{ color: '#00C8FF12', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '36px', fontWeight: '700', position: 'absolute', textAlign: 'center', padding: '0 16px', zIndex: 0 }}>
                   {p.name}
                 </span>
                 <img
                   src={p.image_url}
                   alt={p.name}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'relative', zIndex: 1 }}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'relative', zIndex: 1, filter: 'drop-shadow(0 0 40px rgba(0,200,255,0.25))' }}
                   onError={(e) => { e.target.style.display = 'none' }}
                 />
               </div>
@@ -201,7 +202,7 @@ const Home = () => {
                   </span>
                 </div>
               )}
-              <h1 style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '36px', fontWeight: '900', letterSpacing: '-2px', lineHeight: 1, margin: 0 }}>
+              <h1 style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '38px', fontWeight: '700', letterSpacing: '-0.5px', lineHeight: 1, margin: 0 }}>
                 {p.name}
               </h1>
               <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px', lineHeight: '1.4', margin: 0 }}>
@@ -269,13 +270,15 @@ const Home = () => {
             <button
               key={id}
               onClick={() => id === 'all' ? setSearchParams({}) : setSearchParams({ cat: id })}
-              className="sw-pill flex items-center border-none cursor-pointer flex-shrink-0"
+              className={isActive ? 'flex items-center border-none cursor-pointer flex-shrink-0' : 'sw-pill flex items-center border-none cursor-pointer flex-shrink-0'}
               style={{
-                backgroundColor: isActive ? '#00C8FF' : undefined,
+                background: isActive ? 'linear-gradient(135deg, #1A9FFF, #00C8FF)' : undefined,
+                boxShadow: isActive ? '0 0 14px rgba(0,200,255,0.45)' : 'none',
                 borderRadius: '20px',
                 padding: '8px 18px',
                 gap: '6px',
                 whiteSpace: 'nowrap',
+                transition: 'box-shadow 0.2s ease',
               }}
             >
               {Icon && <Icon size={14} color={isActive ? '#060810' : '#AAB3C5'} />}
@@ -333,7 +336,7 @@ const Home = () => {
           {/* Desktop — categoría filtrada */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
                 {categories.find((c) => c.id === activeCategory)?.label}
               </span>
               <select
@@ -373,7 +376,7 @@ const Home = () => {
           {/* Mobile — categoría filtrada */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
                 {categories.find((c) => c.id === activeCategory)?.label}
               </span>
               <select
@@ -414,7 +417,7 @@ const Home = () => {
 
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
               Nuevos Productos
             </span>
             <div className="flex sw-scroll" style={{ gap: '10px', justifyContent: 'space-between', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
@@ -428,7 +431,7 @@ const Home = () => {
 
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
               Nuevos Productos
             </span>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
@@ -442,7 +445,7 @@ const Home = () => {
 
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 40px`, gap: '20px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
               Notebooks Gamer
             </span>
             <div className="flex" style={{ gap: '8px' }}>
@@ -485,7 +488,7 @@ const Home = () => {
 
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
               Notebooks Gamer
             </span>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
@@ -499,7 +502,7 @@ const Home = () => {
 
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 40px`, gap: '20px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
               Monitores Gaming
             </span>
             <div className="flex sw-scroll" style={{ gap: '10px', justifyContent: 'space-between', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
@@ -513,7 +516,7 @@ const Home = () => {
 
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
               Monitores Gaming
             </span>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
