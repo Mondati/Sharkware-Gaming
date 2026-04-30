@@ -2,7 +2,7 @@ import { useState, Fragment } from 'react'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import {
   ChevronRight, Tag, ArrowLeft, Lock,
-  Minus, Plus, Trash2, X, ShoppingBag,
+  Minus, Plus, Trash2, Trash, X, ShoppingBag,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
@@ -13,9 +13,10 @@ const fmt = (n) => '$' + n.toLocaleString('es-AR')
 
 const Cart = () => {
   const { sidePadding } = useWindowWidth()
-  const { items, removeItem, updateQty, cartCount } = useCart()
+  const { items, removeItem, updateQty, clearCart, cartCount } = useCart()
   const [coupon, setCoupon] = useState('')
   const [hoveredBtn, setHoveredBtn] = useState(null)
+  const [showClearConfirm, setShowClearConfirm] = useState(false)
 
   const totalQty = cartCount
   const subtotal = items.reduce((a, i) => a + i.price_ars * i.quantity, 0)
@@ -173,6 +174,19 @@ const Cart = () => {
           ))}
         </div>
 
+        {items.length > 0 && (
+          <button
+            onClick={() => setShowClearConfirm(true)}
+            className="flex items-center justify-center no-underline"
+            style={{ backgroundColor: '#1E2232', border: '1px solid #EF4444', borderRadius: '10px', padding: '12px', gap: '8px' }}
+          >
+            <Trash size={16} color="#EF4444" />
+            <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+              Vaciar carrito
+            </span>
+          </button>
+        )}
+
         {/* Coupon */}
         <div className="flex items-center" style={{ gap: '10px' }}>
           <div
@@ -278,15 +292,31 @@ const Cart = () => {
         <div className="flex flex-col" style={{ flex: 1, gap: '20px' }}>
 
           {/* Header */}
-          <div className="flex items-center" style={{ width: '100%' }}>
-            <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
-              Mi Carrito
-            </span>
-            <div style={{ backgroundColor: '#1B2333', borderRadius: '20px', padding: '4px 12px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
-                {totalQty} {totalQty === 1 ? 'producto' : 'productos'}
+          <div className="flex items-center justify-between" style={{ width: '100%' }}>
+            <div className="flex items-center" style={{ gap: '12px' }}>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
+                Mi Carrito
               </span>
+              <div style={{ backgroundColor: '#1B2333', borderRadius: '20px', padding: '4px 12px' }}>
+                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+                  {totalQty} {totalQty === 1 ? 'producto' : 'productos'}
+                </span>
+              </div>
             </div>
+            {items.length > 0 && (
+              <button
+                onClick={() => setShowClearConfirm(true)}
+                onMouseEnter={() => setHoveredBtn('clear_d')}
+                onMouseLeave={() => setHoveredBtn(null)}
+                className="flex items-center justify-center border-none cursor-pointer"
+                style={{ backgroundColor: hoveredBtn === 'clear_d' ? '#2A1A1A' : '#1E2232', border: '1px solid #EF4444', borderRadius: '10px', padding: '10px 16px', gap: '8px' }}
+              >
+                <Trash size={16} color="#EF4444" />
+                <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+                  Vaciar carrito
+                </span>
+              </button>
+            )}
           </div>
 
           {/* Items container */}
@@ -494,6 +524,52 @@ const Cart = () => {
       </div>
 
       <Footer />
+
+      {/* ═══════════════ CLEAR CART MODAL ═══════════════ */}
+      {showClearConfirm && (
+        <div
+          className="fixed inset-0 flex items-center justify-center"
+          style={{ zIndex: 9999, backgroundColor: 'rgba(0,0,0,0.8)' }}
+          onClick={() => setShowClearConfirm(false)}
+        >
+          <div
+            className="flex flex-col"
+            style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '24px', gap: '20px', width: '90%', maxWidth: '360px', border: '1px solid #1B2333' }}
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex flex-col items-center" style={{ gap: '12px' }}>
+              <div
+                className="flex items-center justify-center"
+                style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: 'rgba(239,68,68,0.15)' }}
+              >
+                <Trash2 size={28} color="#EF4444" />
+              </div>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800', textAlign: 'center' }}>
+                ¿Vaciar el carrito?
+              </span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', textAlign: 'center' }}>
+                Se eliminarán todos los productos del carrito.
+              </span>
+            </div>
+            <div className="flex" style={{ gap: '12px' }}>
+              <button
+                onClick={() => setShowClearConfirm(false)}
+                className="flex-1 flex items-center justify-center border-none cursor-pointer"
+                style={{ backgroundColor: '#1B2333', borderRadius: '10px', height: '48px' }}
+              >
+                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Cancelar</span>
+              </button>
+              <button
+                onClick={() => { clearCart(); setShowClearConfirm(false) }}
+                className="flex-1 flex items-center justify-center border-none cursor-pointer"
+                style={{ backgroundColor: '#EF4444', borderRadius: '10px', height: '48px' }}
+              >
+                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Vaciar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
