@@ -13,6 +13,7 @@ import CheckoutCrypto from './pages/checkout/CheckoutCrypto'
 import CheckoutConfirmCrypto from './pages/checkout/CheckoutConfirmCrypto'
 import SearchResults from './pages/SearchResults'
 import ProtectedRoute from './components/ProtectedRoute'
+import ScrollToTop from './components/ScrollToTop'
 import { useCart } from './context/CartContext'
 
 const AdminPanel = lazy(() => import('./pages/admin/AdminPanel'))
@@ -59,6 +60,7 @@ const App = () => {
   const hideChatbot = location.pathname === '/login' || location.pathname.startsWith('/admin')
   return (
     <div className="flex flex-col min-h-screen">
+      <ScrollToTop />
       {!hideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
