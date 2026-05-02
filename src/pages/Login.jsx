@@ -1,27 +1,52 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  Mail, Lock, LogIn, Globe, Smartphone,
+  Mail, Lock, LogIn,
   ShieldCheck, Truck, RefreshCw, Eye, EyeOff, UserRound, ArrowLeft,
 } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
 const Login = () => {
   const [activeTab, setActiveTab] = useState('login')
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const navigate = useNavigate()
+  const { login, register } = useAuth()
 
-  const handleLogin = () => {
-    if (email === 'admin@sharkware.com' && password === 'admin123') {
-      localStorage.setItem('sw_role', 'admin')
-      navigate('/admin')
-    } else if (email && password) {
-      localStorage.setItem('sw_role', 'user')
-      navigate('/')
-    } else {
+  const handleTabChange = (tab) => {
+    setActiveTab(tab)
+    setError('')
+  }
+
+  const handleLogin = async () => {
+    if (!email || !password) {
       setError('Completá el email y la contraseña.')
+      return
+    }
+    try {
+      const u = await login({ email, password })
+      navigate(u.role === 'admin' ? '/admin' : '/')
+    } catch (err) {
+      if (err.status === 401) setError('Credenciales inválidas.')
+      else if (err.status === 400) setError(err.message)
+      else setError('Ocurrió un error. Intentá de nuevo.')
+    }
+  }
+
+  const handleRegister = async () => {
+    if (!name.trim()) { setError('Ingresá tu nombre.'); return }
+    if (!email) { setError('Ingresá tu email.'); return }
+    if (password.length < 8) { setError('La contraseña debe tener al menos 8 caracteres.'); return }
+    try {
+      await register({ name: name.trim(), email, password })
+      navigate('/')
+    } catch (err) {
+      if (err.status === 409) setError('Ya existe una cuenta con ese email.')
+      else if (err.status === 400) setError(err.message)
+      else setError('Ocurrió un error. Intentá de nuevo.')
     }
   }
 
@@ -78,7 +103,7 @@ const Login = () => {
             style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '4px' }}
           >
             <button
-              onClick={() => setActiveTab('login')}
+              onClick={() => handleTabChange('login')}
               className="flex items-center justify-center flex-1 border-none cursor-pointer"
               style={{
                 height: '40px',
@@ -93,7 +118,7 @@ const Login = () => {
               Iniciar sesión
             </button>
             <button
-              onClick={() => setActiveTab('register')}
+              onClick={() => handleTabChange('register')}
               className="flex items-center justify-center flex-1 border-none cursor-pointer"
               style={{
                 height: '40px',
@@ -108,6 +133,27 @@ const Login = () => {
               Registrarse
             </button>
           </div>
+
+          {/* Nombre (solo registro) */}
+          {activeTab === 'register' && (
+            <div className="flex flex-col w-full" style={{ gap: '6px' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Nombre</span>
+              <div
+                className="flex items-center"
+                style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
+              >
+                <UserRound size={18} color="#AAB3C5" />
+                <input
+                  type="text"
+                  placeholder="Tu nombre"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  className="bg-transparent border-none outline-none w-full"
+                  style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
+                />
+              </div>
+            </div>
+          )}
 
           {/* Email */}
           <div className="flex flex-col w-full" style={{ gap: '6px' }}>
@@ -154,14 +200,16 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Forgot password */}
-          <div className="flex justify-end w-full">
-            <button className="border-none cursor-pointer" style={{ background: 'none', padding: 0 }}>
-              <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
-                ¿Olvidaste tu contraseña?
-              </span>
-            </button>
-          </div>
+          {/* Forgot password (solo login) */}
+          {activeTab === 'login' && (
+            <div className="flex justify-end w-full">
+              <button className="border-none cursor-pointer" style={{ background: 'none', padding: 0 }}>
+                <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+                  ¿Olvidaste tu contraseña?
+                </span>
+              </button>
+            </div>
+          )}
 
           {/* Error */}
           {error && (
@@ -170,55 +218,30 @@ const Login = () => {
             </span>
           )}
 
-          {/* Login button */}
+          {/* Botón principal */}
           <button
-            onClick={handleLogin}
+            onClick={activeTab === 'login' ? handleLogin : handleRegister}
             className="flex items-center justify-center border-none cursor-pointer w-full"
             style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '52px', gap: '10px' }}
           >
             <LogIn size={18} color="#FFFFFF" />
             <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
-              Ingresar
+              {activeTab === 'login' ? 'Ingresar' : 'Crear cuenta'}
             </span>
           </button>
 
-          {/* Divider */}
-          <div className="flex items-center w-full" style={{ gap: '12px' }}>
-            <div style={{ flex: 1, height: '1px', backgroundColor: '#1B2333' }} />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>o continúa con</span>
-            <div style={{ flex: 1, height: '1px', backgroundColor: '#1B2333' }} />
-          </div>
-
-          {/* Social buttons */}
-          <div className="flex w-full" style={{ gap: '12px' }}>
-            <button
-              className="flex flex-1 items-center justify-center border-none cursor-pointer"
-              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', gap: '8px', border: '1px solid #1B2333' }}
-            >
-              <Globe size={18} color="#F5F7FA" />
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Google</span>
-            </button>
-            <button
-              className="flex flex-1 items-center justify-center border-none cursor-pointer"
-              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', gap: '8px', border: '1px solid #1B2333' }}
-            >
-              <Smartphone size={18} color="#F5F7FA" />
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Apple</span>
-            </button>
-          </div>
-
-          {/* Register link */}
+          {/* Link alternativo login/registro */}
           <div className="flex items-center justify-center" style={{ gap: '6px' }}>
             <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
-              ¿No tenés cuenta?
+              {activeTab === 'login' ? '¿No tenés cuenta?' : '¿Ya tenés cuenta?'}
             </span>
             <button
-              onClick={() => setActiveTab('register')}
+              onClick={() => handleTabChange(activeTab === 'login' ? 'register' : 'login')}
               className="border-none cursor-pointer"
               style={{ background: 'none', padding: 0 }}
             >
               <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
-                Registrate
+                {activeTab === 'login' ? 'Registrate' : 'Iniciá sesión'}
               </span>
             </button>
           </div>
@@ -315,10 +338,10 @@ const Login = () => {
             <div className="flex flex-col items-center" style={{ gap: '8px' }}>
               <UserRound size={40} color="#24A8F5" />
               <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
-                Bienvenido de vuelta
+                {activeTab === 'login' ? 'Bienvenido de vuelta' : 'Crear cuenta'}
               </span>
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', textAlign: 'center' }}>
-                Ingresá a tu cuenta de Sharkware Gaming
+                {activeTab === 'login' ? 'Ingresá a tu cuenta de Sharkware Gaming' : 'Completá los datos para registrarte'}
               </span>
             </div>
 
@@ -328,7 +351,7 @@ const Login = () => {
               style={{ backgroundColor: '#070B16', borderRadius: '10px', padding: '4px' }}
             >
               <button
-                onClick={() => setActiveTab('login')}
+                onClick={() => handleTabChange('login')}
                 className="flex items-center justify-center flex-1 border-none cursor-pointer"
                 style={{
                   height: '40px',
@@ -343,7 +366,7 @@ const Login = () => {
                 Iniciar sesión
               </button>
               <button
-                onClick={() => setActiveTab('register')}
+                onClick={() => handleTabChange('register')}
                 className="flex items-center justify-center flex-1 border-none cursor-pointer"
                 style={{
                   height: '40px',
@@ -358,6 +381,27 @@ const Login = () => {
                 Registrarse
               </button>
             </div>
+
+            {/* Nombre (solo registro) */}
+            {activeTab === 'register' && (
+              <div className="flex flex-col" style={{ gap: '6px' }}>
+                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Nombre</span>
+                <div
+                  className="flex items-center"
+                  style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
+                >
+                  <UserRound size={16} color="#AAB3C5" />
+                  <input
+                    type="text"
+                    placeholder="Tu nombre"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    className="bg-transparent border-none outline-none w-full"
+                    style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Email */}
             <div className="flex flex-col" style={{ gap: '6px' }}>
@@ -404,14 +448,16 @@ const Login = () => {
               </div>
             </div>
 
-            {/* Forgot password */}
-            <div className="flex justify-end">
-              <button className="border-none cursor-pointer" style={{ background: 'none', padding: 0 }}>
-                <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
-                  ¿Olvidaste tu contraseña?
-                </span>
-              </button>
-            </div>
+            {/* Forgot password (solo login) */}
+            {activeTab === 'login' && (
+              <div className="flex justify-end">
+                <button className="border-none cursor-pointer" style={{ background: 'none', padding: 0 }}>
+                  <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+                    ¿Olvidaste tu contraseña?
+                  </span>
+                </button>
+              </div>
+            )}
 
             {/* Error */}
             {error && (
@@ -420,9 +466,9 @@ const Login = () => {
               </span>
             )}
 
-            {/* Login / Register button */}
+            {/* Botón principal */}
             <button
-              onClick={activeTab === 'login' ? handleLogin : undefined}
+              onClick={activeTab === 'login' ? handleLogin : handleRegister}
               className="flex items-center justify-center border-none cursor-pointer"
               style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '52px', gap: '10px', width: '100%' }}
             >
@@ -432,38 +478,13 @@ const Login = () => {
               </span>
             </button>
 
-            {/* Divider */}
-            <div className="flex items-center" style={{ gap: '12px' }}>
-              <div style={{ flex: 1, height: '1px', backgroundColor: '#1B2333' }} />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>o continúa con</span>
-              <div style={{ flex: 1, height: '1px', backgroundColor: '#1B2333' }} />
-            </div>
-
-            {/* Social buttons */}
-            <div className="flex" style={{ gap: '12px' }}>
-              <button
-                className="flex flex-1 items-center justify-center border-none cursor-pointer"
-                style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '44px', gap: '8px', border: '1px solid #1B2333' }}
-              >
-                <Globe size={18} color="#F5F7FA" />
-                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Google</span>
-              </button>
-              <button
-                className="flex flex-1 items-center justify-center border-none cursor-pointer"
-                style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '44px', gap: '8px', border: '1px solid #1B2333' }}
-              >
-                <Smartphone size={18} color="#F5F7FA" />
-                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Apple</span>
-              </button>
-            </div>
-
-            {/* Register / Login link */}
+            {/* Link alternativo login/registro */}
             <div className="flex items-center justify-center" style={{ gap: '6px' }}>
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
                 {activeTab === 'login' ? '¿No tenés cuenta?' : '¿Ya tenés cuenta?'}
               </span>
               <button
-                onClick={() => setActiveTab(activeTab === 'login' ? 'register' : 'login')}
+                onClick={() => handleTabChange(activeTab === 'login' ? 'register' : 'login')}
                 className="border-none cursor-pointer"
                 style={{ background: 'none', padding: 0 }}
               >
