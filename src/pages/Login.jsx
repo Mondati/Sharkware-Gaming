@@ -12,41 +12,60 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState('')
+  const [errors, setErrors] = useState({})
+  const [formError, setFormError] = useState('')
   const navigate = useNavigate()
   const { login, register } = useAuth()
 
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const PASS_RE = /^(?=.*[a-zA-Z])(?=.*\d).+$/
+
   const handleTabChange = (tab) => {
     setActiveTab(tab)
-    setError('')
+    setErrors({})
+    setFormError('')
+  }
+
+  const clearFieldError = (field) => {
+    if (errors[field]) setErrors(prev => ({ ...prev, [field]: undefined }))
   }
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      setError('Completá el email y la contraseña.')
-      return
-    }
+    const next = {}
+    if (!EMAIL_RE.test(email)) next.email = 'Ingresá un email válido.'
+    if (!password) next.password = 'Ingresá tu contraseña.'
+    if (Object.keys(next).length) { setErrors(next); return }
+
     try {
       const u = await login({ email, password })
       navigate(u.role === 'admin' ? '/admin' : '/')
     } catch (err) {
-      if (err.status === 401) setError('Credenciales inválidas.')
-      else if (err.status === 400) setError(err.message)
-      else setError('Ocurrió un error. Intentá de nuevo.')
+      setPassword('')
+      if (err.status === 400 && err.fields) setErrors(err.fields)
+      else if (err.status === 401) setFormError('Credenciales inválidas.')
+      else setFormError('Ocurrió un error. Intentá de nuevo.')
     }
   }
 
   const handleRegister = async () => {
-    if (!name.trim()) { setError('Ingresá tu nombre.'); return }
-    if (!email) { setError('Ingresá tu email.'); return }
-    if (password.length < 8) { setError('La contraseña debe tener al menos 8 caracteres.'); return }
+    const next = {}
+    const nameVal = name.trim()
+    if (!nameVal || nameVal.length < 2 || nameVal.length > 100 || !/^[a-zA-ZÀ-ÿ\s]+$/.test(nameVal))
+      next.name = 'El nombre debe tener entre 2 y 100 letras.'
+    if (!EMAIL_RE.test(email) || email.length > 120)
+      next.email = 'Ingresá un email válido.'
+    if (password.length < 8 || password.length > 72 || !PASS_RE.test(password))
+      next.password = 'Mínimo 8 caracteres, al menos una letra y un número.'
+    if (Object.keys(next).length) { setErrors(next); return }
+
     try {
-      await register({ name: name.trim(), email, password })
+      await register({ name: nameVal, email, password })
       navigate('/')
     } catch (err) {
-      if (err.status === 409) setError('Ya existe una cuenta con ese email.')
-      else if (err.status === 400) setError(err.message)
-      else setError('Ocurrió un error. Intentá de nuevo.')
+      setPassword('')
+      if (err.status === 400 && err.fields) setErrors(err.fields)
+      else if (err.status === 409) setErrors({ email: 'Ya existe una cuenta con ese email.' })
+      else setFormError('Ocurrió un error. Intentá de nuevo.')
     }
   }
 
@@ -140,18 +159,19 @@ const Login = () => {
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Nombre</span>
               <div
                 className="flex items-center"
-                style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
+                style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: `1px solid ${errors.name ? '#EF4444' : '#1B2333'}` }}
               >
                 <UserRound size={18} color="#AAB3C5" />
                 <input
                   type="text"
                   placeholder="Tu nombre"
                   value={name}
-                  onChange={e => setName(e.target.value)}
+                  onChange={e => { setName(e.target.value); clearFieldError('name') }}
                   className="bg-transparent border-none outline-none w-full"
                   style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
                 />
               </div>
+              {errors.name && <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '12px' }}>{errors.name}</span>}
             </div>
           )}
 
@@ -160,18 +180,19 @@ const Login = () => {
             <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Email</span>
             <div
               className="flex items-center"
-              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
+              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: `1px solid ${errors.email ? '#EF4444' : '#1B2333'}` }}
             >
               <Mail size={18} color="#AAB3C5" />
               <input
                 type="email"
                 placeholder="tu@email.com"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={e => { setEmail(e.target.value); clearFieldError('email') }}
                 className="bg-transparent border-none outline-none w-full"
                 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
               />
             </div>
+            {errors.email && <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '12px' }}>{errors.email}</span>}
           </div>
 
           {/* Password */}
@@ -179,14 +200,14 @@ const Login = () => {
             <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Contraseña</span>
             <div
               className="flex items-center"
-              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
+              style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: `1px solid ${errors.password ? '#EF4444' : '#1B2333'}` }}
             >
               <Lock size={18} color="#AAB3C5" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="••••••••"
                 value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={e => { setPassword(e.target.value); clearFieldError('password') }}
                 className="bg-transparent border-none outline-none w-full"
                 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
               />
@@ -198,6 +219,7 @@ const Login = () => {
                 {showPassword ? <Eye size={18} color="#AAB3C5" /> : <EyeOff size={18} color="#AAB3C5" />}
               </button>
             </div>
+            {errors.password && <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '12px' }}>{errors.password}</span>}
           </div>
 
           {/* Forgot password (solo login) */}
@@ -211,10 +233,10 @@ const Login = () => {
             </div>
           )}
 
-          {/* Error */}
-          {error && (
+          {/* Error general */}
+          {formError && (
             <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '13px', textAlign: 'center' }}>
-              {error}
+              {formError}
             </span>
           )}
 
@@ -388,18 +410,19 @@ const Login = () => {
                 <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Nombre</span>
                 <div
                   className="flex items-center"
-                  style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
+                  style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: `1px solid ${errors.name ? '#EF4444' : '#1B2333'}` }}
                 >
                   <UserRound size={16} color="#AAB3C5" />
                   <input
                     type="text"
                     placeholder="Tu nombre"
                     value={name}
-                    onChange={e => setName(e.target.value)}
+                    onChange={e => { setName(e.target.value); clearFieldError('name') }}
                     className="bg-transparent border-none outline-none w-full"
                     style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
                   />
                 </div>
+                {errors.name && <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '12px' }}>{errors.name}</span>}
               </div>
             )}
 
@@ -408,18 +431,19 @@ const Login = () => {
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Email</span>
               <div
                 className="flex items-center"
-                style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
+                style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: `1px solid ${errors.email ? '#EF4444' : '#1B2333'}` }}
               >
                 <Mail size={16} color="#AAB3C5" />
                 <input
                   type="email"
                   placeholder="tu@email.com"
                   value={email}
-                  onChange={e => setEmail(e.target.value)}
+                  onChange={e => { setEmail(e.target.value); clearFieldError('email') }}
                   className="bg-transparent border-none outline-none w-full"
                   style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
                 />
               </div>
+              {errors.email && <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '12px' }}>{errors.email}</span>}
             </div>
 
             {/* Password */}
@@ -427,14 +451,14 @@ const Login = () => {
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Contraseña</span>
               <div
                 className="flex items-center"
-                style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
+                style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: `1px solid ${errors.password ? '#EF4444' : '#1B2333'}` }}
               >
                 <Lock size={16} color="#AAB3C5" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={e => { setPassword(e.target.value); clearFieldError('password') }}
                   className="bg-transparent border-none outline-none w-full"
                   style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
                 />
@@ -446,6 +470,7 @@ const Login = () => {
                   {showPassword ? <Eye size={16} color="#AAB3C5" /> : <EyeOff size={16} color="#AAB3C5" />}
                 </button>
               </div>
+              {errors.password && <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '12px' }}>{errors.password}</span>}
             </div>
 
             {/* Forgot password (solo login) */}
@@ -459,10 +484,10 @@ const Login = () => {
               </div>
             )}
 
-            {/* Error */}
-            {error && (
+            {/* Error general */}
+            {formError && (
               <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '13px', textAlign: 'center' }}>
-                {error}
+                {formError}
               </span>
             )}
 
