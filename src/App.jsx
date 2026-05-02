@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
+import Register from './pages/Register'
 import Checkout from './pages/checkout/Checkout'
 import CheckoutConfirmMercadoPago from './pages/checkout/CheckoutConfirmMercadoPago'
 import CheckoutCrypto from './pages/checkout/CheckoutCrypto'
@@ -56,8 +57,8 @@ const CartToast = () => {
 const App = () => {
   const location = useLocation()
   const [chatOpen, setChatOpen] = useState(false)
-  const hideNavbar = location.pathname === '/login' || location.pathname.startsWith('/admin')
-  const hideChatbot = location.pathname === '/login' || location.pathname.startsWith('/admin')
+  const hideNavbar = location.pathname === '/login' || location.pathname === '/register' || location.pathname.startsWith('/admin')
+  const hideChatbot = location.pathname === '/login' || location.pathname === '/register' || location.pathname.startsWith('/admin')
   return (
     <div className="flex flex-col min-h-screen">
       <ScrollToTop />
@@ -68,6 +69,7 @@ const App = () => {
         <Route path="/search" element={<SearchResultsRoute />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/checkout/confirm/mercadopago" element={<CheckoutConfirmMercadoPago />} />
         <Route path="/checkout/crypto" element={<CheckoutCrypto />} />
