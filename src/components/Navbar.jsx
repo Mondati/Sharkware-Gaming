@@ -1,20 +1,30 @@
 import { useState, useCallback } from 'react'
-import { Search, UserRound, ShoppingCart, Menu, X } from 'lucide-react'
+import { Search, UserRound, ShoppingCart, Menu, X, LogOut } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import MobileSidebar from './MobileSidebar'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
   const { cartCount } = useCart()
+  const { user, logout, showToast } = useAuth()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [hoveredBtn, setHoveredBtn] = useState(null)
   const [searchFocused, setSearchFocused] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
   const [mobileSearchTerm, setMobileSearchTerm] = useState('')
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
   const { sidePadding } = useWindowWidth()
   const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    setUserMenuOpen(false)
+    await logout()
+    showToast('Sesión cerrada correctamente')
+    navigate('/')
+  }
 
   const mobileSearchRef = useCallback((node) => { node?.focus() }, [])
 
@@ -98,15 +108,52 @@ const Navbar = () => {
                 <Search size={20} color="#AAB3C5" />
               </button>
 
-              <Link
-                to="/login"
-                onMouseEnter={() => setHoveredBtn('user')}
-                onMouseLeave={() => setHoveredBtn(null)}
-                className="flex items-center justify-center no-underline"
-                style={{ width: '36px', height: '36px', backgroundColor: hoveredBtn === 'user' ? '#1E2232' : 'transparent', borderRadius: '8px', transition: 'background-color 0.15s ease' }}
-              >
-                <UserRound size={20} color="#AAB3C5" />
-              </Link>
+              {user ? (
+                <div style={{ position: 'relative' }}>
+                  <button
+                    onClick={() => setUserMenuOpen(v => !v)}
+                    className="flex items-center justify-center border-none cursor-pointer"
+                    style={{ width: '36px', height: '36px', backgroundColor: userMenuOpen ? '#1E2232' : 'transparent', borderRadius: '8px', transition: 'background-color 0.15s ease' }}
+                  >
+                    <UserRound size={20} color="#24A8F5" />
+                  </button>
+                  {userMenuOpen && (
+                    <div style={{
+                      position: 'absolute', top: '42px', right: 0,
+                      backgroundColor: '#1E2232', borderRadius: '12px',
+                      padding: '12px 16px', minWidth: '160px',
+                      border: '1px solid #1B2333', zIndex: 100,
+                      display: 'flex', flexDirection: 'column', gap: '10px'
+                    }}>
+                      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+                        {user.name}
+                      </span>
+                      <button
+                        onClick={handleLogout}
+                        style={{
+                          background: 'transparent', border: '1px solid #EF4444',
+                          borderRadius: '8px', padding: '6px 12px',
+                          color: '#EF4444', fontFamily: 'Poppins', fontSize: '12px',
+                          fontWeight: '600', cursor: 'pointer',
+                          display: 'flex', alignItems: 'center', gap: '6px'
+                        }}
+                      >
+                        <LogOut size={12} /> Cerrar sesión
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  to="/login"
+                  onMouseEnter={() => setHoveredBtn('user')}
+                  onMouseLeave={() => setHoveredBtn(null)}
+                  className="flex items-center justify-center no-underline"
+                  style={{ width: '36px', height: '36px', backgroundColor: hoveredBtn === 'user' ? '#1E2232' : 'transparent', borderRadius: '8px', transition: 'background-color 0.15s ease' }}
+                >
+                  <UserRound size={20} color="#AAB3C5" />
+                </Link>
+              )}
 
               <Link
                 to="/cart"
@@ -203,18 +250,36 @@ const Navbar = () => {
           />
         </form>
 
-        <Link
-          to="/login"
-          onMouseEnter={() => setHoveredBtn('login')}
-          onMouseLeave={() => setHoveredBtn(null)}
-          className="flex items-center no-underline"
-          style={{ backgroundColor: hoveredBtn === 'login' ? '#252840' : '#1E2232', borderRadius: '20px', padding: '8px 16px', gap: '8px', transition: 'background-color 0.15s ease' }}
-        >
-          <UserRound size={15} color="#AAB3C5" />
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
-            Ingresar
-          </span>
-        </Link>
+        {user ? (
+          <div className="flex items-center" style={{ backgroundColor: '#1E2232', borderRadius: '20px', padding: '8px 16px', gap: '8px' }}>
+            <UserRound size={15} color="#24A8F5" />
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+              {user.name}
+            </span>
+            <button
+              onClick={handleLogout}
+              onMouseEnter={() => setHoveredBtn('logout')}
+              onMouseLeave={() => setHoveredBtn(null)}
+              title="Cerrar sesión"
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', paddingLeft: '4px' }}
+            >
+              <LogOut size={14} color={hoveredBtn === 'logout' ? '#EF4444' : '#8890A4'} />
+            </button>
+          </div>
+        ) : (
+          <Link
+            to="/login"
+            onMouseEnter={() => setHoveredBtn('login')}
+            onMouseLeave={() => setHoveredBtn(null)}
+            className="flex items-center no-underline"
+            style={{ backgroundColor: hoveredBtn === 'login' ? '#252840' : '#1E2232', borderRadius: '20px', padding: '8px 16px', gap: '8px', transition: 'background-color 0.15s ease' }}
+          >
+            <UserRound size={15} color="#AAB3C5" />
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+              Ingresar
+            </span>
+          </Link>
+        )}
 
         <Link
           to="/cart"

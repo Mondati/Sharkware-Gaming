@@ -5,3 +5,9 @@ export const login = (payload) =>
 
 export const register = (payload) =>
   apiFetch('/api/auth/register', { method: 'POST', body: payload })
+
+export const logout = () =>
+  apiFetch('/api/auth/logout', { method: 'POST' })
+
+export const me = () =>
+  apiFetch('/api/auth/me')
