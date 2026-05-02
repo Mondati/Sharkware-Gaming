@@ -281,12 +281,12 @@ const Login = () => {
       </div>
 
       {/* ═══════════════ DESKTOP VERSION ═══════════════ */}
-      <div className="hidden md:flex" style={{ minHeight: '100vh', backgroundColor: '#070B16' }}>
+      <div className="hidden md:flex" style={{ height: '100vh', overflow: 'hidden', backgroundColor: '#070B16' }}>
 
         {/* ── Left Panel ── */}
         <div
           className="flex flex-col justify-center"
-          style={{ width: '50%', backgroundColor: '#0A0F1C', padding: '60px', gap: '32px' }}
+          style={{ width: '50%', height: '100%', backgroundColor: '#0A0F1C', padding: '60px', gap: '32px' }}
         >
           {/* Logo */}
           <div className="flex flex-col" style={{ gap: '4px' }}>
@@ -349,20 +349,20 @@ const Login = () => {
         {/* ── Right Panel ── */}
         <div
           className="flex items-center justify-center"
-          style={{ width: '50%', backgroundColor: '#070B16' }}
+          style={{ width: '50%', height: '100%', backgroundColor: '#070B16' }}
         >
           {/* Form Card */}
           <div
             className="flex flex-col"
-            style={{ width: '440px', backgroundColor: '#0E1424', borderRadius: '20px', padding: '40px', gap: '24px', border: '1px solid #1B2333' }}
+            style={{ width: '420px', backgroundColor: '#0E1424', borderRadius: '20px', padding: '28px 36px', gap: '16px', border: '1px solid #1B2333' }}
           >
             {/* Form Header */}
-            <div className="flex flex-col items-center" style={{ gap: '8px' }}>
-              <UserRound size={40} color="#24A8F5" />
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
+            <div className="flex flex-col items-center" style={{ gap: '6px' }}>
+              <UserRound size={28} color="#24A8F5" />
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '20px', fontWeight: '800' }}>
                 {activeTab === 'login' ? 'Bienvenido de vuelta' : 'Crear cuenta'}
               </span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', textAlign: 'center' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', textAlign: 'center' }}>
                 {activeTab === 'login' ? 'Ingresá a tu cuenta de Sharkware Gaming' : 'Completá los datos para registrarte'}
               </span>
             </div>
@@ -376,7 +376,7 @@ const Login = () => {
                 onClick={() => handleTabChange('login')}
                 className="flex items-center justify-center flex-1 border-none cursor-pointer"
                 style={{
-                  height: '40px',
+                  height: '36px',
                   borderRadius: '8px',
                   backgroundColor: activeTab === 'login' ? '#24A8F5' : 'transparent',
                   color: activeTab === 'login' ? '#FFFFFF' : '#AAB3C5',
@@ -391,7 +391,7 @@ const Login = () => {
                 onClick={() => handleTabChange('register')}
                 className="flex items-center justify-center flex-1 border-none cursor-pointer"
                 style={{
-                  height: '40px',
+                  height: '36px',
                   borderRadius: '8px',
                   backgroundColor: activeTab === 'register' ? '#24A8F5' : 'transparent',
                   color: activeTab === 'register' ? '#FFFFFF' : '#AAB3C5',
@@ -406,11 +406,11 @@ const Login = () => {
 
             {/* Nombre (solo registro) */}
             {activeTab === 'register' && (
-              <div className="flex flex-col" style={{ gap: '6px' }}>
+              <div className="flex flex-col" style={{ gap: '5px' }}>
                 <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Nombre</span>
                 <div
                   className="flex items-center"
-                  style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: `1px solid ${errors.name ? '#EF4444' : '#1B2333'}` }}
+                  style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '44px', padding: '0 16px', gap: '10px', border: `1px solid ${errors.name ? '#EF4444' : '#1B2333'}` }}
                 >
                   <UserRound size={16} color="#AAB3C5" />
                   <input
@@ -427,11 +427,11 @@ const Login = () => {
             )}
 
             {/* Email */}
-            <div className="flex flex-col" style={{ gap: '6px' }}>
+            <div className="flex flex-col" style={{ gap: '5px' }}>
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Email</span>
               <div
                 className="flex items-center"
-                style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: `1px solid ${errors.email ? '#EF4444' : '#1B2333'}` }}
+                style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '44px', padding: '0 16px', gap: '10px', border: `1px solid ${errors.email ? '#EF4444' : '#1B2333'}` }}
               >
                 <Mail size={16} color="#AAB3C5" />
                 <input
@@ -447,11 +447,11 @@ const Login = () => {
             </div>
 
             {/* Password */}
-            <div className="flex flex-col" style={{ gap: '6px' }}>
+            <div className="flex flex-col" style={{ gap: '5px' }}>
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Contraseña</span>
               <div
                 className="flex items-center"
-                style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '48px', padding: '0 16px', gap: '10px', border: `1px solid ${errors.password ? '#EF4444' : '#1B2333'}` }}
+                style={{ backgroundColor: '#070B16', borderRadius: '10px', height: '44px', padding: '0 16px', gap: '10px', border: `1px solid ${errors.password ? '#EF4444' : '#1B2333'}` }}
               >
                 <Lock size={16} color="#AAB3C5" />
                 <input
@@ -495,17 +495,17 @@ const Login = () => {
             <button
               onClick={activeTab === 'login' ? handleLogin : handleRegister}
               className="flex items-center justify-center border-none cursor-pointer"
-              style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '52px', gap: '10px', width: '100%' }}
+              style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '46px', gap: '10px', width: '100%' }}
             >
               <LogIn size={18} color="#FFFFFF" />
-              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
+              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>
                 {activeTab === 'login' ? 'Ingresar' : 'Crear cuenta'}
               </span>
             </button>
 
             {/* Link alternativo login/registro */}
             <div className="flex items-center justify-center" style={{ gap: '6px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
                 {activeTab === 'login' ? '¿No tenés cuenta?' : '¿Ya tenés cuenta?'}
               </span>
               <button
@@ -513,7 +513,7 @@ const Login = () => {
                 className="border-none cursor-pointer"
                 style={{ background: 'none', padding: 0 }}
               >
-                <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
+                <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>
                   {activeTab === 'login' ? 'Registrate' : 'Iniciá sesión'}
                 </span>
               </button>
