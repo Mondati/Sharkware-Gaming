@@ -15,7 +15,7 @@ const Login = () => {
   const [errors, setErrors] = useState({})
   const [formError, setFormError] = useState('')
   const navigate = useNavigate()
-  const { login, register } = useAuth()
+  const { login, register, showToast } = useAuth()
 
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   const PASS_RE = /^(?=.*[a-zA-Z])(?=.*\d).+$/
@@ -38,6 +38,7 @@ const Login = () => {
 
     try {
       const u = await login({ email, password })
+      showToast(`¡Bienvenido/a, ${u.name}!`)
       navigate(u.role === 'admin' ? '/admin' : '/')
     } catch (err) {
       setPassword('')
@@ -59,7 +60,8 @@ const Login = () => {
     if (Object.keys(next).length) { setErrors(next); return }
 
     try {
-      await register({ name: nameVal, email, password })
+      const u = await register({ name: nameVal, email, password })
+      showToast(`¡Cuenta creada con éxito! Bienvenido/a, ${u.name}`)
       navigate('/')
     } catch (err) {
       setPassword('')

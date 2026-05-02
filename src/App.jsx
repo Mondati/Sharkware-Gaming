@@ -14,6 +14,7 @@ import CheckoutConfirmCrypto from './pages/checkout/CheckoutConfirmCrypto'
 import SearchResults from './pages/SearchResults'
 import ProtectedRoute from './components/ProtectedRoute'
 import ScrollToTop from './components/ScrollToTop'
+import Toast from './components/Toast'
 import { useCart } from './context/CartContext'
 
 const AdminPanel = lazy(() => import('./pages/admin/AdminPanel'))
@@ -84,6 +85,7 @@ const App = () => {
         />
       </Routes>
       <CartToast />
+      <Toast />
       {!hideChatbot && (
         <>
           {chatOpen && <ChatbotPanel onClose={() => setChatOpen(false)} />}
