@@ -12,6 +12,7 @@ export const apiFetch = async (path, { method = 'GET', body } = {}) => {
     const err = new Error(data?.message ?? 'Request failed')
     err.status = res.status
     err.code = data?.error
+    err.fields = data?.fields
     throw err
   }
   return data
