@@ -23,6 +23,7 @@ const MOBILE_INPUT = {
   backgroundColor: '#0E1424', borderRadius: '10px', height: '44px',
   padding: '0 14px', border: '1px solid #1B2333', color: '#F5F7FA',
   fontFamily: 'Poppins', fontSize: '13px',
+  width: '100%', boxSizing: 'border-box',
 }
 const MOBILE_TA = { ...MOBILE_INPUT, height: 'auto', padding: '12px 14px', resize: 'none' }
 const MOBILE_LABEL = { color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }
@@ -125,7 +126,7 @@ const MobileAddBody = ({ state, onClose }) => {
   const galRef = useRef()
 
   return (
-    <div className="flex md:hidden flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
+    <div className="flex md:hidden flex-col w-full h-screen" style={{ backgroundColor: '#070B16' }}>
       {/* Header */}
       <div className="flex items-center justify-between w-full"
         style={{ height: '56px', padding: '0 16px', backgroundColor: '#0A0F1C', borderBottom: '1px solid #1B2333', flexShrink: 0 }}>
@@ -141,7 +142,7 @@ const MobileAddBody = ({ state, onClose }) => {
       </div>
 
       {/* Form */}
-      <div className="flex flex-col" style={{ flex: 1, padding: '16px', gap: '14px', overflowY: 'auto', paddingBottom: '80px' }}>
+      <div className="flex flex-col" style={{ flex: 1, padding: '16px', gap: '14px', overflowY: 'auto', paddingBottom: '110px' }}>
 
         {globalErr && (
           <div style={{ backgroundColor: '#2D1010', border: '1px solid #EF4444', borderRadius: '8px', padding: '10px 14px' }}>
@@ -170,12 +171,12 @@ const MobileAddBody = ({ state, onClose }) => {
         <div className="flex flex-col" style={{ gap: '6px' }}>
           <span style={MOBILE_LABEL}>Galería (opcional)</span>
           <input ref={galRef} type="file" accept="image/*" multiple style={{ display: 'none' }}
-            onChange={e => { setGallery(Array.from(e.target.files)); e.target.value = '' }} />
+            onChange={e => { setGallery(Array.from(e.target.files).slice(0, 3)); e.target.value = '' }} />
           <button onClick={() => galRef.current.click()} className="border-none cursor-pointer"
             style={{ ...MOBILE_INPUT, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', justifyContent: 'flex-start' }}>
             <Upload size={14} color="#AAB3C5" />
             <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
-              {gallery.length ? `${gallery.length} imagen(es) seleccionada(s)` : 'Seleccionar fotos adicionales'}
+              {gallery.length ? `${gallery.length}/3 imagen(es) seleccionada(s)` : 'Seleccionar fotos (máx 3)'}
             </span>
           </button>
         </div>
@@ -280,7 +281,7 @@ const MobileAddBody = ({ state, onClose }) => {
 
       {/* Footer fijo */}
       <div className="flex items-center justify-between w-full"
-        style={{ position: 'fixed', bottom: '64px', left: 0, right: 0, padding: '12px 16px', gap: '10px', backgroundColor: '#0E1424', borderTop: '1px solid #1B2333', zIndex: 55 }}>
+        style={{ position: 'fixed', bottom: 0, left: 0, right: 0, padding: '12px 16px', gap: '10px', backgroundColor: '#0E1424', borderTop: '1px solid #1B2333', zIndex: 55 }}>
         <button onClick={onClose} className="flex items-center justify-center flex-1 border-none cursor-pointer"
           style={{ backgroundColor: '#1B2333', borderRadius: '10px', height: '46px' }}>
           <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Cancelar</span>
@@ -333,7 +334,7 @@ const DesktopAddBody = ({ state, onClose }) => {
       <div className="flex" style={{ flex: 1, overflow: 'hidden' }}>
         {/* Left — imagen + galería */}
         <div className="flex flex-col"
-          style={{ width: '280px', flexShrink: 0, backgroundColor: '#080D1A', padding: '24px', gap: '16px', borderRight: '1px solid #1B2333', overflowY: 'auto' }}>
+          style={{ width: 'clamp(220px, 28%, 280px)', flexShrink: 0, backgroundColor: '#080D1A', padding: '24px', gap: '16px', borderRight: '1px solid #1B2333', overflowY: 'auto' }}>
           <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Imagen del producto *</span>
           <input ref={imgRef} type="file" accept="image/*" style={{ display: 'none' }}
             onChange={e => { setImage(e.target.files[0] ?? null); e.target.value = '' }} />
@@ -365,12 +366,12 @@ const DesktopAddBody = ({ state, onClose }) => {
 
           <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Galería (opcional)</span>
           <input ref={galRef} type="file" accept="image/*" multiple style={{ display: 'none' }}
-            onChange={e => { setGallery(Array.from(e.target.files)); e.target.value = '' }} />
+            onChange={e => { setGallery(Array.from(e.target.files).slice(0, 3)); e.target.value = '' }} />
           <button onClick={() => galRef.current.click()} className="flex items-center border-none cursor-pointer"
             style={{ backgroundColor: '#0D2035', borderRadius: '6px', padding: '7px 14px', border: '1px solid #1B2333', gap: '6px' }}>
             <Upload size={12} color="#AAB3C5" />
             <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
-              {gallery.length ? `${gallery.length} imagen(es)` : 'Agregar fotos'}
+              {gallery.length ? `${gallery.length}/3 imagen(es)` : 'Agregar fotos (máx 3)'}
             </span>
           </button>
           {gallery.length > 0 && (
@@ -522,7 +523,7 @@ const EditModal = ({ product, onClose }) => {
   const taStyle2    = { ...TEXTAREA_STYLE_BASE, backgroundColor: '#0E1424' }
 
   const MobileEdit = () => (
-    <div className="flex md:hidden flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
+    <div className="flex md:hidden flex-col w-full h-screen" style={{ backgroundColor: '#070B16' }}>
       <div className="flex items-center justify-between w-full"
         style={{ height: '56px', padding: '0 16px', backgroundColor: '#0A0F1C', borderBottom: '1px solid #1B2333', flexShrink: 0 }}>
         <button onClick={onClose} className="flex items-center justify-center border-none cursor-pointer"
@@ -535,7 +536,7 @@ const EditModal = ({ product, onClose }) => {
         </div>
         <div style={{ width: '36px' }} />
       </div>
-      <div className="flex flex-col" style={{ flex: 1, padding: '16px', gap: '14px', overflowY: 'auto', paddingBottom: '80px' }}>
+      <div className="flex flex-col" style={{ flex: 1, padding: '16px', gap: '14px', overflowY: 'auto', paddingBottom: '110px' }}>
         <div className="flex flex-col items-center justify-center"
           style={{ height: '140px', borderRadius: '12px', gap: '8px', border: '1px dashed #24A8F5', backgroundColor: '#0D2035' }}>
           <Image size={32} color="#24A8F5" />
@@ -582,7 +583,7 @@ const EditModal = ({ product, onClose }) => {
         </div>
       </div>
       <div className="flex items-center justify-between w-full"
-        style={{ position: 'fixed', bottom: '64px', left: 0, right: 0, padding: '12px 16px', gap: '10px', backgroundColor: '#0E1424', borderTop: '1px solid #1B2333', zIndex: 55 }}>
+        style={{ position: 'fixed', bottom: 0, left: 0, right: 0, padding: '12px 16px', gap: '10px', backgroundColor: '#0E1424', borderTop: '1px solid #1B2333', zIndex: 55 }}>
         <button onClick={onClose} className="flex items-center justify-center flex-1 border-none cursor-pointer"
           style={{ backgroundColor: '#1B2333', borderRadius: '10px', height: '46px' }}>
           <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Cancelar</span>
@@ -602,12 +603,10 @@ const EditModal = ({ product, onClose }) => {
         style={{ position: 'fixed', inset: 0, backgroundColor: '#070B16', zIndex: 60 }}>
         <MobileEdit />
       </div>
-      <div className="hidden md:flex items-start justify-center" aria-hidden="true"
-        style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(7,6,16,0.97)', zIndex: 50, paddingTop: '85px' }}
-        onClick={e => { if (e.target === e.currentTarget) onClose() }}>
+      <div className="hidden md:flex items-center justify-center" aria-hidden="true"
+        style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(7,6,16,0.97)', zIndex: 50, padding: '20px' }}>
         <div role="dialog" aria-modal="true" aria-label="Editar Producto" className="flex flex-col"
-          style={{ width: '820px', height: '730px', backgroundColor: '#0E1424', borderRadius: '12px', border: '1px solid #1B2333', overflow: 'hidden' }}
-          onClick={e => e.stopPropagation()}>
+          style={{ width: 'min(820px, 95vw)', height: 'min(730px, calc(100vh - 40px))', backgroundColor: '#0E1424', borderRadius: '12px', border: '1px solid #1B2333', overflow: 'hidden' }}>
           <div className="flex items-center justify-between"
             style={{ height: '64px', padding: '0 24px', borderBottom: '1px solid #1B2333', flexShrink: 0 }}>
             <div className="flex flex-col" style={{ gap: '3px' }}>
@@ -621,7 +620,7 @@ const EditModal = ({ product, onClose }) => {
           </div>
           <div className="flex" style={{ flex: 1, overflow: 'hidden' }}>
             <div className="flex flex-col"
-              style={{ width: '280px', flexShrink: 0, backgroundColor: '#080D1A', padding: '24px', gap: '16px', borderRight: '1px solid #1B2333' }}>
+              style={{ width: 'clamp(220px, 28%, 280px)', flexShrink: 0, backgroundColor: '#080D1A', padding: '24px', gap: '16px', borderRight: '1px solid #1B2333', overflowY: 'auto' }}>
               <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Imagen del producto</span>
               <div className="flex flex-col items-center justify-center"
                 style={{ height: '200px', borderRadius: '8px', gap: '10px', border: '1px solid #24A8F5', backgroundColor: '#0D2035' }}>
@@ -724,12 +723,10 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
       </div>
 
       {/* Desktop add */}
-      <div className="hidden md:flex items-start justify-center" aria-hidden="true"
-        style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(7,6,16,0.97)', zIndex: 50, paddingTop: '85px' }}
-        onClick={e => { if (e.target === e.currentTarget) onClose() }}>
+      <div className="hidden md:flex items-center justify-center" aria-hidden="true"
+        style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(7,6,16,0.97)', zIndex: 50, padding: '20px' }}>
         <div role="dialog" aria-modal="true" aria-label="Agregar Producto" className="flex flex-col"
-          style={{ width: '820px', height: '730px', backgroundColor: '#0E1424', borderRadius: '12px', border: '1px solid #1B2333', overflow: 'hidden' }}
-          onClick={e => e.stopPropagation()}>
+          style={{ width: 'min(820px, 95vw)', height: 'min(730px, calc(100vh - 40px))', backgroundColor: '#0E1424', borderRadius: '12px', border: '1px solid #1B2333', overflow: 'hidden' }}>
           <DesktopAddBody state={state} onClose={onClose} />
         </div>
       </div>

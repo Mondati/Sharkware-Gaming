@@ -48,6 +48,18 @@ const Login = () => {
     }
   }
 
+  const handleSubmit = () => {
+    if (activeTab === 'login') handleLogin()
+    else handleRegister()
+  }
+
+  const onEnter = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      handleSubmit()
+    }
+  }
+
   const handleRegister = async () => {
     const next = {}
     const nameVal = name.trim()
@@ -169,6 +181,7 @@ const Login = () => {
                   placeholder="Tu nombre"
                   value={name}
                   onChange={e => { setName(e.target.value); clearFieldError('name') }}
+                  onKeyDown={onEnter}
                   className="bg-transparent border-none outline-none w-full"
                   style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
                 />
@@ -190,6 +203,7 @@ const Login = () => {
                 placeholder="tu@email.com"
                 value={email}
                 onChange={e => { setEmail(e.target.value); clearFieldError('email') }}
+                onKeyDown={onEnter}
                 className="bg-transparent border-none outline-none w-full"
                 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
               />
@@ -210,6 +224,7 @@ const Login = () => {
                 placeholder="••••••••"
                 value={password}
                 onChange={e => { setPassword(e.target.value); clearFieldError('password') }}
+                onKeyDown={onEnter}
                 className="bg-transparent border-none outline-none w-full"
                 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
               />
@@ -420,6 +435,7 @@ const Login = () => {
                     placeholder="Tu nombre"
                     value={name}
                     onChange={e => { setName(e.target.value); clearFieldError('name') }}
+                    onKeyDown={onEnter}
                     className="bg-transparent border-none outline-none w-full"
                     style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
                   />
@@ -441,6 +457,7 @@ const Login = () => {
                   placeholder="tu@email.com"
                   value={email}
                   onChange={e => { setEmail(e.target.value); clearFieldError('email') }}
+                  onKeyDown={onEnter}
                   className="bg-transparent border-none outline-none w-full"
                   style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
                 />
@@ -461,6 +478,7 @@ const Login = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={e => { setPassword(e.target.value); clearFieldError('password') }}
+                  onKeyDown={onEnter}
                   className="bg-transparent border-none outline-none w-full"
                   style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}
                 />

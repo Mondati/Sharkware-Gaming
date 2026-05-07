@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { Search, UserRound, ShoppingCart, Menu, X, LogOut } from 'lucide-react'
+import { Search, UserRound, ShoppingCart, Menu, X, LogOut, LayoutDashboard } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import MobileSidebar from './MobileSidebar'
 import { useWindowWidth } from '../hooks/useWindowWidth'
@@ -128,6 +128,22 @@ const Navbar = () => {
                       <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
                         {user.name}
                       </span>
+                      {user.role === 'admin' && (
+                        <Link
+                          to="/admin"
+                          onClick={() => setUserMenuOpen(false)}
+                          style={{
+                            background: 'transparent', border: '1px solid #24A8F5',
+                            borderRadius: '8px', padding: '6px 12px',
+                            color: '#24A8F5', fontFamily: 'Poppins', fontSize: '12px',
+                            fontWeight: '600', cursor: 'pointer',
+                            display: 'flex', alignItems: 'center', gap: '6px',
+                            textDecoration: 'none'
+                          }}
+                        >
+                          <LayoutDashboard size={12} /> Panel admin
+                        </Link>
+                      )}
                       <button
                         onClick={handleLogout}
                         style={{
@@ -155,36 +171,38 @@ const Navbar = () => {
                 </Link>
               )}
 
-              <Link
-                to="/cart"
-                onMouseEnter={() => setHoveredBtn('cart')}
-                onMouseLeave={() => setHoveredBtn(null)}
-                className="flex items-center justify-center no-underline"
-                style={{ position: 'relative', width: '36px', height: '36px', backgroundColor: hoveredBtn === 'cart' ? '#1E2232' : 'transparent', borderRadius: '8px', transition: 'background-color 0.15s ease' }}
-              >
-                <ShoppingCart size={20} color="#AAB3C5" />
-                {cartCount > 0 && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      top: '2px',
-                      right: '2px',
-                      backgroundColor: '#24A8F5',
-                      borderRadius: '50%',
-                      width: '16px',
-                      height: '16px',
-                      fontSize: '9px',
-                      fontWeight: '700',
-                      color: '#FFFFFF',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {cartCount}
-                  </span>
-                )}
-              </Link>
+              {user?.role !== 'admin' && (
+                <Link
+                  to="/cart"
+                  onMouseEnter={() => setHoveredBtn('cart')}
+                  onMouseLeave={() => setHoveredBtn(null)}
+                  className="flex items-center justify-center no-underline"
+                  style={{ position: 'relative', width: '36px', height: '36px', backgroundColor: hoveredBtn === 'cart' ? '#1E2232' : 'transparent', borderRadius: '8px', transition: 'background-color 0.15s ease' }}
+                >
+                  <ShoppingCart size={20} color="#AAB3C5" />
+                  {cartCount > 0 && (
+                    <span
+                      style={{
+                        position: 'absolute',
+                        top: '2px',
+                        right: '2px',
+                        backgroundColor: '#24A8F5',
+                        borderRadius: '50%',
+                        width: '16px',
+                        height: '16px',
+                        fontSize: '9px',
+                        fontWeight: '700',
+                        color: '#FFFFFF',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {cartCount}
+                    </span>
+                  )}
+                </Link>
+              )}
 
               <button
                 onClick={() => setSidebarOpen(true)}
@@ -250,6 +268,19 @@ const Navbar = () => {
           />
         </form>
 
+        {user?.role === 'admin' && (
+          <Link
+            to="/admin"
+            onMouseEnter={() => setHoveredBtn('adminPanel')}
+            onMouseLeave={() => setHoveredBtn(null)}
+            className="flex items-center no-underline"
+            style={{ backgroundColor: hoveredBtn === 'adminPanel' ? '#0D2035' : '#1E2232', borderRadius: '20px', padding: '8px 14px', gap: '6px', transition: 'background-color 0.15s ease' }}
+          >
+            <LayoutDashboard size={14} color="#24A8F5" />
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Panel</span>
+          </Link>
+        )}
+
         {user ? (
           <div className="flex items-center" style={{ backgroundColor: '#1E2232', borderRadius: '20px', padding: '8px 16px', gap: '8px' }}>
             <UserRound size={15} color="#24A8F5" />
@@ -281,6 +312,7 @@ const Navbar = () => {
           </Link>
         )}
 
+        {user?.role !== 'admin' && (
         <Link
           to="/cart"
           onMouseEnter={() => setHoveredBtn('cartDesktop')}
@@ -292,6 +324,7 @@ const Navbar = () => {
             🛒&nbsp;&nbsp;Carrito ({cartCount})
           </span>
         </Link>
+        )}
       </nav>
 
       <MobileSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />

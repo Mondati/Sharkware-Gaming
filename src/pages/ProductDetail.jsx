@@ -104,7 +104,7 @@ const ProductDetail = () => {
     )
   }
 
-  const displayGallery = product.gallery?.length > 0 ? product.gallery : [product.image_url]
+  const displayGallery = [...new Set([product.image_url, ...(product.gallery ?? [])].filter(Boolean))]
 
   const quickSpecs = [
     { icon: Cpu,         label: 'PROCESADOR',    value: product.specs?.cpu     ?? product.specs?.chipset },
