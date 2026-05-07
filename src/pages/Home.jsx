@@ -3,10 +3,12 @@ import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard } from 'luc
 import { Link, useSearchParams } from 'react-router-dom'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
-import { categories } from '../data/categories'
-import { products, newProducts, notebooksList, monitorsList } from '../data/products'
 import { SORT_OPTIONS } from '../data/sortOptions'
 import { useWindowWidth } from '../hooks/useWindowWidth'
+import { getProducts, getCategories } from '../api/products'
+import { formatARS } from '../utils/formatPrice'
+
+const ALL_CATEGORY = { id: 'all', label: 'Todo', icon: null }
 
 const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard }
 
@@ -35,25 +37,57 @@ const Home = () => {
   const [activeSlide, setActiveSlide] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
 
+  const [categories, setCategories] = useState([ALL_CATEGORY])
+  const [newProducts, setNewProducts] = useState([])
+  const [notebooksList, setNotebooksList] = useState([])
+  const [monitorsList, setMonitorsList] = useState([])
+  const [categoryProducts, setCategoryProducts] = useState([])
+
   useEffect(() => {
-    if (isPaused) return
+    getCategories()
+      .then(cats => setCategories([ALL_CATEGORY, ...cats]))
+      .catch(() => setCategories([ALL_CATEGORY]))
+  }, [])
+
+  useEffect(() => {
+    if (activeCategory !== 'all') return
+    let cancelled = false
+    Promise.all([
+      getProducts({ badge: 'NUEVO', size: 8 }).catch(() => ({ items: [] })),
+      getProducts({ category: 'notebooks', size: 10 }).catch(() => ({ items: [] })),
+      getProducts({ category: 'monitors', size: 10 }).catch(() => ({ items: [] })),
+    ]).then(([news, nbs, mons]) => {
+      if (cancelled) return
+      setNewProducts(news.items ?? [])
+      setNotebooksList(nbs.items ?? [])
+      setMonitorsList(mons.items ?? [])
+    })
+    return () => { cancelled = true }
+  }, [activeCategory])
+
+  useEffect(() => {
+    if (activeCategory === 'all') return
+    let cancelled = false
+    const sortParam = sortOrder === 'price_asc' || sortOrder === 'price_desc' ? sortOrder : undefined
+    getProducts({ category: activeCategory, sort: sortParam, size: 50 })
+      .then(res => { if (!cancelled) setCategoryProducts(res.items ?? []) })
+      .catch(() => { if (!cancelled) setCategoryProducts([]) })
+    return () => { cancelled = true }
+  }, [activeCategory, sortOrder])
+
+  useEffect(() => {
+    if (isPaused || newProducts.length === 0) return
     const timer = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % newProducts.length)
     }, 5000)
     return () => clearInterval(timer)
-  }, [isPaused])
+  }, [isPaused, newProducts.length])
 
-  const filteredByCategory = activeCategory === 'all'
-    ? null
-    : products.filter((p) => p.category_id === activeCategory && p.active)
+  useEffect(() => {
+    setActiveSlide(0)
+  }, [newProducts.length])
 
-  const sortedFilteredByCategory = filteredByCategory
-    ? [...filteredByCategory].sort((a, b) => {
-        if (sortOrder === 'price_asc') return a.price_ars - b.price_ars
-        if (sortOrder === 'price_desc') return b.price_ars - a.price_ars
-        return 0
-      })
-    : null
+  const sortedFilteredByCategory = activeCategory === 'all' ? null : categoryProducts
 
   const filteredNotebooks = activeNbFilter === 'Todos'
     ? notebooksList
@@ -108,7 +142,7 @@ const Home = () => {
                 </p>
                 <div className="flex flex-col" style={{ gap: '4px' }}>
                   <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px' }}>Precio desde</span>
-                  <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '32px', fontWeight: '800' }}>{p.price} ARS</span>
+                  <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '32px', fontWeight: '800' }}>{formatARS(p.price_ars)}</span>
                 </div>
                 <div className="flex items-center flex-wrap" style={{ gap: '14px' }}>
                   <Link
@@ -208,7 +242,7 @@ const Home = () => {
               <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px', lineHeight: '1.4', margin: 0 }}>
                 {p.spec}
               </p>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>{p.price} ARS</span>
+              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>{formatARS(p.price_ars)}</span>
               <div className="flex items-center" style={{ gap: '10px' }}>
                 <Link
                   to={`/product/${p.id}`}
@@ -331,7 +365,7 @@ const Home = () => {
 
       {/* ═══════════════ CATÁLOGO — filtrado por categoría o secciones por defecto ═══════════════ */}
 
-      {filteredByCategory ? (
+      {sortedFilteredByCategory ? (
         <>
           {/* Desktop — categoría filtrada */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>

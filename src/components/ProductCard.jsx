@@ -2,6 +2,7 @@ import { useState, memo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, ShoppingCart, Check } from 'lucide-react'
 import { useCart } from '../context/CartContext'
+import { formatARS } from '../utils/formatPrice'
 
 const CATEGORY_ICON = {
   notebooks: Laptop,
@@ -88,10 +89,11 @@ const StockDot = ({ stock }) => (
 const BADGE_COLORS = { NUEVO: '#22C55E', HOT: '#DC2626', OFERTA: '#FF8400' }
 
 const ProductCard = ({
-  id, brand, name, spec, price, price_ars, image_url,
+  id, brand, name, spec, price_ars, image_url,
   imgHeight = 210, mobile = false, badge = null,
   stock = 1, category_id = null,
 }) => {
+  const price = formatARS(price_ars)
   const [hovered, setHovered] = useState(false)
   const [cartHovered, setCartHovered] = useState(false)
   const [added, setAdded] = useState(false)
