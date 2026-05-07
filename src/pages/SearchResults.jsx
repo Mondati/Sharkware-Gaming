@@ -1,15 +1,13 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { SearchX } from 'lucide-react'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
 import FilterPanel from '../components/FilterPanel'
 import Pagination from '../components/Pagination'
-import { products } from '../data/products'
-import { categories } from '../data/categories'
 import { SORT_OPTIONS } from '../data/sortOptions'
-import { searchProducts } from '../utils/search'
 import { useWindowWidth } from '../hooks/useWindowWidth'
+import { getProducts, getFacets, getCategories } from '../api/products'
 
 const LIMIT = 12
 const FILTER_DEFAULTS = { category: 'all', brand: '', minPrice: '', maxPrice: '', sort: 'relevance' }
@@ -117,38 +115,77 @@ const SearchResults = () => {
     setSearchParams(next)
   }
 
-  // ── Filter chain ──────────────────────────────────────────────
-  const searched = searchProducts(q, products)
-  const byCat    = catParam === 'all'
-    ? searched
-    : searched.filter(p => p.category_id === catParam)
-  const byBrand  = !brandParam
-    ? byCat
-    : byCat.filter(p => p.brand === brandParam)
-
   const min = minParam !== '' ? Number(minParam) : null
   const max = maxParam !== '' ? Number(maxParam) : null
   const priceValid = min === null || max === null || min <= max
-  const byPrice = priceValid
-    ? byBrand.filter(p =>
-        (min === null || p.price_ars >= min) &&
-        (max === null || p.price_ars <= max))
-    : byBrand
 
-  const sorted = [...byPrice].sort((a, b) => {
-    if (sortOrder === 'price_asc') return a.price_ars - b.price_ars
-    if (sortOrder === 'price_desc') return b.price_ars - a.price_ars
-    return 0
-  })
-
-  // ── Pagination ────────────────────────────────────────────────
   const rawPage = Number(searchParams.get('page'))
   const parsedPage = Number.isFinite(rawPage) && rawPage >= 1 ? Math.floor(rawPage) : 1
-  const totalPages = Math.max(1, Math.ceil(sorted.length / LIMIT))
+
+  // ── Server-side data ──────────────────────────────────────────
+  const [paginated, setPaginated] = useState([])
+  const [total, setTotal] = useState(0)
+  const [serverTotalPages, setServerTotalPages] = useState(1)
+  const [availableBrands, setAvailableBrands] = useState([])
+  const [catalogMin, setCatalogMin] = useState(null)
+  const [catalogMax, setCatalogMax] = useState(null)
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    getCategories().then(setCategories).catch(() => setCategories([]))
+  }, [])
+
+  useEffect(() => {
+    if (!priceValid) return
+    let cancelled = false
+    const sortParam = sortOrder === 'price_asc' || sortOrder === 'price_desc' ? sortOrder : undefined
+    getProducts({
+      q,
+      category: catParam === 'all' ? undefined : catParam,
+      brand: brandParam || undefined,
+      minPrice: minParam || undefined,
+      maxPrice: maxParam || undefined,
+      sort: sortParam,
+      page: parsedPage - 1,
+      size: LIMIT,
+    })
+      .then(res => {
+        if (cancelled) return
+        setPaginated(res.items ?? [])
+        setTotal(res.total ?? 0)
+        setServerTotalPages(Math.max(1, res.totalPages ?? 1))
+      })
+      .catch(() => {
+        if (cancelled) return
+        setPaginated([])
+        setTotal(0)
+        setServerTotalPages(1)
+      })
+    return () => { cancelled = true }
+  }, [q, catParam, brandParam, minParam, maxParam, sortOrder, parsedPage, priceValid])
+
+  useEffect(() => {
+    let cancelled = false
+    getFacets({ q, category: catParam === 'all' ? undefined : catParam })
+      .then(facets => {
+        if (cancelled) return
+        setAvailableBrands(facets?.brands ?? [])
+        setCatalogMin(facets?.priceMin ?? null)
+        setCatalogMax(facets?.priceMax ?? null)
+      })
+      .catch(() => {
+        if (cancelled) return
+        setAvailableBrands([])
+        setCatalogMin(null)
+        setCatalogMax(null)
+      })
+    return () => { cancelled = true }
+  }, [q, catParam])
+
+  const totalPages = serverTotalPages
   const currentPage = Math.min(parsedPage, totalPages)
   const start = (currentPage - 1) * LIMIT
   const end = currentPage * LIMIT
-  const paginated = sorted.slice(start, end)
 
   // Normaliza la URL si page estaba fuera de rango (ej: page=999 con 2 páginas → page=2)
   useEffect(() => {
@@ -168,22 +205,16 @@ const SearchResults = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const from = sorted.length === 0 ? 0 : start + 1
-  const to = Math.min(end, sorted.length)
-  const countLabel = sorted.length === 0
+  const from = total === 0 ? 0 : start + 1
+  const to = Math.min(end, total)
+  const countLabel = total === 0
     ? 'Sin resultados'
     : totalPages > 1
-      ? `Mostrando ${from}–${to} de ${sorted.length} productos`
-      : sorted.length === 1 ? '1 producto' : `${sorted.length} productos`
-
-  // ── Dynamic filter options ────────────────────────────────────
-  const availableBrands = searched.length > 0
-    ? [...new Set(searched.map(p => p.brand))].sort()
-    : []
-  const catalogMin = searched.length > 0 ? Math.min(...searched.map(p => p.price_ars)) : null
-  const catalogMax = searched.length > 0 ? Math.max(...searched.map(p => p.price_ars)) : null
+      ? `Mostrando ${from}–${to} de ${total} productos`
+      : total === 1 ? '1 producto' : `${total} productos`
 
   const hasActiveFilters = catParam !== 'all' || !!brandParam || !!minParam || !!maxParam
+  const sortedLength = total
 
   // ── Active chips ──────────────────────────────────────────────
   const activeChips = []
@@ -247,9 +278,10 @@ const SearchResults = () => {
     hasActiveFilters,
     onFilterChange: updateFilter,
     onClearFilters: clearFilters,
+    categories,
   }
 
-  const showPagination = sorted.length > 0 && totalPages > 1
+  const showPagination = sortedLength > 0 && totalPages > 1
 
   return (
     <div className="flex flex-col flex-1" style={{ backgroundColor: '#0A0C14' }}>
@@ -298,7 +330,7 @@ const SearchResults = () => {
         <FilterPanel {...filterPanelProps} />
         <div className="flex flex-col flex-1" style={{ minWidth: 0, gap: '16px' }}>
           {chips}
-          {sorted.length === 0
+          {sortedLength === 0
             ? <EmptyState isMobile={false} hasActiveFilters={hasActiveFilters} onClear={clearFilters} />
             : (
               <>
@@ -333,7 +365,7 @@ const SearchResults = () => {
       >
         <FilterPanel {...filterPanelProps} />
         {chips}
-        {sorted.length === 0
+        {sortedLength === 0
           ? <EmptyState isMobile hasActiveFilters={hasActiveFilters} onClear={clearFilters} />
           : (
             <>

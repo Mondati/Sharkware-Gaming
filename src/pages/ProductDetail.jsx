@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Cpu, Monitor, MemoryStick, HardDrive,
   Star, Heart, Share2, ShoppingCart,
@@ -8,10 +8,10 @@ import { Link, useParams } from 'react-router-dom'
 import Footer from '../components/Footer'
 import TrustBadges from '../components/TrustBadges'
 import ProductCard from '../components/ProductCard'
-import { products } from '../data/products'
-import { categories } from '../data/categories'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import { useCart } from '../context/CartContext'
+import { getProduct, getProducts, getCategories } from '../api/products'
+import { formatARS } from '../utils/formatPrice'
 
 const tabs = ['Descripción', 'Especificaciones', 'Reseñas (127)']
 
@@ -41,7 +41,11 @@ const ImgOrPlaceholder = ({ src, brand, name, style }) => {
 
 const ProductDetail = () => {
   const { id } = useParams()
-  const product = products.find((p) => p.id === Number(id))
+  const [product, setProduct] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [notFound, setNotFound] = useState(false)
+  const [relatedProducts, setRelatedProducts] = useState([])
+  const [categories, setCategories] = useState([])
 
   const [activeTab, setActiveTab] = useState(0)
   const [qty, setQty] = useState(1)
@@ -53,11 +57,39 @@ const ProductDetail = () => {
   const { sidePadding, cardFlex } = useWindowWidth()
   const { addItem } = useCart()
 
+  useEffect(() => {
+    let cancelled = false
+    setLoading(true)
+    setNotFound(false)
+    setProduct(null)
+    setActiveThumb(0)
+    getProduct(id)
+      .then(p => { if (!cancelled) setProduct(p) })
+      .catch(err => { if (!cancelled) setNotFound(err?.status === 404) })
+      .finally(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
+  }, [id])
+
+  useEffect(() => {
+    if (!product?.category_id) return
+    let cancelled = false
+    getProducts({ category: product.category_id, exclude: product.id, size: 5 })
+      .then(res => { if (!cancelled) setRelatedProducts(res.items ?? []) })
+      .catch(() => { if (!cancelled) setRelatedProducts([]) })
+    return () => { cancelled = true }
+  }, [product?.category_id, product?.id])
+
+  useEffect(() => {
+    getCategories().then(setCategories).catch(() => setCategories([]))
+  }, [])
+
   const handleAddToCart = () => {
     addItem(product, qty)
   }
 
-  if (!product) {
+  if (loading) return null
+
+  if (notFound || !product) {
     return (
       <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
         <div className="flex flex-col flex-1 items-center justify-center" style={{ gap: '16px' }}>
@@ -87,10 +119,6 @@ const ProductDetail = () => {
   }))
 
   const categoryLabel = categories.find((c) => c.id === product.category_id)?.label ?? product.category_id
-
-  const relatedProducts = products
-    .filter((p) => p.category_id === product.category_id && p.id !== product.id)
-    .slice(0, 5)
 
   return (
     <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
@@ -259,7 +287,7 @@ const ProductDetail = () => {
           {/* Price */}
           <div style={{ marginBottom: '14px' }}>
             <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '40px', fontWeight: '800', lineHeight: 1 }}>
-              {product.price}
+              {formatARS(product.price_ars)}
             </span>
           </div>
 
@@ -501,7 +529,7 @@ const ProductDetail = () => {
 
         <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
 
-        <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '30px', fontWeight: '800' }}>{product.price}</span>
+        <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '30px', fontWeight: '800' }}>{formatARS(product.price_ars)}</span>
 
         <div className="flex items-center" style={{ gap: '6px' }}>
           <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: product.stock > 0 ? '#22C55E' : '#EF4444', flexShrink: 0 }} />

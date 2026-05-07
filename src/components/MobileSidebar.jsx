@@ -4,7 +4,7 @@ import {
   Monitor, Cpu, Zap, MemoryStick, HardDrive, Keyboard,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { categories } from '../data/categories'
+import { getCategories } from '../api/products'
 
 const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard }
 
@@ -16,6 +16,11 @@ const accountLinks = [
 
 const MobileSidebar = ({ isOpen, onClose }) => {
   const [hoveredItem, setHoveredItem] = useState(null)
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    getCategories().then(setCategories).catch(() => setCategories([]))
+  }, [])
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
@@ -82,7 +87,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
               CATEGORÍAS
             </span>
           </div>
-          {categories.filter((c) => c.id !== 'all').map(({ id, label, icon }) => {
+          {categories.map(({ id, label, icon }) => {
             const Icon = ICON_MAP[icon] ?? null
             return (
             <Link
@@ -111,7 +116,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
                   flexShrink: 0,
                 }}
               >
-                <Icon size={16} color="#24A8F5" />
+                {Icon && <Icon size={16} color="#24A8F5" />}
               </div>
               <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
                 {label}
