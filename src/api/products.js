@@ -21,8 +21,8 @@ export const getFacets = (params = {}) =>
 
 export const getCategories = () => apiFetch('/api/categories')
 
-export const listAdminProducts = ({ page = 0, size = 50, q = '' } = {}) =>
-  apiFetch(`/api/products${buildQuery({ page, size, q })}`)
+export const listAdminProducts = ({ page = 0, size = 20 } = {}) =>
+  apiFetch(`/api/admin/products${buildQuery({ page, size })}`)
 
 export const createProduct = (data, imageFile, galleryFiles = []) => {
   const formData = new FormData()
