@@ -240,7 +240,11 @@ const MobileBody = ({ mode, product, state, onClose }) => {
         <div className="flex flex-col" style={{ gap: '6px' }}>
           <span style={MOBILE_LABEL}>Galería (opcional)</span>
           <input ref={galRef} type="file" accept="image/*" multiple style={{ display: 'none' }}
-            onChange={e => { setGallery(Array.from(e.target.files).slice(0, 3)); e.target.value = '' }} />
+            onChange={e => {
+              const remaining = 3 - existingGallery.length - gallery.length
+              if (remaining > 0) setGallery([...gallery, ...Array.from(e.target.files).slice(0, remaining)])
+              e.target.value = ''
+            }} />
           <button onClick={() => galRef.current.click()} className="border-none cursor-pointer"
             style={{ ...MOBILE_INPUT, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', justifyContent: 'flex-start' }}>
             <Upload size={14} color="#AAB3C5" />
@@ -491,7 +495,11 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
 
           <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Galería (opcional)</span>
           <input ref={galRef} type="file" accept="image/*" multiple style={{ display: 'none' }}
-            onChange={e => { setGallery(Array.from(e.target.files).slice(0, 3)); e.target.value = '' }} />
+            onChange={e => {
+              const remaining = 3 - existingGallery.length - gallery.length
+              if (remaining > 0) setGallery([...gallery, ...Array.from(e.target.files).slice(0, remaining)])
+              e.target.value = ''
+            }} />
           <button onClick={() => galRef.current.click()} className="flex items-center border-none cursor-pointer"
             style={{ backgroundColor: '#0D2035', borderRadius: '6px', padding: '7px 14px', border: '1px solid #1B2333', gap: '6px' }}>
             <Upload size={12} color="#AAB3C5" />
