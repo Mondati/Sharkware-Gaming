@@ -83,9 +83,9 @@ const AdminPanel = () => {
 
   const openEdit = (p) => { setEditTarget(p); setModal('edit') }
 
-  const handleSave = (created) => {
-    showToast('Producto creado')
-    fetchProducts()
+  const handleSave = (_saved, savedMode) => {
+    showToast(savedMode === 'edit' ? 'Producto actualizado' : 'Producto creado')
+    fetchProducts(savedMode === 'edit' ? page : 0)
   }
 
   const filtered = products.filter(p =>
