@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { X, Upload, Save, Image, ChevronDown, Plus, Trash2, Loader } from 'lucide-react'
-import { createProduct, getCategories } from '../../api/products'
+import { createProduct, updateProduct, getCategories } from '../../api/products'
 
 /* ─── shared styles ─── */
 const INPUT_STYLE_BASE = {
@@ -33,12 +33,47 @@ const emptyForm = {
   categoryId: '', badge: '',
 }
 
-/* ─────────────────────────────────── AddForm (shared logic) ─── */
-const useAddForm = ({ onSave, onClose, navigate }) => {
-  const [form, setForm]         = useState(emptyForm)
-  const [specRows, setSpecRows] = useState([])
+/* ─── useProductForm — shared logic for add & edit ─── */
+const useProductForm = ({ mode, product, onSave, onClose, navigate }) => {
+  const isEdit = mode === 'edit'
+
+  const [form, setForm] = useState(() => {
+    if (isEdit && product) {
+      return {
+        brand: product.brand ?? '',
+        name: product.name ?? '',
+        spec: product.spec ?? '',
+        description: product.description ?? '',
+        priceArs: String(product.price_ars ?? ''),
+        stock: String(product.stock ?? ''),
+        categoryId: product.category_id ?? '',
+        badge: product.badge ?? '',
+      }
+    }
+    return emptyForm
+  })
+
+  const [specRows, setSpecRows] = useState(() => {
+    if (isEdit && product?.specs) {
+      return Object.entries(product.specs).map(([key, value]) => ({ key, value }))
+    }
+    return []
+  })
+
   const [imageFile, setImage]   = useState(null)
-  const [gallery, setGallery]   = useState([])
+  const [gallery, setGalleryRaw] = useState([])
+  const [existingGallery, setExistingGallery] = useState(() =>
+    isEdit && product?.gallery ? [...product.gallery] : []
+  )
+  const [galleryDirty, setGalleryDirty] = useState(false)
+  const setGallery = (next) => {
+    setGalleryRaw(next)
+    setGalleryDirty(true)
+  }
+  const removeExistingGallery = (url) => {
+    setExistingGallery(g => g.filter(u => u !== url))
+    setGalleryDirty(true)
+  }
   const [categories, setCats]   = useState([])
   const [catsLoading, setCL]    = useState(true)
   const [fieldErrs, setFieldErrs] = useState({})
@@ -71,7 +106,8 @@ const useAddForm = ({ onSave, onClose, navigate }) => {
                                errs.priceArs  = 'Ingresá un precio mayor a 0'
     if (form.stock === '' || isNaN(Number(form.stock)) || Number(form.stock) < 0)
                                errs.stock     = 'Stock debe ser 0 o mayor'
-    if (!imageFile)            errs.image     = 'Seleccioná una imagen principal'
+    if (!isEdit && !imageFile) errs.image     = 'Seleccioná una imagen principal'
+    if (existingGallery.length + gallery.length > 3) errs.gallery = 'Máximo 3 fotos en la galería'
     return errs
   }
 
@@ -97,13 +133,19 @@ const useAddForm = ({ onSave, onClose, navigate }) => {
     setSaving(true)
     setGlobalErr(null)
     try {
-      const created = await createProduct(data, imageFile, gallery)
-      onSave(created)
+      if (isEdit) {
+        const keep = galleryDirty ? existingGallery : null
+        const saved = await updateProduct(product.id, data, imageFile, gallery, keep)
+        onSave(saved, 'edit')
+      } else {
+        const created = await createProduct(data, imageFile, gallery)
+        onSave(created, 'add')
+      }
       onClose()
     } catch (err) {
       if (err.status === 401) { navigate('/login'); return }
       if (err.fields) { setFieldErrs(err.fields); setSaving(false); return }
-      if (err.status === 404) setGlobalErr('Categoría no encontrada')
+      if (err.status === 404) setGlobalErr('Producto o categoría no encontrada')
       else if (err.status >= 500) setGlobalErr('Error al subir la imagen, intentá de nuevo')
       else setGlobalErr(err.message ?? 'Error al guardar el producto')
       setSaving(false)
@@ -113,17 +155,21 @@ const useAddForm = ({ onSave, onClose, navigate }) => {
   return {
     form, set, specRows, addSpecRow, removeSpecRow, setSpecKey, setSpecVal,
     imageFile, setImage, gallery, setGallery,
+    existingGallery, removeExistingGallery,
     categories, catsLoading, fieldErrs, globalErr, saving, handleSave,
   }
 }
 
-/* ─────────────────────── Mobile "add" body ─── */
-const MobileAddBody = ({ state, onClose }) => {
+/* ─────────────────────────────────── Mobile body ─── */
+const MobileBody = ({ mode, product, state, onClose }) => {
+  const isEdit = mode === 'edit'
   const { form, set, specRows, addSpecRow, removeSpecRow, setSpecKey, setSpecVal,
           imageFile, setImage, gallery, setGallery,
+          existingGallery, removeExistingGallery,
           categories, catsLoading, fieldErrs, globalErr, saving, handleSave } = state
   const imgRef = useRef()
   const galRef = useRef()
+  const totalGallery = existingGallery.length + gallery.length
 
   return (
     <div className="flex md:hidden flex-col w-full h-screen" style={{ backgroundColor: '#070B16' }}>
@@ -135,8 +181,12 @@ const MobileAddBody = ({ state, onClose }) => {
           <X size={18} color="#F5F7FA" />
         </button>
         <div className="flex flex-col items-center">
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>Agregar Producto</span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px' }}>Nuevo producto</span>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
+            {isEdit ? 'Editar Producto' : 'Agregar Producto'}
+          </span>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px' }}>
+            {isEdit ? (product?.name ?? '') : 'Nuevo producto'}
+          </span>
         </div>
         <div style={{ width: '36px' }} />
       </div>
@@ -150,19 +200,38 @@ const MobileAddBody = ({ state, onClose }) => {
           </div>
         )}
 
-        {/* Imagen */}
+        {/* Imagen principal */}
         <div className="flex flex-col" style={{ gap: '6px' }}>
-          <span style={MOBILE_LABEL}>Imagen principal *</span>
+          <span style={MOBILE_LABEL}>Imagen principal {!isEdit && '*'}</span>
           <input ref={imgRef} type="file" accept="image/*" style={{ display: 'none' }}
             onChange={e => { setImage(e.target.files[0] ?? null); e.target.value = '' }} />
           <div className="flex flex-col items-center justify-center cursor-pointer"
-            style={{ height: '120px', borderRadius: '12px', gap: '8px',
+            style={{ height: '120px', borderRadius: '12px', gap: '8px', overflow: 'hidden',
               border: `1px dashed ${fieldErrs.image ? '#EF4444' : '#1B2333'}`, backgroundColor: '#0E1424' }}
             onClick={() => imgRef.current.click()}>
-            <Upload size={24} color={fieldErrs.image ? '#EF4444' : '#AAB3C5'} />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
-              {imageFile ? imageFile.name : 'Tocá para seleccionar imagen'}
-            </span>
+            {imageFile ? (
+              <>
+                <Upload size={24} color="#24A8F5" />
+                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', textAlign: 'center', padding: '0 8px', wordBreak: 'break-all' }}>
+                  {imageFile.name}
+                </span>
+              </>
+            ) : isEdit && product?.image_url ? (
+              <>
+                <img src={product.image_url} alt={product.name}
+                  style={{ width: '60px', height: '60px', objectFit: 'contain', borderRadius: '6px' }} />
+                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
+                  Imagen actual · tocá para cambiar
+                </span>
+              </>
+            ) : (
+              <>
+                <Upload size={24} color={fieldErrs.image ? '#EF4444' : '#AAB3C5'} />
+                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
+                  Tocá para seleccionar imagen
+                </span>
+              </>
+            )}
           </div>
           {fieldErrs.image && <span style={ERR_STYLE}>{fieldErrs.image}</span>}
         </div>
@@ -171,14 +240,46 @@ const MobileAddBody = ({ state, onClose }) => {
         <div className="flex flex-col" style={{ gap: '6px' }}>
           <span style={MOBILE_LABEL}>Galería (opcional)</span>
           <input ref={galRef} type="file" accept="image/*" multiple style={{ display: 'none' }}
-            onChange={e => { setGallery(Array.from(e.target.files).slice(0, 3)); e.target.value = '' }} />
+            onChange={e => {
+              const remaining = 3 - existingGallery.length - gallery.length
+              if (remaining > 0) setGallery([...gallery, ...Array.from(e.target.files).slice(0, remaining)])
+              e.target.value = ''
+            }} />
           <button onClick={() => galRef.current.click()} className="border-none cursor-pointer"
             style={{ ...MOBILE_INPUT, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', justifyContent: 'flex-start' }}>
             <Upload size={14} color="#AAB3C5" />
             <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
-              {gallery.length ? `${gallery.length}/3 imagen(es) seleccionada(s)` : 'Seleccionar fotos (máx 3)'}
+              {totalGallery > 0
+                ? `${totalGallery}/3 foto(s) en galería · tocá para agregar`
+                : 'Seleccionar fotos (máx 3)'}
             </span>
           </button>
+          {existingGallery.length > 0 && (
+            <div className="flex" style={{ gap: '8px', flexWrap: 'wrap', marginTop: '4px' }}>
+              {existingGallery.map((url) => (
+                <div key={url} style={{ position: 'relative', width: '64px', height: '64px' }}>
+                  <img src={url} alt="" style={{ width: '64px', height: '64px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #1B2333' }} />
+                  <button onClick={() => removeExistingGallery(url)} className="border-none cursor-pointer flex items-center justify-center"
+                    style={{ position: 'absolute', top: '-6px', right: '-6px', width: '22px', height: '22px', borderRadius: '50%', backgroundColor: '#EF4444', padding: 0 }}>
+                    <X size={12} color="#FFFFFF" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+          {gallery.length > 0 && (
+            <div className="flex flex-col" style={{ gap: '4px', marginTop: '4px' }}>
+              {gallery.map((f, i) => (
+                <div key={i} className="flex items-center justify-between">
+                  <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>{f.name}</span>
+                  <button onClick={() => setGallery(gallery.filter((_, j) => j !== i))} className="border-none cursor-pointer" style={{ background: 'none', padding: '0 0 0 6px' }}>
+                    <X size={14} color="#EF4444" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+          {fieldErrs.gallery && <span style={ERR_STYLE}>{fieldErrs.gallery}</span>}
         </div>
 
         {/* Nombre + Marca */}
@@ -293,7 +394,7 @@ const MobileAddBody = ({ state, onClose }) => {
             : <Save size={16} color="#FFFFFF" />
           }
           <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
-            {saving ? 'Guardando...' : 'Guardar Producto'}
+            {saving ? 'Guardando...' : isEdit ? 'Guardar Cambios' : 'Guardar Producto'}
           </span>
         </button>
       </div>
@@ -301,13 +402,16 @@ const MobileAddBody = ({ state, onClose }) => {
   )
 }
 
-/* ─────────────────────── Desktop "add" body ─── */
-const DesktopAddBody = ({ state, onClose }) => {
+/* ─────────────────────── Desktop body ─── */
+const DesktopBody = ({ mode, product, state, onClose }) => {
+  const isEdit = mode === 'edit'
   const { form, set, specRows, addSpecRow, removeSpecRow, setSpecKey, setSpecVal,
           imageFile, setImage, gallery, setGallery,
+          existingGallery, removeExistingGallery,
           categories, catsLoading, fieldErrs, globalErr, saving, handleSave } = state
   const imgRef = useRef()
   const galRef = useRef()
+  const totalGallery = existingGallery.length + gallery.length
 
   return (
     <>
@@ -315,8 +419,12 @@ const DesktopAddBody = ({ state, onClose }) => {
       <div className="flex items-center justify-between"
         style={{ height: '64px', padding: '0 24px', borderBottom: '1px solid #1B2333', flexShrink: 0 }}>
         <div className="flex flex-col" style={{ gap: '3px' }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>Agregar Producto</span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>Completá los datos del nuevo producto</span>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>
+            {isEdit ? 'Editar Producto' : 'Agregar Producto'}
+          </span>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
+            {isEdit ? (product?.name ?? '') : 'Completá los datos del nuevo producto'}
+          </span>
         </div>
         <button onClick={onClose} className="flex items-center justify-center border-none cursor-pointer"
           style={{ width: '32px', height: '32px', backgroundColor: '#1B2333', borderRadius: '16px' }}>
@@ -335,27 +443,48 @@ const DesktopAddBody = ({ state, onClose }) => {
         {/* Left — imagen + galería */}
         <div className="flex flex-col"
           style={{ width: 'clamp(220px, 28%, 280px)', flexShrink: 0, backgroundColor: '#080D1A', padding: '24px', gap: '16px', borderRight: '1px solid #1B2333', overflowY: 'auto' }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Imagen del producto *</span>
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>
+            Imagen del producto {!isEdit && '*'}
+          </span>
           <input ref={imgRef} type="file" accept="image/*" style={{ display: 'none' }}
             onChange={e => { setImage(e.target.files[0] ?? null); e.target.value = '' }} />
           <div className="flex flex-col items-center justify-center cursor-pointer"
-            style={{ height: '180px', borderRadius: '8px', gap: '10px',
-              border: `1px dashed ${fieldErrs.image ? '#EF4444' : '#1B2333'}`, backgroundColor: 'transparent' }}
+            style={{ height: '180px', borderRadius: '8px', gap: '10px', overflow: 'hidden',
+              border: `1px dashed ${fieldErrs.image ? '#EF4444' : isEdit && !imageFile ? '#24A8F5' : '#1B2333'}`,
+              backgroundColor: isEdit && !imageFile ? '#0D2035' : 'transparent' }}
             onClick={() => imgRef.current.click()}>
-            {imageFile
-              ? <Image size={36} color="#24A8F5" />
-              : <Upload size={36} color={fieldErrs.image ? '#EF4444' : '#AAB3C5'} />
-            }
-            <span style={{ color: imageFile ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500', textAlign: 'center', padding: '0 8px', wordBreak: 'break-all' }}>
-              {imageFile ? imageFile.name : 'Arrastrá la imagen aquí'}
-            </span>
-            {!imageFile && <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>o</span>}
-            <button className="border-none cursor-pointer"
-              style={{ backgroundColor: '#0D2035', borderRadius: '6px', padding: '7px 14px', border: '1px solid #24A8F5' }}>
-              <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
-                {imageFile ? 'Cambiar imagen' : 'Examinar archivos'}
-              </span>
-            </button>
+            {imageFile ? (
+              <>
+                <Image size={36} color="#24A8F5" />
+                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500', textAlign: 'center', padding: '0 8px', wordBreak: 'break-all' }}>
+                  {imageFile.name}
+                </span>
+              </>
+            ) : isEdit && product?.image_url ? (
+              <>
+                <img src={product.image_url} alt={product.name}
+                  style={{ width: '80px', height: '80px', objectFit: 'contain', borderRadius: '6px' }} />
+                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', textAlign: 'center', padding: '0 8px' }}>
+                  Imagen actual
+                </span>
+                <button className="border-none cursor-pointer"
+                  style={{ backgroundColor: '#0D2035', borderRadius: '6px', padding: '7px 14px', border: '1px solid #24A8F5' }}>
+                  <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Cambiar imagen</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <Upload size={36} color={fieldErrs.image ? '#EF4444' : '#AAB3C5'} />
+                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500', textAlign: 'center', padding: '0 8px' }}>
+                  Arrastrá la imagen aquí
+                </span>
+                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>o</span>
+                <button className="border-none cursor-pointer"
+                  style={{ backgroundColor: '#0D2035', borderRadius: '6px', padding: '7px 14px', border: '1px solid #24A8F5' }}>
+                  <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Examinar archivos</span>
+                </button>
+              </>
+            )}
           </div>
           {fieldErrs.image && <span style={ERR_STYLE}>{fieldErrs.image}</span>}
           <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', textAlign: 'center' }}>
@@ -366,26 +495,44 @@ const DesktopAddBody = ({ state, onClose }) => {
 
           <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Galería (opcional)</span>
           <input ref={galRef} type="file" accept="image/*" multiple style={{ display: 'none' }}
-            onChange={e => { setGallery(Array.from(e.target.files).slice(0, 3)); e.target.value = '' }} />
+            onChange={e => {
+              const remaining = 3 - existingGallery.length - gallery.length
+              if (remaining > 0) setGallery([...gallery, ...Array.from(e.target.files).slice(0, remaining)])
+              e.target.value = ''
+            }} />
           <button onClick={() => galRef.current.click()} className="flex items-center border-none cursor-pointer"
             style={{ backgroundColor: '#0D2035', borderRadius: '6px', padding: '7px 14px', border: '1px solid #1B2333', gap: '6px' }}>
             <Upload size={12} color="#AAB3C5" />
             <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
-              {gallery.length ? `${gallery.length}/3 imagen(es)` : 'Agregar fotos (máx 3)'}
+              {totalGallery > 0 ? `${totalGallery}/3 foto(s)` : 'Agregar fotos (máx 3)'}
             </span>
           </button>
+          {existingGallery.length > 0 && (
+            <div className="flex" style={{ gap: '6px', flexWrap: 'wrap' }}>
+              {existingGallery.map((url) => (
+                <div key={url} style={{ position: 'relative', width: '56px', height: '56px' }}>
+                  <img src={url} alt="" style={{ width: '56px', height: '56px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #1B2333' }} />
+                  <button onClick={() => removeExistingGallery(url)} className="border-none cursor-pointer flex items-center justify-center"
+                    style={{ position: 'absolute', top: '-5px', right: '-5px', width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#EF4444', padding: 0 }}>
+                    <X size={10} color="#FFFFFF" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
           {gallery.length > 0 && (
             <div className="flex flex-col" style={{ gap: '4px' }}>
               {gallery.map((f, i) => (
                 <div key={i} className="flex items-center justify-between">
                   <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>{f.name}</span>
-                  <button onClick={() => setGallery(g => g.filter((_, j) => j !== i))} className="border-none cursor-pointer" style={{ background: 'none', padding: '0 0 0 6px' }}>
+                  <button onClick={() => setGallery(gallery.filter((_, j) => j !== i))} className="border-none cursor-pointer" style={{ background: 'none', padding: '0 0 0 6px' }}>
                     <X size={12} color="#EF4444" />
                   </button>
                 </div>
               ))}
             </div>
           )}
+          {fieldErrs.gallery && <span style={ERR_STYLE}>{fieldErrs.gallery}</span>}
         </div>
 
         {/* Right — campos */}
@@ -500,206 +647,9 @@ const DesktopAddBody = ({ state, onClose }) => {
             : <Save size={14} color="#FFFFFF" />
           }
           <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
-            {saving ? 'Guardando...' : 'Guardar Producto'}
+            {saving ? 'Guardando...' : isEdit ? 'Guardar Cambios' : 'Guardar Producto'}
           </span>
         </button>
-      </div>
-    </>
-  )
-}
-
-/* ─────────────────────── Edit modal (visual placeholder) ─── */
-const EDIT_CATEGORIES = ['GPU', 'CPU', 'Monitor', 'RAM', 'Placa Madre', 'Almacenamiento', 'Periféricos']
-const emptyEditForm = { nombre: '', marca: '', desc: '', espec: '', precio: '', stock: '', cat: '', activo: true }
-
-const EditModal = ({ product, onClose }) => {
-  const [form, setForm] = useState(
-    product
-      ? { nombre: product.name, marca: product.brand ?? '', desc: '', espec: '', precio: String(product.price_ars ?? ''), stock: String(product.stock ?? ''), cat: product.category_id ?? '', activo: product.active }
-      : emptyEditForm
-  )
-  const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }))
-  const inputStyle2 = { ...INPUT_STYLE_BASE, backgroundColor: '#0E1424' }
-  const taStyle2    = { ...TEXTAREA_STYLE_BASE, backgroundColor: '#0E1424' }
-
-  const MobileEdit = () => (
-    <div className="flex md:hidden flex-col w-full h-screen" style={{ backgroundColor: '#070B16' }}>
-      <div className="flex items-center justify-between w-full"
-        style={{ height: '56px', padding: '0 16px', backgroundColor: '#0A0F1C', borderBottom: '1px solid #1B2333', flexShrink: 0 }}>
-        <button onClick={onClose} className="flex items-center justify-center border-none cursor-pointer"
-          style={{ width: '36px', height: '36px', backgroundColor: '#1E2232', borderRadius: '8px' }}>
-          <X size={18} color="#F5F7FA" />
-        </button>
-        <div className="flex flex-col items-center">
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>Editar Producto</span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px' }}>{product?.name}</span>
-        </div>
-        <div style={{ width: '36px' }} />
-      </div>
-      <div className="flex flex-col" style={{ flex: 1, padding: '16px', gap: '14px', overflowY: 'auto', paddingBottom: '110px' }}>
-        <div className="flex flex-col items-center justify-center"
-          style={{ height: '140px', borderRadius: '12px', gap: '8px', border: '1px dashed #24A8F5', backgroundColor: '#0D2035' }}>
-          <Image size={32} color="#24A8F5" />
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px' }}>Imagen actual cargada</span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px' }}>JPG, PNG, WEBP · Máx 5MB</span>
-        </div>
-        <div className="flex" style={{ gap: '10px' }}>
-          <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-            <span style={MOBILE_LABEL}>Nombre *</span>
-            <input style={{ ...MOBILE_INPUT, backgroundColor: '#0E1424' }} value={form.nombre} onChange={set('nombre')} />
-          </div>
-          <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-            <span style={MOBILE_LABEL}>Marca *</span>
-            <input style={{ ...MOBILE_INPUT, backgroundColor: '#0E1424' }} value={form.marca} onChange={set('marca')} />
-          </div>
-        </div>
-        <div className="flex" style={{ gap: '10px' }}>
-          <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-            <span style={MOBILE_LABEL}>Precio (ARS) *</span>
-            <input style={{ ...MOBILE_INPUT, backgroundColor: '#0E1424' }} value={form.precio} onChange={set('precio')} />
-          </div>
-          <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-            <span style={MOBILE_LABEL}>Stock *</span>
-            <input type="number" style={{ ...MOBILE_INPUT, backgroundColor: '#0E1424' }} value={form.stock} onChange={set('stock')} />
-          </div>
-        </div>
-        <div className="flex flex-col" style={{ gap: '6px' }}>
-          <span style={MOBILE_LABEL}>Categoría *</span>
-          <div className="flex items-center justify-between"
-            style={{ ...MOBILE_INPUT, backgroundColor: '#0E1424', cursor: 'pointer' }}>
-            <select value={form.cat} onChange={set('cat')}
-              style={{ background: 'none', border: 'none', color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', width: '100%', cursor: 'pointer', appearance: 'none' }}>
-              {EDIT_CATEGORIES.map(c => <option key={c} value={c} style={{ backgroundColor: '#0E1424' }}>{c}</option>)}
-            </select>
-            <ChevronDown size={14} color="#AAB3C5" style={{ pointerEvents: 'none', flexShrink: 0 }} />
-          </div>
-        </div>
-        <div className="flex items-center justify-between" style={{ padding: '4px 0' }}>
-          <span style={{ ...MOBILE_LABEL }}>Estado</span>
-          <button onClick={() => setForm(f => ({ ...f, activo: !f.activo }))} className="flex items-center border-none cursor-pointer"
-            style={{ width: '44px', height: '24px', borderRadius: '12px', backgroundColor: form.activo ? '#24A8F5' : '#1B2333', padding: '0 3px', justifyContent: form.activo ? 'flex-end' : 'flex-start' }}>
-            <div style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#FFFFFF' }} />
-          </button>
-        </div>
-      </div>
-      <div className="flex items-center justify-between w-full"
-        style={{ position: 'fixed', bottom: 0, left: 0, right: 0, padding: '12px 16px', gap: '10px', backgroundColor: '#0E1424', borderTop: '1px solid #1B2333', zIndex: 55 }}>
-        <button onClick={onClose} className="flex items-center justify-center flex-1 border-none cursor-pointer"
-          style={{ backgroundColor: '#1B2333', borderRadius: '10px', height: '46px' }}>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>Cancelar</span>
-        </button>
-        <button onClick={onClose} className="flex items-center justify-center flex-1 border-none cursor-pointer"
-          style={{ backgroundColor: '#24A8F5', borderRadius: '10px', height: '46px', gap: '8px' }}>
-          <Save size={16} color="#FFFFFF" />
-          <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Guardar Cambios</span>
-        </button>
-      </div>
-    </div>
-  )
-
-  return (
-    <>
-      <div className="flex md:hidden items-start justify-center"
-        style={{ position: 'fixed', inset: 0, backgroundColor: '#070B16', zIndex: 60 }}>
-        <MobileEdit />
-      </div>
-      <div className="hidden md:flex items-center justify-center" aria-hidden="true"
-        style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(7,6,16,0.97)', zIndex: 50, padding: '20px' }}>
-        <div role="dialog" aria-modal="true" aria-label="Editar Producto" className="flex flex-col"
-          style={{ width: 'min(820px, 95vw)', height: 'min(730px, calc(100vh - 40px))', backgroundColor: '#0E1424', borderRadius: '12px', border: '1px solid #1B2333', overflow: 'hidden' }}>
-          <div className="flex items-center justify-between"
-            style={{ height: '64px', padding: '0 24px', borderBottom: '1px solid #1B2333', flexShrink: 0 }}>
-            <div className="flex flex-col" style={{ gap: '3px' }}>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>Editar Producto</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{product?.name}</span>
-            </div>
-            <button onClick={onClose} className="flex items-center justify-center border-none cursor-pointer"
-              style={{ width: '32px', height: '32px', backgroundColor: '#1B2333', borderRadius: '16px' }}>
-              <X size={16} color="#AAB3C5" />
-            </button>
-          </div>
-          <div className="flex" style={{ flex: 1, overflow: 'hidden' }}>
-            <div className="flex flex-col"
-              style={{ width: 'clamp(220px, 28%, 280px)', flexShrink: 0, backgroundColor: '#080D1A', padding: '24px', gap: '16px', borderRight: '1px solid #1B2333', overflowY: 'auto' }}>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Imagen del producto</span>
-              <div className="flex flex-col items-center justify-center"
-                style={{ height: '200px', borderRadius: '8px', gap: '10px', border: '1px solid #24A8F5', backgroundColor: '#0D2035' }}>
-                <Image size={40} color="#24A8F5" />
-                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px' }}>Imagen actual cargada</span>
-                <button className="border-none cursor-pointer"
-                  style={{ backgroundColor: '#0D2035', borderRadius: '6px', padding: '7px 14px', border: '1px solid #24A8F5' }}>
-                  <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Cambiar imagen</span>
-                </button>
-              </div>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', textAlign: 'center' }}>JPG, PNG, WEBP · Máx 5MB</span>
-            </div>
-            <div className="flex flex-col" style={{ flex: 1, padding: '24px', gap: '14px', overflowY: 'auto' }}>
-              <div className="flex" style={{ gap: '14px' }}>
-                <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-                  <span style={LABEL_STYLE}>Nombre *</span>
-                  <input style={inputStyle2} value={form.nombre} onChange={set('nombre')} />
-                </div>
-                <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-                  <span style={LABEL_STYLE}>Marca *</span>
-                  <input style={inputStyle2} value={form.marca} onChange={set('marca')} />
-                </div>
-              </div>
-              <div className="flex flex-col" style={{ gap: '6px' }}>
-                <span style={LABEL_STYLE}>Descripción</span>
-                <textarea style={taStyle2} value={form.desc} onChange={set('desc')} />
-              </div>
-              <div className="flex flex-col" style={{ gap: '6px' }}>
-                <span style={LABEL_STYLE}>Especificaciones técnicas</span>
-                <textarea style={taStyle2} value={form.espec} onChange={set('espec')} />
-              </div>
-              <div className="flex" style={{ gap: '14px' }}>
-                <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-                  <span style={LABEL_STYLE}>Precio (ARS) *</span>
-                  <input style={inputStyle2} value={form.precio} onChange={set('precio')} />
-                </div>
-                <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
-                  <span style={LABEL_STYLE}>Stock *</span>
-                  <input type="number" style={inputStyle2} value={form.stock} onChange={set('stock')} />
-                </div>
-              </div>
-              <div className="flex flex-col" style={{ gap: '6px' }}>
-                <span style={LABEL_STYLE}>Categoría *</span>
-                <div className="flex items-center justify-between"
-                  style={{ ...inputStyle2, cursor: 'pointer', padding: '0 12px' }}>
-                  <select value={form.cat} onChange={set('cat')}
-                    style={{ background: 'none', border: 'none', color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', width: '100%', cursor: 'pointer', appearance: 'none' }}>
-                    {EDIT_CATEGORIES.map(c => <option key={c} value={c} style={{ backgroundColor: '#0E1424' }}>{c}</option>)}
-                  </select>
-                  <ChevronDown size={14} color="#AAB3C5" style={{ pointerEvents: 'none', flexShrink: 0 }} />
-                </div>
-              </div>
-              <div className="flex items-center justify-between" style={{ padding: '4px 0' }}>
-                <span style={LABEL_STYLE}>Estado del producto</span>
-                <div className="flex flex-col items-end" style={{ gap: '3px' }}>
-                  <button onClick={() => setForm(f => ({ ...f, activo: !f.activo }))} className="flex items-center border-none cursor-pointer"
-                    style={{ width: '44px', height: '24px', borderRadius: '12px', backgroundColor: form.activo ? '#24A8F5' : '#1B2333', padding: '0 3px', justifyContent: form.activo ? 'flex-end' : 'flex-start' }}>
-                    <div style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#FFFFFF' }} />
-                  </button>
-                  <span style={{ color: form.activo ? '#22C55E' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600' }}>
-                    {form.activo ? 'Activo' : 'Inactivo'}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style={{ height: '1px', backgroundColor: '#1B2333', flexShrink: 0 }} />
-          <div className="flex items-center justify-between" style={{ height: '60px', padding: '0 24px', flexShrink: 0 }}>
-            <button onClick={onClose} className="flex items-center justify-center border-none cursor-pointer"
-              style={{ backgroundColor: '#1B2333', borderRadius: '6px', height: '38px', padding: '0 20px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Cancelar</span>
-            </button>
-            <button onClick={onClose} className="flex items-center justify-center border-none cursor-pointer"
-              style={{ backgroundColor: '#24A8F5', borderRadius: '6px', height: '38px', padding: '0 20px', gap: '8px' }}>
-              <Save size={14} color="#FFFFFF" />
-              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Guardar Cambios</span>
-            </button>
-          </div>
-        </div>
       </div>
     </>
   )
@@ -708,26 +658,22 @@ const EditModal = ({ product, onClose }) => {
 /* ─────────────────────── ProductModal entry ─── */
 const ProductModal = ({ mode, product, onClose, onSave }) => {
   const navigate = useNavigate()
-  const isEdit = mode === 'edit'
-
-  const state = useAddForm({ onSave, onClose, navigate })
-
-  if (isEdit) return <EditModal product={product} onClose={onClose} />
+  const state = useProductForm({ mode, product, onSave, onClose, navigate })
 
   return (
     <>
-      {/* Mobile add */}
+      {/* Mobile */}
       <div className="flex md:hidden items-start justify-center"
         style={{ position: 'fixed', inset: 0, backgroundColor: '#070B16', zIndex: 60 }}>
-        <MobileAddBody state={state} onClose={onClose} />
+        <MobileBody mode={mode} product={product} state={state} onClose={onClose} />
       </div>
 
-      {/* Desktop add */}
+      {/* Desktop */}
       <div className="hidden md:flex items-center justify-center" aria-hidden="true"
         style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(7,6,16,0.97)', zIndex: 50, padding: '20px' }}>
-        <div role="dialog" aria-modal="true" aria-label="Agregar Producto" className="flex flex-col"
+        <div role="dialog" aria-modal="true" aria-label={mode === 'edit' ? 'Editar Producto' : 'Agregar Producto'} className="flex flex-col"
           style={{ width: 'min(820px, 95vw)', height: 'min(730px, calc(100vh - 40px))', backgroundColor: '#0E1424', borderRadius: '12px', border: '1px solid #1B2333', overflow: 'hidden' }}>
-          <DesktopAddBody state={state} onClose={onClose} />
+          <DesktopBody mode={mode} product={product} state={state} onClose={onClose} />
         </div>
       </div>
     </>

@@ -31,3 +31,14 @@ export const createProduct = (data, imageFile, galleryFiles = []) => {
   galleryFiles.forEach(f => formData.append('gallery', f))
   return apiFetch('/api/admin/products', { method: 'POST', body: formData })
 }
+
+export const updateProduct = (id, data, imageFile, galleryFiles = [], keepGalleryUrls = null) => {
+  const formData = new FormData()
+  formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }))
+  if (imageFile) formData.append('image', imageFile)
+  galleryFiles.forEach(f => formData.append('gallery', f))
+  if (keepGalleryUrls !== null) {
+    formData.append('keepGallery', new Blob([JSON.stringify(keepGalleryUrls)], { type: 'application/json' }))
+  }
+  return apiFetch(`/api/admin/products/${id}`, { method: 'PUT', body: formData })
+}
