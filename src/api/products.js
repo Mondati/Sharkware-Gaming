@@ -42,3 +42,6 @@ export const updateProduct = (id, data, imageFile, galleryFiles = [], keepGaller
   }
   return apiFetch(`/api/admin/products/${id}`, { method: 'PUT', body: formData })
 }
+
+export const deleteProduct = (id) =>
+  apiFetch(`/api/admin/products/${id}`, { method: 'DELETE' })

@@ -7,7 +7,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom'
 import AdminBottomNav from './AdminBottomNav'
 import ProductModal from './ProductModal'
-import { listAdminProducts } from '../../api/products'
+import { listAdminProducts, deleteProduct } from '../../api/products'
 import { useAuth } from '../../context/AuthContext'
 import { formatARS } from '../../utils/formatPrice'
 
@@ -82,6 +82,24 @@ const AdminPanel = () => {
   useEffect(() => { fetchProducts(0) }, [fetchProducts])
 
   const openEdit = (p) => { setEditTarget(p); setModal('edit') }
+
+  const handleDelete = async (product) => {
+    if (!window.confirm(`¿Eliminar "${product.name}"? Esta acción no se puede deshacer.`)) return
+    try {
+      await deleteProduct(product.id)
+      showToast('Producto eliminado')
+      fetchProducts(page)
+    } catch (err) {
+      if (err.status === 409) {
+        showToast('No se puede eliminar: tiene órdenes asociadas')
+      } else if (err.status === 404) {
+        showToast('El producto ya no existe')
+        fetchProducts(page)
+      } else {
+        showToast('Error al eliminar el producto')
+      }
+    }
+  }
 
   const handleSave = (_saved, savedMode) => {
     showToast(savedMode === 'edit' ? 'Producto actualizado' : 'Producto creado')
@@ -305,7 +323,7 @@ const AdminPanel = () => {
                       <Pencil size={14} color="#24A8F5" />
                       <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Editar</span>
                     </button>
-                    <button className="flex items-center justify-center border-none cursor-pointer flex-1"
+                    <button onClick={() => handleDelete(p)} className="flex items-center justify-center border-none cursor-pointer flex-1"
                       style={{ backgroundColor: '#2D1010', borderRadius: '8px', height: '36px', gap: '6px' }}>
                       <Trash2 size={14} color="#EF4444" />
                       <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Eliminar</span>
@@ -368,7 +386,7 @@ const AdminPanel = () => {
                       <button onClick={() => openEdit(p)} className="border-none cursor-pointer" style={{ background: 'none', padding: 0 }}>
                         <Pencil size={18} color="#24A8F5" />
                       </button>
-                      <button className="border-none cursor-pointer" style={{ background: 'none', padding: 0 }}>
+                      <button onClick={() => handleDelete(p)} className="border-none cursor-pointer" style={{ background: 'none', padding: 0 }}>
                         <Trash2 size={18} color="#EF4444" />
                       </button>
                     </div>
