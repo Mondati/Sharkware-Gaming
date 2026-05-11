@@ -1,0 +1,165 @@
+REACT DOCTOR — PLAN DE FIXES
+============================
+Score inicial: 83/100 — 249 issues — 24/35 archivos
+Fecha escaneo: 2026-05-11
+
+Convenciones del proyecto a respetar (NO tocar aunque react-doctor las flaggee):
+- Inline styles con hex hardcodeados (CLAUDE.md): se ignoran los 61 warnings de
+  "no-inline-exhaustive-style".
+- Archivos marcados para borrar en Sprint 4 — NO arreglar:
+    src/pages/checkout/CheckoutCrypto.jsx
+    src/pages/checkout/CheckoutConfirmCrypto.jsx
+- Wide letter-spacing en UPPERCASE corto está permitido (la propia regla lo dice).
+  Solo corregir donde sea texto de cuerpo / precios / specs.
+
+
+=====================================================================
+TANDA 1 — QUICK WINS (mecánicos, sin riesgo visual)
+=====================================================================
+
+[ ] 1.1  useContext → use()  (React 19)
+        - src/context/CartContext.jsx:1
+        - src/context/AuthContext.jsx:1
+
+[ ] 1.2  useState → useRef  (flags solo escritos, nunca leídos en render)
+        - src/components/ProductCard.jsx:18      (imgError)
+        - src/pages/Home.jsx:38
+        - src/pages/ProductDetail.jsx:19
+        - src/pages/ProductDetail.jsx:45
+        - src/pages/ProductDetail.jsx:46
+
+[ ] 1.3  useState derivado de prop → calcular inline en render
+        - src/components/FilterPanel.jsx:5  (minParam)
+        - src/components/FilterPanel.jsx:6  (maxParam)
+
+[ ] 1.4  Default prop = [] → constante a nivel de módulo
+        - src/components/FilterPanel.jsx:78
+
+[ ] 1.5  setState funcional (evitar stale closure)
+        - src/pages/admin/ProductModal.jsx:157  (setGallery)
+
+[ ] 1.6  [...arr].sort() → arr.toSorted()  (ES2023)
+        - src/components/Pagination.jsx:8
+
+[ ] 1.7  Array index como key → id estable
+        - src/pages/admin/ProductModal.jsx:316
+        - src/pages/admin/ProductModal.jsx:413
+        - src/pages/admin/ProductModal.jsx:575
+        - src/pages/admin/ProductModal.jsx:669
+
+[ ] 1.8  Em-dash (—) en JSX text → coma / dos puntos
+        - src/components/Footer.jsx:53
+        - src/components/Footer.jsx:163
+        (omitir CheckoutConfirmCrypto.jsx — se borra)
+
+[ ] 1.9  "..." → "…"  (ellipsis tipográfico)
+        - src/pages/admin/AdminPanel.jsx:263
+
+[ ] 1.10 transition: "all" → propiedades específicas
+        - src/pages/Home.jsx:197
+        - src/pages/Home.jsx:278
+
+[ ] 1.11 z-index 1000 → escala deliberada (toast 30 / modal 20 / nav 10)
+        - src/App.jsx:44
+        - src/pages/Cart.jsx:532
+        - src/components/Navbar.jsx:125
+        - src/components/Toast.jsx:19
+
+[ ] 1.12 A11y: click handler en <div> → role="button" + tabIndex={0} + onKeyDown
+        - src/pages/Cart.jsx:530
+        - src/pages/Cart.jsx:535
+        - src/components/ChatbotPanel.jsx:20
+        - src/pages/admin/ProductModal.jsx:255
+        - src/pages/admin/ProductModal.jsx:504
+
+
+=====================================================================
+TANDA 2 — DISEÑO / ACCESIBILIDAD (riesgo medio, revisar visualmente)
+=====================================================================
+
+[ ] 2.1  Bordes laterales 3px (delator de UI generada por IA)
+        Reemplazar por boxShadow inset o quitar.
+        - src/pages/Home.jsx:373
+        - src/pages/Home.jsx:413
+        - src/pages/Home.jsx:454
+        - src/pages/Home.jsx:468
+        - src/pages/Home.jsx:482
+        - src/pages/Home.jsx:525
+        - src/pages/Home.jsx:539
+        - src/pages/Home.jsx:553
+
+[ ] 2.2  fontWeight 800 en <h1> → 600
+        - src/pages/Login.jsx:322
+        - src/pages/Home.jsx:137
+        - src/pages/Home.jsx:239
+        - src/pages/ProductDetail.jsx:271
+        - src/pages/ProductDetail.jsx:520
+
+[ ] 2.3  .map().filter() en una sola pasada (reduce / for..of)
+        - src/context/CartContext.jsx:10
+        - src/pages/ProductDetail.jsx:324
+        - src/pages/ProductDetail.jsx:543
+
+[ ] 2.4  preventDefault en <form onSubmit> chat
+        Decisión: aceptar y suprimir el warning (el chat necesita JS, no aplica
+        progressive enhancement).
+        - src/components/ChatbotPanel.jsx:145
+
+[ ] 2.5  Wide letter-spacing en BODY TEXT (no en uppercase corto)
+        Auditar cada uno y eliminar letterSpacing donde sea párrafo/precio/spec:
+        - src/components/MobileSidebar.jsx:66, 70, 86
+        - src/pages/Cart.jsx:119, 377
+        - src/components/Footer.jsx:46, 49, 156, 159
+        - src/components/ProductCard.jsx:64, 185, 276
+        - src/pages/Login.jsx:105, 108, 312, 316
+        - src/pages/Home.jsx:132, 234
+        - src/pages/ProductDetail.jsx:32, 224, 259, 334, 509, 516, 553
+
+
+=====================================================================
+TANDA 3 — REFACTORS GRANDES (post-expo o cuando haya tiempo)
+=====================================================================
+
+[ ] 3.1  Tiny text 10px → 12px (93 spots, ALTO RIESGO de romper layouts)
+        Estrategia: subir a 11px donde no entre 12; a 12px en mobile body.
+        Hacer por archivo y validar visualmente. Archivos afectados:
+        - src/pages/admin/AdminBottomNav.jsx
+        - src/pages/admin/AdminPanel.jsx     (~20 spots)
+        - src/pages/admin/ProductModal.jsx   (~11 spots)
+        - src/components/MobileSidebar.jsx
+        - src/components/FilterPanel.jsx     (5 spots)
+        - src/components/Navbar.jsx
+        - src/components/Footer.jsx          (5 spots)
+        - src/components/ChatbotPanel.jsx
+        - src/components/ProductCard.jsx     (~7 spots)
+        - src/components/TrustBadges.jsx
+        - src/pages/Cart.jsx                 (6 spots)
+        - src/pages/Login.jsx
+        - src/pages/Home.jsx
+        - src/pages/ProductDetail.jsx        (~12 spots)
+        - src/pages/checkout/Checkout.jsx
+        - src/pages/checkout/CheckoutConfirmMercadoPago.jsx
+        (CheckoutCrypto / CheckoutConfirmCrypto — omitir, se borran)
+
+[ ] 3.2  Giant components — split en sub-componentes
+        - src/pages/Cart.jsx:14            (562 líneas) ← prioridad si se hace algo
+        - src/components/Navbar.jsx:9
+        - src/pages/admin/AdminPanel.jsx:55
+        - src/pages/SearchResults.jsx:93
+        - src/pages/Login.jsx:9
+        - src/pages/Home.jsx:30
+        - src/pages/ProductDetail.jsx:42
+
+[ ] 3.3  Cascading setState / useReducer (va con 3.2)
+        - src/pages/SearchResults.jsx:138
+        - src/pages/SearchResults.jsx:167
+        - src/pages/Home.jsx:52
+        - src/pages/ProductDetail.jsx:60
+
+
+=====================================================================
+ORDEN SUGERIDO DE EJECUCIÓN
+=====================================================================
+1. Tanda 1 entera (un solo PR, ~30 issues fuera, score ~88-90).
+2. Tanda 2 con revisión visual por bloque (Home borders, headings, etc).
+3. Tanda 3 solo si queda tiempo o post-expo. Empezar por Cart.jsx.
