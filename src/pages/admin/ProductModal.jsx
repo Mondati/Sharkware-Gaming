@@ -92,23 +92,69 @@ const useProductForm = ({ mode, product, onSave, onClose, navigate }) => {
     setFieldErrs(fe => ({ ...fe, [k]: undefined }))
   }
 
-  const addSpecRow    = () => setSpecRows(r => [...r, { key: '', value: '' }])
+  const addSpecRow    = () => setSpecRows(r => r.length >= 20 ? r : [...r, { key: '', value: '' }])
   const removeSpecRow = (i) => setSpecRows(r => r.filter((_, j) => j !== i))
   const setSpecKey    = (i, v) => setSpecRows(r => r.map((row, j) => j === i ? { ...row, key: v }   : row))
   const setSpecVal    = (i, v) => setSpecRows(r => r.map((row, j) => j === i ? { ...row, value: v } : row))
 
   const validate = () => {
     const errs = {}
-    if (!form.brand.trim())    errs.brand     = 'La marca es obligatoria'
-    if (!form.name.trim())     errs.name      = 'El nombre es obligatorio'
-    if (!form.categoryId)      errs.categoryId = 'Seleccioná una categoría'
+    if (!form.brand.trim())                      errs.brand     = 'La marca es obligatoria'
+    else if (form.brand.trim().length > 50)      errs.brand     = 'La marca no puede superar 50 caracteres'
+    if (!form.name.trim())                       errs.name      = 'El nombre es obligatorio'
+    else if (form.name.trim().length > 150)      errs.name      = 'El nombre no puede superar 150 caracteres'
+    if (form.spec && form.spec.trim().length > 255)
+                                                 errs.spec      = 'La especificación no puede superar 255 caracteres'
+    if (form.description && form.description.length > 2000)
+                                                 errs.description = 'La descripción no puede superar 2000 caracteres'
+    if (!form.categoryId)                        errs.categoryId = 'La categoría es obligatoria'
     if (!form.priceArs || isNaN(Number(form.priceArs)) || Number(form.priceArs) <= 0)
-                               errs.priceArs  = 'Ingresá un precio mayor a 0'
+                                                 errs.priceArs  = 'El precio debe ser mayor a cero'
+    else if (!/^\d{1,10}(\.\d{1,2})?$/.test(String(form.priceArs)))
+                                                 errs.priceArs  = 'Formato de precio inválido'
     if (form.stock === '' || isNaN(Number(form.stock)) || Number(form.stock) < 0)
-                               errs.stock     = 'Stock debe ser 0 o mayor'
-    if (!isEdit && !imageFile) errs.image     = 'Seleccioná una imagen principal'
-    if (existingGallery.length + gallery.length > 3) errs.gallery = 'Máximo 3 fotos en la galería'
+                                                 errs.stock     = 'El stock no puede ser negativo'
+    else if (Number(form.stock) > 999999)        errs.stock     = 'El stock no puede superar 999999'
+    if (form.badge && !['NUEVO', 'HOT', 'OFERTA'].includes(form.badge))
+                                                 errs.badge     = 'Badge inválido. Valores permitidos: NUEVO, HOT, OFERTA'
+    if (!isEdit && !imageFile)                   errs.image     = 'La imagen principal es obligatoria'
+    if (existingGallery.length + gallery.length > 3)
+                                                 errs.gallery   = 'La galería no puede tener más de 3 fotos'
+
+    if (specRows.length > 20) {
+      errs.specs = 'No se permiten más de 20 specs'
+    } else {
+      for (const { key, value } of specRows) {
+        const k = key.trim()
+        if (!k && value.trim()) { errs.specs = 'Las claves de specs no pueden estar vacías'; break }
+        if (k.length > 50)      { errs.specs = 'Las claves de specs no pueden superar 50 caracteres'; break }
+        if (value.length > 200) { errs.specs = 'Los valores de specs no pueden superar 200 caracteres'; break }
+      }
+    }
     return errs
+  }
+
+  const setImageSafe = (file) => {
+    if (!file) { setImage(null); return }
+    if (!file.type.startsWith('image/')) {
+      setFieldErrs(fe => ({ ...fe, image: 'El archivo debe ser una imagen válida' }))
+      return
+    }
+    setFieldErrs(fe => ({ ...fe, image: undefined }))
+    setImage(file)
+  }
+
+  const addGalleryFiles = (files) => {
+    const arr = Array.from(files)
+    const invalid = arr.find(f => !f.type.startsWith('image/'))
+    if (invalid) {
+      setFieldErrs(fe => ({ ...fe, gallery: 'Todos los archivos de galería deben ser imágenes válidas' }))
+      return
+    }
+    const remaining = 3 - existingGallery.length - gallery.length
+    if (remaining <= 0) return
+    setFieldErrs(fe => ({ ...fe, gallery: undefined }))
+    setGallery([...gallery, ...arr.slice(0, remaining)])
   }
 
   const handleSave = async () => {
@@ -154,7 +200,7 @@ const useProductForm = ({ mode, product, onSave, onClose, navigate }) => {
 
   return {
     form, set, specRows, addSpecRow, removeSpecRow, setSpecKey, setSpecVal,
-    imageFile, setImage, gallery, setGallery,
+    imageFile, setImage: setImageSafe, gallery, setGallery, addGalleryFiles,
     existingGallery, removeExistingGallery,
     categories, catsLoading, fieldErrs, globalErr, saving, handleSave,
   }
@@ -164,12 +210,13 @@ const useProductForm = ({ mode, product, onSave, onClose, navigate }) => {
 const MobileBody = ({ mode, product, state, onClose }) => {
   const isEdit = mode === 'edit'
   const { form, set, specRows, addSpecRow, removeSpecRow, setSpecKey, setSpecVal,
-          imageFile, setImage, gallery, setGallery,
+          imageFile, setImage, gallery, setGallery, addGalleryFiles,
           existingGallery, removeExistingGallery,
           categories, catsLoading, fieldErrs, globalErr, saving, handleSave } = state
   const imgRef = useRef()
   const galRef = useRef()
   const totalGallery = existingGallery.length + gallery.length
+  const specsFull = specRows.length >= 20
 
   return (
     <div className="flex md:hidden flex-col w-full h-screen" style={{ backgroundColor: '#070B16' }}>
@@ -240,13 +287,9 @@ const MobileBody = ({ mode, product, state, onClose }) => {
         <div className="flex flex-col" style={{ gap: '6px' }}>
           <span style={MOBILE_LABEL}>Galería (opcional)</span>
           <input ref={galRef} type="file" accept="image/*" multiple style={{ display: 'none' }}
-            onChange={e => {
-              const remaining = 3 - existingGallery.length - gallery.length
-              if (remaining > 0) setGallery([...gallery, ...Array.from(e.target.files).slice(0, remaining)])
-              e.target.value = ''
-            }} />
+            onChange={e => { addGalleryFiles(e.target.files); e.target.value = '' }} />
           <button onClick={() => galRef.current.click()} className="border-none cursor-pointer"
-            style={{ ...MOBILE_INPUT, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', justifyContent: 'flex-start' }}>
+            style={{ ...MOBILE_INPUT, border: `1px solid ${fieldErrs.gallery ? '#EF4444' : '#1B2333'}`, display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', justifyContent: 'flex-start' }}>
             <Upload size={14} color="#AAB3C5" />
             <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
               {totalGallery > 0
@@ -287,13 +330,13 @@ const MobileBody = ({ mode, product, state, onClose }) => {
           <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
             <span style={MOBILE_LABEL}>Nombre *</span>
             <input style={{ ...MOBILE_INPUT, border: `1px solid ${fieldErrs.name ? '#EF4444' : '#1B2333'}` }}
-              value={form.name} onChange={set('name')} placeholder="Ej: RTX 5090 24GB" />
+              maxLength={150} value={form.name} onChange={set('name')} placeholder="Ej: RTX 5090 24GB" />
             {fieldErrs.name && <span style={ERR_STYLE}>{fieldErrs.name}</span>}
           </div>
           <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
             <span style={MOBILE_LABEL}>Marca *</span>
             <input style={{ ...MOBILE_INPUT, border: `1px solid ${fieldErrs.brand ? '#EF4444' : '#1B2333'}` }}
-              value={form.brand} onChange={set('brand')} placeholder="Ej: NVIDIA" />
+              maxLength={50} value={form.brand} onChange={set('brand')} placeholder="Ej: NVIDIA" />
             {fieldErrs.brand && <span style={ERR_STYLE}>{fieldErrs.brand}</span>}
           </div>
         </div>
@@ -301,27 +344,31 @@ const MobileBody = ({ mode, product, state, onClose }) => {
         {/* Spec corta */}
         <div className="flex flex-col" style={{ gap: '6px' }}>
           <span style={MOBILE_LABEL}>Resumen técnico</span>
-          <input style={MOBILE_INPUT} value={form.spec} onChange={set('spec')} placeholder="Ej: 12GB GDDR6X" />
+          <input style={{ ...MOBILE_INPUT, border: `1px solid ${fieldErrs.spec ? '#EF4444' : '#1B2333'}` }}
+            maxLength={255} value={form.spec} onChange={set('spec')} placeholder="Ej: 12GB GDDR6X" />
+          {fieldErrs.spec && <span style={ERR_STYLE}>{fieldErrs.spec}</span>}
         </div>
 
         {/* Descripción */}
         <div className="flex flex-col" style={{ gap: '6px' }}>
           <span style={MOBILE_LABEL}>Descripción</span>
-          <textarea rows={3} style={MOBILE_TA} value={form.description} onChange={set('description')}
+          <textarea rows={3} style={{ ...MOBILE_TA, border: `1px solid ${fieldErrs.description ? '#EF4444' : '#1B2333'}` }}
+            maxLength={2000} value={form.description} onChange={set('description')}
             placeholder="Describí el producto brevemente..." />
+          {fieldErrs.description && <span style={ERR_STYLE}>{fieldErrs.description}</span>}
         </div>
 
         {/* Precio + Stock */}
         <div className="flex" style={{ gap: '10px' }}>
           <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
             <span style={MOBILE_LABEL}>Precio (ARS) *</span>
-            <input type="number" style={{ ...MOBILE_INPUT, border: `1px solid ${fieldErrs.priceArs ? '#EF4444' : '#1B2333'}` }}
+            <input type="number" min={0} step="0.01" style={{ ...MOBILE_INPUT, border: `1px solid ${fieldErrs.priceArs ? '#EF4444' : '#1B2333'}` }}
               value={form.priceArs} onChange={set('priceArs')} placeholder="0" />
             {fieldErrs.priceArs && <span style={ERR_STYLE}>{fieldErrs.priceArs}</span>}
           </div>
           <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
             <span style={MOBILE_LABEL}>Stock *</span>
-            <input type="number" style={{ ...MOBILE_INPUT, border: `1px solid ${fieldErrs.stock ? '#EF4444' : '#1B2333'}` }}
+            <input type="number" min={0} max={999999} style={{ ...MOBILE_INPUT, border: `1px solid ${fieldErrs.stock ? '#EF4444' : '#1B2333'}` }}
               value={form.stock} onChange={set('stock')} placeholder="0" />
             {fieldErrs.stock && <span style={ERR_STYLE}>{fieldErrs.stock}</span>}
           </div>
@@ -344,7 +391,7 @@ const MobileBody = ({ mode, product, state, onClose }) => {
           </div>
           <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
             <span style={MOBILE_LABEL}>Badge</span>
-            <div className="flex items-center justify-between" style={{ ...MOBILE_INPUT, cursor: 'pointer' }}>
+            <div className="flex items-center justify-between" style={{ ...MOBILE_INPUT, border: `1px solid ${fieldErrs.badge ? '#EF4444' : '#1B2333'}`, cursor: 'pointer' }}>
               <select value={form.badge} onChange={set('badge')}
                 style={{ background: 'none', border: 'none', color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', width: '100%', cursor: 'pointer', appearance: 'none' }}>
                 <option value="">Sin badge</option>
@@ -354,17 +401,19 @@ const MobileBody = ({ mode, product, state, onClose }) => {
               </select>
               <ChevronDown size={14} color="#AAB3C5" style={{ pointerEvents: 'none', flexShrink: 0 }} />
             </div>
+            {fieldErrs.badge && <span style={ERR_STYLE}>{fieldErrs.badge}</span>}
           </div>
         </div>
 
         {/* Specs clave-valor */}
         <div className="flex flex-col" style={{ gap: '8px' }}>
           <span style={MOBILE_LABEL}>Especificaciones técnicas</span>
+          {fieldErrs.specs && <span style={ERR_STYLE}>{fieldErrs.specs}</span>}
           {specRows.map((row, i) => (
             <div key={i} className="flex items-center" style={{ gap: '6px' }}>
-              <input placeholder="Clave" value={row.key} onChange={e => setSpecKey(i, e.target.value)}
+              <input placeholder="Clave" maxLength={50} value={row.key} onChange={e => setSpecKey(i, e.target.value)}
                 style={{ ...MOBILE_INPUT, flex: 1 }} />
-              <input placeholder="Valor" value={row.value} onChange={e => setSpecVal(i, e.target.value)}
+              <input placeholder="Valor" maxLength={200} value={row.value} onChange={e => setSpecVal(i, e.target.value)}
                 style={{ ...MOBILE_INPUT, flex: 1 }} />
               <button onClick={() => removeSpecRow(i)} className="border-none cursor-pointer"
                 style={{ background: 'none', padding: 0 }}>
@@ -372,10 +421,13 @@ const MobileBody = ({ mode, product, state, onClose }) => {
               </button>
             </div>
           ))}
-          <button onClick={addSpecRow} className="flex items-center justify-center border-none cursor-pointer"
-            style={{ backgroundColor: '#0E1424', borderRadius: '8px', height: '36px', border: '1px dashed #1B2333', gap: '6px' }}>
+          <button onClick={addSpecRow} disabled={specsFull} className="flex items-center justify-center border-none"
+            style={{ backgroundColor: '#0E1424', borderRadius: '8px', height: '36px', border: '1px dashed #1B2333', gap: '6px',
+              cursor: specsFull ? 'not-allowed' : 'pointer', opacity: specsFull ? 0.5 : 1 }}>
             <Plus size={14} color="#24A8F5" />
-            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Agregar especificación</span>
+            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>
+              {specsFull ? 'Máximo 20 specs' : 'Agregar especificación'}
+            </span>
           </button>
         </div>
       </div>
@@ -406,12 +458,13 @@ const MobileBody = ({ mode, product, state, onClose }) => {
 const DesktopBody = ({ mode, product, state, onClose }) => {
   const isEdit = mode === 'edit'
   const { form, set, specRows, addSpecRow, removeSpecRow, setSpecKey, setSpecVal,
-          imageFile, setImage, gallery, setGallery,
+          imageFile, setImage, gallery, setGallery, addGalleryFiles,
           existingGallery, removeExistingGallery,
           categories, catsLoading, fieldErrs, globalErr, saving, handleSave } = state
   const imgRef = useRef()
   const galRef = useRef()
   const totalGallery = existingGallery.length + gallery.length
+  const specsFull = specRows.length >= 20
 
   return (
     <>
@@ -495,13 +548,9 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
 
           <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Galería (opcional)</span>
           <input ref={galRef} type="file" accept="image/*" multiple style={{ display: 'none' }}
-            onChange={e => {
-              const remaining = 3 - existingGallery.length - gallery.length
-              if (remaining > 0) setGallery([...gallery, ...Array.from(e.target.files).slice(0, remaining)])
-              e.target.value = ''
-            }} />
+            onChange={e => { addGalleryFiles(e.target.files); e.target.value = '' }} />
           <button onClick={() => galRef.current.click()} className="flex items-center border-none cursor-pointer"
-            style={{ backgroundColor: '#0D2035', borderRadius: '6px', padding: '7px 14px', border: '1px solid #1B2333', gap: '6px' }}>
+            style={{ backgroundColor: '#0D2035', borderRadius: '6px', padding: '7px 14px', border: `1px solid ${fieldErrs.gallery ? '#EF4444' : '#1B2333'}`, gap: '6px' }}>
             <Upload size={12} color="#AAB3C5" />
             <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
               {totalGallery > 0 ? `${totalGallery}/3 foto(s)` : 'Agregar fotos (máx 3)'}
@@ -541,12 +590,12 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
           <div className="flex" style={{ gap: '14px' }}>
             <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
               <span style={LABEL_STYLE}>Nombre *</span>
-              <input style={inputStyle(fieldErrs.name)} value={form.name} onChange={set('name')} placeholder="Ej: RTX 5090 24GB GDDR7" />
+              <input style={inputStyle(fieldErrs.name)} maxLength={150} value={form.name} onChange={set('name')} placeholder="Ej: RTX 5090 24GB GDDR7" />
               {fieldErrs.name && <span style={ERR_STYLE}>{fieldErrs.name}</span>}
             </div>
             <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
               <span style={LABEL_STYLE}>Marca *</span>
-              <input style={inputStyle(fieldErrs.brand)} value={form.brand} onChange={set('brand')} placeholder="Ej: NVIDIA" />
+              <input style={inputStyle(fieldErrs.brand)} maxLength={50} value={form.brand} onChange={set('brand')} placeholder="Ej: NVIDIA" />
               {fieldErrs.brand && <span style={ERR_STYLE}>{fieldErrs.brand}</span>}
             </div>
           </div>
@@ -554,26 +603,28 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
           {/* Spec corta */}
           <div className="flex flex-col" style={{ gap: '6px' }}>
             <span style={LABEL_STYLE}>Resumen técnico</span>
-            <input style={inputStyle(false)} value={form.spec} onChange={set('spec')} placeholder="Ej: 12GB GDDR6X" />
+            <input style={inputStyle(fieldErrs.spec)} maxLength={255} value={form.spec} onChange={set('spec')} placeholder="Ej: 12GB GDDR6X" />
+            {fieldErrs.spec && <span style={ERR_STYLE}>{fieldErrs.spec}</span>}
           </div>
 
           {/* Descripción */}
           <div className="flex flex-col" style={{ gap: '6px' }}>
             <span style={LABEL_STYLE}>Descripción</span>
-            <textarea style={taStyle(false)} value={form.description} onChange={set('description')}
+            <textarea style={taStyle(fieldErrs.description)} maxLength={2000} value={form.description} onChange={set('description')}
               placeholder="Describí el producto brevemente..." />
+            {fieldErrs.description && <span style={ERR_STYLE}>{fieldErrs.description}</span>}
           </div>
 
           {/* Precio + Stock */}
           <div className="flex" style={{ gap: '14px' }}>
             <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
               <span style={LABEL_STYLE}>Precio (ARS) *</span>
-              <input type="number" style={inputStyle(fieldErrs.priceArs)} value={form.priceArs} onChange={set('priceArs')} placeholder="0" />
+              <input type="number" min={0} step="0.01" style={inputStyle(fieldErrs.priceArs)} value={form.priceArs} onChange={set('priceArs')} placeholder="0" />
               {fieldErrs.priceArs && <span style={ERR_STYLE}>{fieldErrs.priceArs}</span>}
             </div>
             <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
               <span style={LABEL_STYLE}>Stock *</span>
-              <input type="number" style={inputStyle(fieldErrs.stock)} value={form.stock} onChange={set('stock')} placeholder="0" />
+              <input type="number" min={0} max={999999} style={inputStyle(fieldErrs.stock)} value={form.stock} onChange={set('stock')} placeholder="0" />
               {fieldErrs.stock && <span style={ERR_STYLE}>{fieldErrs.stock}</span>}
             </div>
           </div>
@@ -596,7 +647,7 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
             <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
               <span style={LABEL_STYLE}>Badge</span>
               <div className="flex items-center justify-between"
-                style={{ ...INPUT_STYLE_BASE, border: '1px solid #1B2333', cursor: 'pointer', padding: '0 12px' }}>
+                style={{ ...INPUT_STYLE_BASE, border: `1px solid ${fieldErrs.badge ? '#EF4444' : '#1B2333'}`, cursor: 'pointer', padding: '0 12px' }}>
                 <select value={form.badge} onChange={set('badge')}
                   style={{ background: 'none', border: 'none', color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', width: '100%', cursor: 'pointer', appearance: 'none' }}>
                   <option value="">Sin badge</option>
@@ -606,27 +657,32 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
                 </select>
                 <ChevronDown size={14} color="#AAB3C5" style={{ pointerEvents: 'none', flexShrink: 0 }} />
               </div>
+              {fieldErrs.badge && <span style={ERR_STYLE}>{fieldErrs.badge}</span>}
             </div>
           </div>
 
           {/* Specs clave-valor */}
           <div className="flex flex-col" style={{ gap: '8px' }}>
             <span style={LABEL_STYLE}>Especificaciones técnicas</span>
+            {fieldErrs.specs && <span style={ERR_STYLE}>{fieldErrs.specs}</span>}
             {specRows.map((row, i) => (
               <div key={i} className="flex items-center" style={{ gap: '8px' }}>
-                <input placeholder="Clave (ej: VRAM)" value={row.key} onChange={e => setSpecKey(i, e.target.value)}
+                <input placeholder="Clave (ej: VRAM)" maxLength={50} value={row.key} onChange={e => setSpecKey(i, e.target.value)}
                   style={{ ...INPUT_STYLE_BASE, flex: 1 }} />
-                <input placeholder="Valor (ej: 12GB)" value={row.value} onChange={e => setSpecVal(i, e.target.value)}
+                <input placeholder="Valor (ej: 12GB)" maxLength={200} value={row.value} onChange={e => setSpecVal(i, e.target.value)}
                   style={{ ...INPUT_STYLE_BASE, flex: 1 }} />
                 <button onClick={() => removeSpecRow(i)} className="border-none cursor-pointer" style={{ background: 'none', padding: 0, flexShrink: 0 }}>
                   <Trash2 size={16} color="#EF4444" />
                 </button>
               </div>
             ))}
-            <button onClick={addSpecRow} className="flex items-center justify-center border-none cursor-pointer"
-              style={{ backgroundColor: 'transparent', borderRadius: '6px', height: '34px', border: '1px dashed #1B2333', gap: '6px' }}>
+            <button onClick={addSpecRow} disabled={specsFull} className="flex items-center justify-center border-none"
+              style={{ backgroundColor: 'transparent', borderRadius: '6px', height: '34px', border: '1px dashed #1B2333', gap: '6px',
+                cursor: specsFull ? 'not-allowed' : 'pointer', opacity: specsFull ? 0.5 : 1 }}>
               <Plus size={14} color="#24A8F5" />
-              <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Agregar especificación</span>
+              <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>
+                {specsFull ? 'Máximo 20 specs' : 'Agregar especificación'}
+              </span>
             </button>
           </div>
         </div>
