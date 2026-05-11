@@ -15,26 +15,24 @@
 
 ## Descripción
 
-Sharkware Gaming es un prototipo de tienda online de componentes y periféricos gaming —notebooks, GPUs, monitores, RAM, almacenamiento y periféricos— orientado al mercado argentino. La aplicación implementa el flujo completo de un ecommerce: catálogo, búsqueda, filtros, carrito persistente, checkout con dos métodos de pago y panel administrativo.
+Sharkware Gaming es una tienda online de componentes y periféricos gaming —notebooks, GPUs, monitores, RAM, almacenamiento y periféricos— orientada al mercado argentino. La aplicación implementa el flujo completo de un ecommerce: catálogo, búsqueda, filtros, carrito persistente, checkout con MercadoPago, panel administrativo con CRUD de productos y autenticación real basada en sesiones HTTP.
 
-El frontend está construido con **React 19 + Vite** y diseñado para integrarse en una segunda fase con un backend **Spring Boot 3 + MySQL 8**.
+El frontend está construido con **React 19 + Vite** y se conecta a un backend **Spring Boot 4 + MySQL 8** (ver `ecommerce-api/sharkware/`). El detalle completo del modelo de datos, endpoints REST y plan por sprints vive en [`CLAUDE.md`](./CLAUDE.md).
 
 > [!NOTE]
-> Esta versión es un **prototipo frontend estático**. Los datos viven en `src/data/` como arrays de JavaScript. El detalle del modelo de datos, los endpoints REST y las fases de integración con el backend están documentados en `CLAUDE.md`.
+> Algunas pantallas del catálogo todavía leen de `src/data/products.js` (seed estático de 70 productos). La migración integral del front a los endpoints `/api/products` y `/api/categories` está planificada para el Sprint 2. El panel admin, auth y el flujo MercadoPago ya consumen el backend real.
 
 ## Funcionalidades
 
-- **Catálogo dinámico** con 13 productos en 8 categorías y galería de imágenes
-- **Detalle de producto** con specs adaptativas por categoría y productos relacionados
-- **Búsqueda** por nombre, marca y especificación (case-insensitive, substring)
-- **Filtros combinables** por categoría, marca y rango de precios, persistidos en la URL
-- **Ordenamiento** por relevancia o precio (ascendente / descendente)
-- **Paginación** con URL persistente y normalización automática de páginas inválidas
-- **Carrito persistente** con `Context API` + `useReducer` + `localStorage`
-- **Checkout** con MercadoPago (sandbox) y cotización en criptomonedas (BTC/ETH/USDT)
-- **Panel administrativo** con CRUD completo de productos (ruta protegida)
-- **Diseño responsive** mobile-first con un único breakpoint en 768px
-- **Code splitting** de la ruta `/admin` para optimizar el bundle inicial
+- **Catálogo** con búsqueda por nombre/marca/spec, filtros combinables (categoría, marca, rango de precios), ordenamiento y paginación — todo el estado persiste en la URL.
+- **Detalle de producto** con specs adaptativas por categoría, galería de imágenes y productos relacionados.
+- **Carrito persistente** anónimo (`CartContext` + `useReducer` + `localStorage`) que al loguearse hace merge con el carrito del usuario en el backend.
+- **Autenticación real** vía `HttpSession` + `BCryptPasswordEncoder` — login, registro con auto-login, logout y restauración de sesión en F5.
+- **Checkout con MercadoPago** (sandbox) — preferencia + `back_urls` + sincronización por `external_reference` (sin webhook).
+- **Panel administrativo** (`/admin`) protegido por rol con CRUD de productos: listado paginado server-side, creación y edición con upload multipart (imagen principal + galería de hasta 3) y validación espejo de las reglas del backend.
+- **Chatbot Sharkbot** (Gemini 1.5 Flash) como FAB flotante en todo el sitio salvo `/login` y `/admin`.
+- **Diseño responsive** mobile-first con breakpoint único en 768px y padding lateral escalado por viewport (40px → 400px).
+- **Code splitting** de la ruta `/admin` con `React.lazy` + `Suspense`.
 
 ## Stack tecnológico
 
@@ -42,12 +40,13 @@ El frontend está construido con **React 19 + Vite** y diseñado para integrarse
 |---|---|---|
 | Framework | React | 19.2 |
 | Routing | React Router DOM | 7.14 |
-| Estilos | Tailwind CSS (via `@tailwindcss/vite`) | 4.2 |
+| Estilos | Tailwind CSS (`@tailwindcss/vite`) | 4.2 |
 | Iconos | Lucide React | 1.8 |
 | Build tool | Vite | 8.0 |
 | Estado global | Context API + `useReducer` + `localStorage` | — |
+| Fetch | `apiFetch` propio sobre `fetch` con `credentials: 'include'` | — |
 
-El stack se mantuvo deliberadamente minimalista —sin TypeScript, sin Redux, sin axios, sin librerías de formularios— para enfatizar dominio del fundamento de React puro con hooks.
+Sin TypeScript, sin Redux/Zustand, sin axios, sin react-hook-form. Toda la red pasa por `src/api/client.js`.
 
 ## Cómo correr el proyecto
 
@@ -55,6 +54,7 @@ El stack se mantuvo deliberadamente minimalista —sin TypeScript, sin Redux, si
 
 - Node.js 18 o superior
 - npm 9 o superior
+- Backend corriendo en `http://localhost:8080` (ver `ecommerce-api/sharkware/`) para que funcionen auth, admin y checkout.
 
 ### Instalación
 
@@ -78,53 +78,103 @@ El sitio queda disponible en `http://localhost:5173`.
 
 ### Credenciales de prueba
 
-> [!TIP]
-> La autenticación es mock —se valida contra valores hardcodeados y el rol queda en `localStorage`. Será reemplazada por `HttpSession` + `BCryptPasswordEncoder` en la fase backend.
+- **Admin:** el backend siembra un usuario admin al arrancar. Las credenciales se comparten por canal privado al equipo del proyecto.
+- **Usuario normal:** registrarse desde el tab "Registrarse" en `/login` (el endpoint hardcodea `role="user"`).
+
+> [!IMPORTANT]
+> Las variables sensibles (tokens de MercadoPago, API keys de Gemini/Cloudinary, credenciales de MySQL y mail) viven en el `.env` del backend, que está en `.gitignore`. Nunca se versionan ni se publican aquí.
+
+## Estructura del proyecto
+
+```
+src/
+├── api/             client.js (apiFetch), auth.js, products.js
+├── components/      Navbar, ProductCard, FilterPanel, MobileSidebar,
+│                    Pagination, ProtectedRoute, ChatbotPanel, Toast, Footer…
+├── context/         CartContext.jsx, AuthContext.jsx
+├── hooks/           useWindowWidth.js
+├── pages/
+│   ├── Home.jsx, ProductDetail.jsx, SearchResults.jsx,
+│   ├── Cart.jsx, Login.jsx,
+│   ├── checkout/    Checkout, CheckoutConfirmMercadoPago (+ legacy crypto)
+│   └── admin/       AdminPanel (lazy), ProductModal, AdminBottomNav
+├── data/            sortOptions.js, products.js (seed temporal), categories.js
+└── App.jsx, main.jsx, index.css
+```
+
+`AuthProvider` envuelve a `CartProvider` en `main.jsx` para que el carrito pueda leer el usuario al hacer merge.
 
 ## Historias de usuario
 
 | HU | Descripción | Estado |
 |---|---|---|
-| HU1 | Ver catálogo de productos | Completa |
-| HU2 | Ver detalle de producto | Completa |
-| HU3 | Navegación multinivel por categorías | Completa |
-| HU4 | Buscar productos por nombre | Completa |
-| HU5 | Filtrar por categoría, marca y precio | Completa |
-| HU6 | Ordenar por precio o relevancia | Completa |
-| HU7 | Paginación de resultados | Completa |
-| HU8 | Agregar al carrito | Completa |
-| HU9 | Ver carrito | Completa |
-| HU10 | Modificar carrito (cantidad + eliminar) | Completa |
+| HU1–HU7 | Catálogo, detalle, navegación, búsqueda, filtros, sort, paginación | ✅ |
+| HU8–HU12 | Carrito: agregar, ver, modificar, eliminar, vaciar | ✅ |
+| HU13–HU15 | Simular compra, integrar MercadoPago, confirmar | ⏳ Sprint 4 |
+| HU16 | Registro de usuario (auto-login) | ✅ |
+| HU17 | Login con `HttpSession` | ✅ |
+| HU18 | Logout | ✅ |
+| HU19 | Validación de datos + restauración de sesión | ✅ |
+| HU20 | Editar producto desde admin (con galería selectiva) | ✅ |
+| HU21 | Eliminar producto desde admin | ⏳ Sprint 5 |
+| HU22 | Validación de formulario de producto (espejo del back) | ✅ |
+| HU23 | Listado paginado de productos en admin | ✅ |
+| HU24 | Crear producto desde admin (multipart) | ✅ |
+| HU25 | Persistir productos, usuarios y pedidos en BD | ✅ back / ⏳ migración front (Sprint 2) |
+| HU26 | FAQ automáticas vía Gemini | ⏳ Sprint 5 |
+| HU27 | Ofertas de productos | ⏳ Sprint 5 |
+| HU28 | Conversor BTC/ETH/USDT ↔ ARS | ⏳ Sprint 5 |
+| HU29 | Adaptación mobile, tablet y desktop | ✅ |
+| HU30 | Disponibilidad de stock | ⏳ Sprint 1 |
+| HU31 | Gestión de stock desde admin | ⏳ Sprint 4 |
+| HU32 | Descuento automático de stock al confirmar pago | ⏳ Sprint 4 |
 
 ## Decisiones de diseño
 
-- **Mobile-first responsive** con un único breakpoint Tailwind (`md:` 768px). Cada componente tiene dos versiones completas en lugar de ocultar elementos individuales.
-- **Padding lateral dinámico** vía hook `useWindowWidth` —escala de 40px en tablet a 400px en pantallas 4K— para mantener líneas de lectura cómodas en todos los viewports.
-- **Estilos inline con paleta hardcodeada**: Tailwind se reserva exclusivamente para layout y utilidades responsive; los colores son `style={{}}` para mantener consistencia visual estricta.
-- **`CartContext` con `useReducer` + `localStorage`** como única fuente de verdad. El carrito sobrevive a recargas de página.
-- **URL como estado**: filtros, búsqueda, ordenamiento y paginación viven en `useSearchParams`, lo que permite compartir y bookmarkear estados específicos del catálogo.
-- **Code splitting selectivo** de `/admin` con `React.lazy` + `Suspense` —el panel administrativo no entra al bundle inicial.
+- **Mobile-first responsive** con un único breakpoint Tailwind (`md:` 768px). Cada bloque tiene dos versiones completas en lugar de ocultar elementos individuales.
+- **Padding lateral dinámico** vía `useWindowWidth` — escala de 40px en tablet a 400px en 4K.
+- **Estilos inline con paleta hardcodeada**: Tailwind solo para layout y responsive; los colores van en `style={{}}` para consistencia visual estricta.
+- **Tipografía dual**: `Poppins` para todo el UI y `Rajdhani` exclusivamente para headings y títulos del hero.
+- **Focus accesible global** en `src/index.css` (`:focus-visible { outline: 2px solid #24A8F5 }`) — nunca escribir `outline: 'none'` inline.
+- **`CartContext` como única fuente de verdad** del carrito anónimo; al loguearse se mergea con el del usuario vía `POST /api/cart/merge`.
+- **URL como estado**: filtros, búsqueda, ordenamiento y paginación viven en `useSearchParams`.
+- **Code splitting selectivo** de `/admin` con `React.lazy` + `Suspense`.
+- **Carrito oculto para admins** — el botón del Navbar desaparece cuando `user?.role === 'admin'`.
+
+## API y autenticación
+
+`src/api/client.js` expone `apiFetch(path, { method, body })`:
+
+- Auto-añade `credentials: 'include'` para que el navegador envíe la cookie `JSESSIONID`.
+- Detecta `FormData` y omite `Content-Type` para multipart.
+- Devuelve `null` en `204 No Content`.
+- En errores ≥ 400 lanza un `Error` con `status`, `code` y `fields` (este último permite mapear errores de validación campo por campo en los formularios).
+
+Wrappers actuales:
+
+- `src/api/auth.js` → `login`, `register`, `logout`, `me`.
+- `src/api/products.js` → `getProducts`, `getProduct`, `getFacets`, `getCategories`, `listAdminProducts`, `createProduct`, `updateProduct`.
+
+Base URL: `http://localhost:8080` por defecto (configurable vía `VITE_API_URL`).
 
 ## Métodos de pago
 
-| Método | Estado de integración |
+| Método | Estado |
 |---|---|
-| MercadoPago | Sandbox previsto en fase backend (preference + webhook) |
-| Cripto (BTC/ETH/USDT) | **Solo cotización informativa** —no es un método de pago real |
+| MercadoPago Checkout Pro (sandbox) | Integración real — preferencia + `back_urls` + `sync-payment` por `external_reference`. **Sin webhook.** |
+| Cripto (BTC/ETH/USDT) | **No es método de pago** — Sprint 5 entregará un widget conversor ARS ↔ cripto alimentado por CoinGecko. |
 
 > [!WARNING]
-> El flujo de checkout con criptomonedas muestra QR, dirección y countdown, pero **no verifica la transacción on-chain**. La cotización se obtiene de una API pública (CoinGecko/Binance) para mostrar el equivalente en tiempo real al usuario. La confirmación queda en estado `PENDING` hasta que un admin la marca manualmente como `PAID` desde el panel.
+> Las pantallas legacy `CheckoutCrypto.jsx` y `CheckoutConfirmCrypto.jsx` quedan en el repo pero se eliminan en Sprint 4 junto con sus rutas.
 
 ## Roadmap
 
-- [x] **Fase 1** — Frontend estático con datos mock (HU1–HU10)
-- [ ] **Fase 2** — Backend Spring Boot 3 + MySQL 8, auth con `HttpSession` + `BCrypt`
-- [ ] **Fase 3** — Integración real de MercadoPago (sandbox) + endpoint de cotización cripto
-- [ ] **Fase 4** — Conexión frontend ↔ backend (`src/api/`, fetch wrappers con `credentials: 'include'`, loading states, manejo de errores)
-
-> [!IMPORTANT]
-> El detalle completo del modelo de datos (7 entidades), los endpoints REST y las fases de implementación del backend está documentado en `CLAUDE.md`.
+- [x] **Sprint 1** — Frontend estático con datos mock (HU1–HU12, HU29).
+- [x] **Sprint 3** — Auth real (HU16–HU19) y panel admin con CRUD de productos (HU20, HU22, HU23, HU24).
+- [ ] **Sprint 2** — Migración de Home/ProductDetail/SearchResults/FilterPanel a los endpoints `/api/products` y `/api/categories` (cierre UX de HU25).
+- [ ] **Sprint 4** — Checkout MercadoPago end-to-end, decremento de stock transaccional (HU13–HU15, HU30–HU32).
+- [ ] **Sprint 5** — HU21 (delete admin), chatbot Gemini (HU26), ofertas (HU27), conversor cripto (HU28).
 
 ## Contexto académico
 
-Proyecto desarrollado como trabajo final integrador, aplicando el ciclo completo de análisis (definición de historias de usuario), diseño (mockups y paleta de marca) e implementación (frontend funcional listo para integrarse a un backend Java).
+Proyecto desarrollado como trabajo final integrador, aplicando el ciclo completo de análisis (historias de usuario), diseño (mockups, paleta de marca, accesibilidad por teclado) e implementación full-stack (frontend React + backend Spring Boot/MySQL).
