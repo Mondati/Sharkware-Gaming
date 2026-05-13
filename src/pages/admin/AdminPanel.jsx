@@ -371,7 +371,7 @@ const AdminPanel = () => {
                 ))}
               </div>
 
-              <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
+              <div>
                 {products.length === 0 && (
                   <div className="flex items-center justify-center" style={{ padding: '32px' }}>
                     <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
