@@ -136,7 +136,7 @@ const AdminPanel = () => {
       {/* ── Sidebar (desktop only) ── */}
       <div className="hidden md:flex flex-col"
         style={{ width: '260px', flexShrink: 0, backgroundColor: '#0E1424', borderRight: '1px solid #1B2333', height: '100%' }}>
-        <Link to="/" className="flex items-center no-underline" style={{ padding: '20px 24px', gap: '12px' }} title="Ir a la tienda">
+        <Link to="/" className="flex items-center no-underline" style={{ height: '60px', padding: '0 24px', gap: '12px' }} title="Ir a la tienda">
           <Zap size={22} color="#24A8F5" />
           <div className="flex flex-col" style={{ gap: '1px', flex: 1 }}>
             <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>SHARKWARE</span>
