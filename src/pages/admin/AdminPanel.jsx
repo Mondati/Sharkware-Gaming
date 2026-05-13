@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import {
   Zap, LayoutDashboard, Package, ShoppingCart, Users, Settings, LogOut,
   UserRound, Bell, Plus, Search, Pencil, Trash2, CircleCheck, TriangleAlert,
@@ -69,10 +69,12 @@ const AdminPanel = () => {
   const [totalPages, setTotalPages] = useState(0)
   const [deleteTarget, setDeleteTarget] = useState(null)
   const [deleting, setDeleting] = useState(false)
+  const searchRef = useRef('')
+  const debounceRef = useRef(null)
 
-  const fetchProducts = useCallback((pageNum = 0) => {
+  const fetchProducts = useCallback((pageNum = 0, q = '') => {
     setLoadingList(true)
-    listAdminProducts({ page: pageNum, size: 20 })
+    listAdminProducts({ page: pageNum, size: 20, q })
       .then(data => {
         setProducts(data.items ?? data)
         setTotalPages(data.totalPages ?? 1)
@@ -81,6 +83,15 @@ const AdminPanel = () => {
       .catch(() => { setProducts([]); setTotalPages(1) })
       .finally(() => setLoadingList(false))
   }, [])
+
+  const handleSearch = (val) => {
+    setSearch(val)
+    searchRef.current = val
+    clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(() => {
+      fetchProducts(0, searchRef.current)
+    }, 300)
+  }
 
   useEffect(() => { fetchProducts(0) }, [fetchProducts])
 
@@ -94,14 +105,14 @@ const AdminPanel = () => {
     try {
       await deleteProduct(deleteTarget.id)
       showToast('Producto eliminado')
-      fetchProducts(page)
+      fetchProducts(page, searchRef.current)
       setDeleteTarget(null)
     } catch (err) {
       if (err.status === 409) {
         showToast('No se puede eliminar: tiene órdenes asociadas')
       } else if (err.status === 404) {
         showToast('El producto ya no existe')
-        fetchProducts(page)
+        fetchProducts(page, searchRef.current)
       } else {
         showToast('Error al eliminar el producto')
       }
@@ -113,12 +124,8 @@ const AdminPanel = () => {
 
   const handleSave = (_saved, savedMode) => {
     showToast(savedMode === 'edit' ? 'Producto actualizado' : 'Producto creado')
-    fetchProducts(savedMode === 'edit' ? page : 0)
+    fetchProducts(savedMode === 'edit' ? page : 0, searchRef.current)
   }
-
-  const filtered = products.filter(p =>
-    `${p.name} ${p.brand}`.toLowerCase().includes(search.toLowerCase())
-  )
 
   const activeCount = products.filter(p => p.active).length
   const noStockCount = products.filter(p => p.stock === 0).length
@@ -246,7 +253,7 @@ const AdminPanel = () => {
           <div className="md:hidden flex items-center justify-between" style={{ gap: '10px' }}>
             <div className="flex flex-col" style={{ gap: '2px', flex: 1 }}>
               <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>Lista de Productos</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{filtered.length} de {products.length} productos</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{products.length} de {products.length} productos</span>
             </div>
             <button onClick={() => setModal('add')} className="flex items-center justify-center border-none cursor-pointer"
               style={{ backgroundColor: '#24A8F5', borderRadius: '8px', width: '40px', height: '40px' }}>
@@ -258,7 +265,7 @@ const AdminPanel = () => {
           <div className="md:hidden flex items-center"
             style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', gap: '8px', border: '1px solid #1B2333' }}>
             <Search size={16} color="#AAB3C5" />
-            <input placeholder="Buscar producto..." value={search} onChange={e => setSearch(e.target.value)}
+            <input placeholder="Buscar producto..." value={search} onChange={e => handleSearch(e.target.value)}
               className="bg-transparent border-none outline-none w-full"
               style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }} />
           </div>
@@ -273,7 +280,7 @@ const AdminPanel = () => {
               <div className="flex items-center"
                 style={{ backgroundColor: '#0E1424', borderRadius: '6px', height: '36px', padding: '0 12px', gap: '8px', border: '1px solid #1B2333', width: '220px' }}>
                 <Search size={14} color="#AAB3C5" />
-                <input placeholder="Buscar producto..." value={search} onChange={e => setSearch(e.target.value)}
+                <input placeholder="Buscar producto..." value={search} onChange={e => handleSearch(e.target.value)}
                   className="bg-transparent border-none outline-none w-full"
                   style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }} />
               </div>
@@ -295,7 +302,7 @@ const AdminPanel = () => {
           {/* Mobile Product Cards */}
           {!loadingList && (
             <div className="md:hidden flex flex-col" style={{ gap: '10px' }}>
-              {filtered.map((p) => (
+              {products.map((p) => (
                 <div key={p.id} className="flex flex-col"
                   style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '14px', gap: '10px', border: '1px solid #1B2333' }}>
                   <div className="flex flex-col" style={{ gap: '2px' }}>
@@ -365,7 +372,7 @@ const AdminPanel = () => {
               </div>
 
               <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
-                {filtered.length === 0 && (
+                {products.length === 0 && (
                   <div className="flex items-center justify-center" style={{ padding: '32px' }}>
                     <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
                       {search ? 'Sin resultados para esa búsqueda' : 'No hay productos cargados'}
@@ -373,9 +380,9 @@ const AdminPanel = () => {
                   </div>
                 )}
 
-                {filtered.map((p, i) => (
+                {products.map((p, i) => (
                   <div key={p.id} className="flex items-center"
-                    style={{ padding: '12px 16px', borderBottom: i < filtered.length - 1 ? '1px solid #1B2333' : 'none' }}>
+                    style={{ padding: '12px 16px', borderBottom: i < products.length - 1 ? '1px solid #1B2333' : 'none' }}>
                     <div className="flex flex-col" style={{ flex: 1, gap: '2px' }}>
                       <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>{p.name}</span>
                       <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{p.brand}</span>
@@ -411,7 +418,7 @@ const AdminPanel = () => {
                 </span>
                 <div className="flex items-center" style={{ gap: '4px' }}>
                   <button
-                    onClick={() => fetchProducts(page - 1)}
+                    onClick={() => fetchProducts(page - 1, searchRef.current)}
                     disabled={page === 0}
                     className="flex items-center justify-center cursor-pointer border-none"
                     style={{ width: '28px', height: '28px', backgroundColor: page === 0 ? '#0A0C14' : '#1B2333', borderRadius: '4px', opacity: page === 0 ? 0.5 : 1 }}
@@ -419,14 +426,14 @@ const AdminPanel = () => {
                     <ChevronLeft size={14} color="#F5F7FA" />
                   </button>
                   {Array.from({ length: totalPages }, (_, i) => i).map(i => (
-                    <button key={i} onClick={() => fetchProducts(i)}
+                    <button key={i} onClick={() => fetchProducts(i, searchRef.current)}
                       className="flex items-center justify-center cursor-pointer border-none"
                       style={{ width: '28px', height: '28px', backgroundColor: i === page ? '#24A8F5' : '#1B2333', borderRadius: '4px' }}>
                       <span style={{ fontFamily: 'Poppins', fontSize: '12px', fontWeight: i === page ? '700' : 'normal', color: '#F5F7FA' }}>{i + 1}</span>
                     </button>
                   ))}
                   <button
-                    onClick={() => fetchProducts(page + 1)}
+                    onClick={() => fetchProducts(page + 1, searchRef.current)}
                     disabled={page >= totalPages - 1}
                     className="flex items-center justify-center cursor-pointer border-none"
                     style={{ width: '28px', height: '28px', backgroundColor: page >= totalPages - 1 ? '#0A0C14' : '#1B2333', borderRadius: '4px', opacity: page >= totalPages - 1 ? 0.5 : 1 }}
