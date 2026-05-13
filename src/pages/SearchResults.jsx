@@ -97,6 +97,7 @@ const SearchResults = () => {
   const brandParam = searchParams.get('brand') ?? ''
   const minParam   = searchParams.get('minPrice') ?? ''
   const maxParam   = searchParams.get('maxPrice') ?? ''
+  const badgeParam = searchParams.get('badge') ?? ''
   const sortOrder  = searchParams.get('sort') ?? 'relevance'
   const { sidePadding, cardFlex } = useWindowWidth()
 
@@ -110,7 +111,7 @@ const SearchResults = () => {
 
   const clearFilters = () => {
     const next = new URLSearchParams(searchParams)
-    ;['category', 'brand', 'minPrice', 'maxPrice'].forEach(k => next.delete(k))
+    ;['category', 'brand', 'minPrice', 'maxPrice', 'badge'].forEach(k => next.delete(k))
     next.delete('page')
     setSearchParams(next)
   }
@@ -145,6 +146,7 @@ const SearchResults = () => {
       brand: brandParam || undefined,
       minPrice: minParam || undefined,
       maxPrice: maxParam || undefined,
+      badge: badgeParam || undefined,
       sort: sortParam,
       page: parsedPage - 1,
       size: LIMIT,
@@ -162,11 +164,11 @@ const SearchResults = () => {
         setServerTotalPages(1)
       })
     return () => { cancelled = true }
-  }, [q, catParam, brandParam, minParam, maxParam, sortOrder, parsedPage, priceValid])
+  }, [q, catParam, brandParam, minParam, maxParam, badgeParam, sortOrder, parsedPage, priceValid])
 
   useEffect(() => {
     let cancelled = false
-    getFacets({ q, category: catParam === 'all' ? undefined : catParam })
+    getFacets({ q, category: catParam === 'all' ? undefined : catParam, badge: badgeParam || undefined })
       .then(facets => {
         if (cancelled) return
         setAvailableBrands(facets?.brands ?? [])
@@ -180,7 +182,7 @@ const SearchResults = () => {
         setCatalogMax(null)
       })
     return () => { cancelled = true }
-  }, [q, catParam])
+  }, [q, catParam, badgeParam])
 
   const totalPages = serverTotalPages
   const currentPage = Math.min(parsedPage, totalPages)
@@ -213,7 +215,7 @@ const SearchResults = () => {
       ? `Mostrando ${from}–${to} de ${total} productos`
       : total === 1 ? '1 producto' : `${total} productos`
 
-  const hasActiveFilters = catParam !== 'all' || !!brandParam || !!minParam || !!maxParam
+  const hasActiveFilters = catParam !== 'all' || !!brandParam || !!minParam || !!maxParam || !!badgeParam
   const sortedLength = total
 
   // ── Active chips ──────────────────────────────────────────────
@@ -225,6 +227,7 @@ const SearchResults = () => {
   if (brandParam) activeChips.push({ key: 'brand', label: brandParam })
   if (minParam)   activeChips.push({ key: 'minPrice', label: `Desde $${Number(minParam).toLocaleString('es-AR')}` })
   if (maxParam)   activeChips.push({ key: 'maxPrice', label: `Hasta $${Number(maxParam).toLocaleString('es-AR')}` })
+  if (badgeParam) activeChips.push({ key: 'badge', label: `Badge: ${badgeParam}` })
 
   const chips = hasActiveFilters && (
     <div className="flex flex-wrap items-center" style={{ gap: '8px' }}>
@@ -294,7 +297,7 @@ const SearchResults = () => {
         <div className="flex items-center w-full" style={{ gap: '12px' }}>
           <div className="flex flex-col flex-1" style={{ gap: '4px' }}>
             <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
-              {q ? <>Resultados para &ldquo;{q}&rdquo;</> : 'Todos los productos'}
+              {q ? <>Resultados para &ldquo;{q}&rdquo;</> : badgeParam === 'OFERTA' ? 'Ofertas' : 'Todos los productos'}
             </span>
             <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>
               {countLabel}
@@ -312,7 +315,7 @@ const SearchResults = () => {
         <div className="flex items-center w-full" style={{ gap: '10px' }}>
           <div className="flex flex-col flex-1" style={{ gap: '2px' }}>
             <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
-              {q ? <>&ldquo;{q}&rdquo;</> : 'Todos los productos'}
+              {q ? <>&ldquo;{q}&rdquo;</> : badgeParam === 'OFERTA' ? 'Ofertas' : 'Todos los productos'}
             </span>
             <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {countLabel}

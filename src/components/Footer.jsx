@@ -1,273 +1,90 @@
 import { useState } from 'react'
-import { Camera, X, Play, Music2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 
-const desktopLinks = {
-  Productos: ['Notebooks Gamer', 'Desktops Gamer', 'Monitores', 'Periféricos', 'Sillas Gamer'],
-  Empresa: ['Nosotros', 'Blog', 'Trabaja con nosotros', 'Prensa'],
-  Soporte: ['Centro de ayuda', 'Garantía', 'Envíos', 'Devoluciones'],
-}
+const SUPPORT_EMAIL = 'sharkwaregaming@gmail.com'
+const SUPPORT_SUBJECT = 'Consulta de soporte — Sharkware Gaming'
+const SUPPORT_HREF = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(SUPPORT_EMAIL)}&su=${encodeURIComponent(SUPPORT_SUBJECT)}`
 
-const mobileLinks = {
-  Productos: ['Notebooks', 'Desktops', 'Monitores', 'Periféricos'],
-  Empresa: ['Nosotros', 'Contacto', 'Garantía', 'Envíos'],
-}
-
-const paymentMethods = ['VISA', 'Mastercard', 'AMEX', 'Mercado Pago', 'Naranja X']
-const mobilePayments = ['VISA', 'MC', 'AMEX']
-
-const socials = [
-  { icon: Camera, label: 'Instagram' },
-  { icon: X, label: 'Twitter' },
-  { icon: Play, label: 'YouTube' },
-  { icon: Music2, label: 'TikTok' },
+const navLinks = [
+  { label: 'Productos', to: '/search' },
+  { label: 'Ofertas', to: '/search?badge=OFERTA' },
+  { label: 'Soporte', href: SUPPORT_HREF, external: true },
+  { label: 'Nosotros', to: '#' },
 ]
 
 const Footer = () => {
   const [hoveredLink, setHoveredLink] = useState(null)
-  const [hoveredSocial, setHoveredSocial] = useState(null)
-  const [hoveredNewsletter, setHoveredNewsletter] = useState(false)
   const { sidePadding } = useWindowWidth()
 
   return (
     <>
       {/* ── Mobile Footer ── */}
       <footer
-        className="md:hidden flex flex-col w-full"
-        style={{ backgroundColor: '#060810', padding: '24px 16px 20px', gap: '20px' }}
+        className="md:hidden flex flex-col items-center w-full"
+        style={{ backgroundColor: '#060810', padding: '20px 16px', gap: '16px' }}
       >
-        {/* Divider */}
         <div style={{ backgroundColor: '#1E2232', height: '1px', width: '100%' }} />
 
-        {/* Brand */}
-        <div className="flex flex-col" style={{ gap: '8px' }}>
-          <div className="flex flex-col">
-            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700', letterSpacing: '1px' }}>
-              SHARKWARE
-            </span>
-            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '8px', fontWeight: '700', letterSpacing: '2px' }}>
-              GAMING
-            </span>
-          </div>
-          <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px', lineHeight: '1.5', margin: 0 }}>
-            Tu tienda gamer de confianza — Sharkware Gaming
-          </p>
-        </div>
-
-        {/* Newsletter */}
-        <div className="flex flex-col" style={{ gap: '10px' }}>
-          <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
-            Suscribite al Newsletter
+        <div className="flex flex-col items-center" style={{ gap: '2px' }}>
+          <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700', letterSpacing: '1px' }}>
+            SHARKWARE
           </span>
-          <div className="flex items-center" style={{ height: '42px' }}>
-            <input
-              type="email"
-              placeholder="Tu email gamer..."
-              className="bg-transparent border-none outline-none"
-              style={{
-                flex: 1,
-                height: '100%',
-                backgroundColor: '#1E2232',
-                borderRadius: '7px 0 0 7px',
-                padding: '0 14px',
-                color: '#AAB3C5',
-                fontFamily: 'Poppins',
-                fontSize: '13px',
-              }}
-            />
-            <button
-              onMouseEnter={() => setHoveredNewsletter(true)}
-              onMouseLeave={() => setHoveredNewsletter(false)}
-              className="cursor-pointer border-none"
-              style={{
-                height: '100%',
-                padding: '0 16px',
-                background: 'linear-gradient(135deg, #00C8FF 0%, #1A9FFF 100%)',
-                borderRadius: '0 7px 7px 0',
-                color: '#060810',
-                fontFamily: 'Poppins',
-                fontSize: '13px',
-                fontWeight: '700',
-                boxShadow: hoveredNewsletter ? '0 4px 16px rgba(0,200,255,0.4)' : 'none',
-                transition: 'box-shadow 0.2s ease',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              Suscribirme
-            </button>
-          </div>
+          <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '8px', fontWeight: '700', letterSpacing: '2px' }}>
+            GAMING
+          </span>
         </div>
 
-        {/* Link columns */}
-        <div className="flex" style={{ gap: '32px' }}>
-          {Object.entries(mobileLinks).map(([heading, links]) => (
-            <div key={heading} className="flex flex-col" style={{ gap: '8px' }}>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '700' }}>
-                {heading}
-              </span>
-              {links.map((link) => (
-                <Link
-                  key={link}
-                  to="#"
-                  className="no-underline"
-                  onMouseEnter={() => setHoveredLink(link)}
-                  onMouseLeave={() => setHoveredLink(null)}
-                  style={{ color: hoveredLink === link ? '#F5F7FA' : '#8890A4', fontFamily: 'Poppins', fontSize: '12px', transition: 'color 0.15s ease' }}
-                >
-                  {link}
-                </Link>
-              ))}
-            </div>
-          ))}
+        <div className="flex flex-wrap justify-center" style={{ gap: '20px' }}>
+          {navLinks.map(({ label, to, href }) => {
+            const sharedProps = {
+              className: 'no-underline',
+              onMouseEnter: () => setHoveredLink(label),
+              onMouseLeave: () => setHoveredLink(null),
+              style: { color: hoveredLink === label ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', transition: 'color 0.15s ease' },
+            }
+            return href
+              ? <a key={label} href={href} target="_blank" rel="noopener noreferrer" {...sharedProps}>{label}</a>
+              : <Link key={label} to={to} {...sharedProps}>{label}</Link>
+          })}
         </div>
 
-        {/* Payments + Copyright */}
-        <div className="flex items-center w-full" style={{ gap: '12px' }}>
-          <div className="flex" style={{ gap: '6px' }}>
-            {mobilePayments.map((method) => (
-              <span
-                key={method}
-                style={{ backgroundColor: '#1E2232', borderRadius: '6px', padding: '5px 10px', color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700' }}
-              >
-                {method}
-              </span>
-            ))}
-          </div>
-        </div>
-        <span style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '11px' }}>
-          © 2025 Sharkware Gaming. Todos los derechos reservados.
+        <span style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '11px', textAlign: 'center' }}>
+          © 2026 Sharkware Gaming. Todos los derechos reservados.
         </span>
       </footer>
 
       {/* ── Desktop Footer ── */}
       <footer
-        className="hidden md:flex flex-col w-full"
-        style={{ backgroundColor: '#060810', padding: `48px ${sidePadding} 40px`, gap: '32px' }}
+        className="hidden md:flex items-center w-full"
+        style={{ backgroundColor: '#060810', padding: `24px ${sidePadding}`, gap: '32px', borderTop: '1px solid #1E2232' }}
       >
-        {/* Divider */}
-        <div style={{ backgroundColor: '#1E2232', height: '1px', width: '100%' }} />
-
-        {/* Top: Brand + Links */}
-        <div className="flex w-full" style={{ gap: '48px', justifyContent: 'center' }}>
-          {/* Brand */}
-          <div className="flex flex-col" style={{ gap: '16px', width: '260px', flexShrink: 0 }}>
-            <div className="flex flex-col">
-              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700', letterSpacing: '1px' }}>
-                SHARKWARE
-              </span>
-              <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
-                GAMING
-              </span>
-            </div>
-            <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', width: '240px', lineHeight: '1.5' }}>
-              Tu tienda gamer de confianza. Componentes, notebooks, desktops y periféricos al mejor precio — Sharkware Gaming.
-            </p>
-            {/* Socials */}
-            <div className="flex" style={{ gap: '10px' }}>
-              {socials.map(({ icon: Icon, label }) => (
-                <button
-                  key={label}
-                  aria-label={label}
-                  onMouseEnter={() => setHoveredSocial(label)}
-                  onMouseLeave={() => setHoveredSocial(null)}
-                  className="flex items-center justify-center cursor-pointer border-none"
-                  style={{ backgroundColor: hoveredSocial === label ? '#252840' : '#1E2232', borderRadius: '8px', padding: '8px', width: '36px', height: '36px', transition: 'background-color 0.15s ease' }}
-                >
-                  <Icon size={16} color={hoveredSocial === label ? '#AAB3C5' : '#8890A4'} />
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Link columns */}
-          <div className="flex flex-1" style={{ gap: '48px' }}>
-            {Object.entries(desktopLinks).map(([heading, links]) => (
-              <div key={heading} className="flex flex-col" style={{ gap: '12px' }}>
-                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>
-                  {heading}
-                </span>
-                {links.map((link) => (
-                  <Link
-                    key={link}
-                    to="#"
-                    className="no-underline"
-                    onMouseEnter={() => setHoveredLink(link)}
-                    onMouseLeave={() => setHoveredLink(null)}
-                    style={{ color: hoveredLink === link ? '#F5F7FA' : '#8890A4', fontFamily: 'Poppins', fontSize: '13px', transition: 'color 0.15s ease' }}
-                  >
-                    {link}
-                  </Link>
-                ))}
-              </div>
-            ))}
-
-            {/* Newsletter */}
-            <div className="flex flex-col" style={{ gap: '12px', width: '240px' }}>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>
-                Newsletter
-              </span>
-              <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', width: '200px', lineHeight: '1.5' }}>
-                Recibí ofertas y novedades exclusivas.
-              </p>
-              <div className="flex items-center" style={{ height: '40px' }}>
-                <input
-                  type="email"
-                  placeholder="Tu email gamer..."
-                  className="bg-transparent border-none outline-none"
-                  style={{
-                    flex: 1,
-                    height: '100%',
-                    backgroundColor: '#1E2232',
-                    borderRadius: '7px 0 0 7px',
-                    padding: '0 12px',
-                    color: '#AAB3C5',
-                    fontFamily: 'Poppins',
-                    fontSize: '13px',
-                  }}
-                />
-                <button
-                  onMouseEnter={() => setHoveredNewsletter(true)}
-                  onMouseLeave={() => setHoveredNewsletter(false)}
-                  className="cursor-pointer border-none"
-                  style={{
-                    height: '100%',
-                    padding: '0 14px',
-                    background: 'linear-gradient(135deg, #00C8FF 0%, #1A9FFF 100%)',
-                    borderRadius: '0 7px 7px 0',
-                    color: '#060810',
-                    fontFamily: 'Poppins',
-                    fontSize: '13px',
-                    fontWeight: '700',
-                    boxShadow: hoveredNewsletter ? '0 4px 16px rgba(0,200,255,0.4)' : 'none',
-                    transition: 'box-shadow 0.2s ease',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  Enviar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom: payments + copyright */}
-        <div className="flex items-center w-full" style={{ gap: '20px', justifyContent: 'center' }}>
-          <div className="flex" style={{ gap: '8px' }}>
-            {paymentMethods.map((method) => (
-              <span
-                key={method}
-                style={{ backgroundColor: '#1E2232', borderRadius: '6px', padding: '6px 12px', color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700' }}
-              >
-                {method}
-              </span>
-            ))}
-          </div>
-          <div className="flex-1" />
-          <span style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '12px' }}>
-            © 2025 Sharkware Gaming Store. Todos los derechos reservados.
+        <div className="flex flex-col" style={{ gap: '2px', flexShrink: 0 }}>
+          <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700', letterSpacing: '1px' }}>
+            SHARKWARE
+          </span>
+          <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
+            GAMING
           </span>
         </div>
+
+        <nav className="flex flex-1 justify-center" style={{ gap: '48px' }}>
+          {navLinks.map(({ label, to, href }) => {
+            const sharedProps = {
+              className: 'no-underline',
+              onMouseEnter: () => setHoveredLink(label),
+              onMouseLeave: () => setHoveredLink(null),
+              style: { color: hoveredLink === label ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', transition: 'color 0.15s ease' },
+            }
+            return href
+              ? <a key={label} href={href} target="_blank" rel="noopener noreferrer" {...sharedProps}>{label}</a>
+              : <Link key={label} to={to} {...sharedProps}>{label}</Link>
+          })}
+        </nav>
+
+        <span style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '12px', flexShrink: 0, whiteSpace: 'nowrap' }}>
+          © 2026 Sharkware Gaming. Todos los derechos reservados.
+        </span>
       </footer>
     </>
   )
