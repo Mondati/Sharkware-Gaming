@@ -1,10 +1,15 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Bot, X, Send } from 'lucide-react'
 
 const ChatbotPanel = ({ onClose }) => {
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
+  )
+
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 767px)')
     const apply = () => {
+      setIsMobile(mq.matches)
       document.body.style.overflow = mq.matches ? 'hidden' : ''
     }
     apply()
@@ -15,21 +20,21 @@ const ChatbotPanel = ({ onClose }) => {
     }
   }, [])
 
-  return (
-    <>
-      <div
-        onClick={onClose}
-        className="md:hidden fixed inset-0"
-        style={{
-          backgroundColor: 'rgba(6,8,16,0.55)',
-          backdropFilter: 'blur(6px)',
-          WebkitBackdropFilter: 'blur(6px)',
-          zIndex: 49,
-        }}
-      />
-    <div
-      className="flex flex-col"
-      style={{
+  const panelStyle = isMobile
+    ? {
+        position: 'fixed',
+        top: '72px',
+        left: '16px',
+        right: '16px',
+        bottom: '96px',
+        backgroundColor: '#0E1424',
+        border: '1px solid #1B2333',
+        borderRadius: '14px',
+        boxShadow: '0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,200,255,0.25)',
+        zIndex: 50,
+        overflow: 'hidden',
+      }
+    : {
         position: 'fixed',
         bottom: '112px',
         right: '32px',
@@ -43,8 +48,21 @@ const ChatbotPanel = ({ onClose }) => {
         boxShadow: '0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,200,255,0.25)',
         zIndex: 50,
         overflow: 'hidden',
-      }}
-    >
+      }
+
+  return (
+    <>
+      <div
+        onClick={onClose}
+        className="md:hidden fixed inset-0"
+        style={{
+          backgroundColor: 'rgba(6,8,16,0.55)',
+          backdropFilter: 'blur(6px)',
+          WebkitBackdropFilter: 'blur(6px)',
+          zIndex: 49,
+        }}
+      />
+    <div className="flex flex-col" style={panelStyle}>
       <div
         className="flex items-center justify-between"
         style={{

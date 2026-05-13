@@ -7,6 +7,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom'
 import AdminBottomNav from './AdminBottomNav'
 import ProductModal from './ProductModal'
+import ConfirmModal from './ConfirmModal'
 import { listAdminProducts, deleteProduct } from '../../api/products'
 import { useAuth } from '../../context/AuthContext'
 import { formatARS } from '../../utils/formatPrice'
@@ -66,6 +67,8 @@ const AdminPanel = () => {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
+  const [deleteTarget, setDeleteTarget] = useState(null)
+  const [deleting, setDeleting] = useState(false)
 
   const fetchProducts = useCallback((pageNum = 0) => {
     setLoadingList(true)
@@ -83,12 +86,16 @@ const AdminPanel = () => {
 
   const openEdit = (p) => { setEditTarget(p); setModal('edit') }
 
-  const handleDelete = async (product) => {
-    if (!window.confirm(`¿Eliminar "${product.name}"? Esta acción no se puede deshacer.`)) return
+  const handleDelete = (product) => setDeleteTarget(product)
+
+  const confirmDelete = async () => {
+    if (!deleteTarget) return
+    setDeleting(true)
     try {
-      await deleteProduct(product.id)
+      await deleteProduct(deleteTarget.id)
       showToast('Producto eliminado')
       fetchProducts(page)
+      setDeleteTarget(null)
     } catch (err) {
       if (err.status === 409) {
         showToast('No se puede eliminar: tiene órdenes asociadas')
@@ -98,6 +105,9 @@ const AdminPanel = () => {
       } else {
         showToast('Error al eliminar el producto')
       }
+      setDeleteTarget(null)
+    } finally {
+      setDeleting(false)
     }
   }
 
@@ -439,6 +449,17 @@ const AdminPanel = () => {
           onSave={handleSave}
         />
       )}
+
+      <ConfirmModal
+        open={!!deleteTarget}
+        title="Eliminar producto"
+        message={deleteTarget ? `¿Seguro que querés eliminar "${deleteTarget.name}"? Esta acción no se puede deshacer.` : ''}
+        confirmLabel="Eliminar"
+        loadingLabel="Eliminando..."
+        loading={deleting}
+        onConfirm={confirmDelete}
+        onClose={() => setDeleteTarget(null)}
+      />
 
       {/* ── Mobile Bottom Nav ── */}
       <AdminBottomNav />

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import Footer from '../components/Footer'
@@ -42,6 +42,7 @@ const Home = () => {
   const [notebooksList, setNotebooksList] = useState([])
   const [monitorsList, setMonitorsList] = useState([])
   const [categoryProducts, setCategoryProducts] = useState([])
+  const catalogRef = useRef(null)
 
   useEffect(() => {
     getCategories()
@@ -74,6 +75,14 @@ const Home = () => {
       .catch(() => { if (!cancelled) setCategoryProducts([]) })
     return () => { cancelled = true }
   }, [activeCategory, sortOrder])
+
+  useEffect(() => {
+    if (activeCategory === 'all') return
+    const id = requestAnimationFrame(() => {
+      catalogRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+    return () => cancelAnimationFrame(id)
+  }, [activeCategory])
 
   useEffect(() => {
     if (isPaused || newProducts.length === 0) return
@@ -366,7 +375,7 @@ const Home = () => {
       {/* ═══════════════ CATÁLOGO — filtrado por categoría o secciones por defecto ═══════════════ */}
 
       {sortedFilteredByCategory ? (
-        <>
+        <div ref={catalogRef}>
           {/* Desktop — categoría filtrada */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
             <div className="flex items-center w-full">
@@ -444,7 +453,7 @@ const Home = () => {
               </div>
             )}
           </section>
-        </>
+        </div>
       ) : (
         <>
           {/* ── Nuevos Productos ─────────────────────────────────────────── */}

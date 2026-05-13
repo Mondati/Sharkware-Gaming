@@ -97,8 +97,8 @@ const App = () => {
               position: 'fixed',
               bottom: '32px',
               right: '32px',
-              width: '64px',
-              height: '64px',
+              width: '52px',
+              height: '52px',
               borderRadius: '999px',
               backgroundColor: '#0E1424',
               border: '1px solid rgba(0,200,255,0.2)',
@@ -106,7 +106,7 @@ const App = () => {
               zIndex: 50,
             }}
           >
-            {chatOpen ? <X size={28} color="#FFFFFF" /> : <Bot size={32} color="#FFFFFF" />}
+            {chatOpen ? <X size={22} color="#FFFFFF" /> : <Bot size={26} color="#FFFFFF" />}
           </button>
         </>
       )}
