@@ -113,6 +113,10 @@ const ProductDetail = () => {
     { icon: HardDrive,   label: 'ALMACENAMIENTO', value: product.specs?.storage ?? product.specs?.resolution },
   ].filter((s) => s.value)
 
+  const quickSpecRows = []
+  if (quickSpecs.length > 0) quickSpecRows.push(quickSpecs.slice(0, 2))
+  if (quickSpecs.length > 2) quickSpecRows.push(quickSpecs.slice(2, 4))
+
   const detailSpecs = Object.entries(product.specs ?? {}).map(([key, value]) => ({
     label: key.charAt(0).toUpperCase() + key.slice(1),
     value,
@@ -221,7 +225,7 @@ const ProductDetail = () => {
                 backgroundColor: product.badge === 'NUEVO' ? '#22C55E' : '#EF4444',
                 borderRadius: '5px', padding: '4px 10px',
               }}>
-                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>
+                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>
                   {product.badge}
                 </span>
               </div>
@@ -268,7 +272,7 @@ const ProductDetail = () => {
           </div>
 
           {/* Title */}
-          <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '26px', fontWeight: '800', lineHeight: '1.25', margin: '0 0 10px 0' }}>
+          <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '26px', fontWeight: '600', lineHeight: '1.25', margin: '0 0 10px 0' }}>
             {product.name}
           </h1>
 
@@ -321,7 +325,7 @@ const ProductDetail = () => {
           {/* Quick specs */}
           {quickSpecs.length > 0 && (
             <div className="flex flex-col" style={{ gap: '8px', marginBottom: '24px' }}>
-              {[quickSpecs.slice(0, 2), quickSpecs.slice(2, 4)].filter((r) => r.length > 0).map((row, ri) => (
+              {quickSpecRows.map((row, ri) => (
                 <div key={row.map(s => s.label).join('-')} className="flex" style={{ gap: '8px' }}>
                   {row.map(({ icon: Icon, label, value }) => (
                     <div
@@ -506,7 +510,7 @@ const ProductDetail = () => {
         {product.badge && (
           <div className="flex" style={{ gap: '8px' }}>
             <div style={{ backgroundColor: product.badge === 'NUEVO' ? '#22C55E' : '#EF4444', borderRadius: '5px', padding: '4px 10px' }}>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>
+              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>
                 {product.badge}
               </span>
             </div>
@@ -517,7 +521,7 @@ const ProductDetail = () => {
           {product.brand}
         </span>
 
-        <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '20px', fontWeight: '800', lineHeight: '1.25', margin: 0 }}>
+        <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '20px', fontWeight: '600', lineHeight: '1.25', margin: 0 }}>
           {product.name}
         </h1>
 
@@ -540,7 +544,7 @@ const ProductDetail = () => {
 
         {quickSpecs.length > 0 && (
           <div className="flex flex-col" style={{ gap: '8px' }}>
-            {[quickSpecs.slice(0, 2), quickSpecs.slice(2, 4)].filter((r) => r.length > 0).map((row, ri) => (
+            {quickSpecRows.map((row, ri) => (
               <div key={row.map(s => s.label).join('-')} className="flex" style={{ gap: '8px' }}>
                 {row.map(({ icon: Icon, label, value }) => (
                   <div

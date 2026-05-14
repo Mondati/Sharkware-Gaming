@@ -122,7 +122,7 @@ const Navbar = () => {
                       position: 'absolute', top: '42px', right: 0,
                       backgroundColor: '#1E2232', borderRadius: '12px',
                       padding: '12px 16px', minWidth: '160px',
-                      border: '1px solid #1B2333', zIndex: 100,
+                      border: '1px solid #1B2333', zIndex: 10,
                       display: 'flex', flexDirection: 'column', gap: '10px'
                     }}>
                       <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>

@@ -126,7 +126,7 @@ const Checkout = () => {
             className="flex items-center"
             style={{ backgroundColor: '#0D2E52', borderRadius: '20px', padding: '4px 10px', gap: '4px', alignSelf: 'flex-start' }}
           >
-            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600' }}>★ Recomendado</span>
+            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>★ Recomendado</span>
           </div>
           <div className="flex items-center" style={{ gap: '6px' }}>
             <ShieldCheck size={14} color="#22C55E" />
@@ -193,7 +193,7 @@ const Checkout = () => {
               <div className="flex items-center" style={{ gap: '10px' }}>
                 <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>Pagar con MercadoPago</span>
                 <div style={{ backgroundColor: '#0D2E52', borderRadius: '20px', padding: '4px 10px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600' }}>★ Recomendado</span>
+                  <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>★ Recomendado</span>
                 </div>
               </div>
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Tarjeta, cuotas y otros medios disponibles</span>

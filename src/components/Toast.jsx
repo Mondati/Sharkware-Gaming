@@ -18,7 +18,7 @@ const Toast = () => {
         borderRadius: '12px',
         padding: '12px 20px',
         gap: '10px',
-        zIndex: 1000,
+        zIndex: 30,
         boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
         whiteSpace: 'nowrap',
         overflow: 'hidden',

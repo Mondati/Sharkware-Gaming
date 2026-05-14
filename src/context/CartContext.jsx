@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useEffect, useState, useRef } from 'react'
+import { createContext, use, useReducer, useEffect, useState, useRef } from 'react'
 
 const CartContext = createContext(null)
 const STORAGE_KEY = 'sw_cart'
@@ -7,9 +7,10 @@ const loadCart = () => {
   try {
     const data = JSON.parse(localStorage.getItem(STORAGE_KEY))
     if (!Array.isArray(data)) return []
-    return data
-      .map(i => ({ ...i, quantity: i.quantity ?? 1, price_ars: i.price_ars ?? 0 }))
-      .filter(i => i.id != null)
+    return data.reduce((acc, i) => {
+      if (i.id != null) acc.push({ ...i, quantity: i.quantity ?? 1, price_ars: i.price_ars ?? 0 })
+      return acc
+    }, [])
   } catch {
     return []
   }
@@ -87,7 +88,7 @@ export const CartProvider = ({ children }) => {
 }
 
 export const useCart = () => {
-  const ctx = useContext(CartContext)
+  const ctx = use(CartContext)
   if (!ctx) throw new Error('useCart must be used within CartProvider')
   return ctx
 }

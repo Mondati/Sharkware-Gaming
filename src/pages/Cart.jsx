@@ -374,7 +374,7 @@ const Cart = () => {
                     <img src={item.image_url} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display = 'none' }} />
                   </div>
                     <div className="flex flex-col" style={{ gap: '4px' }}>
-                      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
+                      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
                         {item.brand}
                       </span>
                       <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
@@ -528,14 +528,17 @@ const Cart = () => {
       {/* ═══════════════ CLEAR CART MODAL ═══════════════ */}
       {showClearConfirm && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Confirmar vaciar carrito"
           className="fixed inset-0 flex items-center justify-center"
-          style={{ zIndex: 9999, backgroundColor: 'rgba(0,0,0,0.8)' }}
-          onClick={() => setShowClearConfirm(false)}
+          style={{ zIndex: 20, backgroundColor: 'rgba(0,0,0,0.8)' }}
+          onClick={(e) => { if (e.target === e.currentTarget) setShowClearConfirm(false) }}
+          onKeyDown={(e) => { if (e.key === 'Escape') setShowClearConfirm(false) }}
         >
           <div
             className="flex flex-col"
             style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '24px', gap: '20px', width: '90%', maxWidth: '360px', border: '1px solid #1B2333' }}
-            onClick={e => e.stopPropagation()}
           >
             <div className="flex flex-col items-center" style={{ gap: '12px' }}>
               <div
