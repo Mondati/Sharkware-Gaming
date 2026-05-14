@@ -237,7 +237,7 @@ const AdminPanel = () => {
         </div>
 
         {/* Content area */}
-        <div className="flex flex-col" style={{ flex: 1, padding: '28px', gap: '20px', overflowY: 'auto' }}>
+        <div className="flex flex-col sw-scroll" style={{ flex: 1, padding: '28px', gap: '20px', overflowY: 'auto' }}>
 
           {/* Mobile Stats */}
           <div className="md:hidden grid grid-cols-2" style={{ gap: '10px' }}>

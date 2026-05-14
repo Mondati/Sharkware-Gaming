@@ -240,7 +240,7 @@ const MobileBody = ({ mode, product, state, onClose }) => {
       </div>
 
       {/* Form */}
-      <div className="flex flex-col" style={{ flex: 1, padding: '16px', gap: '14px', overflowY: 'auto', paddingBottom: '110px' }}>
+      <div className="flex flex-col sw-scroll" style={{ flex: 1, padding: '16px', gap: '14px', overflowY: 'auto', paddingBottom: '110px' }}>
 
         {globalErr && (
           <div style={{ backgroundColor: '#2D1010', border: '1px solid #EF4444', borderRadius: '8px', padding: '10px 14px' }}>
@@ -495,7 +495,7 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
       {/* Body */}
       <div className="flex" style={{ flex: 1, overflow: 'hidden' }}>
         {/* Left — imagen + galería */}
-        <div className="flex flex-col"
+        <div className="flex flex-col sw-scroll"
           style={{ width: 'clamp(220px, 28%, 280px)', flexShrink: 0, backgroundColor: '#080D1A', padding: '24px', gap: '16px', borderRight: '1px solid #1B2333', overflowY: 'auto' }}>
           <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>
             Imagen del producto {!isEdit && '*'}
@@ -586,7 +586,7 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
         </div>
 
         {/* Right — campos */}
-        <div className="flex flex-col" style={{ flex: 1, padding: '24px', gap: '14px', overflowY: 'auto' }}>
+        <div className="flex flex-col sw-scroll" style={{ flex: 1, padding: '24px', gap: '14px', overflowY: 'auto' }}>
           {/* Nombre + Marca */}
           <div className="flex" style={{ gap: '14px' }}>
             <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
