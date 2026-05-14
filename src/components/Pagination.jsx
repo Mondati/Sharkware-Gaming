@@ -5,7 +5,7 @@ const buildPageItems = (currentPage, totalPages) => {
   const pages = new Set([1, totalPages, currentPage])
   if (currentPage > 1) pages.add(currentPage - 1)
   if (currentPage < totalPages) pages.add(currentPage + 1)
-  const sorted = [...pages].sort((a, b) => a - b)
+  const sorted = Array.from(pages).toSorted((a, b) => a - b)
   const result = []
   for (let i = 0; i < sorted.length; i++) {
     if (i > 0 && sorted[i] - sorted[i - 1] > 1) result.push('...')

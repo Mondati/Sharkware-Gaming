@@ -52,14 +52,19 @@ const ChatbotPanel = ({ onClose }) => {
 
   return (
     <>
-      <div
+      <button
+        type="button"
         onClick={onClose}
+        aria-label="Cerrar panel del chatbot"
         className="md:hidden fixed inset-0"
         style={{
           backgroundColor: 'rgba(6,8,16,0.55)',
           backdropFilter: 'blur(6px)',
           WebkitBackdropFilter: 'blur(6px)',
           zIndex: 49,
+          border: 'none',
+          padding: 0,
+          cursor: 'pointer',
         }}
       />
     <div className="flex flex-col" style={panelStyle}>

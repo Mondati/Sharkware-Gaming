@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { SlidersHorizontal, ChevronDown, ChevronUp } from 'lucide-react'
 
+const EMPTY_CATEGORIES = []
+
 const PriceRangeInputs = ({ catalogMin, catalogMax, minParam, maxParam, onApply, noProducts }) => {
   const [localMin, setLocalMin] = useState(minParam)
   const [localMax, setLocalMax] = useState(maxParam)
@@ -75,7 +77,7 @@ const FilterPanel = ({
   hasActiveFilters,
   onFilterChange,
   onClearFilters,
-  categories = [],
+  categories = EMPTY_CATEGORIES,
 }) => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [hoveredFilter, setHoveredFilter] = useState(null)

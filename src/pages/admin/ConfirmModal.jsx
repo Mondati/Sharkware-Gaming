@@ -33,7 +33,8 @@ const ConfirmModal = ({
 
   return (
     <div
-      onClick={() => { if (!loading) onClose?.() }}
+      role="presentation"
+      onClick={(e) => { if (!loading && e.target === e.currentTarget) onClose?.() }}
       style={{
         position: 'fixed',
         inset: 0,
@@ -47,7 +48,6 @@ const ConfirmModal = ({
       }}
     >
       <div
-        onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-labelledby="confirm-modal-title"

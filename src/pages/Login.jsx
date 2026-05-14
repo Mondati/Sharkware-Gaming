@@ -319,7 +319,7 @@ const Login = () => {
           </div>
 
           {/* Headline */}
-          <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '36px', fontWeight: '800', lineHeight: '1.25', margin: 0 }}>
+          <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '36px', fontWeight: '600', lineHeight: '1.25', margin: 0 }}>
             Tu gear, a un click de distancia
           </h1>
 

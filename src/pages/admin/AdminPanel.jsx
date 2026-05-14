@@ -295,7 +295,7 @@ const AdminPanel = () => {
           {/* Loading state */}
           {loadingList && (
             <div className="flex items-center justify-center" style={{ padding: '40px 0' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Cargando productos...</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Cargando productos…</span>
             </div>
           )}
 

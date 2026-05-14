@@ -203,7 +203,7 @@ const Home = () => {
                 border: 'none',
                 cursor: 'pointer',
                 padding: 0,
-                transition: 'all 0.35s ease',
+                transition: 'width 0.35s ease, background-color 0.35s ease',
               }}
             />
           ))}
@@ -284,7 +284,7 @@ const Home = () => {
                 border: 'none',
                 cursor: 'pointer',
                 padding: 0,
-                transition: 'all 0.35s ease',
+                transition: 'width 0.35s ease, background-color 0.35s ease',
               }}
             />
           ))}
@@ -379,7 +379,7 @@ const Home = () => {
           {/* Desktop — categoría filtrada */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
                 {categories.find((c) => c.id === activeCategory)?.label}
               </span>
               <select
@@ -419,7 +419,7 @@ const Home = () => {
           {/* Mobile — categoría filtrada */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
+              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
                 {categories.find((c) => c.id === activeCategory)?.label}
               </span>
               <select
@@ -460,7 +460,7 @@ const Home = () => {
 
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
               Nuevos Productos
             </span>
             <div className="flex sw-scroll" style={{ gap: '10px', justifyContent: 'space-between', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
@@ -474,7 +474,7 @@ const Home = () => {
 
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
               Nuevos Productos
             </span>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
@@ -488,7 +488,7 @@ const Home = () => {
 
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 40px`, gap: '20px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
               Notebooks Gamer
             </span>
             <div className="flex" style={{ gap: '8px' }}>
@@ -531,7 +531,7 @@ const Home = () => {
 
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
               Notebooks Gamer
             </span>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
@@ -545,7 +545,7 @@ const Home = () => {
 
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 40px`, gap: '20px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
               Monitores Gaming
             </span>
             <div className="flex sw-scroll" style={{ gap: '10px', justifyContent: 'space-between', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
@@ -559,7 +559,7 @@ const Home = () => {
 
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', borderLeft: '3px solid #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
+            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
               Monitores Gaming
             </span>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>

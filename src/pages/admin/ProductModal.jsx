@@ -55,7 +55,7 @@ const useProductForm = ({ mode, product, onSave, onClose, navigate }) => {
 
   const [specRows, setSpecRows] = useState(() => {
     if (isEdit && product?.specs) {
-      return Object.entries(product.specs).map(([key, value]) => ({ key, value }))
+      return Object.entries(product.specs).map(([key, value]) => ({ id: crypto.randomUUID(), key, value }))
     }
     return []
   })
@@ -67,7 +67,7 @@ const useProductForm = ({ mode, product, onSave, onClose, navigate }) => {
   )
   const [galleryDirty, setGalleryDirty] = useState(false)
   const setGallery = (next) => {
-    setGalleryRaw(next)
+    setGalleryRaw(typeof next === 'function' ? next : () => next)
     setGalleryDirty(true)
   }
   const removeExistingGallery = (url) => {
@@ -92,10 +92,10 @@ const useProductForm = ({ mode, product, onSave, onClose, navigate }) => {
     setFieldErrs(fe => ({ ...fe, [k]: undefined }))
   }
 
-  const addSpecRow    = () => setSpecRows(r => r.length >= 20 ? r : [...r, { key: '', value: '' }])
-  const removeSpecRow = (i) => setSpecRows(r => r.filter((_, j) => j !== i))
-  const setSpecKey    = (i, v) => setSpecRows(r => r.map((row, j) => j === i ? { ...row, key: v }   : row))
-  const setSpecVal    = (i, v) => setSpecRows(r => r.map((row, j) => j === i ? { ...row, value: v } : row))
+  const addSpecRow    = () => setSpecRows(r => r.length >= 20 ? r : [...r, { id: crypto.randomUUID(), key: '', value: '' }])
+  const removeSpecRow = (id) => setSpecRows(r => r.filter(row => row.id !== id))
+  const setSpecKey    = (id, v) => setSpecRows(r => r.map(row => row.id === id ? { ...row, key: v }   : row))
+  const setSpecVal    = (id, v) => setSpecRows(r => r.map(row => row.id === id ? { ...row, value: v } : row))
 
   const validate = () => {
     const errs = {}
@@ -154,7 +154,8 @@ const useProductForm = ({ mode, product, onSave, onClose, navigate }) => {
     const remaining = 3 - existingGallery.length - gallery.length
     if (remaining <= 0) return
     setFieldErrs(fe => ({ ...fe, gallery: undefined }))
-    setGallery([...gallery, ...arr.slice(0, remaining)])
+    const toAdd = arr.slice(0, remaining)
+    setGallery(prev => [...prev, ...toAdd])
   }
 
   const handleSave = async () => {
@@ -252,9 +253,9 @@ const MobileBody = ({ mode, product, state, onClose }) => {
           <span style={MOBILE_LABEL}>Imagen principal {!isEdit && '*'}</span>
           <input ref={imgRef} type="file" accept="image/*" style={{ display: 'none' }}
             onChange={e => { setImage(e.target.files[0] ?? null); e.target.value = '' }} />
-          <div className="flex flex-col items-center justify-center cursor-pointer"
-            style={{ height: '120px', borderRadius: '12px', gap: '8px', overflow: 'hidden',
-              border: `1px dashed ${fieldErrs.image ? '#EF4444' : '#1B2333'}`, backgroundColor: '#0E1424' }}
+          <button type="button" className="flex flex-col items-center justify-center cursor-pointer"
+            style={{ height: '120px', borderRadius: '12px', gap: '8px', overflow: 'hidden', width: '100%',
+              border: `1px dashed ${fieldErrs.image ? '#EF4444' : '#1B2333'}`, backgroundColor: '#0E1424', padding: 0 }}
             onClick={() => imgRef.current.click()}>
             {imageFile ? (
               <>
@@ -279,7 +280,7 @@ const MobileBody = ({ mode, product, state, onClose }) => {
                 </span>
               </>
             )}
-          </div>
+          </button>
           {fieldErrs.image && <span style={ERR_STYLE}>{fieldErrs.image}</span>}
         </div>
 
@@ -312,10 +313,10 @@ const MobileBody = ({ mode, product, state, onClose }) => {
           )}
           {gallery.length > 0 && (
             <div className="flex flex-col" style={{ gap: '4px', marginTop: '4px' }}>
-              {gallery.map((f, i) => (
-                <div key={i} className="flex items-center justify-between">
+              {gallery.map((f) => (
+                <div key={`${f.name}-${f.lastModified}-${f.size}`} className="flex items-center justify-between">
                   <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>{f.name}</span>
-                  <button onClick={() => setGallery(gallery.filter((_, j) => j !== i))} className="border-none cursor-pointer" style={{ background: 'none', padding: '0 0 0 6px' }}>
+                  <button onClick={() => setGallery(prev => prev.filter(g => g !== f))} className="border-none cursor-pointer" style={{ background: 'none', padding: '0 0 0 6px' }}>
                     <X size={14} color="#EF4444" />
                   </button>
                 </div>
@@ -409,13 +410,13 @@ const MobileBody = ({ mode, product, state, onClose }) => {
         <div className="flex flex-col" style={{ gap: '8px' }}>
           <span style={MOBILE_LABEL}>Especificaciones técnicas</span>
           {fieldErrs.specs && <span style={ERR_STYLE}>{fieldErrs.specs}</span>}
-          {specRows.map((row, i) => (
-            <div key={i} className="flex items-center" style={{ gap: '6px' }}>
-              <input placeholder="Clave" maxLength={50} value={row.key} onChange={e => setSpecKey(i, e.target.value)}
+          {specRows.map((row) => (
+            <div key={row.id} className="flex items-center" style={{ gap: '6px' }}>
+              <input placeholder="Clave" maxLength={50} value={row.key} onChange={e => setSpecKey(row.id, e.target.value)}
                 style={{ ...MOBILE_INPUT, flex: 1 }} />
-              <input placeholder="Valor" maxLength={200} value={row.value} onChange={e => setSpecVal(i, e.target.value)}
+              <input placeholder="Valor" maxLength={200} value={row.value} onChange={e => setSpecVal(row.id, e.target.value)}
                 style={{ ...MOBILE_INPUT, flex: 1 }} />
-              <button onClick={() => removeSpecRow(i)} className="border-none cursor-pointer"
+              <button onClick={() => removeSpecRow(row.id)} className="border-none cursor-pointer"
                 style={{ background: 'none', padding: 0 }}>
                 <Trash2 size={16} color="#EF4444" />
               </button>
@@ -501,8 +502,8 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
           </span>
           <input ref={imgRef} type="file" accept="image/*" style={{ display: 'none' }}
             onChange={e => { setImage(e.target.files[0] ?? null); e.target.value = '' }} />
-          <div className="flex flex-col items-center justify-center cursor-pointer"
-            style={{ height: '180px', borderRadius: '8px', gap: '10px', overflow: 'hidden',
+          <button type="button" className="flex flex-col items-center justify-center cursor-pointer"
+            style={{ height: '180px', borderRadius: '8px', gap: '10px', overflow: 'hidden', width: '100%', padding: 0,
               border: `1px dashed ${fieldErrs.image ? '#EF4444' : isEdit && !imageFile ? '#24A8F5' : '#1B2333'}`,
               backgroundColor: isEdit && !imageFile ? '#0D2035' : 'transparent' }}
             onClick={() => imgRef.current.click()}>
@@ -538,7 +539,7 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
                 </button>
               </>
             )}
-          </div>
+          </button>
           {fieldErrs.image && <span style={ERR_STYLE}>{fieldErrs.image}</span>}
           <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', textAlign: 'center' }}>
             JPG, PNG, WEBP · Máx 5MB
@@ -571,10 +572,10 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
           )}
           {gallery.length > 0 && (
             <div className="flex flex-col" style={{ gap: '4px' }}>
-              {gallery.map((f, i) => (
-                <div key={i} className="flex items-center justify-between">
+              {gallery.map((f) => (
+                <div key={`${f.name}-${f.lastModified}-${f.size}`} className="flex items-center justify-between">
                   <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>{f.name}</span>
-                  <button onClick={() => setGallery(gallery.filter((_, j) => j !== i))} className="border-none cursor-pointer" style={{ background: 'none', padding: '0 0 0 6px' }}>
+                  <button onClick={() => setGallery(prev => prev.filter(g => g !== f))} className="border-none cursor-pointer" style={{ background: 'none', padding: '0 0 0 6px' }}>
                     <X size={12} color="#EF4444" />
                   </button>
                 </div>
@@ -665,13 +666,13 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
           <div className="flex flex-col" style={{ gap: '8px' }}>
             <span style={LABEL_STYLE}>Especificaciones técnicas</span>
             {fieldErrs.specs && <span style={ERR_STYLE}>{fieldErrs.specs}</span>}
-            {specRows.map((row, i) => (
-              <div key={i} className="flex items-center" style={{ gap: '8px' }}>
-                <input placeholder="Clave (ej: VRAM)" maxLength={50} value={row.key} onChange={e => setSpecKey(i, e.target.value)}
+            {specRows.map((row) => (
+              <div key={row.id} className="flex items-center" style={{ gap: '8px' }}>
+                <input placeholder="Clave (ej: VRAM)" maxLength={50} value={row.key} onChange={e => setSpecKey(row.id, e.target.value)}
                   style={{ ...INPUT_STYLE_BASE, flex: 1 }} />
-                <input placeholder="Valor (ej: 12GB)" maxLength={200} value={row.value} onChange={e => setSpecVal(i, e.target.value)}
+                <input placeholder="Valor (ej: 12GB)" maxLength={200} value={row.value} onChange={e => setSpecVal(row.id, e.target.value)}
                   style={{ ...INPUT_STYLE_BASE, flex: 1 }} />
-                <button onClick={() => removeSpecRow(i)} className="border-none cursor-pointer" style={{ background: 'none', padding: 0, flexShrink: 0 }}>
+                <button onClick={() => removeSpecRow(row.id)} className="border-none cursor-pointer" style={{ background: 'none', padding: 0, flexShrink: 0 }}>
                   <Trash2 size={16} color="#EF4444" />
                 </button>
               </div>
