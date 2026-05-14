@@ -51,7 +51,6 @@ const Home = () => {
   }, [])
 
   useEffect(() => {
-    if (activeCategory !== 'all') return
     let cancelled = false
     Promise.all([
       getProducts({ badge: 'NUEVO', size: 8 }).catch(() => ({ items: [] })),
@@ -64,7 +63,7 @@ const Home = () => {
       setMonitorsList(mons.items ?? [])
     })
     return () => { cancelled = true }
-  }, [activeCategory])
+  }, [])
 
   useEffect(() => {
     if (activeCategory === 'all') return
