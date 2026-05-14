@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import AdminBottomNav from './AdminBottomNav'
 import ProductModal from './ProductModal'
 import ConfirmModal from './ConfirmModal'
-import { listAdminProducts, deleteProduct } from '../../api/products'
+import { listAdminProducts, deleteProduct, getCategories } from '../../api/products'
 import { useAuth } from '../../context/AuthContext'
 import { formatARS } from '../../utils/formatPrice'
 
@@ -69,6 +69,8 @@ const AdminPanel = () => {
   const [totalPages, setTotalPages] = useState(0)
   const [deleteTarget, setDeleteTarget] = useState(null)
   const [deleting, setDeleting] = useState(false)
+  const [categories, setCategories] = useState([])
+  const categoryLabel = (id) => categories.find(c => c.id === id)?.label ?? id
   const searchRef = useRef('')
   const debounceRef = useRef(null)
 
@@ -94,6 +96,10 @@ const AdminPanel = () => {
   }
 
   useEffect(() => { fetchProducts(0) }, [fetchProducts])
+
+  useEffect(() => {
+    getCategories().then(setCategories).catch(() => setCategories([]))
+  }, [])
 
   const openEdit = (p) => { setEditTarget(p); setModal('edit') }
 
@@ -149,7 +155,7 @@ const AdminPanel = () => {
         <div style={{ height: '1px', backgroundColor: '#1B2333' }} />
         <div className="flex flex-col" style={{ padding: '16px 0', gap: '4px' }}>
           <div style={{ padding: '0 24px 8px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700' }}>MENÚ PRINCIPAL</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700' }}>MENÚ PRINCIPAL</span>
           </div>
           {NAV_ITEMS.map(({ icon: Icon, label, active }) => (
             <div key={label} className="flex items-center cursor-pointer"
@@ -174,7 +180,7 @@ const AdminPanel = () => {
           </div>
           <div className="flex flex-col" style={{ flex: 1, gap: '1px', minWidth: 0 }}>
             <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name ?? 'Administrador'}</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email ?? ''}</span>
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email ?? ''}</span>
           </div>
           <button
             onClick={handleLogout}
@@ -200,7 +206,7 @@ const AdminPanel = () => {
             </button>
             <div className="flex flex-col" style={{ gap: '0' }}>
               <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Gestión de Productos</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px' }}>Panel Admin / Productos</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>Panel Admin / Productos</span>
             </div>
           </div>
           <div className="flex items-center" style={{ gap: '8px' }}>
@@ -311,12 +317,12 @@ const AdminPanel = () => {
                   </div>
                   <div className="flex items-center" style={{ gap: '12px' }}>
                     <div className="flex flex-col" style={{ gap: '2px' }}>
-                      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600' }}>Categoría</span>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>{p.category_id}</span>
+                      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Categoría</span>
+                      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>{categoryLabel(p.category_id)}</span>
                     </div>
                     <div style={{ flex: 1 }} />
                     <div className="flex flex-col" style={{ gap: '2px', alignItems: 'flex-end' }}>
-                      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600' }}>Precio</span>
+                      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Precio</span>
                       <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{formatARS(p.price_ars)}</span>
                     </div>
                   </div>
@@ -387,7 +393,7 @@ const AdminPanel = () => {
                       <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>{p.name}</span>
                       <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{p.brand}</span>
                     </div>
-                    <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', width: '120px', flexShrink: 0 }}>{p.category_id}</span>
+                    <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', width: '120px', flexShrink: 0 }}>{categoryLabel(p.category_id)}</span>
                     <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600', width: '140px', flexShrink: 0 }}>{formatARS(p.price_ars)}</span>
                     <span style={{ color: p.stock === 0 ? '#EF4444' : '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: p.stock === 0 ? '600' : 'normal', width: '85px', flexShrink: 0 }}>
                       {p.stock} un.

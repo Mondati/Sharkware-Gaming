@@ -232,7 +232,7 @@ const MobileBody = ({ mode, product, state, onClose }) => {
           <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
             {isEdit ? 'Editar Producto' : 'Agregar Producto'}
           </span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
             {isEdit ? (product?.name ?? '') : 'Nuevo producto'}
           </span>
         </div>
@@ -541,7 +541,7 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
             )}
           </button>
           {fieldErrs.image && <span style={ERR_STYLE}>{fieldErrs.image}</span>}
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', textAlign: 'center' }}>
+          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', textAlign: 'center' }}>
             JPG, PNG, WEBP · Máx 5MB
           </span>
 
@@ -574,7 +574,7 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
             <div className="flex flex-col" style={{ gap: '4px' }}>
               {gallery.map((f) => (
                 <div key={`${f.name}-${f.lastModified}-${f.size}`} className="flex items-center justify-between">
-                  <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>{f.name}</span>
+                  <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>{f.name}</span>
                   <button onClick={() => setGallery(prev => prev.filter(g => g !== f))} className="border-none cursor-pointer" style={{ background: 'none', padding: '0 0 0 6px' }}>
                     <X size={12} color="#EF4444" />
                   </button>

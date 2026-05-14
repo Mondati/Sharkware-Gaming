@@ -225,7 +225,7 @@ const ProductDetail = () => {
                 backgroundColor: product.badge === 'NUEVO' ? '#22C55E' : '#EF4444',
                 borderRadius: '5px', padding: '4px 10px',
               }}>
-                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>
+                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>
                   {product.badge}
                 </span>
               </div>
@@ -510,7 +510,7 @@ const ProductDetail = () => {
         {product.badge && (
           <div className="flex" style={{ gap: '8px' }}>
             <div style={{ backgroundColor: product.badge === 'NUEVO' ? '#22C55E' : '#EF4444', borderRadius: '5px', padding: '4px 10px' }}>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '1px' }}>
+              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>
                 {product.badge}
               </span>
             </div>

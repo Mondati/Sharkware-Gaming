@@ -61,7 +61,7 @@ const ProductImage = ({ image_url, brand, name, height, category_id }) => {
       }}
     >
       {Icon && <Icon size={24} color="#24A8F5" style={{ opacity: 0.5 }} />}
-      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '700', letterSpacing: '2px' }}>
+      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
         {brand}
       </span>
       <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', textAlign: 'center', lineHeight: '1.3' }}>
@@ -80,7 +80,7 @@ const StockDot = ({ stock }) => (
       backgroundColor: stock > 0 ? '#22C55E' : '#EF4444',
       flexShrink: 0,
     }} />
-    <span style={{ color: stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600' }}>
+    <span style={{ color: stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>
       {stock > 0 ? 'En stock' : 'Sin stock'}
     </span>
   </div>
@@ -273,7 +273,7 @@ const ProductCard = ({
         </button>
       </div>
 
-      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600', letterSpacing: '1px' }}>
+      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '1px' }}>
         {brand}
       </span>
 

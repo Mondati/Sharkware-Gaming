@@ -46,7 +46,7 @@ const AdminBottomNav = () => {
             style={{
               color: active ? '#24A8F5' : '#AAB3C5',
               fontFamily: 'Poppins',
-              fontSize: '10px',
+              fontSize: '11px',
               fontWeight: active ? '700' : '500',
             }}
           >
