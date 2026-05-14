@@ -1,6 +1,6 @@
 import { useState, memo, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, ShoppingCart, Check } from 'lucide-react'
+import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box, ShoppingCart, Check } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import { formatARS } from '../utils/formatPrice'
 
@@ -12,6 +12,8 @@ const CATEGORY_ICON = {
   monitors: Monitor,
   storage: HardDrive,
   peripherals: Keyboard,
+  coolers: Fan,
+  gabinetes: Box,
 }
 
 const ProductImage = ({ image_url, brand, name, height, category_id }) => {

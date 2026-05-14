@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import {
   X, User, Package, Headphones, ChevronRight, Laptop,
-  Monitor, Cpu, Zap, MemoryStick, HardDrive, Keyboard,
+  Monitor, Cpu, Zap, MemoryStick, HardDrive, Keyboard, Fan, Box,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { getCategories } from '../api/products'
 
-const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard }
+const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box }
 
 const accountLinks = [
   { icon: User,       label: 'Mi cuenta',   to: '/login' },

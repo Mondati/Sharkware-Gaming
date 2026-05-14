@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard } from 'lucide-react'
+import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
@@ -10,7 +10,7 @@ import { formatARS } from '../utils/formatPrice'
 
 const ALL_CATEGORY = { id: 'all', label: 'Todo', icon: null }
 
-const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard }
+const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box }
 
 const BADGE_COLOR = {
   NUEVO:  { bg: '#00C8FF22', text: '#00C8FF', dot: '#00C8FF' },
@@ -293,15 +293,14 @@ const Home = () => {
       {/* ═══════════════ CATEGORY BAR ═══════════════ */}
 
       {/* Desktop Category Bar */}
-      <div className="hidden md:block w-full" style={{ position: 'relative', backgroundColor: '#070B16', borderBottom: '1px solid #1B2333' }}>
+      <div className="hidden md:block w-full" style={{ backgroundColor: '#070B16', borderBottom: '1px solid #1B2333', padding: `4px ${sidePadding}` }}>
       <div
-        className="flex items-center w-full"
+        className="flex items-center sw-scroll"
         style={{
-          height: '76px',
-          padding: `14px ${sidePadding}`,
           gap: '10px',
           overflowX: 'auto',
-          scrollbarWidth: 'none',
+          paddingTop: '10px',
+          paddingBottom: '10px',
           justifyContent: 'space-between',
         }}
       >
@@ -331,19 +330,17 @@ const Home = () => {
           )
         })}
       </div>
-      <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '48px', background: 'linear-gradient(to right, transparent, #070B16)', pointerEvents: 'none' }} />
       </div>
 
       {/* Mobile Category Bar — horizontal scroll */}
       <div
-        className="flex md:hidden w-full overflow-x-auto"
+        className="flex md:hidden w-full overflow-x-auto sw-no-scrollbar"
         style={{
           backgroundColor: '#070B16',
           borderBottom: '1px solid #1B2333',
           padding: '10px 16px',
           gap: '8px',
           flexShrink: 0,
-          scrollbarWidth: 'none',
         }}
       >
         {categories.map(({ id, label, icon }) => {

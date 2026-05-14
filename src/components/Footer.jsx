@@ -82,7 +82,7 @@ const Footer = () => {
           })}
         </nav>
 
-        <span style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '12px', flexShrink: 0, whiteSpace: 'nowrap' }}>
+        <span style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '12px' }}>
           © 2026 Sharkware Gaming. Todos los derechos reservados.
         </span>
       </footer>

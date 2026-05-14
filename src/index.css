@@ -48,6 +48,9 @@ input, select {
   background: #24A8F5;
 }
 
+.sw-no-scrollbar { scrollbar-width: none; }
+.sw-no-scrollbar::-webkit-scrollbar { display: none; }
+
 .sw-hero-primary { background: linear-gradient(135deg, #00C8FF 0%, #1A9FFF 100%); box-shadow: 0 4px 20px rgba(0,200,255,0.35); transition: box-shadow 0.2s ease, transform 0.2s ease; }
 .sw-hero-primary:hover { box-shadow: 0 6px 28px rgba(0,200,255,0.55); transform: translateY(-1px); }
 .sw-hero-secondary { background-color: #1E2232; transition: background-color 0.15s ease; }
