@@ -86,13 +86,13 @@ const Checkout = () => {
       const order = await createOrder(
         items.map(i => ({ productId: i.id, quantity: i.quantity }))
       )
-      navigate(`/checkout/confirm/mercadopago?order=${order.id}`)
+      navigate(`/checkout/summary/${order.id}`)
     } catch (err) {
       if (err.status === 401) navigate('/login')
-      else if (err.code === 'OUT_OF_STOCK') showToast(`Sin stock para producto ${err.fields?.productId ?? ''}`)
+      else if (err.code === 'OUT_OF_STOCK') showToast('Uno de los productos se quedó sin stock')
       else if (err.code === 'NOT_FOUND') showToast('Producto no disponible')
       else if (err.code === 'VALIDATION_ERROR') showToast('Datos del pedido inválidos')
-      else showToast('No se pudo crear la orden')
+      else showToast('No se pudo iniciar el pago')
       setSubmitting(false)
     }
   }
@@ -101,7 +101,7 @@ const Checkout = () => {
     return <div className="flex flex-1" style={{ backgroundColor: '#070B16' }} />
   }
 
-  const ctaLabel = submitting ? 'Procesando…' : 'Pagar con MercadoPago'
+  const ctaLabel = submitting ? 'Procesando…' : 'Continuar'
 
   return (
     <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>

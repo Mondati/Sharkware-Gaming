@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { ChevronRight, ArrowLeft, X, Clock, CheckCircle2, XCircle, ShoppingBag, Info } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import Footer from '../../components/Footer'
-import { getOrder } from '../../api/orders'
+import { syncPayment } from '../../api/orders'
 
 const fmt = (n) => '$' + Math.round(Number(n) || 0).toLocaleString('es-AR')
+
+const MAX_ATTEMPTS = 10
+const POLL_INTERVAL_MS = 3000
 
 const STATUS_META = {
   PENDING:   { label: 'Pendiente de pago', color: '#F59E0B', bg: '#2A1F0A', Icon: Clock },
@@ -46,12 +49,43 @@ const StatusBadge = ({ status }) => {
   )
 }
 
+const HeroBanner = ({ Icon, iconColor, iconBg, title, subtitle }) => (
+  <div
+    className="flex flex-col items-center text-center"
+    style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '32px 24px', gap: '12px', border: '1px solid #1B2333' }}
+  >
+    <div style={{ backgroundColor: iconBg, borderRadius: '999px', padding: '14px' }}>
+      <Icon size={36} color={iconColor} />
+    </div>
+    <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '20px', fontWeight: '800' }}>{title}</span>
+    {subtitle && (
+      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', maxWidth: '420px' }}>
+        {subtitle}
+      </span>
+    )}
+  </div>
+)
+
+const PrimaryHomeButton = ({ label = 'Volver al inicio' }) => (
+  <Link
+    to="/"
+    className="no-underline flex items-center justify-center flex-1"
+    style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '48px' }}
+  >
+    <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
+      {label}
+    </span>
+  </Link>
+)
+
 const CheckoutConfirmMercadoPago = () => {
   const [params] = useSearchParams()
   const orderId = params.get('order')
   const [order, setOrder] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [timedOut, setTimedOut] = useState(false)
+  const attemptsRef = useRef(0)
 
   useEffect(() => {
     if (!orderId) {
@@ -60,19 +94,52 @@ const CheckoutConfirmMercadoPago = () => {
       return
     }
     let cancelled = false
+    let timer
+    attemptsRef.current = 0
     setLoading(true)
     setError(null)
-    getOrder(orderId)
-      .then(data => { if (!cancelled) setOrder(data) })
-      .catch(err => {
+    setTimedOut(false)
+
+    const tick = async () => {
+      try {
+        const data = await syncPayment(orderId)
         if (cancelled) return
+        setOrder(data)
+        setLoading(false)
+        if (data.status === 'PENDING') {
+          if (attemptsRef.current < MAX_ATTEMPTS - 1) {
+            attemptsRef.current += 1
+            timer = setTimeout(tick, POLL_INTERVAL_MS)
+          } else {
+            setTimedOut(true)
+          }
+        } else {
+          const pending = localStorage.getItem('sw_pending_order')
+          if (pending && Number(pending) === Number(orderId)) {
+            localStorage.removeItem('sw_pending_order')
+          }
+        }
+      } catch (err) {
+        if (cancelled) return
+        if (err.code === 'PAYMENT_PROVIDER_ERROR' && attemptsRef.current < MAX_ATTEMPTS - 1) {
+          attemptsRef.current += 1
+          timer = setTimeout(tick, POLL_INTERVAL_MS)
+          return
+        }
         if (err.status === 404) setError('Orden no encontrada')
         else if (err.status === 401) setError('Necesitás iniciar sesión para ver esta orden')
-        else setError('No pudimos cargar el pedido')
-      })
-      .finally(() => { if (!cancelled) setLoading(false) })
-    return () => { cancelled = true }
+        else setError(err.message || 'No pudimos confirmar el pago')
+        setLoading(false)
+      }
+    }
+
+    tick()
+    return () => { cancelled = true; if (timer) clearTimeout(timer) }
   }, [orderId])
+
+  const status = order?.status
+  const showSkeleton = loading && !order
+  const showPolling = !error && order && status === 'PENDING' && !timedOut
 
   return (
     <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
@@ -87,7 +154,7 @@ const CheckoutConfirmMercadoPago = () => {
         </Link>
         <div className="flex flex-col items-center">
           <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
-            Pedido creado
+            Confirmación de pago
           </span>
           <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
             Paso 3 de 3
@@ -102,7 +169,7 @@ const CheckoutConfirmMercadoPago = () => {
       <div className="hidden md:flex items-center w-full" style={{ backgroundColor: '#0A0F1C', height: '44px', padding: '0 80px', gap: '8px' }}>
         <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Inicio</Link>
         <ChevronRight size={14} color="#1B2333" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Pedido creado</span>
+        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Confirmación de pago</span>
       </div>
 
       {/* ═══════════════ CONTENT ═══════════════ */}
@@ -110,18 +177,21 @@ const CheckoutConfirmMercadoPago = () => {
         className="flex flex-col w-full"
         style={{ padding: '24px 16px', gap: '20px', maxWidth: '720px', margin: '0 auto', width: '100%' }}
       >
-        <div className="flex flex-col" style={{ gap: '6px' }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
-            Tu pedido fue creado
-          </span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
-            Guardamos los detalles de tu compra. Revisalos abajo.
-          </span>
-        </div>
+        {showSkeleton && (
+          <>
+            <div className="flex flex-col" style={{ gap: '6px' }}>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
+                Confirmando pago…
+              </span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
+                Estamos verificando el estado de tu compra con MercadoPago.
+              </span>
+            </div>
+            <Skeleton />
+          </>
+        )}
 
-        {loading && <Skeleton />}
-
-        {!loading && error && (
+        {!showSkeleton && error && (
           <div
             className="flex flex-col items-center text-center"
             style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '32px 24px', gap: '12px', border: '1px solid #1B2333' }}
@@ -140,7 +210,49 @@ const CheckoutConfirmMercadoPago = () => {
           </div>
         )}
 
-        {!loading && !error && order && (
+        {!error && order && status === 'PAID' && (
+          <HeroBanner
+            Icon={CheckCircle2}
+            iconColor="#22C55E"
+            iconBg="#0E2417"
+            title="¡Pago confirmado!"
+            subtitle="Recibimos tu pago. Te enviamos los detalles por mail."
+          />
+        )}
+
+        {!error && order && (status === 'FAILED' || status === 'CANCELLED') && (
+          <HeroBanner
+            Icon={XCircle}
+            iconColor="#EF4444"
+            iconBg="#2A1414"
+            title="El pago no se completó"
+            subtitle="Podés intentarlo de nuevo desde el catálogo."
+          />
+        )}
+
+        {!error && order && status === 'PENDING' && timedOut && (
+          <HeroBanner
+            Icon={Clock}
+            iconColor="#F59E0B"
+            iconBg="#2A1F0A"
+            title="El pago está en proceso"
+            subtitle="Te avisaremos cuando se confirme. Podés cerrar esta página."
+          />
+        )}
+
+        {showPolling && (
+          <div
+            className="flex items-center"
+            style={{ backgroundColor: '#0A1F3F', borderRadius: '12px', padding: '14px', gap: '10px', border: '1px solid rgba(36,168,245,0.3)' }}
+          >
+            <Clock size={18} color="#24A8F5" style={{ flexShrink: 0 }} />
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
+              Confirmando pago con MercadoPago…
+            </span>
+          </div>
+        )}
+
+        {!error && order && (
           <>
             {/* Header card */}
             <div
@@ -201,28 +313,9 @@ const CheckoutConfirmMercadoPago = () => {
               </div>
             </div>
 
-            {/* Info banner */}
-            <div
-              className="flex items-start"
-              style={{ backgroundColor: '#0A1F3F', borderRadius: '12px', padding: '14px', gap: '10px', border: '1px solid rgba(36,168,245,0.3)' }}
-            >
-              <Info size={18} color="#24A8F5" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', lineHeight: '1.5' }}>
-                Esta orden quedó pendiente. La integración con MercadoPago para finalizar el pago se completa en la próxima entrega (HU14).
-              </span>
-            </div>
-
             {/* Actions */}
             <div className="flex" style={{ gap: '12px' }}>
-              <Link
-                to="/"
-                className="no-underline flex items-center justify-center flex-1"
-                style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '48px' }}
-              >
-                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
-                  Volver al inicio
-                </span>
-              </Link>
+              <PrimaryHomeButton />
             </div>
           </>
         )}
