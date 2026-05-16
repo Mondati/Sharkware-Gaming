@@ -1,14 +1,14 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import {
   Zap, LayoutDashboard, Package, ShoppingCart, Users, Settings, LogOut,
-  UserRound, Bell, Plus, Search, Pencil, Trash2, CircleCheck, TriangleAlert,
+  UserRound, Bell, Plus, Search, Pencil, Trash2, Clock, TriangleAlert,
   Layers, ChevronLeft, ChevronRight, Menu, Store,
 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import AdminBottomNav from './AdminBottomNav'
 import ProductModal from './ProductModal'
 import ConfirmModal from './ConfirmModal'
-import { listAdminProducts, deleteProduct, getCategories } from '../../api/products'
+import { listAdminProducts, deleteProduct, getCategories, getAdminStats } from '../../api/products'
 import { useAuth } from '../../context/AuthContext'
 import { formatARS } from '../../utils/formatPrice'
 
@@ -70,6 +70,7 @@ const AdminPanel = () => {
   const [deleteTarget, setDeleteTarget] = useState(null)
   const [deleting, setDeleting] = useState(false)
   const [categories, setCategories] = useState([])
+  const [stats, setStats] = useState(null)
   const categoryLabel = (id) => categories.find(c => c.id === id)?.label ?? id
   const searchRef = useRef('')
   const debounceRef = useRef(null)
@@ -86,6 +87,10 @@ const AdminPanel = () => {
       .finally(() => setLoadingList(false))
   }, [])
 
+  const fetchStats = useCallback(() => {
+    getAdminStats().then(setStats).catch(() => {})
+  }, [])
+
   const handleSearch = (val) => {
     setSearch(val)
     searchRef.current = val
@@ -96,6 +101,8 @@ const AdminPanel = () => {
   }
 
   useEffect(() => { fetchProducts(0) }, [fetchProducts])
+
+  useEffect(() => { fetchStats() }, [fetchStats])
 
   useEffect(() => {
     getCategories().then(setCategories).catch(() => setCategories([]))
@@ -112,6 +119,7 @@ const AdminPanel = () => {
       await deleteProduct(deleteTarget.id)
       showToast('Producto eliminado')
       fetchProducts(page, searchRef.current)
+      fetchStats()
       setDeleteTarget(null)
     } catch (err) {
       if (err.status === 409) {
@@ -131,10 +139,14 @@ const AdminPanel = () => {
   const handleSave = (_saved, savedMode) => {
     showToast(savedMode === 'edit' ? 'Producto actualizado' : 'Producto creado')
     fetchProducts(savedMode === 'edit' ? page : 0, searchRef.current)
+    fetchStats()
   }
 
-  const activeCount = products.filter(p => p.active).length
-  const noStockCount = products.filter(p => p.stock === 0).length
+  const totalProducts = stats?.totalProducts ?? null
+  const pendingOrders = stats?.pendingOrders ?? null
+  const noStockCount = stats?.outOfStockProducts ?? null
+  const categoriesCount = stats?.totalCategories ?? null
+  const fmt = (n) => (n === null || n === undefined ? '—' : n)
 
   return (
     <div className="flex" style={{ height: '100vh', backgroundColor: '#070B16', overflow: 'hidden' }}>
@@ -241,25 +253,25 @@ const AdminPanel = () => {
 
           {/* Mobile Stats */}
           <div className="md:hidden grid grid-cols-2" style={{ gap: '10px' }}>
-            <StatCard mobile label="Total Productos" value={products.length} sub={`${activeCount} activos`} subColor="#22C55E" icon={Package} iconColor="#24A8F5" />
-            <StatCard mobile label="Activos" value={activeCount} sub={`${products.length > 0 ? Math.round(activeCount / products.length * 100) : 0}% del catálogo`} subColor="#AAB3C5" icon={CircleCheck} iconColor="#22C55E" />
-            <StatCard mobile label="Sin Stock" value={noStockCount} sub="Requieren reposición" subColor="#FF8400" icon={TriangleAlert} iconColor="#FF8400" />
-            <StatCard mobile label="Categorías" value="7" sub="GPU · CPU · Monitor..." subColor="#AAB3C5" icon={Layers} iconColor="#37C3FF" />
+            <StatCard mobile label="Total Productos" value={fmt(totalProducts)} sub="En catálogo" subColor="#AAB3C5" icon={Package} iconColor="#24A8F5" />
+            <StatCard mobile label="Pedidos pendientes" value={fmt(pendingOrders)} sub="Sin confirmar pago" subColor="#F59E0B" icon={Clock} iconColor="#F59E0B" />
+            <StatCard mobile label="Sin Stock" value={fmt(noStockCount)} sub="Requieren reposición" subColor="#FF8400" icon={TriangleAlert} iconColor="#FF8400" />
+            <StatCard mobile label="Categorías" value={fmt(categoriesCount)} sub="GPU · CPU · Monitor..." subColor="#AAB3C5" icon={Layers} iconColor="#37C3FF" />
           </div>
 
           {/* Desktop Stats */}
           <div className="hidden md:flex" style={{ gap: '14px' }}>
-            <StatCard label="Total Productos" value={products.length} sub={`${activeCount} activos`} subColor="#22C55E" icon={Package} iconColor="#24A8F5" />
-            <StatCard label="Activos" value={activeCount} sub={`${products.length > 0 ? Math.round(activeCount / products.length * 100) : 0}% del catálogo`} subColor="#AAB3C5" icon={CircleCheck} iconColor="#22C55E" />
-            <StatCard label="Sin Stock" value={noStockCount} sub="Requieren reposición" subColor="#FF8400" icon={TriangleAlert} iconColor="#FF8400" />
-            <StatCard label="Categorías" value="7" sub="GPU · CPU · Monitor · RAM..." subColor="#AAB3C5" icon={Layers} iconColor="#37C3FF" />
+            <StatCard label="Total Productos" value={fmt(totalProducts)} sub="En catálogo" subColor="#AAB3C5" icon={Package} iconColor="#24A8F5" />
+            <StatCard label="Pedidos pendientes" value={fmt(pendingOrders)} sub="Sin confirmar pago" subColor="#F59E0B" icon={Clock} iconColor="#F59E0B" />
+            <StatCard label="Sin Stock" value={fmt(noStockCount)} sub="Requieren reposición" subColor="#FF8400" icon={TriangleAlert} iconColor="#FF8400" />
+            <StatCard label="Categorías" value={fmt(categoriesCount)} sub="GPU · CPU · Monitor · RAM..." subColor="#AAB3C5" icon={Layers} iconColor="#37C3FF" />
           </div>
 
           {/* Mobile Action bar */}
           <div className="md:hidden flex items-center justify-between" style={{ gap: '10px' }}>
             <div className="flex flex-col" style={{ gap: '2px', flex: 1 }}>
               <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>Lista de Productos</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{products.length} de {products.length} productos</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{products.length} de {fmt(totalProducts)} productos</span>
             </div>
             <button onClick={() => setModal('add')} className="flex items-center justify-center border-none cursor-pointer"
               style={{ backgroundColor: '#24A8F5', borderRadius: '8px', width: '40px', height: '40px' }}>

@@ -74,17 +74,24 @@ const ProductImage = ({ image_url, brand, name, height, category_id }) => {
 }
 
 const StockDot = ({ stock }) => (
-  <div className="flex items-center" style={{ gap: '5px' }}>
-    <div style={{
-      width: '6px',
-      height: '6px',
-      borderRadius: '50%',
-      backgroundColor: stock > 0 ? '#22C55E' : '#EF4444',
-      flexShrink: 0,
-    }} />
-    <span style={{ color: stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>
-      {stock > 0 ? 'En stock' : 'Sin stock'}
-    </span>
+  <div className="flex items-center flex-wrap" style={{ gap: '6px' }}>
+    <div className="flex items-center" style={{ gap: '5px' }}>
+      <div style={{
+        width: '6px',
+        height: '6px',
+        borderRadius: '50%',
+        backgroundColor: stock > 0 ? '#22C55E' : '#EF4444',
+        flexShrink: 0,
+      }} />
+      <span style={{ color: stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>
+        {stock > 0 ? 'En stock' : 'Sin stock'}
+      </span>
+    </div>
+    {stock > 0 && stock <= 3 && (
+      <span style={{ backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', padding: '2px 8px', borderRadius: '10px', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600', whiteSpace: 'nowrap' }}>
+        Pocas unidades
+      </span>
+    )}
   </div>
 )
 
