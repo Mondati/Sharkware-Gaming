@@ -17,3 +17,5 @@ export const createMpPreference = (orderId) =>
   })
 
 export const syncPayment = (orderId) => apiFetch(`/api/orders/${orderId}/sync-payment`)
+
+export const getOrderSummary = (id) => apiFetch(`/api/orders/${id}/summary`)

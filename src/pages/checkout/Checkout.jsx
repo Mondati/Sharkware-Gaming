@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 import TrustBadges from '../../components/TrustBadges'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
-import { createOrder, createMpPreference } from '../../api/orders'
+import { createOrder } from '../../api/orders'
 
 const fmt = (n) => '$' + Math.round(n).toLocaleString('es-AR')
 
@@ -58,7 +58,7 @@ const SummaryPanel = ({ subtotal, cartCount, onPay, submitting, ctaLabel }) => (
 
 const Checkout = () => {
   const navigate = useNavigate()
-  const { items, cartCount, clearCart } = useCart()
+  const { items, cartCount } = useCart()
   const { user, loading, showToast } = useAuth()
   const [submitting, setSubmitting] = useState(false)
 
@@ -86,14 +86,10 @@ const Checkout = () => {
       const order = await createOrder(
         items.map(i => ({ productId: i.id, quantity: i.quantity }))
       )
-      const pref = await createMpPreference(order.id)
-      clearCart()
-      window.location.href = pref.initPoint
+      navigate(`/checkout/summary/${order.id}`)
     } catch (err) {
       if (err.status === 401) navigate('/login')
       else if (err.code === 'OUT_OF_STOCK') showToast('Uno de los productos se quedó sin stock')
-      else if (err.code === 'PAYMENT_PROVIDER_ERROR') showToast('No se pudo iniciar el pago. Reintentá en un momento.')
-      else if (err.code === 'CONFLICT') showToast('La orden ya no está disponible para pagar')
       else if (err.code === 'NOT_FOUND') showToast('Producto no disponible')
       else if (err.code === 'VALIDATION_ERROR') showToast('Datos del pedido inválidos')
       else showToast('No se pudo iniciar el pago')
@@ -105,7 +101,7 @@ const Checkout = () => {
     return <div className="flex flex-1" style={{ backgroundColor: '#070B16' }} />
   }
 
-  const ctaLabel = submitting ? 'Procesando…' : 'Pagar con MercadoPago'
+  const ctaLabel = submitting ? 'Procesando…' : 'Continuar'
 
   return (
     <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>

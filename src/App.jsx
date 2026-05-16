@@ -8,7 +8,9 @@ import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
 import Checkout from './pages/checkout/Checkout'
+import CheckoutSummary from './pages/checkout/CheckoutSummary'
 import CheckoutConfirmMercadoPago from './pages/checkout/CheckoutConfirmMercadoPago'
+import MyOrders from './pages/MyOrders'
 import SearchResults from './pages/SearchResults'
 import ProtectedRoute from './components/ProtectedRoute'
 import ScrollToTop from './components/ScrollToTop'
@@ -68,7 +70,16 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout/summary/:orderId" element={<CheckoutSummary />} />
         <Route path="/checkout/confirm/mercadopago" element={<CheckoutConfirmMercadoPago />} />
+        <Route
+          path="/mis-pedidos"
+          element={
+            <ProtectedRoute>
+              <MyOrders />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/admin"
           element={

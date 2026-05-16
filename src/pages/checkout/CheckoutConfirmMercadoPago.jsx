@@ -113,6 +113,11 @@ const CheckoutConfirmMercadoPago = () => {
           } else {
             setTimedOut(true)
           }
+        } else {
+          const pending = localStorage.getItem('sw_pending_order')
+          if (pending && Number(pending) === Number(orderId)) {
+            localStorage.removeItem('sw_pending_order')
+          }
         }
       } catch (err) {
         if (cancelled) return

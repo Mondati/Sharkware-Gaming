@@ -9,7 +9,7 @@ const Toast = () => {
       className="flex items-center"
       style={{
         position: 'fixed',
-        bottom: '32px',
+        bottom: '104px',
         left: '50%',
         transform: 'translateX(-50%)',
         maxWidth: 'calc(100vw - 32px)',
@@ -20,13 +20,10 @@ const Toast = () => {
         gap: '10px',
         zIndex: 30,
         boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
       }}
     >
-      <CheckCircle size={16} color="#22C55E" />
-      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
+      <CheckCircle size={16} color="#22C55E" style={{ flexShrink: 0 }} />
+      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600', lineHeight: 1.35 }}>
         {toast}
       </span>
     </div>

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { Search, UserRound, ShoppingCart, Menu, X, LogOut, LayoutDashboard } from 'lucide-react'
+import { Search, UserRound, ShoppingCart, Menu, X, LogOut, LayoutDashboard, Package } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import MobileSidebar from './MobileSidebar'
 import { useWindowWidth } from '../hooks/useWindowWidth'
@@ -144,6 +144,22 @@ const Navbar = () => {
                           <LayoutDashboard size={12} /> Panel admin
                         </Link>
                       )}
+                      {user.role !== 'admin' && (
+                        <Link
+                          to="/mis-pedidos"
+                          onClick={() => setUserMenuOpen(false)}
+                          style={{
+                            background: 'transparent', border: '1px solid #24A8F5',
+                            borderRadius: '8px', padding: '6px 12px',
+                            color: '#24A8F5', fontFamily: 'Poppins', fontSize: '12px',
+                            fontWeight: '600', cursor: 'pointer',
+                            display: 'flex', alignItems: 'center', gap: '6px',
+                            textDecoration: 'none'
+                          }}
+                        >
+                          <Package size={12} /> Mis pedidos
+                        </Link>
+                      )}
                       <button
                         onClick={handleLogout}
                         style={{
@@ -278,6 +294,19 @@ const Navbar = () => {
           >
             <LayoutDashboard size={14} color="#24A8F5" />
             <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Panel</span>
+          </Link>
+        )}
+
+        {user && user.role !== 'admin' && (
+          <Link
+            to="/mis-pedidos"
+            onMouseEnter={() => setHoveredBtn('myOrders')}
+            onMouseLeave={() => setHoveredBtn(null)}
+            className="flex items-center no-underline"
+            style={{ backgroundColor: hoveredBtn === 'myOrders' ? '#0D2035' : '#1E2232', borderRadius: '20px', padding: '8px 14px', gap: '6px', transition: 'background-color 0.15s ease' }}
+          >
+            <Package size={14} color="#24A8F5" />
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Mis pedidos</span>
           </Link>
         )}
 
