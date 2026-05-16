@@ -309,13 +309,23 @@ const ProductDetail = () => {
           </div>
 
           {/* Stock + shipping */}
-          <div className="flex items-center" style={{ gap: '20px', marginBottom: '20px' }}>
+          <div className="flex items-center flex-wrap" style={{ gap: '20px', marginBottom: '20px' }}>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: product.stock > 0 ? '#22C55E' : '#EF4444', flexShrink: 0 }} />
               <span style={{ color: product.stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
                 {product.stock > 0 ? 'En stock' : 'Sin stock'}
               </span>
+              {product.stock > 0 && (
+                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', marginLeft: '4px' }}>
+                  · {product.stock} {product.stock === 1 ? 'disponible' : 'disponibles'}
+                </span>
+              )}
             </div>
+            {product.stock > 0 && product.stock <= 3 && (
+              <div style={{ backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', padding: '4px 10px', borderRadius: '12px', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
+                ¡Pocas unidades!
+              </div>
+            )}
             <div className="flex items-center" style={{ gap: '6px' }}>
               <Truck size={14} color="#24A8F5" />
               <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>Envío gratis a todo el país</span>
@@ -535,11 +545,23 @@ const ProductDetail = () => {
 
         <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '30px', fontWeight: '800' }}>{formatARS(product.price_ars)}</span>
 
-        <div className="flex items-center" style={{ gap: '6px' }}>
-          <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: product.stock > 0 ? '#22C55E' : '#EF4444', flexShrink: 0 }} />
-          <span style={{ color: product.stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
-            {product.stock > 0 ? 'En stock' : 'Sin stock'}
-          </span>
+        <div className="flex items-center flex-wrap" style={{ gap: '10px' }}>
+          <div className="flex items-center" style={{ gap: '6px' }}>
+            <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: product.stock > 0 ? '#22C55E' : '#EF4444', flexShrink: 0 }} />
+            <span style={{ color: product.stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+              {product.stock > 0 ? 'En stock' : 'Sin stock'}
+            </span>
+            {product.stock > 0 && (
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', marginLeft: '4px' }}>
+                · {product.stock} {product.stock === 1 ? 'disponible' : 'disponibles'}
+              </span>
+            )}
+          </div>
+          {product.stock > 0 && product.stock <= 3 && (
+            <div style={{ backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', padding: '4px 10px', borderRadius: '12px', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
+              ¡Pocas unidades!
+            </div>
+          )}
         </div>
 
         {quickSpecs.length > 0 && (
