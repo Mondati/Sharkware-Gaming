@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 import TrustBadges from '../../components/TrustBadges'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
-import { createOrder } from '../../api/orders'
+import { createOrder, createMpPreference } from '../../api/orders'
 
 const fmt = (n) => '$' + Math.round(n).toLocaleString('es-AR')
 
@@ -58,7 +58,7 @@ const SummaryPanel = ({ subtotal, cartCount, onPay, submitting, ctaLabel }) => (
 
 const Checkout = () => {
   const navigate = useNavigate()
-  const { items, cartCount } = useCart()
+  const { items, cartCount, clearCart } = useCart()
   const { user, loading, showToast } = useAuth()
   const [submitting, setSubmitting] = useState(false)
 
@@ -86,13 +86,17 @@ const Checkout = () => {
       const order = await createOrder(
         items.map(i => ({ productId: i.id, quantity: i.quantity }))
       )
-      navigate(`/checkout/confirm/mercadopago?order=${order.id}`)
+      const pref = await createMpPreference(order.id)
+      clearCart()
+      window.location.href = pref.initPoint
     } catch (err) {
       if (err.status === 401) navigate('/login')
-      else if (err.code === 'OUT_OF_STOCK') showToast(`Sin stock para producto ${err.fields?.productId ?? ''}`)
+      else if (err.code === 'OUT_OF_STOCK') showToast('Uno de los productos se quedó sin stock')
+      else if (err.code === 'PAYMENT_PROVIDER_ERROR') showToast('No se pudo iniciar el pago. Reintentá en un momento.')
+      else if (err.code === 'CONFLICT') showToast('La orden ya no está disponible para pagar')
       else if (err.code === 'NOT_FOUND') showToast('Producto no disponible')
       else if (err.code === 'VALIDATION_ERROR') showToast('Datos del pedido inválidos')
-      else showToast('No se pudo crear la orden')
+      else showToast('No se pudo iniciar el pago')
       setSubmitting(false)
     }
   }
