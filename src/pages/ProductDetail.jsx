@@ -4,7 +4,7 @@ import {
   Star, Heart, Share2, ShoppingCart,
   ChevronRight, ChevronDown, ArrowLeft, Truck,
 } from 'lucide-react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
 import TrustBadges from '../components/TrustBadges'
 import ProductCard from '../components/ProductCard'
@@ -41,6 +41,7 @@ const ImgOrPlaceholder = ({ src, brand, name, style }) => {
 
 const ProductDetail = () => {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
@@ -85,6 +86,11 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     addItem(product, qty)
+  }
+
+  const handleBuyNow = () => {
+    addItem(product, qty)
+    navigate('/checkout')
   }
 
   if (loading) return null
@@ -400,10 +406,12 @@ const ProductDetail = () => {
               </span>
             </button>
             <button
+              onClick={handleBuyNow}
               onMouseEnter={() => setHoveredBtn('buy_m')}
               onMouseLeave={() => setHoveredBtn(null)}
+              disabled={product.stock === 0}
               className="flex items-center justify-center"
-              style={{ backgroundColor: hoveredBtn === 'buy_m' ? 'rgba(36,168,245,0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: 'pointer', width: '100%' }}
+              style={{ backgroundColor: hoveredBtn === 'buy_m' ? 'rgba(36,168,245,0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: product.stock === 0 ? 'not-allowed' : 'pointer', width: '100%', opacity: product.stock === 0 ? 0.5 : 1 }}
             >
               <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                 Comprar ahora
@@ -621,10 +629,12 @@ const ProductDetail = () => {
           </button>
 
           <button
+            onClick={handleBuyNow}
             onMouseEnter={() => setHoveredBtn('buy_2')}
             onMouseLeave={() => setHoveredBtn(null)}
+            disabled={product.stock === 0}
             className="flex items-center justify-center"
-            style={{ backgroundColor: hoveredBtn === 'buy_2' ? 'rgba(36,168,245,0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: 'pointer', width: '100%' }}
+            style={{ backgroundColor: hoveredBtn === 'buy_2' ? 'rgba(36,168,245,0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: product.stock === 0 ? 'not-allowed' : 'pointer', width: '100%', opacity: product.stock === 0 ? 0.5 : 1 }}
           >
             <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Comprar ahora</span>
           </button>

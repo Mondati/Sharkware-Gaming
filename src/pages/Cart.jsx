@@ -1,7 +1,7 @@
 import { useState, Fragment } from 'react'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import {
-  ChevronRight, Tag, ArrowLeft, Lock,
+  ChevronRight, ArrowLeft, Lock,
   Minus, Plus, Trash2, Trash, X, ShoppingBag,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -14,7 +14,6 @@ const fmt = (n) => '$' + n.toLocaleString('es-AR')
 const Cart = () => {
   const { sidePadding } = useWindowWidth()
   const { items, removeItem, updateQty, clearCart, cartCount } = useCart()
-  const [coupon, setCoupon] = useState('')
   const [hoveredBtn, setHoveredBtn] = useState(null)
   const [showClearConfirm, setShowClearConfirm] = useState(false)
 
@@ -187,32 +186,6 @@ const Cart = () => {
           </button>
         )}
 
-        {/* Coupon */}
-        <div className="flex items-center" style={{ gap: '10px' }}>
-          <div
-            className="flex items-center flex-1"
-            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', gap: '8px', border: '1px solid #1B2333' }}
-          >
-            <Tag size={16} color="#AAB3C5" />
-            <input
-              type="text"
-              placeholder="Código de descuento"
-              value={coupon}
-              onChange={e => setCoupon(e.target.value)}
-              className="bg-transparent border-none outline-none w-full"
-              style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}
-            />
-          </div>
-          <button
-            onMouseEnter={() => setHoveredBtn('apply_m')}
-            onMouseLeave={() => setHoveredBtn(null)}
-            className="flex items-center justify-center border-none cursor-pointer"
-            style={{ backgroundColor: hoveredBtn === 'apply_m' ? '#252840' : '#1B2333', borderRadius: '10px', height: '44px', padding: '0 18px', flexShrink: 0 }}
-          >
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>Aplicar</span>
-          </button>
-        </div>
-
         {/* Order summary */}
         <div
           className="flex flex-col"
@@ -235,11 +208,6 @@ const Cart = () => {
           <div className="flex items-center">
             <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Envío</span>
             <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>Gratis</span>
-          </div>
-
-          <div className="flex items-center">
-            <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Descuento</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>− $0</span>
           </div>
 
           <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
@@ -426,32 +394,6 @@ const Cart = () => {
             ))}
           </div>
 
-          {/* Coupon row */}
-          <div className="flex items-center" style={{ gap: '12px', width: '100%' }}>
-            <div
-              className="flex items-center"
-              style={{ flex: 1, backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 16px', gap: '10px', border: '1px solid #1B2333' }}
-            >
-              <Tag size={16} color="#AAB3C5" />
-              <input
-                type="text"
-                placeholder="Código de descuento"
-                value={coupon}
-                onChange={e => setCoupon(e.target.value)}
-                className="bg-transparent border-none outline-none w-full"
-                style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}
-              />
-            </div>
-            <button
-              onMouseEnter={() => setHoveredBtn('apply_d')}
-              onMouseLeave={() => setHoveredBtn(null)}
-              className="flex items-center justify-center border-none cursor-pointer"
-              style={{ backgroundColor: hoveredBtn === 'apply_d' ? '#252840' : '#1B2333', borderRadius: '10px', height: '44px', padding: '0 20px' }}
-            >
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Aplicar</span>
-            </button>
-          </div>
-
           {/* Keep shopping */}
           <Link to="/" className="flex items-center no-underline" style={{ gap: '8px' }}>
             <ArrowLeft size={16} color="#24A8F5" />
@@ -483,11 +425,6 @@ const Cart = () => {
           <div className="flex items-center" style={{ width: '100%' }}>
             <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Envío</span>
             <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Gratis</span>
-          </div>
-
-          <div className="flex items-center" style={{ width: '100%' }}>
-            <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Descuento</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>−$0</span>
           </div>
 
           <div style={{ backgroundColor: '#1B2333', height: '1px', width: '100%' }} />
