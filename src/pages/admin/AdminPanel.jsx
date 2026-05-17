@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import {
-  Zap, LayoutDashboard, Package, ShoppingCart, Users, Settings, LogOut,
-  UserRound, Bell, Plus, Search, Pencil, Trash2, Clock, TriangleAlert,
+  Package,
+  UserRound, Plus, Search, Pencil, Trash2, Clock, TriangleAlert,
   Layers, ChevronLeft, ChevronRight, Menu, Store,
 } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import AdminBottomNav from './AdminBottomNav'
+import AdminSidebar from './AdminSidebar'
 import ProductModal from './ProductModal'
 import ConfirmModal from './ConfirmModal'
 import { listAdminProducts, deleteProduct, getCategories, getAdminStats } from '../../api/products'
@@ -13,14 +14,6 @@ import { useAuth } from '../../context/AuthContext'
 import { formatARS } from '../../utils/formatPrice'
 
 /* ─────────────────────────────────────────────────────────── AdminPanel */
-
-const NAV_ITEMS = [
-  { icon: LayoutDashboard, label: 'Dashboard' },
-  { icon: Package, label: 'Productos', active: true },
-  { icon: ShoppingCart, label: 'Pedidos' },
-  { icon: Users, label: 'Usuarios' },
-  { icon: Settings, label: 'Configuración' },
-]
 
 const StatCard = ({ label, value, sub, subColor, icon: Icon, iconColor, mobile = false }) => {
   if (mobile) {
@@ -54,12 +47,7 @@ const StatCard = ({ label, value, sub, subColor, icon: Icon, iconColor, mobile =
 }
 
 const AdminPanel = () => {
-  const { showToast, user, logout } = useAuth()
-  const navigate = useNavigate()
-  const handleLogout = async () => {
-    await logout()
-    navigate('/')
-  }
+  const { showToast } = useAuth()
   const [products, setProducts] = useState([])
   const [loadingList, setLoadingList] = useState(true)
   const [modal, setModal] = useState(null)   // null | 'add' | 'edit'
@@ -152,58 +140,7 @@ const AdminPanel = () => {
     <div className="flex" style={{ height: '100vh', backgroundColor: '#070B16', overflow: 'hidden' }}>
 
       {/* ── Sidebar (desktop only) ── */}
-      <div className="hidden md:flex flex-col"
-        style={{ width: '260px', flexShrink: 0, backgroundColor: '#0E1424', borderRight: '1px solid #1B2333', height: '100%' }}>
-        <Link to="/" className="flex items-center no-underline" style={{ height: '60px', padding: '0 24px', gap: '12px' }} title="Ir a la tienda">
-          <Zap size={22} color="#24A8F5" />
-          <div className="flex flex-col" style={{ gap: '1px', flex: 1 }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>SHARKWARE</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '600' }}>GAMING</span>
-          </div>
-          <div style={{ backgroundColor: '#0D2035', borderRadius: '4px', padding: '4px 8px' }}>
-            <span style={{ color: '#37C3FF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Admin</span>
-          </div>
-        </Link>
-        <div style={{ height: '1px', backgroundColor: '#1B2333' }} />
-        <div className="flex flex-col" style={{ padding: '16px 0', gap: '4px' }}>
-          <div style={{ padding: '0 24px 8px' }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700' }}>MENÚ PRINCIPAL</span>
-          </div>
-          {NAV_ITEMS.map(({ icon: Icon, label, active }) => (
-            <div key={label} className="flex items-center cursor-pointer"
-              style={{ padding: '10px 24px', gap: '12px', backgroundColor: active ? '#0D2035' : 'transparent', borderLeft: active ? '3px solid #24A8F5' : '3px solid transparent' }}>
-              <Icon size={18} color={active ? '#24A8F5' : '#AAB3C5'} />
-              <span style={{ color: active ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: active ? '600' : 'normal' }}>
-                {label}
-              </span>
-            </div>
-          ))}
-          <Link to="/" className="flex items-center no-underline"
-            style={{ padding: '10px 24px', gap: '12px', borderLeft: '3px solid transparent', marginTop: '8px' }}>
-            <Store size={18} color="#AAB3C5" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Ver tienda</span>
-          </Link>
-        </div>
-        <div style={{ flex: 1 }} />
-        <div style={{ height: '1px', backgroundColor: '#1B2333' }} />
-        <div className="flex items-center" style={{ padding: '16px 24px', gap: '10px' }}>
-          <div className="flex items-center justify-center" style={{ width: '34px', height: '34px', backgroundColor: '#1B2333', borderRadius: '17px', flexShrink: 0 }}>
-            <UserRound size={18} color="#24A8F5" />
-          </div>
-          <div className="flex flex-col" style={{ flex: 1, gap: '1px', minWidth: 0 }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name ?? 'Administrador'}</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email ?? ''}</span>
-          </div>
-          <button
-            onClick={handleLogout}
-            title="Cerrar sesión"
-            className="flex items-center justify-center border-none cursor-pointer"
-            style={{ background: 'transparent', padding: 0, flexShrink: 0 }}
-          >
-            <LogOut size={16} color="#AAB3C5" />
-          </button>
-        </div>
-      </div>
+      <AdminSidebar />
 
       {/* ── Main content ── */}
       <div className="flex flex-col" style={{ flex: 1, paddingBottom: '64px' }}>
@@ -226,7 +163,6 @@ const AdminPanel = () => {
               style={{ width: '32px', height: '32px', backgroundColor: '#1B2333', borderRadius: '8px' }}>
               <Store size={16} color="#24A8F5" />
             </Link>
-            <Bell size={18} color="#AAB3C5" />
             <div className="flex items-center justify-center" style={{ width: '32px', height: '32px', backgroundColor: '#1B2333', borderRadius: '16px' }}>
               <UserRound size={16} color="#24A8F5" />
             </div>
@@ -241,7 +177,6 @@ const AdminPanel = () => {
             <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>Panel Admin &nbsp;/&nbsp; Productos</span>
           </div>
           <div className="flex items-center" style={{ gap: '16px' }}>
-            <Bell size={20} color="#AAB3C5" />
             <div className="flex items-center justify-center" style={{ width: '34px', height: '34px', backgroundColor: '#1B2333', borderRadius: '17px' }}>
               <UserRound size={18} color="#24A8F5" />
             </div>

@@ -1,22 +1,13 @@
-import {
-  LayoutDashboard,
-  Package,
-  ShoppingCart,
-  Users,
-  Settings,
-} from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { Package, Store } from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
 
 const navItems = [
-  { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard', active: false },
-  { id: 'productos', icon: Package, label: 'Productos', active: true },
-  { id: 'pedidos', icon: ShoppingCart, label: 'Pedidos', active: false },
-  { id: 'usuarios', icon: Users, label: 'Usuarios', active: false },
-  { id: 'config', icon: Settings, label: 'Config', active: false },
+  { id: 'productos', icon: Package, label: 'Productos', to: '/admin' },
+  { id: 'tienda', icon: Store, label: 'Ver tienda', to: '/' },
 ]
 
 const AdminBottomNav = () => {
-  const navigate = useNavigate()
+  const location = useLocation()
 
   return (
     <div
@@ -28,32 +19,35 @@ const AdminBottomNav = () => {
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
       }}
     >
-      {navItems.map(({ id, icon: Icon, label, active }) => (
-        <button
-          key={id}
-          onClick={() => navigate('/admin')}
-          className="flex flex-col items-center justify-center border-none cursor-pointer"
-          style={{
-            flex: 1,
-            height: '100%',
-            backgroundColor: active ? '#0D2035' : 'transparent',
-            padding: '8px 4px',
-            gap: '4px',
-          }}
-        >
-          <Icon size={20} color={active ? '#24A8F5' : '#AAB3C5'} />
-          <span
+      {navItems.map(({ id, icon: Icon, label, to }) => {
+        const active = location.pathname === to
+        return (
+          <Link
+            key={id}
+            to={to}
+            className="flex flex-col items-center justify-center no-underline"
             style={{
-              color: active ? '#24A8F5' : '#AAB3C5',
-              fontFamily: 'Poppins',
-              fontSize: '11px',
-              fontWeight: active ? '700' : '500',
+              flex: 1,
+              height: '100%',
+              backgroundColor: active ? '#0D2035' : 'transparent',
+              padding: '8px 4px',
+              gap: '4px',
             }}
           >
-            {label}
-          </span>
-        </button>
-      ))}
+            <Icon size={20} color={active ? '#24A8F5' : '#AAB3C5'} />
+            <span
+              style={{
+                color: active ? '#24A8F5' : '#AAB3C5',
+                fontFamily: 'Poppins',
+                fontSize: '11px',
+                fontWeight: active ? '700' : '500',
+              }}
+            >
+              {label}
+            </span>
+          </Link>
+        )
+      })}
     </div>
   )
 }
