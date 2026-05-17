@@ -12,6 +12,7 @@ import CheckoutSummary from './pages/checkout/CheckoutSummary'
 import CheckoutConfirmMercadoPago from './pages/checkout/CheckoutConfirmMercadoPago'
 import MyOrders from './pages/MyOrders'
 import SearchResults from './pages/SearchResults'
+import CryptoPage from './pages/CryptoPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import ScrollToTop from './components/ScrollToTop'
 import Toast from './components/Toast'
@@ -67,6 +68,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/search" element={<SearchResultsRoute />} />
+        <Route path="/crypto" element={<CryptoPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/checkout" element={<Checkout />} />
