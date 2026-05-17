@@ -2,14 +2,14 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import {
   Package,
   UserRound, Plus, Search, Pencil, Trash2, Clock, TriangleAlert,
-  Layers, ChevronLeft, ChevronRight, Menu, Store,
+  Layers, ChevronLeft, ChevronRight, Menu, Store, Check, X,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import AdminBottomNav from './AdminBottomNav'
 import AdminSidebar from './AdminSidebar'
 import ProductModal from './ProductModal'
 import ConfirmModal from './ConfirmModal'
-import { listAdminProducts, deleteProduct, getCategories, getAdminStats } from '../../api/products'
+import { listAdminProducts, deleteProduct, getCategories, getAdminStats, updateProductStock } from '../../api/products'
 import { useAuth } from '../../context/AuthContext'
 import { formatARS } from '../../utils/formatPrice'
 
@@ -42,6 +42,113 @@ const StatCard = ({ label, value, sub, subColor, icon: Icon, iconColor, mobile =
       </div>
       <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '28px', fontWeight: '800' }}>{value}</span>
       <span style={{ color: subColor, fontFamily: 'Poppins', fontSize: '11px' }}>{sub}</span>
+    </div>
+  )
+}
+
+const StockCell = ({ product, onUpdated, compact = false }) => {
+  const { showToast } = useAuth()
+  const [editing, setEditing] = useState(false)
+  const [draft, setDraft] = useState(String(product.stock ?? 0))
+  const [saving, setSaving] = useState(false)
+  const inputRef = useRef(null)
+
+  const startEdit = () => {
+    setDraft(String(product.stock ?? 0))
+    setEditing(true)
+    setTimeout(() => { inputRef.current?.focus(); inputRef.current?.select() }, 0)
+  }
+
+  const cancel = () => { setEditing(false); setDraft(String(product.stock ?? 0)) }
+
+  const commit = async () => {
+    const next = Number(draft)
+    if (!Number.isInteger(next) || next < 0 || next > 999999) {
+      showToast('Stock inválido (0 a 999999)')
+      return
+    }
+    if (next === product.stock) { setEditing(false); return }
+    setSaving(true)
+    try {
+      const updated = await updateProductStock(product.id, next)
+      onUpdated(updated)
+      showToast('Stock actualizado')
+      setEditing(false)
+    } catch (err) {
+      const msg = err.fields?.stock ?? (err.status === 404 ? 'El producto ya no existe' : 'No se pudo actualizar el stock')
+      showToast(msg)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const onKey = (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); commit() }
+    else if (e.key === 'Escape') { e.preventDefault(); cancel() }
+  }
+
+  const stockColor = product.stock === 0 ? '#EF4444' : '#F5F7FA'
+  const stockWeight = product.stock === 0 ? (compact ? '700' : '600') : (compact ? '600' : 'normal')
+  const fontSize = compact ? '13px' : '13px'
+  const wrapWidth = compact ? undefined : '85px'
+
+  if (!editing) {
+    return (
+      <div style={{ width: wrapWidth, flexShrink: 0 }}>
+        <button onClick={startEdit} title="Click para editar stock"
+          onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#24A8F5' }}
+          onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1B2333' }}
+          className="cursor-pointer inline-flex items-center"
+          style={{
+            backgroundColor: '#0A0C14',
+            border: '1px solid #1B2333',
+            borderRadius: '4px',
+            padding: '3px 8px',
+            color: stockColor,
+            fontFamily: 'Poppins',
+            fontSize,
+            fontWeight: stockWeight,
+            textAlign: 'left',
+            transition: 'border-color 120ms',
+          }}>
+          {product.stock} un.
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex items-center" style={{ gap: '4px', width: wrapWidth, flexShrink: 0, opacity: saving ? 0.6 : 1 }}>
+      <input
+        ref={inputRef}
+        type="number"
+        min={0}
+        max={999999}
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onKeyDown={onKey}
+        disabled={saving}
+        style={{
+          width: '60px',
+          backgroundColor: '#0A0C14',
+          color: '#F5F7FA',
+          border: '1px solid #1B2333',
+          borderRadius: '4px',
+          padding: '3px 6px',
+          fontFamily: 'Poppins',
+          fontSize: '13px',
+        }}
+      />
+      <button onClick={commit} disabled={saving} title="Guardar"
+        className="border-none cursor-pointer flex items-center justify-center"
+        style={{ background: 'none', padding: 2 }}>
+        <Check size={14} color="#22C55E" />
+      </button>
+      <button onClick={cancel} disabled={saving} title="Cancelar"
+        className="border-none cursor-pointer flex items-center justify-center"
+        style={{ background: 'none', padding: 2 }}>
+        <X size={14} color="#AAB3C5" />
+      </button>
     </div>
   )
 }
@@ -122,6 +229,11 @@ const AdminPanel = () => {
     } finally {
       setDeleting(false)
     }
+  }
+
+  const mergeProduct = (updated) => {
+    setProducts(prev => prev.map(x => x.id === updated.id ? updated : x))
+    fetchStats()
   }
 
   const handleSave = (_saved, savedMode) => {
@@ -276,9 +388,7 @@ const AdminPanel = () => {
                   <div className="flex items-center" style={{ gap: '12px' }}>
                     <div className="flex items-center" style={{ gap: '6px' }}>
                       <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>Stock:</span>
-                      <span style={{ color: p.stock === 0 ? '#EF4444' : '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: p.stock === 0 ? '700' : '600' }}>
-                        {p.stock} un.
-                      </span>
+                      <StockCell product={p} onUpdated={mergeProduct} compact />
                     </div>
                     <div style={{ flex: 1 }} />
                     <div style={{ backgroundColor: p.active ? '#0F3D22' : '#2D1010', borderRadius: '5px', padding: '4px 10px' }}>
@@ -342,9 +452,7 @@ const AdminPanel = () => {
                     </div>
                     <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', width: '120px', flexShrink: 0 }}>{categoryLabel(p.category_id)}</span>
                     <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600', width: '140px', flexShrink: 0 }}>{formatARS(p.price_ars)}</span>
-                    <span style={{ color: p.stock === 0 ? '#EF4444' : '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: p.stock === 0 ? '600' : 'normal', width: '85px', flexShrink: 0 }}>
-                      {p.stock} un.
-                    </span>
+                    <StockCell product={p} onUpdated={mergeProduct} />
                     <div style={{ width: '100px', flexShrink: 0 }}>
                       <div style={{ display: 'inline-flex', backgroundColor: p.active ? '#0F3D22' : '#2D1010', borderRadius: '4px', padding: '3px 10px' }}>
                         <span style={{ color: p.active ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>

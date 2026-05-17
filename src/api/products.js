@@ -47,3 +47,6 @@ export const updateProduct = (id, data, imageFile, galleryFiles = [], keepGaller
 
 export const deleteProduct = (id) =>
   apiFetch(`/api/admin/products/${id}`, { method: 'DELETE' })
+
+export const updateProductStock = (id, stock) =>
+  apiFetch(`/api/admin/products/${id}/stock`, { method: 'PATCH', body: { stock } })
