@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { Search, UserRound, ShoppingCart, Menu, X, LogOut, LayoutDashboard, Package } from 'lucide-react'
+import { Search, UserRound, ShoppingCart, Menu, X, LogOut, LayoutDashboard, Package, Coins } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import MobileSidebar from './MobileSidebar'
 import { useWindowWidth } from '../hooks/useWindowWidth'
@@ -157,7 +157,7 @@ const Navbar = () => {
                             textDecoration: 'none'
                           }}
                         >
-                          <Package size={12} /> Mis pedidos
+                          <Package size={8} /> Pedidos
                         </Link>
                       )}
                       <button
@@ -284,6 +284,17 @@ const Navbar = () => {
           />
         </form>
 
+        <Link
+          to="/crypto"
+          onMouseEnter={() => setHoveredBtn('crypto')}
+          onMouseLeave={() => setHoveredBtn(null)}
+          className="flex items-center no-underline"
+          style={{ backgroundColor: hoveredBtn === 'crypto' ? '#0D2035' : '#1E2232', borderRadius: '20px', padding: '8px 14px', gap: '6px', transition: 'background-color 0.15s ease' }}
+        >
+          <Coins size={14} color="#24A8F5" />
+          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Cripto</span>
+        </Link>
+
         {user?.role === 'admin' && (
           <Link
             to="/admin"
@@ -305,8 +316,8 @@ const Navbar = () => {
             className="flex items-center no-underline"
             style={{ backgroundColor: hoveredBtn === 'myOrders' ? '#0D2035' : '#1E2232', borderRadius: '20px', padding: '8px 14px', gap: '6px', transition: 'background-color 0.15s ease' }}
           >
-            <Package size={14} color="#24A8F5" />
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Mis pedidos</span>
+            <Package size={10} color="#24A8F5" />
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Pedidos</span>
           </Link>
         )}
 
@@ -350,7 +361,7 @@ const Navbar = () => {
           style={{ backgroundColor: hoveredBtn === 'cartDesktop' ? '#00B8EF' : '#00C8FF', borderRadius: '20px', padding: '8px 20px', transition: 'background-color 0.15s ease' }}
         >
           <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>
-            🛒&nbsp;&nbsp;Carrito ({cartCount})
+            Carrito ({cartCount})
           </span>
         </Link>
         )}

@@ -9,6 +9,7 @@ const SUPPORT_HREF = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIC
 const navLinks = [
   { label: 'Productos', to: '/search' },
   { label: 'Ofertas', to: '/search?badge=OFERTA' },
+  { label: 'Cripto', to: '/crypto' },
   { label: 'Soporte', href: SUPPORT_HREF, external: true },
   { label: 'Nosotros', to: '#' },
 ]
