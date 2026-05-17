@@ -5,8 +5,9 @@ import Footer from '../components/Footer'
 import CryptoConverter from '../components/CryptoConverter'
 import { getRates } from '../api/crypto'
 
-const MONO = '"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace'
-const DISPLAY = '"Rajdhani", "Poppins", sans-serif'
+const MONO = 'Poppins, sans-serif'
+const DISPLAY = 'Poppins, sans-serif'
+const HERO = '"Rajdhani", "Poppins", sans-serif'
 
 const EthMark = ({ size = 28, color = '#24A8F5' }) => (
   <svg width={size * 0.62} height={size} viewBox="0 0 256 417" aria-hidden style={{ display: 'block' }}>
@@ -171,7 +172,7 @@ const CryptoPage = () => {
         >
           <h1
             style={{
-              fontFamily: DISPLAY,
+              fontFamily: HERO,
               color: '#F5F7FA',
               fontSize: 'clamp(48px, 8vw, 96px)',
               fontWeight: 700,

@@ -61,3 +61,8 @@ input, select {
 .sw-ver-todos:hover { border-color: #24A8F5; color: #00C8FF; }
 
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+@keyframes sw-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.85); }
+}

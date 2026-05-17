@@ -43,8 +43,8 @@ const formatNumber = (value, currency) => {
   }).format(value)
 }
 
-const MONO = '"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace'
-const DISPLAY = '"Rajdhani", "Poppins", sans-serif'
+const MONO = 'Poppins, sans-serif'
+const DISPLAY = 'Poppins, sans-serif'
 
 const CryptoConverter = () => {
   const [rates, setRates] = useState(null)
