@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box } from 'lucide-react'
+import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box, CircuitBoard, Plug } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
@@ -10,7 +10,7 @@ import { formatARS } from '../utils/formatPrice'
 
 const ALL_CATEGORY = { id: 'all', label: 'Todo', icon: null }
 
-const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box }
+const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box, CircuitBoard, Plug }
 
 const BADGE_COLOR = {
   NUEVO:  { bg: '#00C8FF22', text: '#00C8FF', dot: '#00C8FF' },

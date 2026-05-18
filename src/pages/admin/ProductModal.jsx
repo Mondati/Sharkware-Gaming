@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { X, Upload, Save, Image, ChevronDown, Plus, Trash2, Loader } from 'lucide-react'
 import { createProduct, updateProduct, getCategories } from '../../api/products'
+import { requiredFor } from '../../data/requiredSpecs'
 
 /* ─── shared styles ─── */
 const INPUT_STYLE_BASE = {
@@ -54,11 +55,32 @@ const useProductForm = ({ mode, product, onSave, onClose, navigate }) => {
   })
 
   const [specRows, setSpecRows] = useState(() => {
-    if (isEdit && product?.specs) {
-      return Object.entries(product.specs).map(([key, value]) => ({ id: crypto.randomUUID(), key, value }))
-    }
-    return []
+    const initialCategory = isEdit ? (product?.category_id ?? '') : ''
+    const requiredKeys = requiredFor(initialCategory)
+    const existing = (isEdit && product?.specs)
+      ? Object.entries(product.specs).map(([key, value]) => ({
+          id: crypto.randomUUID(), key, value, required: requiredKeys.includes(key),
+        }))
+      : []
+    const present = new Set(existing.map(r => r.key))
+    const missingRequired = requiredKeys
+      .filter(k => !present.has(k))
+      .map(k => ({ id: crypto.randomUUID(), key: k, value: '', required: true }))
+    return [...missingRequired, ...existing]
   })
+
+  useEffect(() => {
+    const requiredKeys = requiredFor(form.categoryId)
+    setSpecRows(prev => {
+      const cleared = prev.map(r => ({ ...r, required: requiredKeys.includes(r.key) }))
+      const present = new Set(cleared.map(r => r.key))
+      const toAdd = requiredKeys
+        .filter(k => !present.has(k))
+        .map(k => ({ id: crypto.randomUUID(), key: k, value: '', required: true }))
+      if (!toAdd.length && cleared.every((r, i) => r.required === prev[i].required)) return prev
+      return [...toAdd, ...cleared]
+    })
+  }, [form.categoryId])
 
   const [imageFile, setImage]   = useState(null)
   const [gallery, setGalleryRaw] = useState([])
@@ -92,9 +114,9 @@ const useProductForm = ({ mode, product, onSave, onClose, navigate }) => {
     setFieldErrs(fe => ({ ...fe, [k]: undefined }))
   }
 
-  const addSpecRow    = () => setSpecRows(r => r.length >= 20 ? r : [...r, { id: crypto.randomUUID(), key: '', value: '' }])
-  const removeSpecRow = (id) => setSpecRows(r => r.filter(row => row.id !== id))
-  const setSpecKey    = (id, v) => setSpecRows(r => r.map(row => row.id === id ? { ...row, key: v }   : row))
+  const addSpecRow    = () => setSpecRows(r => r.length >= 20 ? r : [...r, { id: crypto.randomUUID(), key: '', value: '', required: false }])
+  const removeSpecRow = (id) => setSpecRows(r => r.filter(row => row.id !== id || row.required))
+  const setSpecKey    = (id, v) => setSpecRows(r => r.map(row => row.id === id && !row.required ? { ...row, key: v }   : row))
   const setSpecVal    = (id, v) => setSpecRows(r => r.map(row => row.id === id ? { ...row, value: v } : row))
 
   const validate = () => {
@@ -124,8 +146,9 @@ const useProductForm = ({ mode, product, onSave, onClose, navigate }) => {
     if (specRows.length > 20) {
       errs.specs = 'No se permiten más de 20 specs'
     } else {
-      for (const { key, value } of specRows) {
+      for (const { key, value, required } of specRows) {
         const k = key.trim()
+        if (required && !value.trim()) { errs.specs = `Campo "${k}" requerido para esta categoría`; break }
         if (!k && value.trim()) { errs.specs = 'Las claves de specs no pueden estar vacías'; break }
         if (k.length > 50)      { errs.specs = 'Las claves de specs no pueden superar 50 caracteres'; break }
         if (value.length > 200) { errs.specs = 'Los valores de specs no pueden superar 200 caracteres'; break }
@@ -412,12 +435,20 @@ const MobileBody = ({ mode, product, state, onClose }) => {
           {fieldErrs.specs && <span style={ERR_STYLE}>{fieldErrs.specs}</span>}
           {specRows.map((row) => (
             <div key={row.id} className="flex items-center" style={{ gap: '6px' }}>
-              <input placeholder="Clave" maxLength={50} value={row.key} onChange={e => setSpecKey(row.id, e.target.value)}
-                style={{ ...MOBILE_INPUT, flex: 1 }} />
+              <div style={{ flex: 1, position: 'relative' }}>
+                <input placeholder="Clave" maxLength={50} value={row.key} onChange={e => setSpecKey(row.id, e.target.value)}
+                  disabled={row.required}
+                  style={{ ...MOBILE_INPUT, width: '100%', opacity: row.required ? 0.85 : 1 }} />
+                {row.required && (
+                  <span style={{ position: 'absolute', top: '-7px', right: '6px', backgroundColor: '#0D2035', color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '600', padding: '2px 6px', borderRadius: '6px', border: '1px solid #24A8F5', textTransform: 'uppercase' }}>
+                    Requerido
+                  </span>
+                )}
+              </div>
               <input placeholder="Valor" maxLength={200} value={row.value} onChange={e => setSpecVal(row.id, e.target.value)}
-                style={{ ...MOBILE_INPUT, flex: 1 }} />
-              <button onClick={() => removeSpecRow(row.id)} className="border-none cursor-pointer"
-                style={{ background: 'none', padding: 0 }}>
+                style={{ ...MOBILE_INPUT, flex: 1, border: `1px solid ${row.required && !row.value.trim() ? '#F59E0B' : '#1B2333'}` }} />
+              <button onClick={() => removeSpecRow(row.id)} disabled={row.required} className="border-none"
+                style={{ background: 'none', padding: 0, cursor: row.required ? 'not-allowed' : 'pointer', opacity: row.required ? 0.3 : 1 }}>
                 <Trash2 size={16} color="#EF4444" />
               </button>
             </div>
@@ -668,11 +699,19 @@ const DesktopBody = ({ mode, product, state, onClose }) => {
             {fieldErrs.specs && <span style={ERR_STYLE}>{fieldErrs.specs}</span>}
             {specRows.map((row) => (
               <div key={row.id} className="flex items-center" style={{ gap: '8px' }}>
-                <input placeholder="Clave (ej: VRAM)" maxLength={50} value={row.key} onChange={e => setSpecKey(row.id, e.target.value)}
-                  style={{ ...INPUT_STYLE_BASE, flex: 1 }} />
+                <div style={{ flex: 1, position: 'relative' }}>
+                  <input placeholder="Clave (ej: VRAM)" maxLength={50} value={row.key} onChange={e => setSpecKey(row.id, e.target.value)}
+                    disabled={row.required}
+                    style={{ ...INPUT_STYLE_BASE, width: '100%', opacity: row.required ? 0.85 : 1 }} />
+                  {row.required && (
+                    <span style={{ position: 'absolute', top: '-7px', right: '6px', backgroundColor: '#0D2035', color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '600', padding: '2px 6px', borderRadius: '6px', border: '1px solid #24A8F5', textTransform: 'uppercase' }}>
+                      Requerido
+                    </span>
+                  )}
+                </div>
                 <input placeholder="Valor (ej: 12GB)" maxLength={200} value={row.value} onChange={e => setSpecVal(row.id, e.target.value)}
-                  style={{ ...INPUT_STYLE_BASE, flex: 1 }} />
-                <button onClick={() => removeSpecRow(row.id)} className="border-none cursor-pointer" style={{ background: 'none', padding: 0, flexShrink: 0 }}>
+                  style={{ ...INPUT_STYLE_BASE, flex: 1, border: `1px solid ${row.required && !row.value.trim() ? '#F59E0B' : '#1B2333'}` }} />
+                <button onClick={() => removeSpecRow(row.id)} disabled={row.required} className="border-none" style={{ background: 'none', padding: 0, flexShrink: 0, cursor: row.required ? 'not-allowed' : 'pointer', opacity: row.required ? 0.3 : 1 }}>
                   <Trash2 size={16} color="#EF4444" />
                 </button>
               </div>

@@ -1,0 +1,143 @@
+import { Link } from 'react-router-dom'
+import { Check, AlertTriangle, ShoppingCart } from 'lucide-react'
+import { formatARS } from '../utils/formatPrice'
+import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext'
+
+const ROLE_LABEL = {
+  cpu: 'CPU',
+  motherboard: 'Motherboard',
+  ram: 'RAM',
+  gpu: 'GPU',
+  psu: 'Fuente',
+  storage: 'Almacenamiento',
+  cooler: 'Cooler',
+  case: 'Gabinete',
+}
+
+const BuildCard = ({ build }) => {
+  const { addItems } = useCart()
+  const { showToast } = useAuth()
+
+  const handleAddAll = () => {
+    const entries = (build.items ?? []).map((it) => ({
+      product: {
+        id: it.productId,
+        brand: it.brand,
+        name: it.productName,
+        spec: ROLE_LABEL[it.role] ?? it.role,
+        price_ars: Number(it.unitPrice),
+        image_url: it.imageUrl,
+        stock: 1,
+      },
+      quantity: it.quantity ?? 1,
+    }))
+    const n = addItems(entries)
+    if (n > 0) showToast(`Build agregada al carrito (${n} productos)`)
+  }
+
+  const compatible = build.compatible
+  const items = build.items ?? []
+  const warnings = build.warnings ?? []
+
+  return (
+    <div
+      className="flex flex-col"
+      style={{
+        marginTop: '8px',
+        backgroundColor: '#080D1A',
+        border: '1px solid rgba(36,168,245,0.35)',
+        borderRadius: '12px',
+        overflow: 'hidden',
+      }}
+    >
+      <div
+        className="flex items-center justify-between"
+        style={{ padding: '10px 14px', backgroundColor: '#0D1A40', borderBottom: '1px solid #1B2333' }}
+      >
+        <span style={{ color: '#F5F7FA', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '15px', fontWeight: 700, letterSpacing: '0.3px' }}>
+          BUILD RECOMENDADA
+        </span>
+        <span style={{ color: '#00C8FF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '16px', fontWeight: 700 }}>
+          {formatARS(build.total)}
+        </span>
+      </div>
+
+      <div className="flex flex-col" style={{ padding: '8px 6px', gap: '4px' }}>
+        {items.map((it) => (
+          <Link
+            key={`${it.productId}-${it.role}`}
+            to={`/product/${it.productId}`}
+            className="flex items-center no-underline"
+            style={{ padding: '6px 10px', borderRadius: '6px', gap: '10px' }}
+          >
+            <div
+              style={{
+                width: '36px', height: '36px', borderRadius: '6px',
+                backgroundColor: '#0E1424', overflow: 'hidden', flexShrink: 0,
+                border: '1px solid #1B2333',
+              }}
+            >
+              {it.imageUrl ? (
+                <img src={it.imageUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : null}
+            </div>
+            <div className="flex flex-col" style={{ flex: 1, minWidth: 0 }}>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                {ROLE_LABEL[it.role] ?? it.role}
+              </span>
+              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {it.brand} {it.productName}
+              </span>
+            </div>
+            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 600, flexShrink: 0 }}>
+              {formatARS(it.unitPrice)}
+            </span>
+          </Link>
+        ))}
+      </div>
+
+      <div
+        className="flex items-center"
+        style={{
+          padding: '8px 14px',
+          gap: '8px',
+          backgroundColor: compatible ? 'rgba(34,197,94,0.10)' : 'rgba(245,158,11,0.10)',
+          borderTop: '1px solid #1B2333',
+        }}
+      >
+        {compatible ? <Check size={14} color="#22C55E" /> : <AlertTriangle size={14} color="#F59E0B" />}
+        <span style={{ color: compatible ? '#22C55E' : '#F59E0B', fontFamily: 'Poppins', fontSize: '11px', fontWeight: 600 }}>
+          {compatible ? 'Compatibilidad verificada' : 'Build con advertencias'}
+        </span>
+      </div>
+
+      {warnings.length > 0 && (
+        <ul style={{ margin: 0, padding: '0 16px 8px 28px', color: '#F59E0B', fontFamily: 'Poppins', fontSize: '11px' }}>
+          {warnings.map((w, i) => <li key={i} style={{ marginTop: '4px' }}>{w}</li>)}
+        </ul>
+      )}
+
+      <button
+        onClick={handleAddAll}
+        className="flex items-center justify-center border-none cursor-pointer"
+        style={{
+          margin: '8px 12px 12px',
+          padding: '10px 14px',
+          backgroundColor: compatible ? '#24A8F5' : '#1B2333',
+          color: compatible ? '#FFFFFF' : '#AAB3C5',
+          borderRadius: '8px',
+          gap: '8px',
+          fontFamily: 'Poppins',
+          fontSize: '13px',
+          fontWeight: 700,
+        }}
+      >
+        <ShoppingCart size={14} />
+        Agregar build al carrito
+      </button>
+    </div>
+  )
+}
+
+export default BuildCard
