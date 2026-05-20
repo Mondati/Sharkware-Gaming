@@ -36,6 +36,28 @@ const reducer = (state, action) => {
         quantity,
       }]
     }
+    case 'ADD_ITEMS': {
+      let next = state
+      for (const { product, quantity } of action.entries) {
+        const existing = next.find(i => i.id === product.id)
+        if (existing) {
+          next = next.map(i =>
+            i.id === product.id ? { ...i, quantity: i.quantity + quantity } : i
+          )
+        } else {
+          next = [...next, {
+            id: product.id,
+            brand: product.brand,
+            name: product.name,
+            spec: product.spec,
+            price_ars: product.price_ars,
+            image_url: product.image_url,
+            quantity,
+          }]
+        }
+      }
+      return next
+    }
     case 'REMOVE_ITEM':
       return state.filter(i => i.id !== action.id)
     case 'UPDATE_QTY':
@@ -72,6 +94,15 @@ export const CartProvider = ({ children }) => {
     showToast()
   }
 
+  const addItems = (entries) => {
+    const valid = (entries ?? []).filter(({ product, quantity }) =>
+      product && product.id != null && quantity > 0 && isFinite(quantity)
+    )
+    if (!valid.length) return 0
+    dispatch({ type: 'ADD_ITEMS', entries: valid })
+    return valid.length
+  }
+
   const removeItem = (id) => dispatch({ type: 'REMOVE_ITEM', id })
 
   const updateQty = (id, quantity) => dispatch({ type: 'UPDATE_QTY', id, quantity })
@@ -81,7 +112,7 @@ export const CartProvider = ({ children }) => {
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0)
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, updateQty, clearCart, cartCount, toastVisible }}>
+    <CartContext.Provider value={{ items, addItem, addItems, removeItem, updateQty, clearCart, cartCount, toastVisible }}>
       {children}
     </CartContext.Provider>
   )

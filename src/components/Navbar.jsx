@@ -9,6 +9,7 @@ import {
   LayoutDashboard,
   Package,
   Coins,
+  Sparkles,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import MobileSidebar from "./MobileSidebar";
@@ -456,6 +457,21 @@ const Navbar = () => {
           className="flex items-center"
           style={{ gap: "8px", flexShrink: 0 }}
         >
+          {user?.role !== "admin" && (
+            <Link
+              to="/builder"
+              onMouseEnter={() => setHoveredBtn("builder")}
+              onMouseLeave={() => setHoveredBtn(null)}
+              className="flex items-center no-underline"
+              style={ghostPill(hoveredBtn === "builder")}
+            >
+              <Sparkles size={13} color="#24A8F5" />
+              {!isTablet && (
+                <span style={ghostLabel(hoveredBtn === "builder")}>Armá tu PC</span>
+              )}
+            </Link>
+          )}
+
           <Link
             to="/crypto"
             onMouseEnter={() => setHoveredBtn("crypto")}

@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react'
 import {
-  X, User, Package, Headphones, ChevronRight, Laptop, Coins,
-  Monitor, Cpu, Zap, MemoryStick, HardDrive, Keyboard, Fan, Box,
+  X, User, Package, Headphones, ChevronRight, Laptop, Coins, Sparkles,
+  Monitor, Cpu, Zap, MemoryStick, HardDrive, Keyboard, Fan, Box, CircuitBoard, Plug,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { getCategories } from '../api/products'
 
-const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box }
+const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box, CircuitBoard, Plug }
 
 const accountLinks = [
-  { icon: User,       label: 'Mi cuenta',   to: '/login'   },
-  { icon: Package,    label: 'Mis pedidos', to: '/'        },
-  { icon: Coins,      label: 'Cripto',      to: '/crypto'  },
-  { icon: Headphones, label: 'Soporte',     to: '/'        },
+  { icon: User,       label: 'Mi cuenta',   to: '/login'    },
+  { icon: Package,    label: 'Mis pedidos', to: '/'         },
+  { icon: Sparkles,   label: 'Armá tu PC',  to: '/builder'  },
+  { icon: Coins,      label: 'Cripto',      to: '/crypto'   },
+  { icon: Headphones, label: 'Soporte',     to: '/'         },
 ]
 
 const MobileSidebar = ({ isOpen, onClose }) => {

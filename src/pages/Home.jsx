@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box } from 'lucide-react'
+import { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box, CircuitBoard, Plug, Sparkles, ArrowRight } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
@@ -7,10 +7,11 @@ import { SORT_OPTIONS } from '../data/sortOptions'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import { getProducts, getCategories } from '../api/products'
 import { formatARS } from '../utils/formatPrice'
+import { useAuth } from '../context/AuthContext'
 
 const ALL_CATEGORY = { id: 'all', label: 'Todo', icon: null }
 
-const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box }
+const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box, CircuitBoard, Plug }
 
 const BADGE_COLOR = {
   NUEVO:  { bg: '#00C8FF22', text: '#00C8FF', dot: '#00C8FF' },
@@ -33,6 +34,8 @@ const Home = () => {
   const [activeNbFilter, setActiveNbFilter] = useState('Todos')
   const [sortOrder, setSortOrder] = useState('relevance')
   const { sidePadding, cardFlex } = useWindowWidth()
+  const { user } = useAuth()
+  const showBuilderHero = user?.role !== 'admin'
 
   const [activeSlide, setActiveSlide] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -479,6 +482,158 @@ const Home = () => {
               ))}
             </div>
           </section>
+
+          {/* ── Builder IA hero ──────────────────────────────────────────── */}
+          {showBuilderHero && (
+            <section
+              className="w-full"
+              style={{ padding: `8px ${sidePadding} 40px` }}
+            >
+              <Link
+                to="/builder"
+                className="no-underline"
+                style={{
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'stretch',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(36,168,245,0.35)',
+                  backgroundColor: '#070B16',
+                  backgroundImage:
+                    'radial-gradient(60% 80% at 90% 50%, rgba(36,168,245,0.22) 0%, transparent 60%),' +
+                    'radial-gradient(40% 80% at 0% 50%, rgba(13,26,64,0.55) 0%, transparent 60%),' +
+                    'linear-gradient(rgba(36,168,245,0.04) 1px, transparent 1px),' +
+                    'linear-gradient(90deg, rgba(36,168,245,0.04) 1px, transparent 1px)',
+                  backgroundSize: 'auto, auto, 32px 32px, 32px 32px',
+                  boxShadow: '0 0 0 1px rgba(0,200,255,0.08), 0 12px 40px rgba(0,0,0,0.35)',
+                }}
+              >
+                <div
+                  aria-hidden
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 2,
+                    background:
+                      'linear-gradient(90deg, transparent 0%, #24A8F5 30%, #00C8FF 50%, #24A8F5 70%, transparent 100%)',
+                    opacity: 0.6,
+                  }}
+                />
+
+                <div
+                  className="flex flex-col"
+                  style={{
+                    flex: 1,
+                    padding: '32px 36px',
+                    gap: 14,
+                    justifyContent: 'center',
+                    minWidth: 0,
+                  }}
+                >
+                  <div className="flex items-center" style={{ gap: 10 }}>
+                    <Sparkles size={14} color="#24A8F5" />
+                    <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: 11, letterSpacing: 3, fontWeight: 500 }}>
+                      SHARKWARE // PC BUILDER
+                    </span>
+                  </div>
+                  <h2
+                    style={{
+                      margin: 0,
+                      fontFamily: 'Rajdhani, Poppins, sans-serif',
+                      color: '#F5F7FA',
+                      fontSize: 'clamp(28px, 4vw, 44px)',
+                      fontWeight: 700,
+                      lineHeight: 1.05,
+                      letterSpacing: '-0.02em',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    ¿No sabés qué comprar?{' '}
+                    <span
+                      style={{
+                        background: 'linear-gradient(90deg, #24A8F5 0%, #00C8FF 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                      }}
+                    >
+                      Armá tu PC con IA.
+                    </span>
+                  </h2>
+                  <p
+                    style={{
+                      margin: 0,
+                      color: '#AAB3C5',
+                      fontFamily: 'Poppins',
+                      fontSize: 14,
+                      lineHeight: 1.55,
+                      maxWidth: 540,
+                    }}
+                  >
+                    Decinos tu presupuesto y para qué la vas a usar. Te armamos una build compatible
+                    con stock real en menos de 2 minutos.
+                  </p>
+                  <div className="flex items-center" style={{ gap: 10, marginTop: 4 }}>
+                    <span
+                      className="flex items-center"
+                      style={{
+                        gap: 8,
+                        padding: '10px 18px',
+                        borderRadius: 999,
+                        backgroundColor: '#24A8F5',
+                        color: '#FFFFFF',
+                        fontFamily: 'Poppins',
+                        fontSize: 13,
+                        fontWeight: 700,
+                        boxShadow: '0 0 24px rgba(36,168,245,0.4)',
+                      }}
+                    >
+                      <Sparkles size={14} /> Probar el asistente
+                      <ArrowRight size={14} />
+                    </span>
+                    <span
+                      style={{
+                        color: '#22C55E',
+                        fontFamily: 'Poppins',
+                        fontSize: 10,
+                        backgroundColor: 'rgba(34,197,94,0.10)',
+                        border: '1px solid rgba(34,197,94,0.30)',
+                        padding: '4px 10px',
+                        borderRadius: 4,
+                        letterSpacing: 1.5,
+                      }}
+                    >
+                      BETA
+                    </span>
+                  </div>
+                </div>
+
+                <div
+                  aria-hidden
+                  className="hidden md:flex items-center justify-center"
+                  style={{
+                    flex: '0 0 280px',
+                    position: 'relative',
+                    borderLeft: '1px solid rgba(36,168,245,0.2)',
+                  }}
+                >
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background:
+                        'radial-gradient(50% 50% at 50% 50%, rgba(0,200,255,0.18) 0%, transparent 70%)',
+                    }}
+                  />
+                  <Cpu size={120} color="#24A8F5" strokeWidth={1} style={{ opacity: 0.85, filter: 'drop-shadow(0 0 24px rgba(0,200,255,0.5))' }} />
+                </div>
+              </Link>
+            </section>
+          )}
 
           {/* ── Notebooks Gamer ──────────────────────────────────────────── */}
 

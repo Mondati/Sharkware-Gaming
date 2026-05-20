@@ -13,6 +13,7 @@ import CheckoutConfirmMercadoPago from './pages/checkout/CheckoutConfirmMercadoP
 import MyOrders from './pages/MyOrders'
 import SearchResults from './pages/SearchResults'
 import CryptoPage from './pages/CryptoPage'
+import BuilderPage from './pages/BuilderPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import ScrollToTop from './components/ScrollToTop'
 import Toast from './components/Toast'
@@ -60,6 +61,7 @@ const App = () => {
   const [chatOpen, setChatOpen] = useState(false)
   const hideNavbar = location.pathname === '/login' || location.pathname.startsWith('/admin')
   const hideChatbot = location.pathname === '/login' || location.pathname.startsWith('/admin')
+
   return (
     <div className="flex flex-col min-h-screen">
       <ScrollToTop />
@@ -69,6 +71,7 @@ const App = () => {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/search" element={<SearchResultsRoute />} />
         <Route path="/crypto" element={<CryptoPage />} />
+        <Route path="/builder" element={<BuilderPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/checkout" element={<Checkout />} />
