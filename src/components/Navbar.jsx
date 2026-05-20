@@ -458,19 +458,18 @@ const Navbar = () => {
           style={{ gap: "8px", flexShrink: 0 }}
         >
           {user?.role !== "admin" && (
-            <button
-              type="button"
-              onClick={() => window.dispatchEvent(new Event("builder:open"))}
+            <Link
+              to="/builder"
               onMouseEnter={() => setHoveredBtn("builder")}
               onMouseLeave={() => setHoveredBtn(null)}
-              className="flex items-center cursor-pointer"
-              style={{ ...ghostPill(hoveredBtn === "builder"), background: hoveredBtn === "builder" ? "rgba(36,168,245,0.08)" : "transparent" }}
+              className="flex items-center no-underline"
+              style={ghostPill(hoveredBtn === "builder")}
             >
               <Sparkles size={13} color="#24A8F5" />
               {!isTablet && (
                 <span style={ghostLabel(hoveredBtn === "builder")}>Armá tu PC</span>
               )}
-            </button>
+            </Link>
           )}
 
           <Link

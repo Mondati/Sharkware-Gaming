@@ -1,9 +1,8 @@
-import { useEffect, useState, lazy, Suspense } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { Check, Bot, X } from 'lucide-react'
 import Navbar from './components/Navbar'
 import ChatbotPanel from './components/ChatbotPanel'
-import BuilderPanel from './components/BuilderPanel'
 import Home from './pages/Home'
 import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
@@ -14,6 +13,7 @@ import CheckoutConfirmMercadoPago from './pages/checkout/CheckoutConfirmMercadoP
 import MyOrders from './pages/MyOrders'
 import SearchResults from './pages/SearchResults'
 import CryptoPage from './pages/CryptoPage'
+import BuilderPage from './pages/BuilderPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import ScrollToTop from './components/ScrollToTop'
 import Toast from './components/Toast'
@@ -59,15 +59,9 @@ const CartToast = () => {
 const App = () => {
   const location = useLocation()
   const [chatOpen, setChatOpen] = useState(false)
-  const [builderOpen, setBuilderOpen] = useState(false)
   const hideNavbar = location.pathname === '/login' || location.pathname.startsWith('/admin')
   const hideChatbot = location.pathname === '/login' || location.pathname.startsWith('/admin')
 
-  useEffect(() => {
-    const open = () => { setBuilderOpen(true); setChatOpen(false) }
-    window.addEventListener('builder:open', open)
-    return () => window.removeEventListener('builder:open', open)
-  }, [])
   return (
     <div className="flex flex-col min-h-screen">
       <ScrollToTop />
@@ -77,6 +71,7 @@ const App = () => {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/search" element={<SearchResultsRoute />} />
         <Route path="/crypto" element={<CryptoPage />} />
+        <Route path="/builder" element={<BuilderPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/checkout" element={<Checkout />} />
@@ -103,12 +98,11 @@ const App = () => {
       </Routes>
       <CartToast />
       <Toast />
-      {!hideChatbot && builderOpen && <BuilderPanel onClose={() => setBuilderOpen(false)} />}
       {!hideChatbot && (
         <>
-          {chatOpen && !builderOpen && <ChatbotPanel onClose={() => setChatOpen(false)} />}
+          {chatOpen && <ChatbotPanel onClose={() => setChatOpen(false)} />}
           <button
-            onClick={() => { setBuilderOpen(false); setChatOpen((v) => !v) }}
+            onClick={() => setChatOpen((v) => !v)}
             className="flex items-center justify-center border-none cursor-pointer"
             aria-label={chatOpen ? 'Cerrar chatbot' : 'Abrir chatbot'}
             style={{
