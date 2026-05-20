@@ -97,6 +97,34 @@ const BuildCard = ({ build }) => {
         ))}
       </div>
 
+      {build.budget != null && (() => {
+        const budget = Number(build.budget)
+        const total = Number(build.total)
+        const delta = total - budget
+        const within = build.withinBudget !== false
+        const deltaColor = within ? '#22C55E' : '#F59E0B'
+        const deltaSign = delta > 0 ? '+' : ''
+        return (
+          <div
+            className="flex items-center justify-between"
+            style={{
+              padding: '8px 14px',
+              borderTop: '1px solid #1B2333',
+              backgroundColor: '#070B16',
+              fontFamily: 'Poppins',
+              fontSize: '11px',
+            }}
+          >
+            <span style={{ color: '#AAB3C5' }}>
+              Presupuesto: <span style={{ color: '#F5F7FA', fontWeight: 600 }}>{formatARS(budget)}</span>
+            </span>
+            <span style={{ color: deltaColor, fontWeight: 700 }}>
+              {deltaSign}{formatARS(Math.abs(delta))}
+            </span>
+          </div>
+        )
+      })()}
+
       <div
         className="flex items-center"
         style={{
