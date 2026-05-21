@@ -111,8 +111,8 @@ const Cart = () => {
                 className="flex items-start no-underline"
                 style={{ gap: '12px', flex: 1 }}
               >
-                <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '80px', height: '80px', flexShrink: 0, overflow: 'hidden' }}>
-                  <img src={item.image_url} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display = 'none' }} />
+                <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '80px', height: '80px', flexShrink: 0, overflow: 'hidden', padding: '6px' }}>
+                  <img src={item.image_url} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} onError={e => { e.target.style.display = 'none' }} />
                 </div>
                 <div className="flex flex-col" style={{ gap: '2px' }}>
                   <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
@@ -338,8 +338,8 @@ const Cart = () => {
                     className="flex items-center no-underline"
                     style={{ flex: 1, gap: '16px' }}
                   >
-                    <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '90px', height: '90px', flexShrink: 0, overflow: 'hidden' }}>
-                    <img src={item.image_url} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => { e.target.style.display = 'none' }} />
+                    <div style={{ backgroundColor: '#1E2232', borderRadius: '10px', width: '90px', height: '90px', flexShrink: 0, overflow: 'hidden', padding: '6px' }}>
+                    <img src={item.image_url} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} onError={e => { e.target.style.display = 'none' }} />
                   </div>
                     <div className="flex flex-col" style={{ gap: '4px' }}>
                       <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>

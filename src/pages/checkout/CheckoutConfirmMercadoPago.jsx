@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { ChevronRight, ArrowLeft, X, Clock, CheckCircle2, XCircle, ShoppingBag, Info } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import Footer from '../../components/Footer'
+import MercadoPagoLogo from '../../components/MercadoPagoLogo'
 import { syncPayment } from '../../api/orders'
 
 const fmt = (n) => '$' + Math.round(Number(n) || 0).toLocaleString('es-AR')
@@ -179,7 +180,8 @@ const CheckoutConfirmMercadoPago = () => {
       >
         {showSkeleton && (
           <>
-            <div className="flex flex-col" style={{ gap: '6px' }}>
+            <div className="flex flex-col" style={{ gap: '10px' }}>
+              <MercadoPagoLogo variant="horizontal" size={28} />
               <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
                 Confirmando pago…
               </span>
@@ -243,12 +245,15 @@ const CheckoutConfirmMercadoPago = () => {
         {showPolling && (
           <div
             className="flex items-center"
-            style={{ backgroundColor: '#0A1F3F', borderRadius: '12px', padding: '14px', gap: '10px', border: '1px solid rgba(36,168,245,0.3)' }}
+            style={{ backgroundColor: '#0A1F3F', borderRadius: '12px', padding: '14px', gap: '10px', border: '1px solid rgba(36,168,245,0.3)', justifyContent: 'space-between' }}
           >
-            <Clock size={18} color="#24A8F5" style={{ flexShrink: 0 }} />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
-              Confirmando pago con MercadoPago…
-            </span>
+            <div className="flex items-center" style={{ gap: '10px' }}>
+              <Clock size={18} color="#24A8F5" style={{ flexShrink: 0 }} />
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
+                Confirmando pago con MercadoPago…
+              </span>
+            </div>
+            <MercadoPagoLogo variant="horizontal" size={18} />
           </div>
         )}
 

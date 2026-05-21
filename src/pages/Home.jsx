@@ -174,7 +174,7 @@ const Home = () => {
               </div>
               <div
                 className="flex items-center justify-center"
-                style={{ position: 'relative', backgroundColor: '#1E2232', borderRadius: '20px', width: '400px', height: '380px', flexShrink: 0, overflow: 'hidden' }}
+                style={{ position: 'relative', backgroundColor: '#1E2232', borderRadius: '20px', width: '400px', height: '380px', flexShrink: 0, overflow: 'hidden', padding: '16px' }}
               >
                 <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(0,200,255,0.12) 0%, transparent 70%)', zIndex: 0 }} />
                 <span style={{ color: '#00C8FF12', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '36px', fontWeight: '700', position: 'absolute', textAlign: 'center', padding: '0 16px', zIndex: 0 }}>
@@ -183,7 +183,7 @@ const Home = () => {
                 <img
                   src={p.image_url}
                   alt={p.name}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'relative', zIndex: 1, filter: 'drop-shadow(0 0 40px rgba(0,200,255,0.25))' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain', position: 'relative', zIndex: 1, filter: 'drop-shadow(0 0 40px rgba(0,200,255,0.25))' }}
                   onError={(e) => { e.target.style.display = 'none' }}
                 />
               </div>
