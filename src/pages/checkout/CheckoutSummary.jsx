@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { ChevronRight, ArrowLeft, X, Clock, CheckCircle2, XCircle, ShoppingBag, Info, CreditCard, Lock, User, Mail, AlertTriangle } from 'lucide-react'
+import { ChevronRight, ArrowLeft, X, Clock, CheckCircle2, XCircle, ShoppingBag, Info, Lock, User, Mail, AlertTriangle } from 'lucide-react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Footer from '../../components/Footer'
+import MercadoPagoLogo from '../../components/MercadoPagoLogo'
 import { getOrderSummary, createMpPreference } from '../../api/orders'
 import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
@@ -284,7 +285,7 @@ const CheckoutSummary = () => {
               style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '20px', gap: '14px', border: '1px solid #24A8F5' }}
             >
               <div style={{ backgroundColor: '#0A1F3F', borderRadius: '12px', padding: '12px', flexShrink: 0 }}>
-                <CreditCard size={22} color="#24A8F5" />
+                <MercadoPagoLogo size={22} />
               </div>
               <div className="flex flex-col flex-1" style={{ gap: '2px' }}>
                 <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>

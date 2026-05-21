@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { Sparkles, Send, Loader, Cpu } from 'lucide-react'
+import { Sparkles, Send, Loader, Cpu, ChevronRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import Footer from '../components/Footer'
 import BuildCard from '../components/BuildCard'
@@ -50,6 +51,32 @@ const BuilderPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
+
+      {/* Mobile header */}
+      <div
+        className="flex md:hidden items-center w-full"
+        style={{ backgroundColor: '#0A0F1C', height: '56px', padding: '0 16px', gap: '10px' }}
+      >
+        <Cpu size={18} color="#24A8F5" />
+        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
+          Armá tu PC
+        </span>
+      </div>
+
+      {/* Desktop breadcrumb */}
+      <div
+        className="hidden md:flex items-center w-full"
+        style={{ backgroundColor: '#0A0F1C', height: '44px', padding: `0 ${sidePadding}`, gap: '8px' }}
+      >
+        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
+          Inicio
+        </Link>
+        <ChevronRight size={14} color="#1B2333" />
+        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+          Armá tu PC
+        </span>
+      </div>
+
       {/* HERO */}
       <section
         style={{

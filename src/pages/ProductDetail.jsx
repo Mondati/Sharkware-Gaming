@@ -7,6 +7,7 @@ import {
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
 import TrustBadges from '../components/TrustBadges'
+import MercadoPagoLogo from '../components/MercadoPagoLogo'
 import ProductCard from '../components/ProductCard'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import { useCart } from '../context/CartContext'
@@ -303,7 +304,8 @@ const ProductDetail = () => {
 
           {/* Payment method tags */}
           <div className="flex items-center" style={{ gap: '8px', marginBottom: '20px' }}>
-            <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 12px' }}>
+            <div className="flex items-center" style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 10px', gap: '6px' }}>
+              <MercadoPagoLogo size={14} />
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>MercadoPago</span>
             </div>
             <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 12px' }}>

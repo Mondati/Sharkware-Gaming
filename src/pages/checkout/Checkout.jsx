@@ -3,6 +3,7 @@ import { ChevronRight, CreditCard, ShieldCheck, X, ArrowLeft, Smartphone, Calend
 import { Link, useNavigate } from 'react-router-dom'
 import Footer from '../../components/Footer'
 import TrustBadges from '../../components/TrustBadges'
+import MercadoPagoLogo from '../../components/MercadoPagoLogo'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
 import { createOrder } from '../../api/orders'
@@ -169,7 +170,7 @@ const Checkout = () => {
         >
           <div className="flex items-center" style={{ gap: '12px' }}>
             <div style={{ backgroundColor: '#0A1F3F', borderRadius: '12px', padding: '12px', flexShrink: 0 }}>
-              <CreditCard size={22} color="#24A8F5" />
+              <MercadoPagoLogo size={22} />
             </div>
             <div className="flex flex-col flex-1" style={{ gap: '2px' }}>
               <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>
@@ -265,7 +266,7 @@ const Checkout = () => {
             style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '24px', gap: '16px', border: '1px solid #24A8F5', width: '100%' }}
           >
             <div style={{ backgroundColor: '#0A1F3F', borderRadius: '12px', padding: '14px', flexShrink: 0 }}>
-              <CreditCard size={26} color="#24A8F5" />
+              <MercadoPagoLogo size={26} />
             </div>
             <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
               <div className="flex items-center" style={{ gap: '10px' }}>

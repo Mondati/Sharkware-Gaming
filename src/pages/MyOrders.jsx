@@ -12,6 +12,7 @@ import {
   ChevronRight,
 } from 'lucide-react'
 import Footer from '../components/Footer'
+import { useWindowWidth } from '../hooks/useWindowWidth'
 import { listOrders, syncPayment } from '../api/orders'
 import { useAuth } from '../context/AuthContext'
 
@@ -185,6 +186,7 @@ const OrderCard = ({ order, verifying, onVerify }) => {
 }
 
 const MyOrders = () => {
+  const { sidePadding } = useWindowWidth()
   const { showToast } = useAuth()
   const [orders, setOrders] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -251,7 +253,7 @@ const MyOrders = () => {
       {/* Desktop breadcrumb */}
       <div
         className="hidden md:flex items-center w-full"
-        style={{ backgroundColor: '#0A0F1C', height: '44px', padding: '0 80px', gap: '8px' }}
+        style={{ backgroundColor: '#0A0F1C', height: '44px', padding: `0 ${sidePadding}`, gap: '8px' }}
       >
         <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
           Inicio
