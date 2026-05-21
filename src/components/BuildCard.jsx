@@ -87,11 +87,11 @@ const BuildCard = ({ build }) => {
                 {ROLE_LABEL[it.role] ?? it.role}
               </span>
               <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {it.brand} {it.productName}
+                {(it.quantity ?? 1) > 1 ? `${it.quantity}x ` : ''}{it.brand} {it.productName}
               </span>
             </div>
             <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 600, flexShrink: 0 }}>
-              {formatARS(it.unitPrice)}
+              {formatARS(Number(it.unitPrice) * (it.quantity ?? 1))}
             </span>
           </Link>
         ))}
