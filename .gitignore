@@ -47,4 +47,7 @@ coverage/
 # Misc
 *.local
 .playwright-mcp/
+.playwright-cli/
 *.stackdump
+testsprite_tests\tmp\config.json
+.docs/
