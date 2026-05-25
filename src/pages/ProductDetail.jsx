@@ -13,6 +13,62 @@ import { useWindowWidth } from '../hooks/useWindowWidth'
 import { useCart } from '../context/CartContext'
 import { getProduct, getProducts, getCategories } from '../api/products'
 import { formatARS } from '../utils/formatPrice'
+import Skeleton from '../components/Skeleton'
+
+const ProductDetailSkeleton = ({ sidePadding }) => (
+  <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
+    {/* Desktop */}
+    <section
+      className="hidden md:flex w-full"
+      style={{ padding: `40px ${sidePadding} 40px`, gap: '40px' }}
+    >
+      <div className="flex flex-col" style={{ flex: '1', gap: '12px' }}>
+        <Skeleton height={520} radius={16} />
+        <div className="flex" style={{ gap: '10px' }}>
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Skeleton key={i} height={72} width={72} radius={8} />
+          ))}
+        </div>
+      </div>
+      <div className="flex flex-col" style={{ flex: '1', gap: '16px' }}>
+        <Skeleton height={14} width="35%" />
+        <Skeleton height={32} width="80%" />
+        <Skeleton height={16} width="60%" />
+        <div className="flex" style={{ gap: '12px', marginTop: '8px' }}>
+          <Skeleton height={20} width={90} radius={999} />
+          <Skeleton height={20} width={110} radius={999} />
+        </div>
+        <Skeleton height={48} width="55%" style={{ marginTop: '12px' }} />
+        <div className="grid grid-cols-2" style={{ gap: '12px', marginTop: '12px' }}>
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Skeleton key={i} height={72} radius={10} />
+          ))}
+        </div>
+        <Skeleton height={52} radius={12} style={{ marginTop: '12px' }} />
+        <Skeleton height={52} radius={12} />
+      </div>
+    </section>
+
+    {/* Mobile */}
+    <section
+      className="flex md:hidden flex-col w-full"
+      style={{ padding: '20px 16px 32px', gap: '14px' }}
+    >
+      <Skeleton height={320} radius={16} />
+      <Skeleton height={12} width="35%" />
+      <Skeleton height={24} width="85%" />
+      <Skeleton height={14} width="60%" />
+      <Skeleton height={36} width="55%" style={{ marginTop: '8px' }} />
+      <div className="grid grid-cols-2" style={{ gap: '10px', marginTop: '8px' }}>
+        {Array.from({ length: 4 }).map((_, i) => (
+          <Skeleton key={i} height={64} radius={10} />
+        ))}
+      </div>
+      <Skeleton height={48} radius={12} style={{ marginTop: '8px' }} />
+      <Skeleton height={48} radius={12} />
+    </section>
+  </div>
+)
 
 const tabs = ['Descripción', 'Especificaciones', 'Reseñas (127)']
 
@@ -94,7 +150,7 @@ const ProductDetail = () => {
     navigate('/checkout')
   }
 
-  if (loading) return null
+  if (loading) return <ProductDetailSkeleton sidePadding={sidePadding} />
 
   if (notFound || !product) {
     return (

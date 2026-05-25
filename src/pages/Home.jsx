@@ -8,6 +8,124 @@ import { useWindowWidth } from '../hooks/useWindowWidth'
 import { getProducts, getCategories } from '../api/products'
 import { formatARS } from '../utils/formatPrice'
 import { useAuth } from '../context/AuthContext'
+import Skeleton from '../components/Skeleton'
+
+const HomeProductCardSkeleton = ({ mobile = false }) => {
+  const imgHeight = mobile ? 160 : 210
+  return (
+    <div
+      className="flex flex-col"
+      style={{
+        backgroundColor: '#121420',
+        border: '1px solid #1B2333',
+        borderRadius: '12px',
+        padding: mobile ? '10px' : '14px',
+        gap: '10px',
+        width: '100%',
+        minWidth: 0,
+      }}
+    >
+      <Skeleton height={imgHeight} radius={8} />
+      <Skeleton height={11} width="40%" />
+      <Skeleton height={14} width="85%" />
+      <Skeleton height={11} width="65%" />
+      <Skeleton height={20} width="55%" />
+    </div>
+  )
+}
+
+const HomeSkeleton = ({ sidePadding, cardFlex }) => (
+  <div className="flex flex-col flex-1" style={{ backgroundColor: '#0A0C14' }}>
+    {/* Hero desktop */}
+    <div
+      className="hidden md:block w-full"
+      style={{
+        position: 'relative',
+        height: '480px',
+        padding: `0 ${sidePadding}`,
+        background: 'linear-gradient(130deg, #071530 0%, #0D1A40 40%, #0A0C14 100%)',
+      }}
+    >
+      <div className="flex items-center w-full h-full" style={{ gap: '48px' }}>
+        <div className="flex flex-col" style={{ flex: 1, gap: '20px' }}>
+          <Skeleton height={22} width={120} radius={5} />
+          <Skeleton height={56} width="80%" />
+          <Skeleton height={14} width="60%" />
+          <Skeleton height={36} width="40%" />
+          <div className="flex" style={{ gap: '14px' }}>
+            <Skeleton height={48} width={170} radius={8} />
+            <Skeleton height={48} width={190} radius={8} />
+          </div>
+        </div>
+        <Skeleton height={380} width={400} radius={20} style={{ flexShrink: 0 }} />
+      </div>
+    </div>
+
+    {/* Hero mobile */}
+    <div
+      className="flex md:hidden flex-col w-full"
+      style={{ padding: '24px 16px 48px', gap: '12px', background: 'linear-gradient(180deg, #071530 0%, #0A0C14 100%)' }}
+    >
+      <Skeleton height={18} width={100} radius={5} />
+      <Skeleton height={36} width="80%" />
+      <Skeleton height={12} width="60%" />
+      <Skeleton height={24} width="40%" />
+      <div className="flex" style={{ gap: '10px' }}>
+        <Skeleton height={40} width={110} radius={8} />
+        <Skeleton height={40} width={120} radius={8} />
+      </div>
+    </div>
+
+    {/* Category bar */}
+    <div
+      className="hidden md:flex w-full"
+      style={{ backgroundColor: '#070B16', borderBottom: '1px solid #1B2333', padding: `12px ${sidePadding}`, gap: '12px' }}
+    >
+      {Array.from({ length: 8 }).map((_, i) => (
+        <Skeleton key={i} height={32} width={90} radius={6} />
+      ))}
+    </div>
+    <div className="flex md:hidden w-full" style={{ padding: '12px 16px', gap: '8px', overflow: 'hidden' }}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Skeleton key={i} height={28} width={70} radius={6} style={{ flexShrink: 0 }} />
+      ))}
+    </div>
+
+    {/* 3 product sections */}
+    {[0, 1, 2].map(section => (
+      <div key={section}>
+        {/* desktop */}
+        <section
+          className="hidden md:flex flex-col w-full"
+          style={{ padding: `40px ${sidePadding} 0`, gap: '20px' }}
+        >
+          <Skeleton height={24} width={260} />
+          <div className="flex" style={{ gap: '16px', overflow: 'hidden' }}>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
+                <HomeProductCardSkeleton />
+              </div>
+            ))}
+          </div>
+        </section>
+        {/* mobile */}
+        <section
+          className="flex md:hidden flex-col w-full"
+          style={{ padding: '24px 16px 0', gap: '14px' }}
+        >
+          <Skeleton height={18} width={200} />
+          <div className="grid grid-cols-2" style={{ gap: '10px' }}>
+            {Array.from({ length: 4 }).map((_, i) => (
+              <HomeProductCardSkeleton key={i} mobile />
+            ))}
+          </div>
+        </section>
+      </div>
+    ))}
+
+    <div style={{ height: '48px' }} />
+  </div>
+)
 
 const ALL_CATEGORY = { id: 'all', label: 'Todo', icon: null }
 
@@ -45,6 +163,7 @@ const Home = () => {
   const [notebooksList, setNotebooksList] = useState([])
   const [monitorsList, setMonitorsList] = useState([])
   const [categoryProducts, setCategoryProducts] = useState([])
+  const [loading, setLoading] = useState(true)
   const catalogRef = useRef(null)
 
   useEffect(() => {
@@ -64,6 +183,8 @@ const Home = () => {
       setNewProducts(news.items ?? [])
       setNotebooksList(nbs.items ?? [])
       setMonitorsList(mons.items ?? [])
+    }).finally(() => {
+      if (!cancelled) setLoading(false)
     })
     return () => { cancelled = true }
   }, [])
@@ -103,6 +224,8 @@ const Home = () => {
   const filteredNotebooks = activeNbFilter === 'Todos'
     ? notebooksList
     : notebooksList.filter(NB_FILTER_MAP[activeNbFilter] ?? (() => true))
+
+  if (loading) return <HomeSkeleton sidePadding={sidePadding} cardFlex={cardFlex} />
 
   return (
     <div className="flex flex-col flex-1" style={{ backgroundColor: '#0A0C14' }}>

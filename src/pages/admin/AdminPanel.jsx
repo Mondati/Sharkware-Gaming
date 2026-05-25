@@ -12,6 +12,58 @@ import ConfirmModal from './ConfirmModal'
 import { listAdminProducts, deleteProduct, getCategories, getAdminStats, updateProductStock } from '../../api/products'
 import { useAuth } from '../../context/AuthContext'
 import { formatARS } from '../../utils/formatPrice'
+import Skeleton from '../../components/Skeleton'
+
+const StatCardSkeleton = ({ mobile = false }) => (
+  <div
+    className="flex flex-col"
+    style={{
+      flex: mobile ? undefined : 1,
+      backgroundColor: '#0E1424',
+      borderRadius: mobile ? '12px' : '8px',
+      padding: mobile ? '14px' : '18px',
+      gap: '10px',
+      border: '1px solid #1B2333',
+    }}
+  >
+    <div className="flex items-center justify-between">
+      <Skeleton height={12} width="55%" />
+      <Skeleton height={16} width={16} radius={4} />
+    </div>
+    <Skeleton height={28} width="40%" />
+    <Skeleton height={11} width="70%" />
+  </div>
+)
+
+const ProductRowSkeleton = () => (
+  <tr style={{ borderBottom: '1px solid #1B2333' }}>
+    <td style={{ padding: '14px 10px' }}><Skeleton height={14} width="80%" /></td>
+    <td style={{ padding: '14px 10px' }}><Skeleton height={14} width="60%" /></td>
+    <td style={{ padding: '14px 10px' }}><Skeleton height={14} width="70%" /></td>
+    <td style={{ padding: '14px 10px' }}><Skeleton height={28} width={80} radius={4} /></td>
+    <td style={{ padding: '14px 10px' }}><Skeleton height={20} width={60} radius={5} /></td>
+    <td style={{ padding: '14px 10px' }}>
+      <div className="flex" style={{ gap: '8px' }}>
+        <Skeleton height={28} width={28} radius={6} />
+        <Skeleton height={28} width={28} radius={6} />
+      </div>
+    </td>
+  </tr>
+)
+
+const ProductCardMobileSkeleton = () => (
+  <div className="flex flex-col"
+    style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '14px', gap: '10px', border: '1px solid #1B2333' }}>
+    <Skeleton height={14} width="70%" />
+    <Skeleton height={11} width="35%" />
+    <div className="flex items-center" style={{ gap: '12px' }}>
+      <Skeleton height={32} width="40%" />
+      <div style={{ flex: 1 }} />
+      <Skeleton height={32} width="30%" />
+    </div>
+    <Skeleton height={28} radius={6} />
+  </div>
+)
 
 /* ─────────────────────────────────────────────────────────── AdminPanel */
 
@@ -300,18 +352,40 @@ const AdminPanel = () => {
 
           {/* Mobile Stats */}
           <div className="md:hidden grid grid-cols-2" style={{ gap: '10px' }}>
-            <StatCard mobile label="Total Productos" value={fmt(totalProducts)} sub="En catálogo" subColor="#AAB3C5" icon={Package} iconColor="#24A8F5" />
-            <StatCard mobile label="Pedidos pendientes" value={fmt(pendingOrders)} sub="Sin confirmar pago" subColor="#F59E0B" icon={Clock} iconColor="#F59E0B" />
-            <StatCard mobile label="Sin Stock" value={fmt(noStockCount)} sub="Requieren reposición" subColor="#FF8400" icon={TriangleAlert} iconColor="#FF8400" />
-            <StatCard mobile label="Categorías" value={fmt(categoriesCount)} sub="GPU · CPU · Monitor..." subColor="#AAB3C5" icon={Layers} iconColor="#37C3FF" />
+            {stats === null ? (
+              <>
+                <StatCardSkeleton mobile />
+                <StatCardSkeleton mobile />
+                <StatCardSkeleton mobile />
+                <StatCardSkeleton mobile />
+              </>
+            ) : (
+              <>
+                <StatCard mobile label="Total Productos" value={fmt(totalProducts)} sub="En catálogo" subColor="#AAB3C5" icon={Package} iconColor="#24A8F5" />
+                <StatCard mobile label="Pedidos pendientes" value={fmt(pendingOrders)} sub="Sin confirmar pago" subColor="#F59E0B" icon={Clock} iconColor="#F59E0B" />
+                <StatCard mobile label="Sin Stock" value={fmt(noStockCount)} sub="Requieren reposición" subColor="#FF8400" icon={TriangleAlert} iconColor="#FF8400" />
+                <StatCard mobile label="Categorías" value={fmt(categoriesCount)} sub="GPU · CPU · Monitor..." subColor="#AAB3C5" icon={Layers} iconColor="#37C3FF" />
+              </>
+            )}
           </div>
 
           {/* Desktop Stats */}
           <div className="hidden md:flex" style={{ gap: '14px' }}>
+            {stats === null ? (
+              <>
+                <StatCardSkeleton />
+                <StatCardSkeleton />
+                <StatCardSkeleton />
+                <StatCardSkeleton />
+              </>
+            ) : (
+              <>
             <StatCard label="Total Productos" value={fmt(totalProducts)} sub="En catálogo" subColor="#AAB3C5" icon={Package} iconColor="#24A8F5" />
             <StatCard label="Pedidos pendientes" value={fmt(pendingOrders)} sub="Sin confirmar pago" subColor="#F59E0B" icon={Clock} iconColor="#F59E0B" />
             <StatCard label="Sin Stock" value={fmt(noStockCount)} sub="Requieren reposición" subColor="#FF8400" icon={TriangleAlert} iconColor="#FF8400" />
             <StatCard label="Categorías" value={fmt(categoriesCount)} sub="GPU · CPU · Monitor · RAM..." subColor="#AAB3C5" icon={Layers} iconColor="#37C3FF" />
+              </>
+            )}
           </div>
 
           {/* Mobile Action bar */}
@@ -357,10 +431,25 @@ const AdminPanel = () => {
             </div>
           </div>
 
-          {/* Loading state */}
+          {/* Loading state — mobile cards */}
           {loadingList && (
-            <div className="flex items-center justify-center" style={{ padding: '40px 0' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Cargando productos…</span>
+            <div className="md:hidden flex flex-col" style={{ gap: '10px' }}>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <ProductCardMobileSkeleton key={i} />
+              ))}
+            </div>
+          )}
+
+          {/* Loading state — desktop table */}
+          {loadingList && (
+            <div className="hidden md:block" style={{ backgroundColor: '#0E1424', borderRadius: '8px', border: '1px solid #1B2333', overflow: 'hidden' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <tbody>
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <ProductRowSkeleton key={i} />
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
 

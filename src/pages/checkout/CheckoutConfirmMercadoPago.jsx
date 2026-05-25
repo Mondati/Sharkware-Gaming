@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import Footer from '../../components/Footer'
 import MercadoPagoLogo from '../../components/MercadoPagoLogo'
 import { syncPayment } from '../../api/orders'
+import SkeletonBlock from '../../components/Skeleton'
 
 const fmt = (n) => '$' + Math.round(Number(n) || 0).toLocaleString('es-AR')
 
@@ -20,16 +21,7 @@ const STATUS_META = {
 const Skeleton = () => (
   <div className="flex flex-col" style={{ gap: '16px' }}>
     {[0, 1, 2].map(i => (
-      <div
-        key={i}
-        style={{
-          backgroundColor: '#0E1424',
-          borderRadius: '14px',
-          border: '1px solid #1B2333',
-          height: i === 1 ? '160px' : '88px',
-          opacity: 0.6,
-        }}
-      />
+      <SkeletonBlock key={i} height={i === 1 ? 160 : 88} radius={14} />
     ))}
   </div>
 )
