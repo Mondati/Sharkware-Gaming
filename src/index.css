@@ -66,3 +66,25 @@ input, select {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.55; transform: scale(0.85); }
 }
+
+@keyframes sw-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.sw-skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: #0E1424;
+  border: 1px solid #1B2333;
+}
+.sw-skeleton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+  animation: sw-shimmer 1.4s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sw-skeleton::before { animation: none; }
+}

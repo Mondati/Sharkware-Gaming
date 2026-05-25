@@ -8,9 +8,33 @@ import Pagination from '../components/Pagination'
 import { SORT_OPTIONS } from '../data/sortOptions'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import { getProducts, getFacets, getCategories } from '../api/products'
+import Skeleton from '../components/Skeleton'
 
 const LIMIT = 12
 const FILTER_DEFAULTS = { category: 'all', brand: '', minPrice: '', maxPrice: '', sort: 'relevance' }
+
+const ProductCardSkeleton = ({ mobile = false }) => {
+  const imgHeight = mobile ? 160 : 210
+  return (
+    <div
+      className="flex flex-col"
+      style={{
+        backgroundColor: '#121420',
+        border: '1px solid #1B2333',
+        borderRadius: '12px',
+        padding: mobile ? '10px' : '14px',
+        gap: '10px',
+        width: '100%',
+      }}
+    >
+      <Skeleton height={imgHeight} radius={8} />
+      <Skeleton height={11} width="40%" />
+      <Skeleton height={14} width="85%" />
+      <Skeleton height={11} width="65%" />
+      <Skeleton height={20} width="55%" style={{ marginTop: 'auto' }} />
+    </div>
+  )
+}
 
 const EmptyState = ({ isMobile, hasActiveFilters, onClear }) => (
   <div
@@ -126,6 +150,7 @@ const SearchResults = () => {
   // ── Server-side data ──────────────────────────────────────────
   const [paginated, setPaginated] = useState([])
   const [total, setTotal] = useState(0)
+  const [loading, setLoading] = useState(true)
   const [serverTotalPages, setServerTotalPages] = useState(1)
   const [availableBrands, setAvailableBrands] = useState([])
   const [catalogMin, setCatalogMin] = useState(null)
@@ -139,6 +164,7 @@ const SearchResults = () => {
   useEffect(() => {
     if (!priceValid) return
     let cancelled = false
+    setLoading(true)
     const sortParam = sortOrder === 'price_asc' || sortOrder === 'price_desc' ? sortOrder : undefined
     getProducts({
       q,
@@ -162,6 +188,9 @@ const SearchResults = () => {
         setPaginated([])
         setTotal(0)
         setServerTotalPages(1)
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
       })
     return () => { cancelled = true }
   }, [q, catParam, brandParam, minParam, maxParam, badgeParam, sortOrder, parsedPage, priceValid])
@@ -333,7 +362,20 @@ const SearchResults = () => {
         <FilterPanel {...filterPanelProps} />
         <div className="flex flex-col flex-1" style={{ minWidth: 0, gap: '16px' }}>
           {chips}
-          {sortedLength === 0
+          {loading
+            ? (
+              <div
+                className="flex sw-scroll"
+                style={{ gap: '16px', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}
+              >
+                {Array.from({ length: LIMIT }).map((_, i) => (
+                  <div key={i} style={{ flex: `1 0 ${cardFlex}`, minWidth: cardFlex, maxWidth: cardFlex, display: 'flex' }}>
+                    <ProductCardSkeleton />
+                  </div>
+                ))}
+              </div>
+            )
+            : sortedLength === 0
             ? <EmptyState isMobile={false} hasActiveFilters={hasActiveFilters} onClear={clearFilters} />
             : (
               <>
@@ -368,7 +410,15 @@ const SearchResults = () => {
       >
         <FilterPanel {...filterPanelProps} />
         {chips}
-        {sortedLength === 0
+        {loading
+          ? (
+            <div className="grid grid-cols-2" style={{ gap: '10px' }}>
+              {Array.from({ length: LIMIT }).map((_, i) => (
+                <ProductCardSkeleton key={i} mobile />
+              ))}
+            </div>
+          )
+          : sortedLength === 0
           ? <EmptyState isMobile hasActiveFilters={hasActiveFilters} onClear={clearFilters} />
           : (
             <>

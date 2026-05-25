@@ -15,6 +15,7 @@ import Footer from '../components/Footer'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import { listOrders, syncPayment } from '../api/orders'
 import { useAuth } from '../context/AuthContext'
+import Skeleton from '../components/Skeleton'
 
 const fmt = (n) => '$' + Math.round(Number(n) || 0).toLocaleString('es-AR')
 
@@ -55,15 +56,7 @@ const StatusBadge = ({ status }) => {
 }
 
 const SkeletonCard = ({ height = 180 }) => (
-  <div
-    style={{
-      backgroundColor: '#0E1424',
-      borderRadius: '14px',
-      border: '1px solid #1B2333',
-      height: `${height}px`,
-      opacity: 0.6,
-    }}
-  />
+  <Skeleton height={height} radius={14} />
 )
 
 const EmptyState = () => (
