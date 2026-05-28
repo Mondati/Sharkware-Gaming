@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react'
+import { useState, useEffect, useRef, Fragment } from 'react'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import {
   ChevronRight, ArrowLeft, Lock,
@@ -8,14 +8,47 @@ import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import TrustBadges from '../components/TrustBadges'
 import { useCart } from '../context/CartContext'
+import { getProduct } from '../api/products'
 
 const fmt = (n) => '$' + n.toLocaleString('es-AR')
 
 const Cart = () => {
   const { sidePadding } = useWindowWidth()
-  const { items, removeItem, updateQty, clearCart, cartCount } = useCart()
+  const { items, removeItem, updateQty, syncStock, clearCart, cartCount } = useCart()
   const [hoveredBtn, setHoveredBtn] = useState(null)
   const [showClearConfirm, setShowClearConfirm] = useState(false)
+  const [stockNotice, setStockNotice] = useState(null)
+  const syncedRef = useRef(false)
+
+  useEffect(() => {
+    if (syncedRef.current) return
+    if (items.length === 0) return
+    syncedRef.current = true
+    const ids = items.map(i => i.id)
+    const prevQty = Object.fromEntries(items.map(i => [i.id, i.quantity]))
+    Promise.all(ids.map(id => getProduct(id).then(p => [id, p]).catch(() => [id, null])))
+      .then(results => {
+        const stockById = {}
+        const adjustments = []
+        for (const [id, p] of results) {
+          if (!p) continue
+          stockById[id] = p.stock
+          if (prevQty[id] > p.stock) {
+            adjustments.push({ name: p.name, from: prevQty[id], to: p.stock })
+          }
+        }
+        if (Object.keys(stockById).length) syncStock(stockById)
+        if (adjustments.length) {
+          const first = adjustments[0]
+          const more = adjustments.length - 1
+          setStockNotice(
+            more > 0
+              ? `Ajustamos "${first.name}" de ${first.from} a ${first.to} y ${more} más por cambios de stock.`
+              : `Ajustamos "${first.name}" de ${first.from} a ${first.to} por cambios de stock.`
+          )
+        }
+      })
+  }, [items, syncStock])
 
   const totalQty = cartCount
   const subtotal = items.reduce((a, i) => a + i.price_ars * i.quantity, 0)
@@ -64,6 +97,15 @@ const Cart = () => {
 
       {/* ═══════════════ MOBILE CONTENT ═══════════════ */}
       <div className="flex md:hidden flex-col w-full" style={{ padding: '16px', gap: '16px' }}>
+
+        {stockNotice && (
+          <div className="flex items-start justify-between" style={{ backgroundColor: 'rgba(245,158,11,0.10)', border: '1px solid rgba(245,158,11,0.35)', borderRadius: '10px', padding: '10px 12px', gap: '10px' }}>
+            <span style={{ color: '#F59E0B', fontFamily: 'Poppins', fontSize: '12px', lineHeight: '1.4' }}>{stockNotice}</span>
+            <button onClick={() => setStockNotice(null)} className="border-none cursor-pointer" style={{ background: 'none', padding: 0, color: '#F59E0B' }}>
+              <X size={14} />
+            </button>
+          </div>
+        )}
 
         {/* Items list */}
         <div className="flex flex-col" style={{ gap: '12px' }}>
@@ -152,8 +194,9 @@ const Cart = () => {
                 <div className="flex items-center" style={{ backgroundColor: '#070B16', borderRadius: '8px', overflow: 'hidden' }}>
                   <button
                     onClick={() => updateQty(item.id, item.quantity - 1)}
-                    className="flex items-center justify-center border-none cursor-pointer"
-                    style={{ width: '30px', height: '30px', background: 'none' }}
+                    disabled={item.quantity <= 1}
+                    className="flex items-center justify-center border-none"
+                    style={{ width: '30px', height: '30px', background: 'none', cursor: item.quantity <= 1 ? 'not-allowed' : 'pointer', opacity: item.quantity <= 1 ? 0.4 : 1 }}
                   >
                     <Minus size={12} color="#AAB3C5" />
                   </button>
@@ -164,8 +207,10 @@ const Cart = () => {
                   </div>
                   <button
                     onClick={() => updateQty(item.id, item.quantity + 1)}
-                    className="flex items-center justify-center border-none cursor-pointer"
-                    style={{ width: '30px', height: '30px', background: 'none' }}
+                    disabled={typeof item.stock === 'number' && item.quantity >= item.stock}
+                    title={typeof item.stock === 'number' && item.quantity >= item.stock ? `Stock máximo: ${item.stock}` : undefined}
+                    className="flex items-center justify-center border-none"
+                    style={{ width: '30px', height: '30px', background: 'none', cursor: (typeof item.stock === 'number' && item.quantity >= item.stock) ? 'not-allowed' : 'pointer', opacity: (typeof item.stock === 'number' && item.quantity >= item.stock) ? 0.4 : 1 }}
                   >
                     <Plus size={12} color="#AAB3C5" />
                   </button>
@@ -255,6 +300,15 @@ const Cart = () => {
 
         {/* ── Left column ── */}
         <div className="flex flex-col" style={{ flex: 1, gap: '20px' }}>
+
+          {stockNotice && (
+            <div className="flex items-start justify-between" style={{ backgroundColor: 'rgba(245,158,11,0.10)', border: '1px solid rgba(245,158,11,0.35)', borderRadius: '10px', padding: '12px 14px', gap: '12px' }}>
+              <span style={{ color: '#F59E0B', fontFamily: 'Poppins', fontSize: '13px', lineHeight: '1.4' }}>{stockNotice}</span>
+              <button onClick={() => setStockNotice(null)} className="border-none cursor-pointer" style={{ background: 'none', padding: 0, color: '#F59E0B' }}>
+                <X size={16} />
+              </button>
+            </div>
+          )}
 
           {/* Header */}
           <div className="flex items-center justify-between" style={{ width: '100%' }}>
@@ -358,26 +412,36 @@ const Cart = () => {
                       c/u {fmt(item.price_ars)}
                     </span>
                   </div>
-                  <div className="flex items-center" style={{ backgroundColor: '#070B16', borderRadius: '8px', flexShrink: 0 }}>
-                    <button
-                      onClick={() => updateQty(item.id, item.quantity - 1)}
-                      className="flex items-center justify-center border-none cursor-pointer"
-                      style={{ width: '34px', height: '34px', background: 'none' }}
-                    >
-                      <Minus size={14} color="#AAB3C5" />
-                    </button>
-                    <div className="flex items-center justify-center" style={{ width: '36px', height: '34px' }}>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
-                        {item.quantity}
-                      </span>
+                  <div className="flex flex-col items-end" style={{ flexShrink: 0, gap: '4px' }}>
+                    <div className="flex items-center" style={{ backgroundColor: '#070B16', borderRadius: '8px' }}>
+                      <button
+                        onClick={() => updateQty(item.id, item.quantity - 1)}
+                        disabled={item.quantity <= 1}
+                        className="flex items-center justify-center border-none"
+                        style={{ width: '34px', height: '34px', background: 'none', cursor: item.quantity <= 1 ? 'not-allowed' : 'pointer', opacity: item.quantity <= 1 ? 0.4 : 1 }}
+                      >
+                        <Minus size={14} color="#AAB3C5" />
+                      </button>
+                      <div className="flex items-center justify-center" style={{ width: '36px', height: '34px' }}>
+                        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
+                          {item.quantity}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => updateQty(item.id, item.quantity + 1)}
+                        disabled={typeof item.stock === 'number' && item.quantity >= item.stock}
+                        title={typeof item.stock === 'number' && item.quantity >= item.stock ? `Stock máximo: ${item.stock}` : undefined}
+                        className="flex items-center justify-center border-none"
+                        style={{ width: '34px', height: '34px', background: 'none', cursor: (typeof item.stock === 'number' && item.quantity >= item.stock) ? 'not-allowed' : 'pointer', opacity: (typeof item.stock === 'number' && item.quantity >= item.stock) ? 0.4 : 1 }}
+                      >
+                        <Plus size={14} color="#AAB3C5" />
+                      </button>
                     </div>
-                    <button
-                      onClick={() => updateQty(item.id, item.quantity + 1)}
-                      className="flex items-center justify-center border-none cursor-pointer"
-                      style={{ width: '34px', height: '34px', background: 'none' }}
-                    >
-                      <Plus size={14} color="#AAB3C5" />
-                    </button>
+                    {typeof item.stock === 'number' && item.quantity >= item.stock && (
+                      <span style={{ color: '#F59E0B', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600', alignSelf: 'stretch', textAlign: 'center' }}>
+                        Máx {item.stock} en stock
+                      </span>
+                    )}
                   </div>
                   <button
                     onClick={() => removeItem(item.id)}

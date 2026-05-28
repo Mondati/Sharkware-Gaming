@@ -8,7 +8,12 @@ const loadCart = () => {
     const data = JSON.parse(localStorage.getItem(STORAGE_KEY))
     if (!Array.isArray(data)) return []
     return data.reduce((acc, i) => {
-      if (i.id != null) acc.push({ ...i, quantity: i.quantity ?? 1, price_ars: i.price_ars ?? 0 })
+      if (i.id != null) acc.push({
+        ...i,
+        quantity: i.quantity ?? 1,
+        price_ars: i.price_ars ?? 0,
+        stock: typeof i.stock === 'number' ? i.stock : null,
+      })
       return acc
     }, [])
   } catch {
@@ -16,14 +21,25 @@ const loadCart = () => {
   }
 }
 
+const capQty = (qty, stock) => {
+  const safe = Math.max(1, qty)
+  if (typeof stock !== 'number') return safe
+  if (stock <= 0) return 0
+  return Math.min(safe, stock)
+}
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'ADD_ITEM': {
       const { product, quantity } = action
+      const stock = typeof product.stock === 'number' ? product.stock : null
+      if (stock === 0) return state
       const existing = state.find(i => i.id === product.id)
       if (existing) {
         return state.map(i =>
-          i.id === product.id ? { ...i, quantity: i.quantity + quantity } : i
+          i.id === product.id
+            ? { ...i, stock, quantity: capQty(i.quantity + quantity, stock) }
+            : i
         )
       }
       return [...state, {
@@ -33,16 +49,21 @@ const reducer = (state, action) => {
         spec: product.spec,
         price_ars: product.price_ars,
         image_url: product.image_url,
-        quantity,
+        stock,
+        quantity: capQty(quantity, stock),
       }]
     }
     case 'ADD_ITEMS': {
       let next = state
       for (const { product, quantity } of action.entries) {
+        const stock = typeof product.stock === 'number' ? product.stock : null
+        if (stock === 0) continue
         const existing = next.find(i => i.id === product.id)
         if (existing) {
           next = next.map(i =>
-            i.id === product.id ? { ...i, quantity: i.quantity + quantity } : i
+            i.id === product.id
+              ? { ...i, stock, quantity: capQty(i.quantity + quantity, stock) }
+              : i
           )
         } else {
           next = [...next, {
@@ -52,7 +73,8 @@ const reducer = (state, action) => {
             spec: product.spec,
             price_ars: product.price_ars,
             image_url: product.image_url,
-            quantity,
+            stock,
+            quantity: capQty(quantity, stock),
           }]
         }
       }
@@ -62,8 +84,18 @@ const reducer = (state, action) => {
       return state.filter(i => i.id !== action.id)
     case 'UPDATE_QTY':
       return state.map(i =>
-        i.id === action.id ? { ...i, quantity: Math.max(1, action.quantity) } : i
-      )
+        i.id === action.id ? { ...i, quantity: capQty(action.quantity, i.stock) } : i
+      ).filter(i => i.quantity > 0)
+    case 'SYNC_STOCK': {
+      const map = action.stockById
+      return state
+        .map(i => {
+          if (!(i.id in map)) return i
+          const stock = map[i.id]
+          return { ...i, stock, quantity: capQty(i.quantity, stock) }
+        })
+        .filter(i => i.quantity > 0)
+    }
     case 'CLEAR_CART':
       return []
     default:
@@ -107,12 +139,14 @@ export const CartProvider = ({ children }) => {
 
   const updateQty = (id, quantity) => dispatch({ type: 'UPDATE_QTY', id, quantity })
 
+  const syncStock = (stockById) => dispatch({ type: 'SYNC_STOCK', stockById })
+
   const clearCart = () => dispatch({ type: 'CLEAR_CART' })
 
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0)
 
   return (
-    <CartContext.Provider value={{ items, addItem, addItems, removeItem, updateQty, clearCart, cartCount, toastVisible }}>
+    <CartContext.Provider value={{ items, addItem, addItems, removeItem, updateQty, syncStock, clearCart, cartCount, toastVisible }}>
       {children}
     </CartContext.Provider>
   )

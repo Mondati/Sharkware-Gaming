@@ -113,7 +113,11 @@ const ProductDetail = () => {
   const [touchStartX, setTouchStartX] = useState(null)
   const [hoveredBtn, setHoveredBtn] = useState(null)
   const { sidePadding, cardFlex } = useWindowWidth()
-  const { addItem } = useCart()
+  const { addItem, items: cartItems } = useCart()
+
+  const inCart = product ? (cartItems.find(i => i.id === product.id)?.quantity ?? 0) : 0
+  const maxAddable = product ? Math.max(0, product.stock - inCart) : 0
+  const reachedMax = product ? qty >= maxAddable : true
 
   useEffect(() => {
     let cancelled = false
@@ -140,6 +144,12 @@ const ProductDetail = () => {
   useEffect(() => {
     getCategories().then(setCategories).catch(() => setCategories([]))
   }, [])
+
+  useEffect(() => {
+    if (!product) return
+    const max = Math.max(1, product.stock - inCart)
+    setQty((q) => Math.min(q, max))
+  }, [product, inCart])
 
   const handleAddToCart = () => {
     addItem(product, qty)
@@ -393,28 +403,37 @@ const ProductDetail = () => {
           )}
 
           {/* Quantity */}
-          <div className="flex items-center" style={{ gap: '14px', marginBottom: '16px' }}>
-            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>Cantidad:</span>
-            <div className="flex items-center" style={{ backgroundColor: '#0A0C14', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', overflow: 'hidden' }}>
-              <button
-                onClick={() => setQty((q) => Math.max(1, q - 1))}
-                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: 'pointer' }}
-              >
-                −
-              </button>
-              <div
-                className="flex items-center justify-center"
-                style={{ width: '44px', height: '40px', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}
-              >
-                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
+          <div className="flex flex-col" style={{ gap: '6px', marginBottom: '16px' }}>
+            <div className="flex items-center" style={{ gap: '14px' }}>
+              <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>Cantidad:</span>
+              <div className="flex items-center" style={{ backgroundColor: '#0A0C14', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', overflow: 'hidden' }}>
+                <button
+                  onClick={() => setQty((q) => Math.max(1, q - 1))}
+                  disabled={qty <= 1}
+                  style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: qty <= 1 ? 'not-allowed' : 'pointer', opacity: qty <= 1 ? 0.4 : 1 }}
+                >
+                  −
+                </button>
+                <div
+                  className="flex items-center justify-center"
+                  style={{ width: '44px', height: '40px', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}
+                >
+                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
+                </div>
+                <button
+                  onClick={() => setQty((q) => Math.min(maxAddable, q + 1))}
+                  disabled={reachedMax}
+                  style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: reachedMax ? 'not-allowed' : 'pointer', opacity: reachedMax ? 0.4 : 1 }}
+                >
+                  +
+                </button>
               </div>
-              <button
-                onClick={() => setQty((q) => q + 1)}
-                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: 'pointer' }}
-              >
-                +
-              </button>
             </div>
+            {product.stock > 0 && inCart > 0 && (
+              <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px' }}>
+                Ya tenés {inCart} en el carrito · máx {product.stock}
+              </span>
+            )}
           </div>
 
           {/* CTAs */}
@@ -423,22 +442,22 @@ const ProductDetail = () => {
               onClick={handleAddToCart}
               onMouseEnter={() => setHoveredBtn('add_m')}
               onMouseLeave={() => setHoveredBtn(null)}
-              disabled={product.stock === 0}
+              disabled={product.stock === 0 || maxAddable === 0}
               className="flex items-center justify-center"
-              style={{ backgroundColor: hoveredBtn === 'add_m' ? '#00A8D8' : '#00C8FF', borderRadius: '10px', height: '54px', border: 'none', cursor: product.stock === 0 ? 'not-allowed' : 'pointer', gap: '12px', width: '100%', opacity: product.stock === 0 ? 0.5 : 1 }}
+              style={{ backgroundColor: hoveredBtn === 'add_m' ? '#00A8D8' : '#00C8FF', borderRadius: '10px', height: '54px', border: 'none', cursor: (product.stock === 0 || maxAddable === 0) ? 'not-allowed' : 'pointer', gap: '12px', width: '100%', opacity: (product.stock === 0 || maxAddable === 0) ? 0.5 : 1 }}
             >
               <ShoppingCart size={18} color="#060810" />
               <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
-                Agregar al carrito
+                {maxAddable === 0 && product.stock > 0 ? 'Stock cubierto en tu carrito' : 'Agregar al carrito'}
               </span>
             </button>
             <button
               onClick={handleBuyNow}
               onMouseEnter={() => setHoveredBtn('buy_m')}
               onMouseLeave={() => setHoveredBtn(null)}
-              disabled={product.stock === 0}
+              disabled={product.stock === 0 || maxAddable === 0}
               className="flex items-center justify-center"
-              style={{ backgroundColor: hoveredBtn === 'buy_m' ? 'rgba(36,168,245,0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: product.stock === 0 ? 'not-allowed' : 'pointer', width: '100%', opacity: product.stock === 0 ? 0.5 : 1 }}
+              style={{ backgroundColor: hoveredBtn === 'buy_m' ? 'rgba(36,168,245,0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: (product.stock === 0 || maxAddable === 0) ? 'not-allowed' : 'pointer', width: '100%', opacity: (product.stock === 0 || maxAddable === 0) ? 0.5 : 1 }}
             >
               <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                 Comprar ahora
@@ -616,7 +635,8 @@ const ProductDetail = () => {
             <div className="flex items-center" style={{ backgroundColor: '#0A0C14', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', overflow: 'hidden' }}>
               <button
                 onClick={() => setQty((q) => Math.max(1, q - 1))}
-                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: 'pointer' }}
+                disabled={qty <= 1}
+                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: qty <= 1 ? 'not-allowed' : 'pointer', opacity: qty <= 1 ? 0.4 : 1 }}
               >
                 −
               </button>
@@ -624,33 +644,41 @@ const ProductDetail = () => {
                 <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
               </div>
               <button
-                onClick={() => setQty((q) => q + 1)}
-                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: 'pointer' }}
+                onClick={() => setQty((q) => Math.min(maxAddable, q + 1))}
+                disabled={reachedMax}
+                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: reachedMax ? 'not-allowed' : 'pointer', opacity: reachedMax ? 0.4 : 1 }}
               >
                 +
               </button>
             </div>
           </div>
+          {product.stock > 0 && inCart > 0 && (
+            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px' }}>
+              Ya tenés {inCart} en el carrito · máx {product.stock}
+            </span>
+          )}
 
           <button
             onClick={handleAddToCart}
             onMouseEnter={() => setHoveredBtn('add_2')}
             onMouseLeave={() => setHoveredBtn(null)}
-            disabled={product.stock === 0}
+            disabled={product.stock === 0 || maxAddable === 0}
             className="flex items-center justify-center"
-            style={{ backgroundColor: hoveredBtn === 'add_2' ? '#00A8D8' : '#00C8FF', borderRadius: '10px', height: '52px', border: 'none', cursor: product.stock === 0 ? 'not-allowed' : 'pointer', gap: '10px', width: '100%', opacity: product.stock === 0 ? 0.5 : 1 }}
+            style={{ backgroundColor: hoveredBtn === 'add_2' ? '#00A8D8' : '#00C8FF', borderRadius: '10px', height: '52px', border: 'none', cursor: (product.stock === 0 || maxAddable === 0) ? 'not-allowed' : 'pointer', gap: '10px', width: '100%', opacity: (product.stock === 0 || maxAddable === 0) ? 0.5 : 1 }}
           >
             <ShoppingCart size={18} color="#060810" />
-            <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>Agregar al carrito</span>
+            <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>
+              {maxAddable === 0 && product.stock > 0 ? 'Stock cubierto en tu carrito' : 'Agregar al carrito'}
+            </span>
           </button>
 
           <button
             onClick={handleBuyNow}
             onMouseEnter={() => setHoveredBtn('buy_2')}
             onMouseLeave={() => setHoveredBtn(null)}
-            disabled={product.stock === 0}
+            disabled={product.stock === 0 || maxAddable === 0}
             className="flex items-center justify-center"
-            style={{ backgroundColor: hoveredBtn === 'buy_2' ? 'rgba(36,168,245,0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: product.stock === 0 ? 'not-allowed' : 'pointer', width: '100%', opacity: product.stock === 0 ? 0.5 : 1 }}
+            style={{ backgroundColor: hoveredBtn === 'buy_2' ? 'rgba(36,168,245,0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: (product.stock === 0 || maxAddable === 0) ? 'not-allowed' : 'pointer', width: '100%', opacity: (product.stock === 0 || maxAddable === 0) ? 0.5 : 1 }}
           >
             <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Comprar ahora</span>
           </button>
