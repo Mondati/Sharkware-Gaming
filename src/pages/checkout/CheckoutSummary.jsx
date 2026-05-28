@@ -286,7 +286,7 @@ const CheckoutSummary = () => {
                   MercadoPago
                 </span>
                 <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
-                  Tarjeta, cuotas y otros medios disponibles
+                  Cuotas según tu tarjeta en MercadoPago
                 </span>
               </div>
             </div>

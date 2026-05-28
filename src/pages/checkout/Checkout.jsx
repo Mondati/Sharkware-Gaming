@@ -28,11 +28,6 @@ const SummaryPanel = ({ subtotal, cartCount, onPay, submitting, ctaLabel }) => (
       <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Total</span>
       <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>{fmt(subtotal)}</span>
     </div>
-    {subtotal > 0 && (
-      <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '12px' }}>
-        en 12 cuotas sin interés de {fmt(subtotal / 12)}
-      </span>
-    )}
     <button
       onClick={onPay}
       disabled={submitting || subtotal === 0}
@@ -175,7 +170,7 @@ const Checkout = () => {
                 MercadoPago
               </span>
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
-                Tarjeta, cuotas y otros medios disponibles
+                Cuotas según tu tarjeta
               </span>
             </div>
           </div>
@@ -186,9 +181,9 @@ const Checkout = () => {
             </span>
           </div>
           <div className="flex items-center" style={{ gap: '6px' }}>
-            <Calendar size={14} color="#22C55E" />
-            <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>
-              Hasta 12 cuotas sin interés
+            <Calendar size={14} color="#AAB3C5" />
+            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
+              Cuotas según tu tarjeta
             </span>
           </div>
           <div className="flex items-center" style={{ gap: '6px' }}>
@@ -215,11 +210,6 @@ const Checkout = () => {
             <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>Total</span>
             <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>{fmt(subtotal)}</span>
           </div>
-          {subtotal > 0 && (
-            <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '11px' }}>
-              en 12 cuotas sin interés de {fmt(subtotal / 12)}
-            </span>
-          )}
         </div>
 
         <button
@@ -269,7 +259,7 @@ const Checkout = () => {
                   <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Método único</span>
                 </div>
               </div>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Tarjeta, cuotas y otros medios disponibles</span>
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Cuotas según tu tarjeta</span>
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>Pago seguro gestionado por MercadoPago</span>
             </div>
           </div>
@@ -280,8 +270,8 @@ const Checkout = () => {
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Pago seguro</span>
             </div>
             <div className="flex items-center" style={{ gap: '6px' }}>
-              <Calendar size={16} color="#22C55E" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Hasta 12 cuotas sin interés</span>
+              <Calendar size={16} color="#AAB3C5" />
+              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Cuotas según tu tarjeta</span>
             </div>
           </div>
         </div>
