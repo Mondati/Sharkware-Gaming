@@ -1,10 +1,50 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Bot, X, Send } from 'lucide-react'
+import { sendChatbotMessage } from '../api/chatbot'
+
+const INITIAL_MESSAGE = {
+  role: 'assistant',
+  content: '¡Hola! Soy Sharkbot, tu asistente de Sharkware Gaming. ¿En qué te puedo ayudar?',
+}
 
 const ChatbotPanel = ({ onClose }) => {
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
   )
+  const [messages, setMessages] = useState([INITIAL_MESSAGE])
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [conversationId, setConversationId] = useState(null)
+  const scrollRef = useRef(null)
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (el) el.scrollTop = el.scrollHeight
+  }, [messages, loading])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const text = input.trim()
+    if (!text || loading) return
+    const next = [...messages, { role: 'user', content: text }]
+    setMessages(next)
+    setInput('')
+    setLoading(true)
+    try {
+      const res = await sendChatbotMessage({ conversationId, message: text })
+      if (res?.conversationId && res.conversationId !== conversationId) {
+        setConversationId(res.conversationId)
+      }
+      setMessages((prev) => [...prev, { role: 'assistant', content: res?.reply || '' }])
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        { role: 'assistant', content: 'El asistente no está disponible ahora, intentá de nuevo en un rato.' },
+      ])
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 767px)')
@@ -124,6 +164,7 @@ const ChatbotPanel = ({ onClose }) => {
       </div>
 
       <div
+        ref={scrollRef}
         className="flex flex-col"
         style={{
           flex: 1,
@@ -133,40 +174,52 @@ const ChatbotPanel = ({ onClose }) => {
           backgroundColor: '#0A0C14',
         }}
       >
-        <div
-          style={{
-            alignSelf: 'flex-start',
-            maxWidth: '85%',
-            padding: '10px 14px',
-            borderRadius: '14px 14px 14px 4px',
-            backgroundColor: '#1E2232',
-            color: '#F5F7FA',
-            fontFamily: 'Poppins',
-            fontSize: '13px',
-            lineHeight: '1.5',
-          }}
-        >
-          ¡Hola! Soy <strong style={{ color: '#24A8F5' }}>Sharkbot</strong>, tu asistente de Sharkware Gaming.
-        </div>
-        <div
-          style={{
-            alignSelf: 'flex-start',
-            maxWidth: '85%',
-            padding: '10px 14px',
-            borderRadius: '14px 14px 14px 4px',
-            backgroundColor: '#1E2232',
-            color: '#F5F7FA',
-            fontFamily: 'Poppins',
-            fontSize: '13px',
-            lineHeight: '1.5',
-          }}
-        >
-          ¿En qué te puedo ayudar hoy?
-        </div>
+        {messages.map((m, i) => {
+          const isUser = m.role === 'user'
+          return (
+            <div
+              key={i}
+              style={{
+                alignSelf: isUser ? 'flex-end' : 'flex-start',
+                maxWidth: '85%',
+                padding: '10px 14px',
+                borderRadius: isUser ? '14px 14px 4px 14px' : '14px 14px 14px 4px',
+                backgroundColor: isUser ? '#24A8F5' : '#1E2232',
+                color: isUser ? '#FFFFFF' : '#F5F7FA',
+                fontFamily: 'Poppins',
+                fontSize: '13px',
+                lineHeight: '1.5',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
+              }}
+            >
+              {m.content}
+            </div>
+          )
+        })}
+        {loading && (
+          <div
+            style={{
+              alignSelf: 'flex-start',
+              maxWidth: '85%',
+              padding: '10px 14px',
+              borderRadius: '14px 14px 14px 4px',
+              backgroundColor: '#1E2232',
+              color: '#AAB3C5',
+              fontFamily: 'Poppins',
+              fontSize: '13px',
+              lineHeight: '1.5',
+              opacity: 0.85,
+              fontStyle: 'italic',
+            }}
+          >
+            Escribiendo…
+          </div>
+        )}
       </div>
 
       <form
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit}
         className="flex items-center"
         style={{
           padding: '12px',
@@ -177,6 +230,9 @@ const ChatbotPanel = ({ onClose }) => {
       >
         <input
           type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          disabled={loading}
           placeholder="Escribí tu mensaje..."
           style={{
             flex: 1,
@@ -191,6 +247,7 @@ const ChatbotPanel = ({ onClose }) => {
         />
         <button
           type="submit"
+          disabled={loading || !input.trim()}
           className="flex items-center justify-center border-none cursor-pointer"
           aria-label="Enviar mensaje"
           style={{
@@ -200,6 +257,8 @@ const ChatbotPanel = ({ onClose }) => {
             backgroundColor: '#24A8F5',
             color: '#FFFFFF',
             flexShrink: 0,
+            opacity: loading || !input.trim() ? 0.6 : 1,
+            cursor: loading || !input.trim() ? 'not-allowed' : 'pointer',
           }}
         >
           <Send size={18} />
