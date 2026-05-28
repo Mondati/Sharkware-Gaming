@@ -165,6 +165,8 @@ const CheckoutConfirmMercadoPago = () => {
         <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Confirmación de pago</span>
       </div>
 
+      <main className="flex flex-col flex-1 w-full">
+
       {/* ═══════════════ CONTENT ═══════════════ */}
       <div
         className="flex flex-col w-full"
@@ -317,6 +319,8 @@ const CheckoutConfirmMercadoPago = () => {
           </>
         )}
       </div>
+
+      </main>
 
       <Footer />
     </div>

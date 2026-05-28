@@ -257,6 +257,8 @@ const MyOrders = () => {
         </span>
       </div>
 
+      <main className="flex flex-col flex-1 w-full">
+
       {/* Content */}
       <div
         className="flex flex-col w-full"
@@ -305,6 +307,8 @@ const MyOrders = () => {
           </div>
         )}
       </div>
+
+      </main>
 
       <Footer />
     </div>

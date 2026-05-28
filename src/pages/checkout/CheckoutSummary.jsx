@@ -136,6 +136,8 @@ const CheckoutSummary = () => {
         <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Confirmá tu pedido</span>
       </div>
 
+      <main className="flex flex-col flex-1 w-full">
+
       {/* ═══════════════ CONTENT ═══════════════ */}
       <div
         className="flex flex-col w-full"
@@ -302,10 +304,6 @@ const CheckoutSummary = () => {
                   {fmt(summary.subtotal)}
                 </span>
               </div>
-              <div className="flex items-center">
-                <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Envío</span>
-                <span style={{ color: '#22C55E', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Gratis</span>
-              </div>
               <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
               <div className="flex items-center">
                 <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Total</span>
@@ -368,6 +366,8 @@ const CheckoutSummary = () => {
           </>
         )}
       </div>
+
+      </main>
 
       <Footer />
     </div>
