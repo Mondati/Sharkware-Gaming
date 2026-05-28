@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Mail, Lock, LogIn,
-  ShieldCheck, Truck, RefreshCw, Eye, EyeOff, UserRound, ArrowLeft,
+  ShieldCheck, RefreshCw, Eye, EyeOff, UserRound, ArrowLeft,
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 
@@ -351,10 +351,6 @@ const Login = () => {
             <div className="flex items-center" style={{ gap: '6px' }}>
               <ShieldCheck size={16} color="#22C55E" />
               <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Compra segura</span>
-            </div>
-            <div className="flex items-center" style={{ gap: '6px' }}>
-              <Truck size={16} color="#24A8F5" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Envío gratis</span>
             </div>
             <div className="flex items-center" style={{ gap: '6px' }}>
               <RefreshCw size={16} color="#F59E0B" />

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import {
   Cpu, Monitor, MemoryStick, HardDrive,
-  Star, Heart, Share2, ShoppingCart,
-  ChevronRight, ChevronDown, ArrowLeft, Truck,
+  ShoppingCart,
+  ChevronRight, ChevronDown, ArrowLeft,
 } from 'lucide-react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
@@ -70,7 +70,7 @@ const ProductDetailSkeleton = ({ sidePadding }) => (
   </div>
 )
 
-const tabs = ['Descripción', 'Especificaciones', 'Reseñas (127)']
+const tabs = ['Descripción', 'Especificaciones']
 
 const ImgOrPlaceholder = ({ src, brand, name, style }) => {
   const [err, setErr] = useState(false)
@@ -201,18 +201,6 @@ const ProductDetail = () => {
         <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '600' }}>
           Detalle del Producto
         </span>
-        <button
-          className="flex items-center justify-center border-none cursor-pointer"
-          style={{ width: '36px', height: '36px', backgroundColor: '#1E2232', borderRadius: '8px' }}
-        >
-          <Heart size={18} color="#AAB3C5" />
-        </button>
-        <button
-          className="flex items-center justify-center border-none cursor-pointer"
-          style={{ width: '36px', height: '36px', backgroundColor: '#1E2232', borderRadius: '8px' }}
-        >
-          <Share2 size={18} color="#AAB3C5" />
-        </button>
       </div>
 
       {/* ═══ MOBILE IMAGE ═══ */}
@@ -321,32 +309,17 @@ const ProductDetail = () => {
         {/* RIGHT — Product info */}
         <div className="flex flex-col flex-1" style={{ gap: '0', minWidth: '0' }}>
 
-          {/* Brand + actions */}
-          <div className="flex items-center" style={{ gap: '8px', marginBottom: '10px' }}>
-            <span className="flex-1" style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
+          {/* Brand */}
+          <div style={{ marginBottom: '10px' }}>
+            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
               {product.brand}
             </span>
-            <button style={{ backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '7px', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Heart size={15} color="#8890A4" />
-            </button>
-            <button style={{ backgroundColor: 'transparent', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '7px', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Share2 size={15} color="#8890A4" />
-            </button>
           </div>
 
           {/* Title */}
-          <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '26px', fontWeight: '600', lineHeight: '1.25', margin: '0 0 10px 0' }}>
+          <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '26px', fontWeight: '600', lineHeight: '1.25', margin: '0 0 20px 0' }}>
             {product.name}
           </h1>
-
-          {/* Rating */}
-          <div className="flex items-center" style={{ gap: '5px', marginBottom: '20px' }}>
-            {[1,2,3,4,5].map((n) => (
-              <Star key={n} size={13} color="#F59E0B" fill="#F59E0B" />
-            ))}
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', marginLeft: '4px' }}>4.8</span>
-            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px' }}>(127 reseñas)</span>
-          </div>
 
           {/* Divider */}
           <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', marginBottom: '20px' }} />
@@ -390,10 +363,6 @@ const ProductDetail = () => {
                 ¡Pocas unidades!
               </div>
             )}
-            <div className="flex items-center" style={{ gap: '6px' }}>
-              <Truck size={14} color="#24A8F5" />
-              <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>Envío gratis a todo el país</span>
-            </div>
           </div>
 
           {/* Quick specs */}
@@ -545,11 +514,6 @@ const ProductDetail = () => {
           </div>
         )}
 
-        {activeTab === 2 && (
-          <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '14px' }}>
-            Las reseñas estarán disponibles próximamente.
-          </span>
-        )}
       </div>
 
       {/* ═══ DESKTOP RELATED ═══ */}
@@ -600,12 +564,6 @@ const ProductDetail = () => {
         <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '20px', fontWeight: '600', lineHeight: '1.25', margin: 0 }}>
           {product.name}
         </h1>
-
-        <div className="flex items-center" style={{ gap: '5px' }}>
-          <Star size={13} color="#F59E0B" fill="#F59E0B" />
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', marginLeft: '2px' }}>4.8</span>
-          <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px' }}>(127 reseñas)</span>
-        </div>
 
         <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
 

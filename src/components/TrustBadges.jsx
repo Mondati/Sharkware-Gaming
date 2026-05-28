@@ -1,8 +1,7 @@
-import { ShieldCheck, Truck, RefreshCw } from 'lucide-react'
+import { ShieldCheck, RefreshCw } from 'lucide-react'
 
 const badges = [
   { icon: ShieldCheck, color: '#24A8F5', label: 'Compra segura' },
-  { icon: Truck,       color: '#22C55E', label: 'Envío gratis'  },
   { icon: RefreshCw,   color: '#F59E0B', label: '30 días devolución' },
 ]
 

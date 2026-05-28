@@ -147,6 +147,8 @@ const CryptoPage = () => {
         </span>
       </div>
 
+      <main className="flex flex-col flex-1 w-full">
+
       {/* HERO */}
       <section
         style={{
@@ -290,6 +292,8 @@ const CryptoPage = () => {
           // las cotizaciones son referenciales · no constituyen recomendación financiera
         </p>
       </section>
+
+      </main>
 
       <Footer />
     </div>

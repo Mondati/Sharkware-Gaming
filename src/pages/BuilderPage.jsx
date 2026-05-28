@@ -77,6 +77,8 @@ const BuilderPage = () => {
         </span>
       </div>
 
+      <main className="flex flex-col flex-1 w-full">
+
       {/* HERO */}
       <section
         style={{
@@ -385,6 +387,8 @@ const BuilderPage = () => {
           // compatibilidades validadas contra catálogo real · stock sujeto a cambios
         </p>
       </section>
+
+      </main>
 
       <Footer />
     </div>
