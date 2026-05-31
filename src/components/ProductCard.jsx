@@ -107,12 +107,16 @@ const ProductCard = ({
   const [cartHovered, setCartHovered] = useState(false)
   const [added, setAdded] = useState(false)
   const timerRef = useRef(null)
-  const { addItem } = useCart()
+  const { addItem, items } = useCart()
+
+  const inCart = items.find(i => i.id === id)?.quantity ?? 0
+  const maxAddable = Math.max(0, stock - inCart)
+  const disabled = maxAddable === 0
 
   const handleAddToCart = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    if (stock === 0 || added) return
+    if (disabled || added) return
     addItem({ id, brand, name, spec, price_ars, image_url, stock }, 1)
     setAdded(true)
     clearTimeout(timerRef.current)
@@ -148,7 +152,8 @@ const ProductCard = ({
             onClick={handleAddToCart}
             onMouseEnter={() => setCartHovered(true)}
             onMouseLeave={() => setCartHovered(false)}
-            disabled={stock === 0}
+            disabled={disabled}
+            title={disabled && stock > 0 ? 'Máximo agregado' : undefined}
             style={{
               position: 'absolute',
               bottom: '6px',
@@ -157,14 +162,14 @@ const ProductCard = ({
               height: '30px',
               borderRadius: '7px',
               border: 'none',
-              cursor: stock === 0 ? 'not-allowed' : 'pointer',
+              cursor: disabled ? 'not-allowed' : 'pointer',
               backgroundColor: added ? '#22C55E' : '#00C8FF',
               boxShadow: cartHovered && !added ? '0 4px 16px rgba(0,200,255,0.5)' : 'none',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               transition: 'background-color 0.2s ease, box-shadow 0.2s ease',
-              opacity: stock === 0 ? 0.4 : 1,
+              opacity: disabled ? 0.4 : 1,
             }}
           >
             {added
@@ -256,7 +261,8 @@ const ProductCard = ({
           onClick={handleAddToCart}
           onMouseEnter={() => setCartHovered(true)}
           onMouseLeave={() => setCartHovered(false)}
-          disabled={stock === 0}
+          disabled={disabled}
+          title={disabled && stock > 0 ? 'Máximo agregado' : undefined}
           style={{
             position: 'absolute',
             bottom: '8px',
@@ -265,14 +271,14 @@ const ProductCard = ({
             height: '34px',
             borderRadius: '8px',
             border: 'none',
-            cursor: stock === 0 ? 'not-allowed' : 'pointer',
+            cursor: disabled ? 'not-allowed' : 'pointer',
             backgroundColor: added ? '#22C55E' : '#00C8FF',
             boxShadow: cartHovered && !added ? '0 4px 16px rgba(0,200,255,0.5)' : 'none',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             transition: 'background-color 0.2s ease, box-shadow 0.2s ease',
-            opacity: stock === 0 ? 0.4 : 1,
+            opacity: disabled ? 0.4 : 1,
           }}
         >
           {added
