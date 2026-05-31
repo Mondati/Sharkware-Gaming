@@ -122,6 +122,8 @@ export const CartProvider = ({ children }) => {
     if (!product) return
     if (product.stock === 0) return
     if (!quantity || quantity < 1 || !isFinite(quantity)) return
+    const existing = items.find(i => i.id === product.id)
+    if (existing && typeof product.stock === 'number' && existing.quantity >= product.stock) return
     dispatch({ type: 'ADD_ITEM', product, quantity })
     showToast()
   }
