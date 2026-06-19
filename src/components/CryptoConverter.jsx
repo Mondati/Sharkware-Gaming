@@ -111,8 +111,8 @@ const CryptoConverter = () => {
       <div
         style={{
           position: 'relative',
-          background: 'linear-gradient(180deg, #0A0F1C 0%, #060810 100%)',
-          border: '1px solid #1B2333',
+          background: 'linear-gradient(180deg, var(--hero-1) 0%, var(--bg-navbar) 100%)',
+          border: '1px solid var(--border)',
           borderRadius: 14,
           padding: '20px 22px',
           overflow: 'hidden',
@@ -121,14 +121,14 @@ const CryptoConverter = () => {
         <div
           style={{
             position: 'absolute', top: 0, left: 0, right: 0, height: 1,
-            background: 'linear-gradient(90deg, transparent, #24A8F5, transparent)',
+            background: 'linear-gradient(90deg, transparent, var(--accent), transparent)',
             opacity: kind === 'from' ? 0.7 : 0.4,
           }}
         />
         <div className="flex items-center justify-between" style={{ marginBottom: 14 }}>
           <span
             style={{
-              color: '#8890A4',
+              color: 'var(--text-subtle)',
               fontFamily: MONO,
               fontSize: 10,
               letterSpacing: 3,
@@ -141,9 +141,9 @@ const CryptoConverter = () => {
             style={{
               fontFamily: MONO,
               fontSize: 11,
-              color: '#24A8F5',
-              backgroundColor: 'rgba(36,168,245,0.08)',
-              border: '1px solid rgba(36,168,245,0.25)',
+              color: 'var(--accent)',
+              backgroundColor: 'rgba(var(--accent-rgb),0.08)',
+              border: '1px solid rgba(var(--accent-rgb),0.25)',
               padding: '2px 8px',
               borderRadius: 4,
               letterSpacing: 1,
@@ -167,7 +167,7 @@ const CryptoConverter = () => {
                 background: 'transparent',
                 border: 'none',
                 outline: 'none',
-                color: '#F5F7FA',
+                color: 'var(--text)',
                 fontFamily: DISPLAY,
                 fontWeight: 600,
                 fontSize: 44,
@@ -180,14 +180,14 @@ const CryptoConverter = () => {
           ) : (
             <span
               style={{
-                color: Number.isFinite(value) ? '#F5F7FA' : '#454E64',
+                color: Number.isFinite(value) ? 'var(--text)' : 'var(--text-faint)',
                 fontFamily: DISPLAY,
                 fontWeight: 600,
                 fontSize: 44,
                 lineHeight: 1,
                 letterSpacing: '-0.02em',
                 wordBreak: 'break-all',
-                textShadow: Number.isFinite(value) ? '0 0 24px rgba(36,168,245,0.25)' : 'none',
+                textShadow: Number.isFinite(value) ? '0 0 24px rgba(var(--accent-rgb),0.25)' : 'none',
               }}
             >
               {Number.isFinite(value) ? formatNumber(value, currency) : '0.00'}
@@ -200,9 +200,9 @@ const CryptoConverter = () => {
             value={currency}
             onChange={(e) => setCurrency(e.target.value)}
             style={{
-              background: '#0E1424',
-              color: '#F5F7FA',
-              border: '1px solid #1B2333',
+              background: 'var(--elev)',
+              color: 'var(--text)',
+              border: '1px solid var(--border)',
               borderRadius: 8,
               padding: '8px 10px',
               fontFamily: MONO,
@@ -216,7 +216,7 @@ const CryptoConverter = () => {
             ))}
           </select>
           {currency !== 'ARS' && rates && (
-            <span style={{ color: '#8890A4', fontFamily: MONO, fontSize: 11 }}>
+            <span style={{ color: 'var(--text-subtle)', fontFamily: MONO, fontSize: 11 }}>
               1 {currency} ≈ {new Intl.NumberFormat('es-AR', { maximumFractionDigits: 0 }).format(Number(rates[rateKey[currency]]))} ARS
             </span>
           )}
@@ -229,21 +229,21 @@ const CryptoConverter = () => {
     <div
       style={{
         position: 'relative',
-        background: 'radial-gradient(120% 80% at 0% 0%, rgba(36,168,245,0.10) 0%, transparent 55%), linear-gradient(160deg, #0E1424 0%, #070B16 100%)',
-        border: '1px solid #1B2333',
+        background: 'radial-gradient(120% 80% at 0% 0%, rgba(var(--accent-rgb),0.10) 0%, transparent 55%), linear-gradient(160deg, var(--elev) 0%, var(--bg-2) 100%)',
+        border: '1px solid var(--border)',
         borderRadius: 18,
         padding: 28,
         overflow: 'hidden',
-        boxShadow: '0 24px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(36,168,245,0.04)',
+        boxShadow: '0 24px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(var(--accent-rgb),0.04)',
       }}
     >
       {/* corner ticks */}
       {['tl', 'tr', 'bl', 'br'].map((corner) => {
         const pos = {
-          tl: { top: 10, left: 10, borderTop: '1px solid #24A8F5', borderLeft: '1px solid #24A8F5' },
-          tr: { top: 10, right: 10, borderTop: '1px solid #24A8F5', borderRight: '1px solid #24A8F5' },
-          bl: { bottom: 10, left: 10, borderBottom: '1px solid #24A8F5', borderLeft: '1px solid #24A8F5' },
-          br: { bottom: 10, right: 10, borderBottom: '1px solid #24A8F5', borderRight: '1px solid #24A8F5' },
+          tl: { top: 10, left: 10, borderTop: '1px solid var(--accent)', borderLeft: '1px solid var(--accent)' },
+          tr: { top: 10, right: 10, borderTop: '1px solid var(--accent)', borderRight: '1px solid var(--accent)' },
+          bl: { bottom: 10, left: 10, borderBottom: '1px solid var(--accent)', borderLeft: '1px solid var(--accent)' },
+          br: { bottom: 10, right: 10, borderBottom: '1px solid var(--accent)', borderRight: '1px solid var(--accent)' },
         }[corner]
         return <span key={corner} aria-hidden style={{ position: 'absolute', width: 12, height: 12, opacity: 0.5, ...pos }} />
       })}
@@ -257,18 +257,18 @@ const CryptoConverter = () => {
               width: 8,
               height: 8,
               borderRadius: '50%',
-              backgroundColor: err ? '#EF4444' : '#22C55E',
-              boxShadow: err ? '0 0 12px #EF4444' : '0 0 12px #22C55E',
+              backgroundColor: err ? 'var(--error)' : 'var(--success)',
+              boxShadow: err ? '0 0 12px var(--error)' : '0 0 12px var(--success)',
               animation: 'cv-pulse 1.6s ease-in-out infinite',
             }}
           />
-          <span style={{ color: '#F5F7FA', fontFamily: MONO, fontSize: 11, letterSpacing: 2, fontWeight: 500 }}>
+          <span style={{ color: 'var(--text)', fontFamily: MONO, fontSize: 11, letterSpacing: 2, fontWeight: 500 }}>
             {err ? 'CONEXIÓN INTERRUMPIDA' : 'MERCADO EN VIVO'}
           </span>
         </div>
         <div className="flex items-center" style={{ gap: 10 }}>
           {updatedAgo && !err && (
-            <span style={{ color: '#8890A4', fontFamily: MONO, fontSize: 11 }}>
+            <span style={{ color: 'var(--text-subtle)', fontFamily: MONO, fontSize: 11 }}>
               actualizado · {loading ? 'sync...' : `${updatedAgo} atrás`}
             </span>
           )}
@@ -280,11 +280,11 @@ const CryptoConverter = () => {
             className="flex items-center justify-center cursor-pointer"
             style={{
               background: 'transparent',
-              border: '1px solid #1B2333',
+              border: '1px solid var(--border)',
               borderRadius: 999,
               width: 34,
               height: 34,
-              color: '#24A8F5',
+              color: 'var(--accent)',
               opacity: loading ? 0.6 : 1,
             }}
           >
@@ -296,14 +296,14 @@ const CryptoConverter = () => {
       {err && !rates ? (
         <div
           style={{
-            border: '1px dashed #EF4444',
+            border: '1px dashed var(--error)',
             borderRadius: 10,
             padding: 24,
             textAlign: 'center',
-            background: 'rgba(239,68,68,0.05)',
+            background: 'rgba(var(--error-rgb),0.05)',
           }}
         >
-          <p style={{ color: '#F5F7FA', fontFamily: MONO, fontSize: 13, margin: 0, marginBottom: 14 }}>
+          <p style={{ color: 'var(--text)', fontFamily: MONO, fontSize: 13, margin: 0, marginBottom: 14 }}>
             No se pudieron cargar las cotizaciones.
           </p>
           <button
@@ -311,11 +311,11 @@ const CryptoConverter = () => {
             onClick={loadRates}
             className="cursor-pointer"
             style={{
-              background: '#EF4444',
+              background: 'var(--error)',
               border: 'none',
               borderRadius: 8,
               padding: '10px 22px',
-              color: '#FFF',
+              color: 'var(--text-strong)',
               fontFamily: MONO,
               fontSize: 12,
               fontWeight: 700,
@@ -345,10 +345,10 @@ const CryptoConverter = () => {
                 width: 44,
                 height: 44,
                 borderRadius: '50%',
-                background: 'linear-gradient(140deg, #24A8F5 0%, #1A9FFF 100%)',
-                border: '3px solid #0E1424',
-                color: '#060810',
-                boxShadow: '0 0 0 1px rgba(36,168,245,0.5), 0 0 24px rgba(36,168,245,0.45)',
+                background: 'linear-gradient(140deg, var(--accent) 0%, var(--accent-2) 100%)',
+                border: '3px solid var(--elev)',
+                color: 'var(--on-accent)',
+                boxShadow: '0 0 0 1px rgba(var(--accent-rgb),0.5), 0 0 24px rgba(var(--accent-rgb),0.45)',
                 transition: 'transform 0.2s ease',
               }}
               onMouseEnter={(e) => { e.currentTarget.style.transform = 'rotate(180deg)' }}

@@ -19,8 +19,8 @@ const ProductCardSkeleton = ({ mobile = false }) => {
     <div
       className="flex flex-col"
       style={{
-        backgroundColor: '#121420',
-        border: '1px solid #1B2333',
+        backgroundColor: 'var(--surface-2)',
+        border: '1px solid var(--border)',
         borderRadius: '12px',
         padding: mobile ? '10px' : '14px',
         gap: '10px',
@@ -41,14 +41,14 @@ const EmptyState = ({ isMobile, hasActiveFilters, onClear }) => (
     className="flex flex-col items-center justify-center"
     style={{ gap: '16px', padding: isMobile ? '60px 0' : '80px 0' }}
   >
-    <SearchX size={isMobile ? 44 : 52} color="#454E64" />
+    <SearchX size={isMobile ? 44 : 52} color="var(--text-faint)" />
     <div className="flex flex-col items-center" style={{ gap: '8px' }}>
-      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: isMobile ? '16px' : '18px', fontWeight: '700', textAlign: 'center' }}>
+      <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: isMobile ? '16px' : '18px', fontWeight: '700', textAlign: 'center' }}>
         {hasActiveFilters
           ? 'No se encontraron productos con los filtros seleccionados'
           : 'No se encontraron productos'}
       </span>
-      <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: isMobile ? '13px' : '14px', textAlign: 'center' }}>
+      <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: isMobile ? '13px' : '14px', textAlign: 'center' }}>
         {hasActiveFilters
           ? 'Probá cambiando o eliminando los filtros'
           : 'Probá con otros términos de búsqueda'}
@@ -58,8 +58,8 @@ const EmptyState = ({ isMobile, hasActiveFilters, onClear }) => (
       <button
         onClick={onClear}
         style={{
-          backgroundColor: '#00C8FF',
-          color: '#060810',
+          backgroundColor: 'var(--accent-bright)',
+          color: 'var(--on-accent)',
           fontFamily: 'Poppins',
           fontSize: '14px',
           fontWeight: '700',
@@ -76,8 +76,8 @@ const EmptyState = ({ isMobile, hasActiveFilters, onClear }) => (
       <Link
         to="/"
         style={{
-          backgroundColor: '#00C8FF',
-          color: '#060810',
+          backgroundColor: 'var(--accent-bright)',
+          color: 'var(--on-accent)',
           fontFamily: 'Poppins',
           fontSize: '14px',
           fontWeight: '700',
@@ -98,11 +98,11 @@ const SortSelect = ({ isMobile, sortOrder, onChange }) => (
     value={sortOrder}
     onChange={e => onChange('sort', e.target.value)}
     style={{
-      backgroundColor: '#1E2232',
-      border: '1px solid #1B2333',
+      backgroundColor: 'var(--surface)',
+      border: '1px solid var(--border)',
       borderRadius: '8px',
       padding: isMobile ? '6px 10px' : '7px 12px',
-      color: '#AAB3C5',
+      color: 'var(--text-muted)',
       fontFamily: 'Poppins',
       fontSize: isMobile ? '12px' : '13px',
       cursor: 'pointer',
@@ -265,11 +265,11 @@ const SearchResults = () => {
           key={chip.key}
           onClick={() => updateFilter(chip.key, '')}
           style={{
-            backgroundColor: '#1E2232',
-            border: '1px solid #1B2333',
+            backgroundColor: 'var(--surface)',
+            border: '1px solid var(--border)',
             borderRadius: '20px',
             padding: '4px 12px',
-            color: '#AAB3C5',
+            color: 'var(--text-muted)',
             fontFamily: 'Poppins',
             fontSize: '12px',
             cursor: 'pointer',
@@ -279,7 +279,7 @@ const SearchResults = () => {
           }}
         >
           {chip.label}
-          <span style={{ color: '#EF4444', fontSize: '14px', lineHeight: 1 }}>×</span>
+          <span style={{ color: 'var(--error)', fontSize: '14px', lineHeight: 1 }}>×</span>
         </button>
       ))}
       <button
@@ -287,7 +287,7 @@ const SearchResults = () => {
         style={{
           backgroundColor: 'transparent',
           border: 'none',
-          color: '#24A8F5',
+          color: 'var(--accent)',
           fontFamily: 'Poppins',
           fontSize: '12px',
           cursor: 'pointer',
@@ -316,7 +316,7 @@ const SearchResults = () => {
   const showPagination = sortedLength > 0 && totalPages > 1
 
   return (
-    <div className="flex flex-col flex-1" style={{ backgroundColor: '#0A0C14' }}>
+    <div className="flex flex-col flex-1" style={{ backgroundColor: 'var(--bg)' }}>
 
       {/* ── Desktop header ── */}
       <section
@@ -325,10 +325,10 @@ const SearchResults = () => {
       >
         <div className="flex items-center w-full" style={{ gap: '12px' }}>
           <div className="flex flex-col flex-1" style={{ gap: '4px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
+            <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
               {q ? <>Resultados para &ldquo;{q}&rdquo;</> : badgeParam === 'OFERTA' ? 'Ofertas' : 'Todos los productos'}
             </span>
-            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>
+            <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '13px' }}>
               {countLabel}
             </span>
           </div>
@@ -343,10 +343,10 @@ const SearchResults = () => {
       >
         <div className="flex items-center w-full" style={{ gap: '10px' }}>
           <div className="flex flex-col flex-1" style={{ gap: '2px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
+            <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>
               {q ? <>&ldquo;{q}&rdquo;</> : badgeParam === 'OFERTA' ? 'Ofertas' : 'Todos los productos'}
             </span>
-            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {countLabel}
             </span>
           </div>

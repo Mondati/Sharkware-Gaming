@@ -11,10 +11,10 @@ import SkeletonBlock from '../../components/Skeleton'
 const fmt = (n) => '$' + Math.round(Number(n) || 0).toLocaleString('es-AR')
 
 const STATUS_META = {
-  PENDING:   { label: 'Pendiente de pago', color: '#F59E0B', bg: '#2A1F0A', Icon: Clock },
-  PAID:      { label: 'Pagado',            color: '#22C55E', bg: '#0E2417', Icon: CheckCircle2 },
-  FAILED:    { label: 'Pago rechazado',    color: '#EF4444', bg: '#2A1414', Icon: XCircle },
-  CANCELLED: { label: 'Cancelado',         color: '#EF4444', bg: '#2A1414', Icon: XCircle },
+  PENDING:   { label: 'Pendiente de pago', color: 'var(--warning)', bg: 'var(--warning-bg)', Icon: Clock },
+  PAID:      { label: 'Pagado',            color: 'var(--success)', bg: 'var(--success-bg)', Icon: CheckCircle2 },
+  FAILED:    { label: 'Pago rechazado',    color: 'var(--error)', bg: 'var(--error-bg)', Icon: XCircle },
+  CANCELLED: { label: 'Cancelado',         color: 'var(--error)', bg: 'var(--error-bg)', Icon: XCircle },
 }
 
 const Skeleton = () => (
@@ -26,7 +26,7 @@ const Skeleton = () => (
 )
 
 const StatusBadge = ({ status }) => {
-  const meta = STATUS_META[status] ?? { label: status, color: '#AAB3C5', bg: '#1B2333', Icon: Info }
+  const meta = STATUS_META[status] ?? { label: status, color: 'var(--text-muted)', bg: 'var(--border)', Icon: Info }
   const Icon = meta.Icon
   return (
     <div
@@ -104,36 +104,36 @@ const CheckoutSummary = () => {
   const showSkeleton = loading && !summary
 
   return (
-    <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
+    <div className="flex flex-col flex-1" style={{ backgroundColor: 'var(--bg-2)' }}>
 
       {/* ═══════════════ MOBILE HEADER ═══════════════ */}
       <div
         className="flex md:hidden items-center justify-between w-full"
-        style={{ backgroundColor: '#0A0F1C', height: '56px', padding: '0 16px' }}
+        style={{ backgroundColor: 'var(--hero-1)', height: '56px', padding: '0 16px' }}
       >
         <Link to="/cart" className="flex items-center no-underline">
-          <ArrowLeft size={20} color="#F5F7FA" />
+          <ArrowLeft size={20} color="var(--text)" />
         </Link>
         <div className="flex flex-col items-center">
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
+          <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
             Confirmá tu pedido
           </span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
+          <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px' }}>
             Paso 3 de 3
           </span>
         </div>
         <Link to="/" className="flex items-center no-underline">
-          <X size={20} color="#AAB3C5" />
+          <X size={20} color="var(--text-muted)" />
         </Link>
       </div>
 
       {/* ═══════════════ DESKTOP BREADCRUMB ═══════════════ */}
-      <div className="hidden md:flex items-center w-full" style={{ backgroundColor: '#0A0F1C', height: '44px', padding: '0 80px', gap: '8px' }}>
-        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Inicio</Link>
-        <ChevronRight size={14} color="#1B2333" />
-        <Link to="/cart" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Carrito</Link>
-        <ChevronRight size={14} color="#1B2333" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Confirmá tu pedido</span>
+      <div className="hidden md:flex items-center w-full" style={{ backgroundColor: 'var(--hero-1)', height: '44px', padding: '0 80px', gap: '8px' }}>
+        <Link to="/" className="no-underline" style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>Inicio</Link>
+        <ChevronRight size={14} color="var(--border)" />
+        <Link to="/cart" className="no-underline" style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>Carrito</Link>
+        <ChevronRight size={14} color="var(--border)" />
+        <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Confirmá tu pedido</span>
       </div>
 
       <main className="flex flex-col flex-1 w-full">
@@ -146,10 +146,10 @@ const CheckoutSummary = () => {
         {showSkeleton && (
           <>
             <div className="flex flex-col" style={{ gap: '6px' }}>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
+              <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
                 Revisá tu pedido
               </span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px' }}>
                 Verificá los datos antes de confirmar el pago.
               </span>
             </div>
@@ -160,16 +160,16 @@ const CheckoutSummary = () => {
         {!showSkeleton && error && (
           <div
             className="flex flex-col items-center text-center"
-            style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '32px 24px', gap: '12px', border: '1px solid #1B2333' }}
+            style={{ backgroundColor: 'var(--elev)', borderRadius: '14px', padding: '32px 24px', gap: '12px', border: '1px solid var(--border)' }}
           >
-            <XCircle size={36} color="#EF4444" />
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>{error}</span>
+            <XCircle size={36} color="var(--error)" />
+            <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>{error}</span>
             <Link
               to="/"
               className="no-underline flex items-center justify-center"
-              style={{ backgroundColor: '#24A8F5', borderRadius: '12px', height: '44px', padding: '0 20px', marginTop: '8px' }}
+              style={{ backgroundColor: 'var(--accent)', borderRadius: '12px', height: '44px', padding: '0 20px', marginTop: '8px' }}
             >
-              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
+              <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                 Volver al inicio
               </span>
             </Link>
@@ -179,10 +179,10 @@ const CheckoutSummary = () => {
         {!error && summary && (
           <>
             <div className="flex flex-col" style={{ gap: '6px' }}>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
+              <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>
                 Revisá tu pedido
               </span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px' }}>
                 Verificá los datos antes de confirmar el pago.
               </span>
             </div>
@@ -190,24 +190,24 @@ const CheckoutSummary = () => {
             {/* Header card */}
             <div
               className="flex flex-col"
-              style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '20px', gap: '12px', border: '1px solid #1B2333' }}
+              style={{ backgroundColor: 'var(--elev)', borderRadius: '14px', padding: '20px', gap: '12px', border: '1px solid var(--border)' }}
             >
               <div className="flex items-center" style={{ gap: '12px' }}>
-                <div style={{ backgroundColor: '#0A1F3F', borderRadius: '12px', padding: '12px' }}>
-                  <ShoppingBag size={22} color="#24A8F5" />
+                <div style={{ backgroundColor: 'var(--surface-accent)', borderRadius: '12px', padding: '12px' }}>
+                  <ShoppingBag size={22} color="var(--accent)" />
                 </div>
                 <div className="flex flex-col flex-1" style={{ gap: '2px' }}>
-                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>
+                  <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>
                     Pedido #{summary.id}
                   </span>
-                  <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
+                  <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px' }}>
                     {summary.itemCount} producto{summary.itemCount !== 1 ? 's' : ''}
                   </span>
                 </div>
                 <StatusBadge status={summary.status} />
               </div>
               {summary.externalReference && (
-                <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px' }}>
+                <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '11px' }}>
                   Referencia: {summary.externalReference}
                 </span>
               )}
@@ -216,21 +216,21 @@ const CheckoutSummary = () => {
             {/* Datos del cliente */}
             <div
               className="flex flex-col"
-              style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '20px', gap: '14px', border: '1px solid #1B2333' }}
+              style={{ backgroundColor: 'var(--elev)', borderRadius: '14px', padding: '20px', gap: '14px', border: '1px solid var(--border)' }}
             >
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
+              <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
                 Datos del cliente
               </span>
-              <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
+              <div style={{ backgroundColor: 'var(--border)', height: '1px' }} />
               <div className="flex items-center" style={{ gap: '10px' }}>
-                <User size={16} color="#24A8F5" />
-                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px' }}>
+                <User size={16} color="var(--accent)" />
+                <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px' }}>
                   {summary.user?.name}
                 </span>
               </div>
               <div className="flex items-center" style={{ gap: '10px' }}>
-                <Mail size={16} color="#24A8F5" />
-                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
+                <Mail size={16} color="var(--accent)" />
+                <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>
                   {summary.user?.email}
                 </span>
               </div>
@@ -239,34 +239,34 @@ const CheckoutSummary = () => {
             {/* Items list */}
             <div
               className="flex flex-col"
-              style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '20px', gap: '14px', border: '1px solid #1B2333' }}
+              style={{ backgroundColor: 'var(--elev)', borderRadius: '14px', padding: '20px', gap: '14px', border: '1px solid var(--border)' }}
             >
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
+              <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
                 Detalle del pedido
               </span>
-              <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
+              <div style={{ backgroundColor: 'var(--border)', height: '1px' }} />
               {(summary.items ?? []).map((it, idx) => (
                 <div key={idx} className="flex items-start" style={{ gap: '12px' }}>
                   <div className="flex flex-col flex-1" style={{ gap: '4px' }}>
-                    <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
+                    <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
                       {it.productName}
                     </span>
-                    <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
+                    <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px' }}>
                       {it.quantity} × {fmt(it.unitPrice)}
                     </span>
                     {!it.stockSufficient && (
                       <div
                         className="flex items-center"
-                        style={{ backgroundColor: '#2A1414', borderRadius: '999px', padding: '4px 10px', gap: '6px', alignSelf: 'flex-start', marginTop: '2px' }}
+                        style={{ backgroundColor: 'var(--error-bg)', borderRadius: '999px', padding: '4px 10px', gap: '6px', alignSelf: 'flex-start', marginTop: '2px' }}
                       >
-                        <AlertTriangle size={12} color="#EF4444" />
-                        <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700' }}>
+                        <AlertTriangle size={12} color="var(--error)" />
+                        <span style={{ color: 'var(--error)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700' }}>
                           Stock insuficiente (quedan {it.currentStock})
                         </span>
                       </div>
                     )}
                   </div>
-                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
+                  <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                     {fmt(Number(it.unitPrice) * it.quantity)}
                   </span>
                 </div>
@@ -276,16 +276,16 @@ const CheckoutSummary = () => {
             {/* Método de pago */}
             <div
               className="flex items-center"
-              style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '20px', gap: '14px', border: '1px solid #24A8F5' }}
+              style={{ backgroundColor: 'var(--elev)', borderRadius: '14px', padding: '20px', gap: '14px', border: '1px solid var(--accent)' }}
             >
-              <div style={{ backgroundColor: '#0A1F3F', borderRadius: '12px', padding: '12px', flexShrink: 0 }}>
+              <div style={{ backgroundColor: 'var(--surface-accent)', borderRadius: '12px', padding: '12px', flexShrink: 0 }}>
                 <MercadoPagoLogo size={22} />
               </div>
               <div className="flex flex-col flex-1" style={{ gap: '2px' }}>
-                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
+                <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
                   MercadoPago
                 </span>
-                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
+                <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px' }}>
                   Cuotas según tu tarjeta en MercadoPago
                 </span>
               </div>
@@ -294,20 +294,20 @@ const CheckoutSummary = () => {
             {/* Totales */}
             <div
               className="flex flex-col"
-              style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '20px', gap: '12px', border: '1px solid #1B2333' }}
+              style={{ backgroundColor: 'var(--elev)', borderRadius: '14px', padding: '20px', gap: '12px', border: '1px solid var(--border)' }}
             >
               <div className="flex items-center">
-                <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
+                <span className="flex-1" style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px' }}>
                   Subtotal ({summary.itemCount} ítem{summary.itemCount !== 1 ? 's' : ''})
                 </span>
-                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
+                <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                   {fmt(summary.subtotal)}
                 </span>
               </div>
-              <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
+              <div style={{ backgroundColor: 'var(--border)', height: '1px' }} />
               <div className="flex items-center">
-                <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Total</span>
-                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>
+                <span className="flex-1" style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Total</span>
+                <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>
                   {fmt(summary.total)}
                 </span>
               </div>
@@ -316,10 +316,10 @@ const CheckoutSummary = () => {
             {!summary.allItemsAvailable && (
               <div
                 className="flex items-center"
-                style={{ backgroundColor: '#2A1414', borderRadius: '12px', padding: '14px', gap: '10px', border: '1px solid rgba(239,68,68,0.3)' }}
+                style={{ backgroundColor: 'var(--error-bg)', borderRadius: '12px', padding: '14px', gap: '10px', border: '1px solid rgba(var(--error-rgb),0.3)' }}
               >
-                <AlertTriangle size={18} color="#EF4444" style={{ flexShrink: 0 }} />
-                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px' }}>
+                <AlertTriangle size={18} color="var(--error)" style={{ flexShrink: 0 }} />
+                <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '13px' }}>
                   Alguno de los productos no tiene stock suficiente. Volvé al carrito para ajustar las cantidades.
                 </span>
               </div>
@@ -332,15 +332,15 @@ const CheckoutSummary = () => {
                 className="flex items-center justify-center border-none cursor-pointer"
                 style={{
                   flex: 1,
-                  backgroundColor: '#0E1424',
-                  border: '1px solid #1B2333',
+                  backgroundColor: 'var(--elev)',
+                  border: '1px solid var(--border)',
                   borderRadius: '12px',
                   height: '48px',
                   gap: '8px',
                 }}
               >
-                <ArrowLeft size={16} color="#F5F7FA" />
-                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
+                <ArrowLeft size={16} color="var(--text)" />
+                <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                   Volver al carrito
                 </span>
               </button>
@@ -350,15 +350,15 @@ const CheckoutSummary = () => {
                 className="flex items-center justify-center border-none"
                 style={{
                   flex: 1,
-                  backgroundColor: canPay ? '#24A8F5' : '#1B2333',
+                  backgroundColor: canPay ? 'var(--accent)' : 'var(--border)',
                   borderRadius: '12px',
                   height: '48px',
                   gap: '8px',
                   cursor: canPay ? 'pointer' : 'not-allowed',
                 }}
               >
-                <Lock size={16} color={canPay ? '#FFFFFF' : '#AAB3C5'} />
-                <span style={{ color: canPay ? '#FFFFFF' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
+                <Lock size={16} color={canPay ? 'var(--text-strong)' : 'var(--text-muted)'} />
+                <span style={{ color: canPay ? 'var(--text-strong)' : 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                   {submitting ? 'Procesando…' : 'Confirmar y pagar'}
                 </span>
               </button>

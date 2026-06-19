@@ -10,7 +10,7 @@ const MONO = 'Poppins, sans-serif'
 const DISPLAY = 'Poppins, sans-serif'
 const HERO = '"Rajdhani", "Poppins", sans-serif'
 
-const EthMark = ({ size = 28, color = '#24A8F5' }) => (
+const EthMark = ({ size = 28, color = 'var(--accent)' }) => (
   <svg width={size * 0.62} height={size} viewBox="0 0 256 417" aria-hidden style={{ display: 'block' }}>
     <path fill={color} d="M127.961 0l-2.795 9.5v275.668l2.795 2.79 127.962-75.638z" opacity="0.85" />
     <path fill={color} d="M127.962 0L0 212.32l127.962 75.639V154.158z" />
@@ -38,8 +38,8 @@ const Sparkline = () => {
     <svg width="100%" height="40" viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden>
       <defs>
         <linearGradient id="spark" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="#24A8F5" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="#24A8F5" stopOpacity="0" />
+          <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
         </linearGradient>
       </defs>
       <path
@@ -48,7 +48,7 @@ const Sparkline = () => {
       />
       <path
         d="M0,28 L20,22 L40,30 L60,18 L80,24 L100,12 L120,20 L140,8 L160,16 L180,6 L200,14"
-        stroke="#24A8F5"
+        stroke="var(--accent)"
         strokeWidth="1.5"
         fill="none"
       />
@@ -62,24 +62,24 @@ const RateCard = ({ coin, value }) => (
       position: 'relative',
       flex: 1,
       minWidth: 220,
-      background: 'linear-gradient(180deg, rgba(36,168,245,0.06) 0%, rgba(36,168,245,0) 70%), #0E1424',
-      border: '1px solid #1B2333',
+      background: 'linear-gradient(180deg, rgba(var(--accent-rgb),0.06) 0%, rgba(var(--accent-rgb),0) 70%), var(--elev)',
+      border: '1px solid var(--border)',
       borderRadius: 14,
       padding: '20px 22px',
       overflow: 'hidden',
     }}
   >
     <div className="flex items-center justify-between" style={{ marginBottom: 6 }}>
-      <span style={{ color: '#8890A4', fontFamily: MONO, fontSize: 10, letterSpacing: 2 }}>
+      <span style={{ color: 'var(--text-subtle)', fontFamily: MONO, fontSize: 10, letterSpacing: 2 }}>
         {coin.name.toUpperCase()}
       </span>
       <span
         style={{
-          color: '#22C55E',
+          color: 'var(--success)',
           fontFamily: MONO,
           fontSize: 10,
-          backgroundColor: 'rgba(34,197,94,0.10)',
-          border: '1px solid rgba(34,197,94,0.30)',
+          backgroundColor: 'rgba(var(--success-rgb),0.10)',
+          border: '1px solid rgba(var(--success-rgb),0.30)',
           padding: '2px 6px',
           borderRadius: 4,
           display: 'inline-flex',
@@ -91,15 +91,15 @@ const RateCard = ({ coin, value }) => (
       </span>
     </div>
     <div className="flex items-baseline" style={{ gap: 8, marginBottom: 8 }}>
-      <span style={{ color: '#24A8F5', fontFamily: DISPLAY, fontSize: 28, fontWeight: 700 }}>
+      <span style={{ color: 'var(--accent)', fontFamily: DISPLAY, fontSize: 28, fontWeight: 700 }}>
         {coin.glyph}
       </span>
-      <span style={{ color: '#F5F7FA', fontFamily: DISPLAY, fontSize: 22, fontWeight: 600, letterSpacing: '-0.01em' }}>
+      <span style={{ color: 'var(--text)', fontFamily: DISPLAY, fontSize: 22, fontWeight: 600, letterSpacing: '-0.01em' }}>
         {coin.code}/ARS
       </span>
     </div>
     <div style={{ marginBottom: 10 }}>
-      <span style={{ color: '#F5F7FA', fontFamily: MONO, fontSize: 18, fontWeight: 500 }}>
+      <span style={{ color: 'var(--text)', fontFamily: MONO, fontSize: 18, fontWeight: 500 }}>
         $ {formatArs(value)}
       </span>
     </div>
@@ -120,15 +120,15 @@ const CryptoPage = () => {
   }, [])
 
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
+    <div className="flex flex-col min-h-screen" style={{ backgroundColor: 'var(--bg-2)' }}>
 
       {/* Mobile header */}
       <div
         className="flex md:hidden items-center w-full"
-        style={{ backgroundColor: '#0A0F1C', height: '56px', padding: '0 16px', gap: '10px' }}
+        style={{ backgroundColor: 'var(--hero-1)', height: '56px', padding: '0 16px', gap: '10px' }}
       >
-        <Activity size={18} color="#24A8F5" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
+        <Activity size={18} color="var(--accent)" />
+        <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
           Cripto
         </span>
       </div>
@@ -136,13 +136,13 @@ const CryptoPage = () => {
       {/* Desktop breadcrumb */}
       <div
         className="hidden md:flex items-center w-full"
-        style={{ backgroundColor: '#0A0F1C', height: '44px', padding: `0 ${sidePadding}`, gap: '8px' }}
+        style={{ backgroundColor: 'var(--hero-1)', height: '44px', padding: `0 ${sidePadding}`, gap: '8px' }}
       >
-        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
+        <Link to="/" className="no-underline" style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>
           Inicio
         </Link>
-        <ChevronRight size={14} color="#1B2333" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+        <ChevronRight size={14} color="var(--border)" />
+        <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
           Cripto
         </span>
       </div>
@@ -154,15 +154,15 @@ const CryptoPage = () => {
         style={{
           position: 'relative',
           padding: `56px ${sidePadding} 40px`,
-          backgroundColor: '#070B16',
+          backgroundColor: 'var(--bg-2)',
           backgroundImage:
-            'radial-gradient(60% 50% at 80% 0%, rgba(36,168,245,0.18) 0%, transparent 60%),' +
-            'radial-gradient(40% 40% at 0% 100%, rgba(13,26,64,0.6) 0%, transparent 60%),' +
-            'linear-gradient(rgba(36,168,245,0.04) 1px, transparent 1px),' +
-            'linear-gradient(90deg, rgba(36,168,245,0.04) 1px, transparent 1px)',
+            'radial-gradient(60% 50% at 80% 0%, rgba(var(--accent-rgb),0.18) 0%, transparent 60%),' +
+            'radial-gradient(40% 40% at 0% 100%, rgba(var(--hero-2-rgb),0.6) 0%, transparent 60%),' +
+            'linear-gradient(rgba(var(--accent-rgb),0.04) 1px, transparent 1px),' +
+            'linear-gradient(90deg, rgba(var(--accent-rgb),0.04) 1px, transparent 1px)',
           backgroundSize: 'auto, auto, 48px 48px, 48px 48px',
           overflow: 'hidden',
-          borderBottom: '1px solid #1B2333',
+          borderBottom: '1px solid var(--border)',
         }}
       >
         {/* deco strip */}
@@ -174,18 +174,18 @@ const CryptoPage = () => {
             left: 0,
             right: 0,
             height: 2,
-            background: 'linear-gradient(90deg, transparent 0%, #24A8F5 30%, #00C8FF 50%, #24A8F5 70%, transparent 100%)',
+            background: 'linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent-bright) 50%, var(--accent) 70%, transparent 100%)',
             opacity: 0.6,
           }}
         />
 
         <div className="flex items-center" style={{ gap: 10, marginBottom: 24 }}>
-          <Activity size={14} color="#24A8F5" />
-          <span style={{ color: '#24A8F5', fontFamily: MONO, fontSize: 11, letterSpacing: 3, fontWeight: 500 }}>
+          <Activity size={14} color="var(--accent)" />
+          <span style={{ color: 'var(--accent)', fontFamily: MONO, fontSize: 11, letterSpacing: 3, fontWeight: 500 }}>
             SHARKWARE // CRYPTO TERMINAL
           </span>
-          <span style={{ flex: 1, height: 1, backgroundColor: 'rgba(36,168,245,0.15)' }} />
-          <span style={{ color: '#8890A4', fontFamily: MONO, fontSize: 10, letterSpacing: 2 }}>
+          <span style={{ flex: 1, height: 1, backgroundColor: 'rgba(var(--accent-rgb),0.15)' }} />
+          <span style={{ color: 'var(--text-subtle)', fontFamily: MONO, fontSize: 10, letterSpacing: 2 }}>
             v1.0 · COINGECKO
           </span>
         </div>
@@ -202,7 +202,7 @@ const CryptoPage = () => {
           <h1
             style={{
               fontFamily: HERO,
-              color: '#F5F7FA',
+              color: 'var(--text)',
               fontSize: 'clamp(48px, 8vw, 96px)',
               fontWeight: 700,
               lineHeight: 0.95,
@@ -215,21 +215,21 @@ const CryptoPage = () => {
             <br />
             <span
               style={{
-                background: 'linear-gradient(90deg, #24A8F5 0%, #00C8FF 50%, #24A8F5 100%)',
+                background: 'linear-gradient(90deg, var(--accent) 0%, var(--accent-bright) 50%, var(--accent) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
-                filter: 'drop-shadow(0 0 24px rgba(36,168,245,0.4))',
+                filter: 'drop-shadow(0 0 24px rgba(var(--accent-rgb),0.4))',
               }}
             >
               a peso
             </span>{' '}
-            <span style={{ color: '#454E64' }}>/</span>{' '}
-            <span style={{ color: '#AAB3C5' }}>al instante.</span>
+            <span style={{ color: 'var(--text-faint)' }}>/</span>{' '}
+            <span style={{ color: 'var(--text-muted)' }}>al instante.</span>
           </h1>
           <p
             style={{
-              color: '#AAB3C5',
+              color: 'var(--text-muted)',
               fontFamily: 'Poppins',
               fontSize: 15,
               maxWidth: 560,
@@ -258,13 +258,13 @@ const CryptoPage = () => {
         style={{
           padding: `60px ${sidePadding} 80px`,
           background:
-            'radial-gradient(50% 60% at 50% 0%, rgba(36,168,245,0.06) 0%, transparent 60%), #070B16',
+            'radial-gradient(50% 60% at 50% 0%, rgba(var(--accent-rgb),0.06) 0%, transparent 60%), var(--bg-2)',
         }}
       >
         <div className="flex items-center" style={{ gap: 14, marginBottom: 24, maxWidth: 720, marginLeft: 'auto', marginRight: 'auto' }}>
           <span
             style={{
-              color: '#24A8F5',
+              color: 'var(--accent)',
               fontFamily: MONO,
               fontSize: 11,
               letterSpacing: 3,
@@ -273,7 +273,7 @@ const CryptoPage = () => {
           >
             [ 01 ] CONVERSOR
           </span>
-          <span style={{ flex: 1, height: 1, backgroundColor: 'rgba(36,168,245,0.15)' }} />
+          <span style={{ flex: 1, height: 1, backgroundColor: 'rgba(var(--accent-rgb),0.15)' }} />
         </div>
         <div style={{ maxWidth: 720, margin: '0 auto' }}>
           <CryptoConverter />
@@ -281,7 +281,7 @@ const CryptoPage = () => {
 
         <p
           style={{
-            color: '#454E64',
+            color: 'var(--text-faint)',
             fontFamily: MONO,
             fontSize: 10,
             textAlign: 'center',

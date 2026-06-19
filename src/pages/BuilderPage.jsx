@@ -50,15 +50,15 @@ const BuilderPage = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#070B16' }}>
+    <div className="flex flex-col min-h-screen" style={{ backgroundColor: 'var(--bg-2)' }}>
 
       {/* Mobile header */}
       <div
         className="flex md:hidden items-center w-full"
-        style={{ backgroundColor: '#0A0F1C', height: '56px', padding: '0 16px', gap: '10px' }}
+        style={{ backgroundColor: 'var(--hero-1)', height: '56px', padding: '0 16px', gap: '10px' }}
       >
-        <Cpu size={18} color="#24A8F5" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
+        <Cpu size={18} color="var(--accent)" />
+        <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
           Armá tu PC
         </span>
       </div>
@@ -66,13 +66,13 @@ const BuilderPage = () => {
       {/* Desktop breadcrumb */}
       <div
         className="hidden md:flex items-center w-full"
-        style={{ backgroundColor: '#0A0F1C', height: '44px', padding: `0 ${sidePadding}`, gap: '8px' }}
+        style={{ backgroundColor: 'var(--hero-1)', height: '44px', padding: `0 ${sidePadding}`, gap: '8px' }}
       >
-        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
+        <Link to="/" className="no-underline" style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>
           Inicio
         </Link>
-        <ChevronRight size={14} color="#1B2333" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+        <ChevronRight size={14} color="var(--border)" />
+        <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
           Armá tu PC
         </span>
       </div>
@@ -84,15 +84,15 @@ const BuilderPage = () => {
         style={{
           position: 'relative',
           padding: `56px ${sidePadding} 40px`,
-          backgroundColor: '#070B16',
+          backgroundColor: 'var(--bg-2)',
           backgroundImage:
-            'radial-gradient(60% 50% at 80% 0%, rgba(36,168,245,0.18) 0%, transparent 60%),' +
-            'radial-gradient(40% 40% at 0% 100%, rgba(13,26,64,0.6) 0%, transparent 60%),' +
-            'linear-gradient(rgba(36,168,245,0.04) 1px, transparent 1px),' +
-            'linear-gradient(90deg, rgba(36,168,245,0.04) 1px, transparent 1px)',
+            'radial-gradient(60% 50% at 80% 0%, rgba(var(--accent-rgb),0.18) 0%, transparent 60%),' +
+            'radial-gradient(40% 40% at 0% 100%, rgba(var(--hero-2-rgb),0.6) 0%, transparent 60%),' +
+            'linear-gradient(rgba(var(--accent-rgb),0.04) 1px, transparent 1px),' +
+            'linear-gradient(90deg, rgba(var(--accent-rgb),0.04) 1px, transparent 1px)',
           backgroundSize: 'auto, auto, 48px 48px, 48px 48px',
           overflow: 'hidden',
-          borderBottom: '1px solid #1B2333',
+          borderBottom: '1px solid var(--border)',
         }}
       >
         <div
@@ -104,24 +104,24 @@ const BuilderPage = () => {
             right: 0,
             height: 2,
             background:
-              'linear-gradient(90deg, transparent 0%, #24A8F5 30%, #00C8FF 50%, #24A8F5 70%, transparent 100%)',
+              'linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent-bright) 50%, var(--accent) 70%, transparent 100%)',
             opacity: 0.6,
           }}
         />
 
         <div className="flex items-center" style={{ gap: 10, marginBottom: 24 }}>
-          <Cpu size={14} color="#24A8F5" />
-          <span style={{ color: '#24A8F5', fontFamily: MONO, fontSize: 11, letterSpacing: 3, fontWeight: 500 }}>
+          <Cpu size={14} color="var(--accent)" />
+          <span style={{ color: 'var(--accent)', fontFamily: MONO, fontSize: 11, letterSpacing: 3, fontWeight: 500 }}>
             SHARKWARE // PC BUILDER
           </span>
-          <span style={{ flex: 1, height: 1, backgroundColor: 'rgba(36,168,245,0.15)' }} />
+          <span style={{ flex: 1, height: 1, backgroundColor: 'rgba(var(--accent-rgb),0.15)' }} />
           <span
             style={{
-              color: '#22C55E',
+              color: 'var(--success)',
               fontFamily: MONO,
               fontSize: 10,
-              backgroundColor: 'rgba(34,197,94,0.10)',
-              border: '1px solid rgba(34,197,94,0.30)',
+              backgroundColor: 'rgba(var(--success-rgb),0.10)',
+              border: '1px solid rgba(var(--success-rgb),0.30)',
               padding: '2px 8px',
               borderRadius: 4,
               letterSpacing: 1.5,
@@ -135,7 +135,7 @@ const BuilderPage = () => {
           <h1
             style={{
               fontFamily: HERO,
-              color: '#F5F7FA',
+              color: 'var(--text)',
               fontSize: 'clamp(40px, 7vw, 80px)',
               fontWeight: 700,
               lineHeight: 0.95,
@@ -147,20 +147,20 @@ const BuilderPage = () => {
             Armá tu PC{' '}
             <span
               style={{
-                background: 'linear-gradient(90deg, #24A8F5 0%, #00C8FF 50%, #24A8F5 100%)',
+                background: 'linear-gradient(90deg, var(--accent) 0%, var(--accent-bright) 50%, var(--accent) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
-                filter: 'drop-shadow(0 0 24px rgba(36,168,245,0.4))',
+                filter: 'drop-shadow(0 0 24px rgba(var(--accent-rgb),0.4))',
               }}
             >
               con IA
             </span>
-            <span style={{ color: '#454E64' }}>.</span>
+            <span style={{ color: 'var(--text-faint)' }}>.</span>
           </h1>
           <p
             style={{
-              color: '#AAB3C5',
+              color: 'var(--text-muted)',
               fontFamily: 'Poppins',
               fontSize: 15,
               maxWidth: 600,
@@ -179,7 +179,7 @@ const BuilderPage = () => {
         style={{
           padding: `48px ${sidePadding} 80px`,
           background:
-            'radial-gradient(50% 60% at 50% 0%, rgba(36,168,245,0.06) 0%, transparent 60%), #070B16',
+            'radial-gradient(50% 60% at 50% 0%, rgba(var(--accent-rgb),0.06) 0%, transparent 60%), var(--bg-2)',
         }}
       >
         <div
@@ -188,7 +188,7 @@ const BuilderPage = () => {
         >
           <span
             style={{
-              color: '#24A8F5',
+              color: 'var(--accent)',
               fontFamily: MONO,
               fontSize: 11,
               letterSpacing: 3,
@@ -197,7 +197,7 @@ const BuilderPage = () => {
           >
             [ 01 ] CONVERSACIÓN
           </span>
-          <span style={{ flex: 1, height: 1, backgroundColor: 'rgba(36,168,245,0.15)' }} />
+          <span style={{ flex: 1, height: 1, backgroundColor: 'rgba(var(--accent-rgb),0.15)' }} />
         </div>
 
         <div
@@ -205,19 +205,19 @@ const BuilderPage = () => {
           style={{
             maxWidth: 960,
             margin: '0 auto',
-            backgroundColor: '#0E1424',
-            border: '1px solid #1B2333',
+            backgroundColor: 'var(--elev)',
+            border: '1px solid var(--border)',
             borderRadius: 14,
             overflow: 'hidden',
-            boxShadow: '0 0 0 1px rgba(0,200,255,0.08), 0 20px 60px rgba(0,0,0,0.4)',
+            boxShadow: '0 0 0 1px rgba(var(--accent-bright-rgb),0.08), 0 20px 60px rgba(0,0,0,0.4)',
           }}
         >
           <div
             className="flex items-center"
             style={{
               padding: '14px 18px',
-              backgroundColor: '#060810',
-              borderBottom: '1px solid #1B2333',
+              backgroundColor: 'var(--bg-navbar)',
+              borderBottom: '1px solid var(--border)',
               gap: 12,
             }}
           >
@@ -227,17 +227,17 @@ const BuilderPage = () => {
                 width: 36,
                 height: 36,
                 borderRadius: 999,
-                backgroundColor: '#0D1A40',
-                border: '1px solid rgba(0,200,255,0.4)',
+                backgroundColor: 'var(--hero-2)',
+                border: '1px solid rgba(var(--accent-bright-rgb),0.4)',
               }}
             >
-              <Sparkles size={18} color="#24A8F5" />
+              <Sparkles size={18} color="var(--accent)" />
             </div>
             <div className="flex flex-col">
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: 14, fontWeight: 600 }}>
+              <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: 14, fontWeight: 600 }}>
                 Asistente Sharkware
               </span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: 11 }}>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: 11 }}>
                 catálogo real · compatibilidad validada
               </span>
             </div>
@@ -252,7 +252,7 @@ const BuilderPage = () => {
               padding: 18,
               gap: 12,
               overflowY: 'auto',
-              backgroundColor: '#0A0C14',
+              backgroundColor: 'var(--bg)',
             }}
           >
             {messages.map((m, i) => (
@@ -264,8 +264,8 @@ const BuilderPage = () => {
                   style={{
                     padding: '11px 15px',
                     borderRadius: m.role === 'user' ? '14px 14px 4px 14px' : '14px 14px 14px 4px',
-                    backgroundColor: m.role === 'user' ? '#1A9FFF' : '#1E2232',
-                    color: '#F5F7FA',
+                    backgroundColor: m.role === 'user' ? 'var(--accent-2)' : 'var(--surface)',
+                    color: 'var(--text)',
                     fontFamily: 'Poppins',
                     fontSize: 13.5,
                     lineHeight: 1.55,
@@ -286,12 +286,12 @@ const BuilderPage = () => {
                   alignSelf: 'flex-start',
                   padding: '10px 14px',
                   borderRadius: '14px 14px 14px 4px',
-                  backgroundColor: '#1E2232',
+                  backgroundColor: 'var(--surface)',
                   gap: 8,
                 }}
               >
-                <Loader size={14} color="#24A8F5" style={{ animation: 'spin 1s linear infinite' }} />
-                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: 12 }}>
+                <Loader size={14} color="var(--accent)" style={{ animation: 'spin 1s linear infinite' }} />
+                <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: 12 }}>
                   pensando…
                 </span>
               </div>
@@ -309,8 +309,8 @@ const BuilderPage = () => {
                       padding: '8px 14px',
                       borderRadius: 999,
                       backgroundColor: 'transparent',
-                      border: '1px solid #24A8F5',
-                      color: '#24A8F5',
+                      border: '1px solid var(--accent)',
+                      color: 'var(--accent)',
                       fontFamily: 'Poppins',
                       fontSize: 12.5,
                       fontWeight: 600,
@@ -332,8 +332,8 @@ const BuilderPage = () => {
             style={{
               padding: 14,
               gap: 10,
-              backgroundColor: '#060810',
-              borderTop: '1px solid #1B2333',
+              backgroundColor: 'var(--bg-navbar)',
+              borderTop: '1px solid var(--border)',
             }}
           >
             <input
@@ -347,9 +347,9 @@ const BuilderPage = () => {
                 flex: 1,
                 padding: '11px 16px',
                 borderRadius: 999,
-                backgroundColor: '#0E1424',
-                border: '1px solid #1B2333',
-                color: '#F5F7FA',
+                backgroundColor: 'var(--elev)',
+                border: '1px solid var(--border)',
+                color: 'var(--text)',
                 fontFamily: 'Poppins',
                 fontSize: 13.5,
                 opacity: loading ? 0.6 : 1,
@@ -364,8 +364,8 @@ const BuilderPage = () => {
                 width: 44,
                 height: 44,
                 borderRadius: 999,
-                backgroundColor: loading || !input.trim() ? '#1B2333' : '#24A8F5',
-                color: '#FFFFFF',
+                backgroundColor: loading || !input.trim() ? 'var(--border)' : 'var(--accent)',
+                color: 'var(--text-strong)',
                 flexShrink: 0,
               }}
             >
@@ -376,7 +376,7 @@ const BuilderPage = () => {
 
         <p
           style={{
-            color: '#454E64',
+            color: 'var(--text-faint)',
             fontFamily: MONO,
             fontSize: 10,
             textAlign: 'center',

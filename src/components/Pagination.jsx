@@ -21,7 +21,7 @@ const Pagination = ({ currentPage, totalPages, onPage, isMobile }) => {
     fontSize: isMobile ? '13px' : '14px',
     fontWeight: '600',
     borderRadius: '8px',
-    border: '1px solid #1B2333',
+    border: '1px solid var(--border)',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
@@ -37,8 +37,8 @@ const Pagination = ({ currentPage, totalPages, onPage, isMobile }) => {
         disabled={currentPage === 1}
         style={{
           ...btnBase,
-          backgroundColor: '#1E2232',
-          color: currentPage === 1 ? '#454E64' : '#AAB3C5',
+          backgroundColor: 'var(--surface)',
+          color: currentPage === 1 ? 'var(--text-faint)' : 'var(--text-muted)',
           cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
           gap: '4px',
           padding: '0 10px',
@@ -52,7 +52,7 @@ const Pagination = ({ currentPage, totalPages, onPage, isMobile }) => {
         item === '...' ? (
           <span
             key={`sep-after-${items[i - 1]}`}
-            style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '14px', padding: '0 4px' }}
+            style={{ color: 'var(--text-faint)', fontFamily: 'Poppins', fontSize: '14px', padding: '0 4px' }}
           >
             …
           </span>
@@ -62,9 +62,9 @@ const Pagination = ({ currentPage, totalPages, onPage, isMobile }) => {
             onClick={() => onPage(item)}
             style={{
               ...btnBase,
-              backgroundColor: item === currentPage ? '#24A8F5' : '#1E2232',
-              color: item === currentPage ? '#060810' : '#AAB3C5',
-              border: item === currentPage ? '1px solid #24A8F5' : '1px solid #1B2333',
+              backgroundColor: item === currentPage ? 'var(--accent)' : 'var(--surface)',
+              color: item === currentPage ? 'var(--bg-navbar)' : 'var(--text-muted)',
+              border: item === currentPage ? '1px solid var(--accent)' : '1px solid var(--border)',
             }}
           >
             {item}
@@ -77,8 +77,8 @@ const Pagination = ({ currentPage, totalPages, onPage, isMobile }) => {
         disabled={currentPage === totalPages}
         style={{
           ...btnBase,
-          backgroundColor: '#1E2232',
-          color: currentPage === totalPages ? '#454E64' : '#AAB3C5',
+          backgroundColor: 'var(--surface)',
+          color: currentPage === totalPages ? 'var(--text-faint)' : 'var(--text-muted)',
           cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
           gap: '4px',
           padding: '0 10px',

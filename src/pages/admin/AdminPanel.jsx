@@ -19,11 +19,11 @@ const StatCardSkeleton = ({ mobile = false }) => (
     className="flex flex-col"
     style={{
       flex: mobile ? undefined : 1,
-      backgroundColor: '#0E1424',
+      backgroundColor: 'var(--elev)',
       borderRadius: mobile ? '12px' : '8px',
       padding: mobile ? '14px' : '18px',
       gap: '10px',
-      border: '1px solid #1B2333',
+      border: '1px solid var(--border)',
     }}
   >
     <div className="flex items-center justify-between">
@@ -36,7 +36,7 @@ const StatCardSkeleton = ({ mobile = false }) => (
 )
 
 const ProductRowSkeleton = () => (
-  <tr style={{ borderBottom: '1px solid #1B2333' }}>
+  <tr style={{ borderBottom: '1px solid var(--border)' }}>
     <td style={{ padding: '14px 10px' }}><Skeleton height={14} width="80%" /></td>
     <td style={{ padding: '14px 10px' }}><Skeleton height={14} width="60%" /></td>
     <td style={{ padding: '14px 10px' }}><Skeleton height={14} width="70%" /></td>
@@ -53,7 +53,7 @@ const ProductRowSkeleton = () => (
 
 const ProductCardMobileSkeleton = () => (
   <div className="flex flex-col"
-    style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '14px', gap: '10px', border: '1px solid #1B2333' }}>
+    style={{ backgroundColor: 'var(--elev)', borderRadius: '14px', padding: '14px', gap: '10px', border: '1px solid var(--border)' }}>
     <Skeleton height={14} width="70%" />
     <Skeleton height={11} width="35%" />
     <div className="flex items-center" style={{ gap: '12px' }}>
@@ -71,14 +71,14 @@ const StatCard = ({ label, value, sub, subColor, icon: Icon, iconColor, mobile =
   if (mobile) {
     return (
       <div className="flex flex-col"
-        style={{ backgroundColor: '#0E1424', borderRadius: '12px', padding: '14px', gap: '8px', border: '1px solid #1B2333' }}>
+        style={{ backgroundColor: 'var(--elev)', borderRadius: '12px', padding: '14px', gap: '8px', border: '1px solid var(--border)' }}>
         <div className="flex items-center" style={{ gap: '10px' }}>
-          <div style={{ backgroundColor: '#1B2333', borderRadius: '10px', padding: '10px', flexShrink: 0 }}>
+          <div style={{ backgroundColor: 'var(--border)', borderRadius: '10px', padding: '10px', flexShrink: 0 }}>
             <Icon size={18} color={iconColor} />
           </div>
           <div className="flex flex-col" style={{ gap: '2px', flex: 1 }}>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '500' }}>{label}</span>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>{value}</span>
+            <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '500' }}>{label}</span>
+            <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '800' }}>{value}</span>
           </div>
         </div>
         <span style={{ color: subColor, fontFamily: 'Poppins', fontSize: '11px' }}>{sub}</span>
@@ -87,12 +87,12 @@ const StatCard = ({ label, value, sub, subColor, icon: Icon, iconColor, mobile =
   }
   return (
     <div className="flex flex-col"
-      style={{ flex: 1, backgroundColor: '#0E1424', borderRadius: '8px', padding: '18px', gap: '6px', border: '1px solid #1B2333' }}>
+      style={{ flex: 1, backgroundColor: 'var(--elev)', borderRadius: '8px', padding: '18px', gap: '6px', border: '1px solid var(--border)' }}>
       <div className="flex items-center justify-between">
-        <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>{label}</span>
+        <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>{label}</span>
         <Icon size={16} color={iconColor} />
       </div>
-      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '28px', fontWeight: '800' }}>{value}</span>
+      <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '28px', fontWeight: '800' }}>{value}</span>
       <span style={{ color: subColor, fontFamily: 'Poppins', fontSize: '11px' }}>{sub}</span>
     </div>
   )
@@ -139,7 +139,7 @@ const StockCell = ({ product, onUpdated, compact = false }) => {
     else if (e.key === 'Escape') { e.preventDefault(); cancel() }
   }
 
-  const stockColor = product.stock === 0 ? '#EF4444' : '#F5F7FA'
+  const stockColor = product.stock === 0 ? 'var(--error)' : 'var(--text)'
   const stockWeight = product.stock === 0 ? (compact ? '700' : '600') : (compact ? '600' : 'normal')
   const fontSize = compact ? '13px' : '13px'
   const wrapWidth = compact ? undefined : '85px'
@@ -148,12 +148,12 @@ const StockCell = ({ product, onUpdated, compact = false }) => {
     return (
       <div style={{ width: wrapWidth, flexShrink: 0 }}>
         <button onClick={startEdit} title="Click para editar stock"
-          onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#24A8F5' }}
-          onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1B2333' }}
+          onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)' }}
           className="cursor-pointer inline-flex items-center"
           style={{
-            backgroundColor: '#0A0C14',
-            border: '1px solid #1B2333',
+            backgroundColor: 'var(--bg)',
+            border: '1px solid var(--border)',
             borderRadius: '4px',
             padding: '3px 8px',
             color: stockColor,
@@ -182,9 +182,9 @@ const StockCell = ({ product, onUpdated, compact = false }) => {
         disabled={saving}
         style={{
           width: '60px',
-          backgroundColor: '#0A0C14',
-          color: '#F5F7FA',
-          border: '1px solid #1B2333',
+          backgroundColor: 'var(--bg)',
+          color: 'var(--text)',
+          border: '1px solid var(--border)',
           borderRadius: '4px',
           padding: '3px 6px',
           fontFamily: 'Poppins',
@@ -194,12 +194,12 @@ const StockCell = ({ product, onUpdated, compact = false }) => {
       <button onClick={commit} disabled={saving} title="Guardar"
         className="border-none cursor-pointer flex items-center justify-center"
         style={{ background: 'none', padding: 2 }}>
-        <Check size={14} color="#22C55E" />
+        <Check size={14} color="var(--success)" />
       </button>
       <button onClick={cancel} disabled={saving} title="Cancelar"
         className="border-none cursor-pointer flex items-center justify-center"
         style={{ background: 'none', padding: 2 }}>
-        <X size={14} color="#AAB3C5" />
+        <X size={14} color="var(--text-muted)" />
       </button>
     </div>
   )
@@ -301,7 +301,7 @@ const AdminPanel = () => {
   const fmt = (n) => (n === null || n === undefined ? '—' : n)
 
   return (
-    <div className="flex" style={{ height: '100vh', backgroundColor: '#070B16', overflow: 'hidden' }}>
+    <div className="flex" style={{ height: '100vh', backgroundColor: 'var(--bg-2)', overflow: 'hidden' }}>
 
       {/* ── Sidebar (desktop only) ── */}
       <AdminSidebar />
@@ -311,38 +311,38 @@ const AdminPanel = () => {
 
         {/* Mobile TopBar */}
         <div className="flex md:hidden items-center justify-between"
-          style={{ height: '56px', flexShrink: 0, backgroundColor: '#0E1424', padding: '0 16px', borderBottom: '1px solid #1B2333' }}>
+          style={{ height: '56px', flexShrink: 0, backgroundColor: 'var(--elev)', padding: '0 16px', borderBottom: '1px solid var(--border)' }}>
           <div className="flex items-center" style={{ gap: '10px' }}>
             <button className="flex items-center justify-center border-none cursor-pointer"
-              style={{ width: '36px', height: '36px', backgroundColor: '#1B2333', borderRadius: '8px' }}>
-              <Menu size={18} color="#F5F7FA" />
+              style={{ width: '36px', height: '36px', backgroundColor: 'var(--border)', borderRadius: '8px' }}>
+              <Menu size={18} color="var(--text)" />
             </button>
             <div className="flex flex-col" style={{ gap: '0' }}>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Gestión de Productos</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>Panel Admin / Productos</span>
+              <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Gestión de Productos</span>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px' }}>Panel Admin / Productos</span>
             </div>
           </div>
           <div className="flex items-center" style={{ gap: '8px' }}>
             <Link to="/" title="Ver tienda" className="flex items-center justify-center no-underline"
-              style={{ width: '32px', height: '32px', backgroundColor: '#1B2333', borderRadius: '8px' }}>
-              <Store size={16} color="#24A8F5" />
+              style={{ width: '32px', height: '32px', backgroundColor: 'var(--border)', borderRadius: '8px' }}>
+              <Store size={16} color="var(--accent)" />
             </Link>
-            <div className="flex items-center justify-center" style={{ width: '32px', height: '32px', backgroundColor: '#1B2333', borderRadius: '16px' }}>
-              <UserRound size={16} color="#24A8F5" />
+            <div className="flex items-center justify-center" style={{ width: '32px', height: '32px', backgroundColor: 'var(--border)', borderRadius: '16px' }}>
+              <UserRound size={16} color="var(--accent)" />
             </div>
           </div>
         </div>
 
         {/* Desktop TopBar */}
         <div className="hidden md:flex items-center justify-between"
-          style={{ height: '60px', flexShrink: 0, backgroundColor: '#0E1424', padding: '0 28px', borderBottom: '1px solid #1B2333' }}>
+          style={{ height: '60px', flexShrink: 0, backgroundColor: 'var(--elev)', padding: '0 28px', borderBottom: '1px solid var(--border)' }}>
           <div className="flex flex-col" style={{ gap: '2px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '17px', fontWeight: '700' }}>Gestión de Productos</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>Panel Admin &nbsp;/&nbsp; Productos</span>
+            <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '17px', fontWeight: '700' }}>Gestión de Productos</span>
+            <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px' }}>Panel Admin &nbsp;/&nbsp; Productos</span>
           </div>
           <div className="flex items-center" style={{ gap: '16px' }}>
-            <div className="flex items-center justify-center" style={{ width: '34px', height: '34px', backgroundColor: '#1B2333', borderRadius: '17px' }}>
-              <UserRound size={18} color="#24A8F5" />
+            <div className="flex items-center justify-center" style={{ width: '34px', height: '34px', backgroundColor: 'var(--border)', borderRadius: '17px' }}>
+              <UserRound size={18} color="var(--accent)" />
             </div>
           </div>
         </div>
@@ -361,10 +361,10 @@ const AdminPanel = () => {
               </>
             ) : (
               <>
-                <StatCard mobile label="Total Productos" value={fmt(totalProducts)} sub="En catálogo" subColor="#AAB3C5" icon={Package} iconColor="#24A8F5" />
-                <StatCard mobile label="Pedidos pendientes" value={fmt(pendingOrders)} sub="Sin confirmar pago" subColor="#F59E0B" icon={Clock} iconColor="#F59E0B" />
-                <StatCard mobile label="Sin Stock" value={fmt(noStockCount)} sub="Requieren reposición" subColor="#FF8400" icon={TriangleAlert} iconColor="#FF8400" />
-                <StatCard mobile label="Categorías" value={fmt(categoriesCount)} sub="GPU · CPU · Monitor..." subColor="#AAB3C5" icon={Layers} iconColor="#37C3FF" />
+                <StatCard mobile label="Total Productos" value={fmt(totalProducts)} sub="En catálogo" subColor="var(--text-muted)" icon={Package} iconColor="var(--accent)" />
+                <StatCard mobile label="Pedidos pendientes" value={fmt(pendingOrders)} sub="Sin confirmar pago" subColor="var(--warning)" icon={Clock} iconColor="var(--warning)" />
+                <StatCard mobile label="Sin Stock" value={fmt(noStockCount)} sub="Requieren reposición" subColor="var(--badge-oferta)" icon={TriangleAlert} iconColor="var(--badge-oferta)" />
+                <StatCard mobile label="Categorías" value={fmt(categoriesCount)} sub="GPU · CPU · Monitor..." subColor="var(--text-muted)" icon={Layers} iconColor="var(--accent-light)" />
               </>
             )}
           </div>
@@ -380,10 +380,10 @@ const AdminPanel = () => {
               </>
             ) : (
               <>
-            <StatCard label="Total Productos" value={fmt(totalProducts)} sub="En catálogo" subColor="#AAB3C5" icon={Package} iconColor="#24A8F5" />
-            <StatCard label="Pedidos pendientes" value={fmt(pendingOrders)} sub="Sin confirmar pago" subColor="#F59E0B" icon={Clock} iconColor="#F59E0B" />
-            <StatCard label="Sin Stock" value={fmt(noStockCount)} sub="Requieren reposición" subColor="#FF8400" icon={TriangleAlert} iconColor="#FF8400" />
-            <StatCard label="Categorías" value={fmt(categoriesCount)} sub="GPU · CPU · Monitor · RAM..." subColor="#AAB3C5" icon={Layers} iconColor="#37C3FF" />
+            <StatCard label="Total Productos" value={fmt(totalProducts)} sub="En catálogo" subColor="var(--text-muted)" icon={Package} iconColor="var(--accent)" />
+            <StatCard label="Pedidos pendientes" value={fmt(pendingOrders)} sub="Sin confirmar pago" subColor="var(--warning)" icon={Clock} iconColor="var(--warning)" />
+            <StatCard label="Sin Stock" value={fmt(noStockCount)} sub="Requieren reposición" subColor="var(--badge-oferta)" icon={TriangleAlert} iconColor="var(--badge-oferta)" />
+            <StatCard label="Categorías" value={fmt(categoriesCount)} sub="GPU · CPU · Monitor · RAM..." subColor="var(--text-muted)" icon={Layers} iconColor="var(--accent-light)" />
               </>
             )}
           </div>
@@ -391,42 +391,42 @@ const AdminPanel = () => {
           {/* Mobile Action bar */}
           <div className="md:hidden flex items-center justify-between" style={{ gap: '10px' }}>
             <div className="flex flex-col" style={{ gap: '2px', flex: 1 }}>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>Lista de Productos</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{products.length} de {fmt(totalProducts)} productos</span>
+              <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>Lista de Productos</span>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px' }}>{products.length} de {fmt(totalProducts)} productos</span>
             </div>
             <button onClick={() => setModal('add')} className="flex items-center justify-center border-none cursor-pointer"
-              style={{ backgroundColor: '#24A8F5', borderRadius: '8px', width: '40px', height: '40px' }}>
-              <Plus size={18} color="#FFFFFF" />
+              style={{ backgroundColor: 'var(--accent)', borderRadius: '8px', width: '40px', height: '40px' }}>
+              <Plus size={18} color="var(--text-strong)" />
             </button>
           </div>
 
           {/* Mobile Search */}
           <div className="md:hidden flex items-center"
-            style={{ backgroundColor: '#0E1424', borderRadius: '10px', height: '44px', padding: '0 14px', gap: '8px', border: '1px solid #1B2333' }}>
-            <Search size={16} color="#AAB3C5" />
+            style={{ backgroundColor: 'var(--elev)', borderRadius: '10px', height: '44px', padding: '0 14px', gap: '8px', border: '1px solid var(--border)' }}>
+            <Search size={16} color="var(--text-muted)" />
             <input placeholder="Buscar producto..." value={search} onChange={e => handleSearch(e.target.value)}
               className="bg-transparent border-none outline-none w-full"
-              style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }} />
+              style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }} />
           </div>
 
           {/* Desktop Action bar */}
           <div className="hidden md:flex items-center justify-between">
             <div className="flex flex-col" style={{ gap: '3px' }}>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>Lista de Productos</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>Administrá el catálogo completo de la tienda</span>
+              <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>Lista de Productos</span>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px' }}>Administrá el catálogo completo de la tienda</span>
             </div>
             <div className="flex items-center" style={{ gap: '10px' }}>
               <div className="flex items-center"
-                style={{ backgroundColor: '#0E1424', borderRadius: '6px', height: '36px', padding: '0 12px', gap: '8px', border: '1px solid #1B2333', width: '220px' }}>
-                <Search size={14} color="#AAB3C5" />
+                style={{ backgroundColor: 'var(--elev)', borderRadius: '6px', height: '36px', padding: '0 12px', gap: '8px', border: '1px solid var(--border)', width: '220px' }}>
+                <Search size={14} color="var(--text-muted)" />
                 <input placeholder="Buscar producto..." value={search} onChange={e => handleSearch(e.target.value)}
                   className="bg-transparent border-none outline-none w-full"
-                  style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }} />
+                  style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px' }} />
               </div>
               <button onClick={() => setModal('add')} className="flex items-center border-none cursor-pointer"
-                style={{ backgroundColor: '#24A8F5', borderRadius: '6px', height: '36px', padding: '0 16px', gap: '8px' }}>
-                <Plus size={14} color="#FFFFFF" />
-                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Agregar Producto</span>
+                style={{ backgroundColor: 'var(--accent)', borderRadius: '6px', height: '36px', padding: '0 16px', gap: '8px' }}>
+                <Plus size={14} color="var(--text-strong)" />
+                <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Agregar Producto</span>
               </button>
             </div>
           </div>
@@ -442,7 +442,7 @@ const AdminPanel = () => {
 
           {/* Loading state — desktop table */}
           {loadingList && (
-            <div className="hidden md:block" style={{ backgroundColor: '#0E1424', borderRadius: '8px', border: '1px solid #1B2333', overflow: 'hidden' }}>
+            <div className="hidden md:block" style={{ backgroundColor: 'var(--elev)', borderRadius: '8px', border: '1px solid var(--border)', overflow: 'hidden' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <tbody>
                   {Array.from({ length: 8 }).map((_, i) => (
@@ -458,44 +458,44 @@ const AdminPanel = () => {
             <div className="md:hidden flex flex-col" style={{ gap: '10px' }}>
               {products.map((p) => (
                 <div key={p.id} className="flex flex-col"
-                  style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '14px', gap: '10px', border: '1px solid #1B2333' }}>
+                  style={{ backgroundColor: 'var(--elev)', borderRadius: '14px', padding: '14px', gap: '10px', border: '1px solid var(--border)' }}>
                   <div className="flex flex-col" style={{ gap: '2px' }}>
-                    <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{p.name}</span>
-                    <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{p.brand}</span>
+                    <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{p.name}</span>
+                    <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px' }}>{p.brand}</span>
                   </div>
                   <div className="flex items-center" style={{ gap: '12px' }}>
                     <div className="flex flex-col" style={{ gap: '2px' }}>
-                      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Categoría</span>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>{categoryLabel(p.category_id)}</span>
+                      <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Categoría</span>
+                      <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>{categoryLabel(p.category_id)}</span>
                     </div>
                     <div style={{ flex: 1 }} />
                     <div className="flex flex-col" style={{ gap: '2px', alignItems: 'flex-end' }}>
-                      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Precio</span>
-                      <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{formatARS(p.price_ars)}</span>
+                      <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Precio</span>
+                      <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{formatARS(p.price_ars)}</span>
                     </div>
                   </div>
                   <div className="flex items-center" style={{ gap: '12px' }}>
                     <div className="flex items-center" style={{ gap: '6px' }}>
-                      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>Stock:</span>
+                      <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px' }}>Stock:</span>
                       <StockCell product={p} onUpdated={mergeProduct} compact />
                     </div>
                     <div style={{ flex: 1 }} />
-                    <div style={{ backgroundColor: p.active ? '#0F3D22' : '#2D1010', borderRadius: '5px', padding: '4px 10px' }}>
-                      <span style={{ color: p.active ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
+                    <div style={{ backgroundColor: p.active ? 'var(--success-bg-2)' : 'var(--error-bg-2)', borderRadius: '5px', padding: '4px 10px' }}>
+                      <span style={{ color: p.active ? 'var(--success)' : 'var(--error)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
                         {p.active ? 'Activo' : 'Inactivo'}
                       </span>
                     </div>
                   </div>
-                  <div className="flex items-center" style={{ gap: '8px', paddingTop: '4px', borderTop: '1px solid #1B2333' }}>
+                  <div className="flex items-center" style={{ gap: '8px', paddingTop: '4px', borderTop: '1px solid var(--border)' }}>
                     <button onClick={() => openEdit(p)} className="flex items-center justify-center border-none cursor-pointer flex-1"
-                      style={{ backgroundColor: '#0D2035', borderRadius: '8px', height: '36px', gap: '6px' }}>
-                      <Pencil size={14} color="#24A8F5" />
-                      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Editar</span>
+                      style={{ backgroundColor: 'var(--surface-accent-2)', borderRadius: '8px', height: '36px', gap: '6px' }}>
+                      <Pencil size={14} color="var(--accent)" />
+                      <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Editar</span>
                     </button>
                     <button onClick={() => handleDelete(p)} className="flex items-center justify-center border-none cursor-pointer flex-1"
-                      style={{ backgroundColor: '#2D1010', borderRadius: '8px', height: '36px', gap: '6px' }}>
-                      <Trash2 size={14} color="#EF4444" />
-                      <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Eliminar</span>
+                      style={{ backgroundColor: 'var(--error-bg-2)', borderRadius: '8px', height: '36px', gap: '6px' }}>
+                      <Trash2 size={14} color="var(--error)" />
+                      <span style={{ color: 'var(--error)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>Eliminar</span>
                     </button>
                   </div>
                 </div>
@@ -505,9 +505,9 @@ const AdminPanel = () => {
 
           {/* Desktop Table */}
           {!loadingList && (
-            <div className="hidden md:block" style={{ backgroundColor: '#0E1424', borderRadius: '8px', border: '1px solid #1B2333' }}>
+            <div className="hidden md:block" style={{ backgroundColor: 'var(--elev)', borderRadius: '8px', border: '1px solid var(--border)' }}>
               <div className="flex items-center"
-                style={{ backgroundColor: '#080D1A', padding: '11px 16px', borderBottom: '1px solid #1B2333' }}>
+                style={{ backgroundColor: 'var(--img-bg-2)', padding: '11px 16px', borderBottom: '1px solid var(--border)' }}>
                 {[
                   { label: 'Producto', flex: 1 },
                   { label: 'Categoría', w: 120 },
@@ -517,7 +517,7 @@ const AdminPanel = () => {
                   { label: 'Acciones', w: 90 },
                 ].map(({ label, flex, w }) => (
                   <span key={label}
-                    style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', flex, width: w, flexShrink: w ? 0 : undefined }}>
+                    style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', flex, width: w, flexShrink: w ? 0 : undefined }}>
                     {label}
                   </span>
                 ))}
@@ -526,7 +526,7 @@ const AdminPanel = () => {
               <div>
                 {products.length === 0 && (
                   <div className="flex items-center justify-center" style={{ padding: '32px' }}>
-                    <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
+                    <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>
                       {search ? 'Sin resultados para esa búsqueda' : 'No hay productos cargados'}
                     </span>
                   </div>
@@ -534,27 +534,27 @@ const AdminPanel = () => {
 
                 {products.map((p, i) => (
                   <div key={p.id} className="flex items-center"
-                    style={{ padding: '12px 16px', borderBottom: i < products.length - 1 ? '1px solid #1B2333' : 'none' }}>
+                    style={{ padding: '12px 16px', borderBottom: i < products.length - 1 ? '1px solid var(--border)' : 'none' }}>
                     <div className="flex flex-col" style={{ flex: 1, gap: '2px' }}>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>{p.name}</span>
-                      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>{p.brand}</span>
+                      <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>{p.name}</span>
+                      <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px' }}>{p.brand}</span>
                     </div>
-                    <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', width: '120px', flexShrink: 0 }}>{categoryLabel(p.category_id)}</span>
-                    <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600', width: '140px', flexShrink: 0 }}>{formatARS(p.price_ars)}</span>
+                    <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px', width: '120px', flexShrink: 0 }}>{categoryLabel(p.category_id)}</span>
+                    <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600', width: '140px', flexShrink: 0 }}>{formatARS(p.price_ars)}</span>
                     <StockCell product={p} onUpdated={mergeProduct} />
                     <div style={{ width: '100px', flexShrink: 0 }}>
-                      <div style={{ display: 'inline-flex', backgroundColor: p.active ? '#0F3D22' : '#2D1010', borderRadius: '4px', padding: '3px 10px' }}>
-                        <span style={{ color: p.active ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
+                      <div style={{ display: 'inline-flex', backgroundColor: p.active ? 'var(--success-bg-2)' : 'var(--error-bg-2)', borderRadius: '4px', padding: '3px 10px' }}>
+                        <span style={{ color: p.active ? 'var(--success)' : 'var(--error)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
                           {p.active ? 'Activo' : 'Inactivo'}
                         </span>
                       </div>
                     </div>
                     <div className="flex items-center" style={{ gap: '8px', width: '90px', flexShrink: 0 }}>
                       <button onClick={() => openEdit(p)} className="border-none cursor-pointer" style={{ background: 'none', padding: 0 }}>
-                        <Pencil size={18} color="#24A8F5" />
+                        <Pencil size={18} color="var(--accent)" />
                       </button>
                       <button onClick={() => handleDelete(p)} className="border-none cursor-pointer" style={{ background: 'none', padding: 0 }}>
-                        <Trash2 size={18} color="#EF4444" />
+                        <Trash2 size={18} color="var(--error)" />
                       </button>
                     </div>
                   </div>
@@ -562,8 +562,8 @@ const AdminPanel = () => {
               </div>
 
               <div className="flex items-center justify-between"
-                style={{ backgroundColor: '#080D1A', padding: '10px 16px' }}>
-                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
+                style={{ backgroundColor: 'var(--img-bg-2)', padding: '10px 16px' }}>
+                <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px' }}>
                   Página {page + 1} de {totalPages} ({products.length} productos)
                 </span>
                 <div className="flex items-center" style={{ gap: '4px' }}>
@@ -571,24 +571,24 @@ const AdminPanel = () => {
                     onClick={() => fetchProducts(page - 1, searchRef.current)}
                     disabled={page === 0}
                     className="flex items-center justify-center cursor-pointer border-none"
-                    style={{ width: '28px', height: '28px', backgroundColor: page === 0 ? '#0A0C14' : '#1B2333', borderRadius: '4px', opacity: page === 0 ? 0.5 : 1 }}
+                    style={{ width: '28px', height: '28px', backgroundColor: page === 0 ? 'var(--bg)' : 'var(--border)', borderRadius: '4px', opacity: page === 0 ? 0.5 : 1 }}
                   >
-                    <ChevronLeft size={14} color="#F5F7FA" />
+                    <ChevronLeft size={14} color="var(--text)" />
                   </button>
                   {Array.from({ length: totalPages }, (_, i) => i).map(i => (
                     <button key={i} onClick={() => fetchProducts(i, searchRef.current)}
                       className="flex items-center justify-center cursor-pointer border-none"
-                      style={{ width: '28px', height: '28px', backgroundColor: i === page ? '#24A8F5' : '#1B2333', borderRadius: '4px' }}>
-                      <span style={{ fontFamily: 'Poppins', fontSize: '12px', fontWeight: i === page ? '700' : 'normal', color: '#F5F7FA' }}>{i + 1}</span>
+                      style={{ width: '28px', height: '28px', backgroundColor: i === page ? 'var(--accent)' : 'var(--border)', borderRadius: '4px' }}>
+                      <span style={{ fontFamily: 'Poppins', fontSize: '12px', fontWeight: i === page ? '700' : 'normal', color: 'var(--text)' }}>{i + 1}</span>
                     </button>
                   ))}
                   <button
                     onClick={() => fetchProducts(page + 1, searchRef.current)}
                     disabled={page >= totalPages - 1}
                     className="flex items-center justify-center cursor-pointer border-none"
-                    style={{ width: '28px', height: '28px', backgroundColor: page >= totalPages - 1 ? '#0A0C14' : '#1B2333', borderRadius: '4px', opacity: page >= totalPages - 1 ? 0.5 : 1 }}
+                    style={{ width: '28px', height: '28px', backgroundColor: page >= totalPages - 1 ? 'var(--bg)' : 'var(--border)', borderRadius: '4px', opacity: page >= totalPages - 1 ? 0.5 : 1 }}
                   >
-                    <ChevronRight size={14} color="#F5F7FA" />
+                    <ChevronRight size={14} color="var(--text)" />
                   </button>
                 </div>
               </div>
