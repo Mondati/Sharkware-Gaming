@@ -14,6 +14,7 @@ import MyOrders from './pages/MyOrders'
 import SearchResults from './pages/SearchResults'
 import CryptoPage from './pages/CryptoPage'
 import BuilderPage from './pages/BuilderPage'
+import AboutPage from './pages/AboutPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import ScrollToTop from './components/ScrollToTop'
 import Toast from './components/Toast'
@@ -72,6 +73,7 @@ const App = () => {
         <Route path="/search" element={<SearchResultsRoute />} />
         <Route path="/crypto" element={<CryptoPage />} />
         <Route path="/builder" element={<BuilderPage />} />
+        <Route path="/nosotros" element={<AboutPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/checkout" element={<Checkout />} />

@@ -11,7 +11,7 @@ const navLinks = [
   { label: 'Ofertas', to: '/search?badge=OFERTA' },
   { label: 'Cripto', to: '/crypto' },
   { label: 'Soporte', href: SUPPORT_HREF, external: true },
-  { label: 'Nosotros', to: '#' },
+  { label: 'Nosotros', to: '/nosotros' },
 ]
 
 const Footer = () => {
