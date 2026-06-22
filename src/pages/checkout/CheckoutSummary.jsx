@@ -6,6 +6,7 @@ import MercadoPagoLogo from '../../components/MercadoPagoLogo'
 import { getOrderSummary, createMpPreference } from '../../api/orders'
 import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
+import { useWindowWidth } from '../../hooks/useWindowWidth'
 import SkeletonBlock from '../../components/Skeleton'
 
 const fmt = (n) => '$' + Math.round(Number(n) || 0).toLocaleString('es-AR')
@@ -46,6 +47,7 @@ const CheckoutSummary = () => {
   const navigate = useNavigate()
   const { showToast } = useAuth()
   const { clearCart } = useCart()
+  const { sidePadding } = useWindowWidth()
   const [summary, setSummary] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -128,7 +130,7 @@ const CheckoutSummary = () => {
       </div>
 
       {/* ═══════════════ DESKTOP BREADCRUMB ═══════════════ */}
-      <div className="hidden md:flex items-center w-full" style={{ backgroundColor: 'var(--hero-1)', height: '44px', padding: '0 80px', gap: '8px' }}>
+      <div className="hidden md:flex items-center w-full" style={{ backgroundColor: 'var(--hero-1)', height: '44px', padding: `0 ${sidePadding}`, gap: '8px' }}>
         <Link to="/" className="no-underline" style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>Inicio</Link>
         <ChevronRight size={14} color="var(--border)" />
         <Link to="/cart" className="no-underline" style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>Carrito</Link>

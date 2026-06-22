@@ -34,6 +34,8 @@ const Navbar = () => {
   const isTablet = sidePadding === "40px";
   const navigate = useNavigate();
 
+  const logoSrc = theme === "retro" ? "/images/logo-retro.png" : "/images/logo.png";
+
   const ghostPill = (hover) => ({
     backgroundColor: hover ? "rgba(var(--accent-rgb),0.08)" : "transparent",
     border: `1px solid ${hover ? "var(--accent)" : "var(--border)"}`,
@@ -154,7 +156,7 @@ const Navbar = () => {
           <>
             <Link to="/" style={{ display: "flex", alignItems: "center" }}>
               <img
-                src="/images/logo.png"
+                src={logoSrc}
                 alt="Sharkware Gaming"
                 style={{ height: "48px", width: "auto", display: "block" }}
               />
@@ -378,19 +380,23 @@ const Navbar = () => {
           backgroundColor: "var(--bg-navbar)",
           height: "76px",
           padding: `0 ${sidePadding}`,
-          gap: isTablet ? "12px" : "20px",
           position: "sticky",
           top: 0,
           zIndex: 50,
         }}
       >
+        <div
+          className="flex items-center w-full"
+          style={{ justifyContent: "space-between", gap: isTablet ? "12px" : "20px" }}
+        >
+        {/* ── Grupo 1: logo ── */}
         <Link
           to="/"
           className="flex items-center"
           style={{ gap: "14px", flexShrink: 0 }}
         >
           <img
-            src="/images/logo.png"
+            src={logoSrc}
             alt="Sharkware Gaming"
             style={{ height: "44px", width: "auto", display: "block" }}
           />
@@ -404,6 +410,7 @@ const Navbar = () => {
           ></span>
         </Link>
 
+        {/* ── Grupo 2: búsqueda ── */}
         <form
           onSubmit={handleDesktopSearch}
           className="flex items-center"
@@ -412,7 +419,7 @@ const Navbar = () => {
             borderRadius: "6px",
             padding: "7px 10px",
             gap: "10px",
-            flex: 1,
+            flex: isTablet ? "0 1 280px" : "0 1 480px",
             maxWidth: isTablet ? "280px" : "480px",
             border: `1px solid ${searchFocused ? "var(--accent)" : "var(--border)"}`,
             boxShadow: searchFocused
@@ -456,6 +463,8 @@ const Navbar = () => {
           />
         </form>
 
+        {/* ── Grupo 3: botones ── */}
+        <div className="flex items-center" style={{ gap: "8px", flexShrink: 0 }}>
         <div
           className="flex items-center"
           style={{ gap: "8px", flexShrink: 0 }}
@@ -662,6 +671,8 @@ const Navbar = () => {
             </span>
           </Link>
         )}
+        </div>
+        </div>
       </nav>
 
       <MobileSidebar

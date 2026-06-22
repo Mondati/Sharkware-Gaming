@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import Footer from '../../components/Footer'
 import MercadoPagoLogo from '../../components/MercadoPagoLogo'
 import { syncPayment } from '../../api/orders'
+import { useWindowWidth } from '../../hooks/useWindowWidth'
 import SkeletonBlock from '../../components/Skeleton'
 
 const fmt = (n) => '$' + Math.round(Number(n) || 0).toLocaleString('es-AR')
@@ -74,6 +75,7 @@ const PrimaryHomeButton = ({ label = 'Volver al inicio' }) => (
 const CheckoutConfirmMercadoPago = () => {
   const [params] = useSearchParams()
   const orderId = params.get('order')
+  const { sidePadding } = useWindowWidth()
   const [order, setOrder] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -159,7 +161,7 @@ const CheckoutConfirmMercadoPago = () => {
       </div>
 
       {/* ═══════════════ DESKTOP BREADCRUMB ═══════════════ */}
-      <div className="hidden md:flex items-center w-full" style={{ backgroundColor: 'var(--hero-1)', height: '44px', padding: '0 80px', gap: '8px' }}>
+      <div className="hidden md:flex items-center w-full" style={{ backgroundColor: 'var(--hero-1)', height: '44px', padding: `0 ${sidePadding}`, gap: '8px' }}>
         <Link to="/" className="no-underline" style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>Inicio</Link>
         <ChevronRight size={14} color="var(--border)" />
         <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Confirmación de pago</span>
