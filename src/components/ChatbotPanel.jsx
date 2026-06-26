@@ -67,10 +67,10 @@ const ChatbotPanel = ({ onClose }) => {
         left: '16px',
         right: '16px',
         bottom: '96px',
-        backgroundColor: '#0E1424',
-        border: '1px solid #1B2333',
+        backgroundColor: 'var(--elev)',
+        border: '1px solid var(--border)',
         borderRadius: '14px',
-        boxShadow: '0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,200,255,0.25)',
+        boxShadow: '0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(var(--accent-bright-rgb),0.25)',
         zIndex: 50,
         overflow: 'hidden',
       }
@@ -82,10 +82,10 @@ const ChatbotPanel = ({ onClose }) => {
         height: '500px',
         maxWidth: 'calc(100vw - 32px)',
         maxHeight: 'calc(100vh - 144px)',
-        backgroundColor: '#0E1424',
-        border: '1px solid #1B2333',
+        backgroundColor: 'var(--elev)',
+        border: '1px solid var(--border)',
         borderRadius: '16px',
-        boxShadow: '0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,200,255,0.25)',
+        boxShadow: '0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(var(--accent-bright-rgb),0.25)',
         zIndex: 50,
         overflow: 'hidden',
       }
@@ -98,7 +98,7 @@ const ChatbotPanel = ({ onClose }) => {
         aria-label="Cerrar panel del chatbot"
         className="md:hidden fixed inset-0"
         style={{
-          backgroundColor: 'rgba(6,8,16,0.55)',
+          backgroundColor: 'rgba(var(--scrim-rgb),0.55)',
           backdropFilter: 'blur(6px)',
           WebkitBackdropFilter: 'blur(6px)',
           zIndex: 49,
@@ -112,8 +112,8 @@ const ChatbotPanel = ({ onClose }) => {
         className="flex items-center justify-between"
         style={{
           padding: '14px 16px',
-          backgroundColor: '#060810',
-          borderBottom: '1px solid #1B2333',
+          backgroundColor: 'var(--bg-navbar)',
+          borderBottom: '1px solid var(--border)',
         }}
       >
         <div className="flex items-center" style={{ gap: '10px' }}>
@@ -123,23 +123,23 @@ const ChatbotPanel = ({ onClose }) => {
               width: '36px',
               height: '36px',
               borderRadius: '999px',
-              backgroundColor: '#0E1424',
-              border: '1px solid rgba(0,200,255,0.4)',
+              backgroundColor: 'var(--elev)',
+              border: '1px solid rgba(var(--accent-bright-rgb),0.4)',
             }}
           >
-            <Bot size={20} color="#24A8F5" />
+            <Bot size={20} color="var(--accent)" />
           </div>
           <div className="flex flex-col">
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
+            <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
               Sharkbot
             </span>
-            <span className="flex items-center" style={{ gap: '6px', color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
+            <span className="flex items-center" style={{ gap: '6px', color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px' }}>
               <span
                 style={{
                   width: '8px',
                   height: '8px',
                   borderRadius: '999px',
-                  backgroundColor: '#22C55E',
+                  backgroundColor: 'var(--success)',
                   display: 'inline-block',
                 }}
               />
@@ -156,7 +156,7 @@ const ChatbotPanel = ({ onClose }) => {
             height: '32px',
             borderRadius: '8px',
             backgroundColor: 'transparent',
-            color: '#AAB3C5',
+            color: 'var(--text-muted)',
           }}
         >
           <X size={18} />
@@ -171,7 +171,7 @@ const ChatbotPanel = ({ onClose }) => {
           padding: '16px',
           gap: '10px',
           overflowY: 'auto',
-          backgroundColor: '#0A0C14',
+          backgroundColor: 'var(--bg)',
         }}
       >
         {messages.map((m, i) => {
@@ -184,8 +184,8 @@ const ChatbotPanel = ({ onClose }) => {
                 maxWidth: '85%',
                 padding: '10px 14px',
                 borderRadius: isUser ? '14px 14px 4px 14px' : '14px 14px 14px 4px',
-                backgroundColor: isUser ? '#24A8F5' : '#1E2232',
-                color: isUser ? '#FFFFFF' : '#F5F7FA',
+                backgroundColor: isUser ? 'var(--accent)' : 'var(--surface)',
+                color: isUser ? 'var(--text-strong)' : 'var(--text)',
                 fontFamily: 'Poppins',
                 fontSize: '13px',
                 lineHeight: '1.5',
@@ -204,8 +204,8 @@ const ChatbotPanel = ({ onClose }) => {
               maxWidth: '85%',
               padding: '10px 14px',
               borderRadius: '14px 14px 14px 4px',
-              backgroundColor: '#1E2232',
-              color: '#AAB3C5',
+              backgroundColor: 'var(--surface)',
+              color: 'var(--text-muted)',
               fontFamily: 'Poppins',
               fontSize: '13px',
               lineHeight: '1.5',
@@ -224,8 +224,8 @@ const ChatbotPanel = ({ onClose }) => {
         style={{
           padding: '12px',
           gap: '8px',
-          backgroundColor: '#060810',
-          borderTop: '1px solid #1B2333',
+          backgroundColor: 'var(--bg-navbar)',
+          borderTop: '1px solid var(--border)',
         }}
       >
         <input
@@ -238,9 +238,9 @@ const ChatbotPanel = ({ onClose }) => {
             flex: 1,
             padding: '10px 14px',
             borderRadius: '999px',
-            backgroundColor: '#0E1424',
-            border: '1px solid #1B2333',
-            color: '#F5F7FA',
+            backgroundColor: 'var(--elev)',
+            border: '1px solid var(--border)',
+            color: 'var(--text)',
             fontFamily: 'Poppins',
             fontSize: '13px',
           }}
@@ -254,8 +254,8 @@ const ChatbotPanel = ({ onClose }) => {
             width: '40px',
             height: '40px',
             borderRadius: '999px',
-            backgroundColor: '#24A8F5',
-            color: '#FFFFFF',
+            backgroundColor: 'var(--accent)',
+            color: 'var(--text-strong)',
             flexShrink: 0,
             opacity: loading || !input.trim() ? 0.6 : 1,
             cursor: loading || !input.trim() ? 'not-allowed' : 'pointer',

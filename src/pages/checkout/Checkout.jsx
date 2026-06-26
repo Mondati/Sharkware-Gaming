@@ -6,6 +6,7 @@ import TrustBadges from '../../components/TrustBadges'
 import MercadoPagoLogo from '../../components/MercadoPagoLogo'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
+import { useWindowWidth } from '../../hooks/useWindowWidth'
 import { createOrder } from '../../api/orders'
 
 const fmt = (n) => '$' + Math.round(n).toLocaleString('es-AR')
@@ -13,35 +14,35 @@ const fmt = (n) => '$' + Math.round(n).toLocaleString('es-AR')
 const SummaryPanel = ({ subtotal, cartCount, onPay, submitting, ctaLabel }) => (
   <div
     className="flex flex-col"
-    style={{ width: '380px', flexShrink: 0, backgroundColor: '#0E1424', borderRadius: '14px', padding: '24px', gap: '16px', border: '1px solid #1B2333' }}
+    style={{ width: '380px', flexShrink: 0, backgroundColor: 'var(--elev)', borderRadius: '14px', padding: '24px', gap: '16px', border: '1px solid var(--border)' }}
   >
-    <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Resumen del pedido</span>
-    <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
+    <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Resumen del pedido</span>
+    <div style={{ backgroundColor: 'var(--border)', height: '1px' }} />
     <div className="flex items-center">
-      <span style={{ flex: 1, color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
+      <span style={{ flex: 1, color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px' }}>
         Subtotal ({cartCount} ítem{cartCount !== 1 ? 's' : ''})
       </span>
-      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{fmt(subtotal)}</span>
+      <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{fmt(subtotal)}</span>
     </div>
-    <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
+    <div style={{ backgroundColor: 'var(--border)', height: '1px' }} />
     <div className="flex items-center">
-      <span style={{ flex: 1, color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Total</span>
-      <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>{fmt(subtotal)}</span>
+      <span style={{ flex: 1, color: 'var(--text)', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>Total</span>
+      <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>{fmt(subtotal)}</span>
     </div>
     <button
       onClick={onPay}
       disabled={submitting || subtotal === 0}
       className="flex items-center justify-center border-none"
       style={{
-        backgroundColor: submitting || subtotal === 0 ? '#1B2333' : '#24A8F5',
+        backgroundColor: submitting || subtotal === 0 ? 'var(--border)' : 'var(--accent)',
         borderRadius: '12px',
         height: '52px',
         cursor: submitting || subtotal === 0 ? 'default' : 'pointer',
         gap: '8px',
       }}
     >
-      <Lock size={16} color={submitting || subtotal === 0 ? '#AAB3C5' : '#FFFFFF'} />
-      <span style={{ color: submitting || subtotal === 0 ? '#AAB3C5' : '#FFFFFF', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
+      <Lock size={16} color={submitting || subtotal === 0 ? 'var(--text-muted)' : 'var(--text-strong)'} />
+      <span style={{ color: submitting || subtotal === 0 ? 'var(--text-muted)' : 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
         {ctaLabel}
       </span>
     </button>
@@ -52,6 +53,7 @@ const Checkout = () => {
   const navigate = useNavigate()
   const { items, cartCount } = useCart()
   const { user, loading, showToast } = useAuth()
+  const { sidePadding } = useWindowWidth()
   const [submitting, setSubmitting] = useState(false)
 
   const subtotal = items.reduce((a, i) => a + i.price_ars * i.quantity, 0)
@@ -90,40 +92,40 @@ const Checkout = () => {
   }
 
   if (loading || !user || items.length === 0) {
-    return <div className="flex flex-1" style={{ backgroundColor: '#070B16' }} />
+    return <div className="flex flex-1" style={{ backgroundColor: 'var(--bg-2)' }} />
   }
 
   const ctaLabel = submitting ? 'Procesando…' : 'Continuar'
 
   return (
-    <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
+    <div className="flex flex-col flex-1" style={{ backgroundColor: 'var(--bg-2)' }}>
 
       {/* ═══════════════ MOBILE HEADER ═══════════════ */}
       <div
         className="flex md:hidden items-center justify-between w-full"
-        style={{ backgroundColor: '#0A0F1C', height: '56px', padding: '0 16px' }}
+        style={{ backgroundColor: 'var(--hero-1)', height: '56px', padding: '0 16px' }}
       >
         <Link to="/cart" className="flex items-center no-underline">
-          <ArrowLeft size={20} color="#F5F7FA" />
+          <ArrowLeft size={20} color="var(--text)" />
         </Link>
         <div className="flex flex-col items-center">
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
+          <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
             Método de pago
           </span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px' }}>
+          <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px' }}>
             Paso 2 de 3
           </span>
         </div>
         <Link to="/cart" className="flex items-center no-underline">
-          <X size={20} color="#AAB3C5" />
+          <X size={20} color="var(--text-muted)" />
         </Link>
       </div>
 
       {/* ═══════════════ DESKTOP BREADCRUMB ═══════════════ */}
-      <div className="hidden md:flex items-center w-full" style={{ backgroundColor: '#0A0F1C', height: '44px', padding: '0 80px', gap: '8px' }}>
-        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Inicio</Link>
-        <ChevronRight size={14} color="#1B2333" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Método de pago</span>
+      <div className="hidden md:flex items-center w-full" style={{ backgroundColor: 'var(--hero-1)', height: '44px', padding: `0 ${sidePadding}`, gap: '8px' }}>
+        <Link to="/" className="no-underline" style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>Inicio</Link>
+        <ChevronRight size={14} color="var(--border)" />
+        <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>Método de pago</span>
       </div>
 
       <main className="flex flex-col flex-1 w-full">
@@ -132,10 +134,10 @@ const Checkout = () => {
       <div className="flex md:hidden flex-col w-full" style={{ padding: '16px', gap: '20px' }}>
 
         <div className="flex flex-col" style={{ gap: '4px' }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '20px', fontWeight: '800' }}>
+          <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '20px', fontWeight: '800' }}>
             Confirmá tu compra
           </span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
+          <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>
             Pagás de forma segura con MercadoPago
           </span>
         </div>
@@ -143,15 +145,15 @@ const Checkout = () => {
         {/* Summary strip */}
         <div
           className="flex items-center"
-          style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '12px 14px', gap: '10px', border: '1px solid #1B2333' }}
+          style={{ backgroundColor: 'var(--elev)', borderRadius: '10px', padding: '12px 14px', gap: '10px', border: '1px solid var(--border)' }}
         >
-          <CreditCard size={18} color="#24A8F5" />
+          <CreditCard size={18} color="var(--accent)" />
           <div className="flex-1">
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
+            <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px' }}>
               {cartCount} producto{cartCount !== 1 ? 's' : ''} en tu carrito
             </span>
           </div>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
+          <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
             Total: {fmt(subtotal)}
           </span>
         </div>
@@ -159,36 +161,36 @@ const Checkout = () => {
         {/* MercadoPago card */}
         <div
           className="flex flex-col"
-          style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '18px', gap: '12px', border: '1px solid #24A8F5' }}
+          style={{ backgroundColor: 'var(--elev)', borderRadius: '14px', padding: '18px', gap: '12px', border: '1px solid var(--accent)' }}
         >
           <div className="flex items-center" style={{ gap: '12px' }}>
-            <div style={{ backgroundColor: '#0A1F3F', borderRadius: '12px', padding: '12px', flexShrink: 0 }}>
+            <div style={{ backgroundColor: 'var(--surface-accent)', borderRadius: '12px', padding: '12px', flexShrink: 0 }}>
               <MercadoPagoLogo size={22} />
             </div>
             <div className="flex flex-col flex-1" style={{ gap: '2px' }}>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>
+              <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700' }}>
                 MercadoPago
               </span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px' }}>
                 Cuotas según tu tarjeta
               </span>
             </div>
           </div>
           <div className="flex items-center" style={{ gap: '8px' }}>
-            <Smartphone size={14} color="#24A8F5" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
+            <Smartphone size={14} color="var(--accent)" />
+            <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px' }}>
               Tarjeta · Efectivo · Billetera virtual
             </span>
           </div>
           <div className="flex items-center" style={{ gap: '6px' }}>
-            <Calendar size={14} color="#AAB3C5" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
+            <Calendar size={14} color="var(--text-muted)" />
+            <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px' }}>
               Cuotas según tu tarjeta
             </span>
           </div>
           <div className="flex items-center" style={{ gap: '6px' }}>
-            <ShieldCheck size={14} color="#22C55E" />
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>
+            <ShieldCheck size={14} color="var(--success)" />
+            <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px' }}>
               Pago seguro gestionado por MercadoPago
             </span>
           </div>
@@ -197,18 +199,18 @@ const Checkout = () => {
         {/* Totals mobile */}
         <div
           className="flex flex-col"
-          style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '16px', gap: '12px', border: '1px solid #1B2333' }}
+          style={{ backgroundColor: 'var(--elev)', borderRadius: '14px', padding: '16px', gap: '12px', border: '1px solid var(--border)' }}
         >
           <div className="flex items-center">
-            <span className="flex-1" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>
+            <span className="flex-1" style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>
               Subtotal ({cartCount} ítem{cartCount !== 1 ? 's' : ''})
             </span>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{fmt(subtotal)}</span>
+            <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{fmt(subtotal)}</span>
           </div>
-          <div style={{ backgroundColor: '#1B2333', height: '1px' }} />
+          <div style={{ backgroundColor: 'var(--border)', height: '1px' }} />
           <div className="flex items-center">
-            <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>Total</span>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>{fmt(subtotal)}</span>
+            <span className="flex-1" style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>Total</span>
+            <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>{fmt(subtotal)}</span>
           </div>
         </div>
 
@@ -217,15 +219,15 @@ const Checkout = () => {
           disabled={submitting}
           className="flex items-center justify-center border-none w-full"
           style={{
-            backgroundColor: submitting ? '#1B2333' : '#24A8F5',
+            backgroundColor: submitting ? 'var(--border)' : 'var(--accent)',
             borderRadius: '12px',
             height: '50px',
             gap: '10px',
             cursor: submitting ? 'default' : 'pointer',
           }}
         >
-          <Lock size={18} color={submitting ? '#AAB3C5' : '#FFFFFF'} />
-          <span style={{ color: submitting ? '#AAB3C5' : '#FFFFFF', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>
+          <Lock size={18} color={submitting ? 'var(--text-muted)' : 'var(--text-strong)'} />
+          <span style={{ color: submitting ? 'var(--text-muted)' : 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>
             {ctaLabel}
           </span>
         </button>
@@ -236,42 +238,42 @@ const Checkout = () => {
       </div>
 
       {/* ═══════════════ DESKTOP CONTENT ═══════════════ */}
-      <div className="hidden md:flex w-full" style={{ padding: '40px 80px', gap: '30px' }}>
+      <div className="hidden md:flex w-full" style={{ padding: `40px ${sidePadding}`, gap: '30px' }}>
 
         <div className="flex flex-col" style={{ flex: 1, gap: '24px' }}>
           <div className="flex flex-col" style={{ gap: '6px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '28px', fontWeight: '800' }}>Confirmá tu compra</span>
-            <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '15px' }}>Pagás de forma segura con MercadoPago</span>
+            <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '28px', fontWeight: '800' }}>Confirmá tu compra</span>
+            <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '15px' }}>Pagás de forma segura con MercadoPago</span>
           </div>
 
           {/* MercadoPago card */}
           <div
             className="flex items-center"
-            style={{ backgroundColor: '#0E1424', borderRadius: '14px', padding: '24px', gap: '16px', border: '1px solid #24A8F5', width: '100%' }}
+            style={{ backgroundColor: 'var(--elev)', borderRadius: '14px', padding: '24px', gap: '16px', border: '1px solid var(--accent)', width: '100%' }}
           >
-            <div style={{ backgroundColor: '#0A1F3F', borderRadius: '12px', padding: '14px', flexShrink: 0 }}>
+            <div style={{ backgroundColor: 'var(--surface-accent)', borderRadius: '12px', padding: '14px', flexShrink: 0 }}>
               <MercadoPagoLogo size={26} />
             </div>
             <div className="flex flex-col" style={{ flex: 1, gap: '6px' }}>
               <div className="flex items-center" style={{ gap: '10px' }}>
-                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>MercadoPago</span>
-                <div style={{ backgroundColor: '#0D2E52', borderRadius: '20px', padding: '4px 10px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Método único</span>
+                <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700' }}>MercadoPago</span>
+                <div style={{ backgroundColor: 'var(--surface-accent-3)', borderRadius: '20px', padding: '4px 10px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Método único</span>
                 </div>
               </div>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>Cuotas según tu tarjeta</span>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px' }}>Pago seguro gestionado por MercadoPago</span>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px' }}>Cuotas según tu tarjeta</span>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px' }}>Pago seguro gestionado por MercadoPago</span>
             </div>
           </div>
 
           <div className="flex items-center" style={{ gap: '20px' }}>
             <div className="flex items-center" style={{ gap: '6px' }}>
-              <ShieldCheck size={16} color="#22C55E" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Pago seguro</span>
+              <ShieldCheck size={16} color="var(--success)" />
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>Pago seguro</span>
             </div>
             <div className="flex items-center" style={{ gap: '6px' }}>
-              <Calendar size={16} color="#AAB3C5" />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px' }}>Cuotas según tu tarjeta</span>
+              <Calendar size={16} color="var(--text-muted)" />
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px' }}>Cuotas según tu tarjeta</span>
             </div>
           </div>
         </div>

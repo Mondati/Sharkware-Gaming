@@ -16,7 +16,7 @@ import { formatARS } from '../utils/formatPrice'
 import Skeleton from '../components/Skeleton'
 
 const ProductDetailSkeleton = ({ sidePadding }) => (
-  <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
+  <div className="flex flex-col flex-1" style={{ backgroundColor: 'var(--bg-2)' }}>
     {/* Desktop */}
     <section
       className="hidden md:flex w-full"
@@ -86,10 +86,10 @@ const ImgOrPlaceholder = ({ src, brand, name, style }) => {
   }
   return (
     <div className="flex flex-col items-center justify-center w-full h-full" style={{ gap: '8px', ...style }}>
-      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', letterSpacing: '2px' }}>
+      <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', letterSpacing: '2px' }}>
         {brand}
       </span>
-      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600', textAlign: 'center', lineHeight: '1.3', padding: '0 16px' }}>
+      <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600', textAlign: 'center', lineHeight: '1.3', padding: '0 16px' }}>
         {name}
       </span>
     </div>
@@ -164,12 +164,12 @@ const ProductDetail = () => {
 
   if (notFound || !product) {
     return (
-      <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
+      <div className="flex flex-col flex-1" style={{ backgroundColor: 'var(--bg-2)' }}>
         <div className="flex flex-col flex-1 items-center justify-center" style={{ gap: '16px' }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
+          <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '24px', fontWeight: '700' }}>
             Producto no encontrado
           </span>
-          <Link to="/" style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px' }}>
+          <Link to="/" style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '14px' }}>
             ← Volver al inicio
           </Link>
         </div>
@@ -198,17 +198,17 @@ const ProductDetail = () => {
   const categoryLabel = categories.find((c) => c.id === product.category_id)?.label ?? product.category_id
 
   return (
-    <div className="flex flex-col flex-1" style={{ backgroundColor: '#070B16' }}>
+    <div className="flex flex-col flex-1" style={{ backgroundColor: 'var(--bg-2)' }}>
 
       {/* ═══ MOBILE HEADER ═══ */}
       <div
         className="flex md:hidden items-center w-full"
-        style={{ backgroundColor: '#0A0F1C', height: '56px', padding: '0 16px', gap: '12px' }}
+        style={{ backgroundColor: 'var(--hero-1)', height: '56px', padding: '0 16px', gap: '12px' }}
       >
         <Link to="/" className="flex items-center no-underline">
-          <ArrowLeft size={20} color="#F5F7FA" />
+          <ArrowLeft size={20} color="var(--text)" />
         </Link>
-        <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '600' }}>
+        <span className="flex-1" style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '600' }}>
           Detalle del Producto
         </span>
       </div>
@@ -226,7 +226,7 @@ const ProductDetail = () => {
           setTouchStartX(null)
         }}
       >
-        <div style={{ width: '100%', height: '280px', backgroundColor: '#0E1424', overflow: 'hidden' }}>
+        <div style={{ width: '100%', height: '280px', backgroundColor: 'var(--elev)', overflow: 'hidden' }}>
           <ImgOrPlaceholder src={displayGallery[activeThumb]} brand={product.brand} name={product.name} />
         </div>
         {displayGallery.length > 1 && (
@@ -239,7 +239,7 @@ const ProductDetail = () => {
                 className="border-none cursor-pointer p-0"
                 style={{
                   width: '8px', height: '8px', borderRadius: '50%',
-                  backgroundColor: activeThumb === i ? '#00C8FF' : '#1B2333',
+                  backgroundColor: activeThumb === i ? 'var(--accent-bright)' : 'var(--border)',
                   flexShrink: 0,
                 }}
               />
@@ -251,17 +251,17 @@ const ProductDetail = () => {
       {/* ═══ DESKTOP BREADCRUMB ═══ */}
       <div
         className="hidden md:flex items-center w-full"
-        style={{ backgroundColor: '#0A0F1C', height: '44px', padding: `0 ${sidePadding}`, gap: '8px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}
+        style={{ backgroundColor: 'var(--hero-1)', height: '44px', padding: `0 ${sidePadding}`, gap: '8px', borderBottom: '1px solid rgba(var(--overlay-rgb),0.04)' }}
       >
-        <Link to="/" className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
+        <Link to="/" className="no-underline" style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
           Inicio
         </Link>
-        <ChevronRight size={13} color="#454E64" />
-        <Link to={`/?cat=${product.category_id}`} className="no-underline" style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
+        <ChevronRight size={13} color="var(--text-faint)" />
+        <Link to={`/?cat=${product.category_id}`} className="no-underline" style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
           {categoryLabel}
         </Link>
-        <ChevronRight size={13} color="#454E64" />
-        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
+        <ChevronRight size={13} color="var(--text-faint)" />
+        <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '500' }}>
           {product.name}
         </span>
       </div>
@@ -272,21 +272,21 @@ const ProductDetail = () => {
         {/* LEFT — Gallery */}
         <div className="flex flex-col" style={{ width: '460px', flexShrink: 0, gap: '12px' }}>
           <div style={{
-            backgroundColor: '#0E1424',
+            backgroundColor: 'var(--elev)',
             borderRadius: '16px',
             height: '420px',
             position: 'relative',
             overflow: 'hidden',
-            border: '1px solid rgba(255,255,255,0.06)',
+            border: '1px solid var(--card-border)',
           }}>
             <ImgOrPlaceholder src={displayGallery[activeThumb]} brand={product.brand} name={product.name} />
             {product.badge && (
               <div style={{
                 position: 'absolute', top: '14px', left: '14px',
-                backgroundColor: product.badge === 'NUEVO' ? '#22C55E' : '#EF4444',
+                backgroundColor: product.badge === 'NUEVO' ? 'var(--success)' : 'var(--error)',
                 borderRadius: '5px', padding: '4px 10px',
               }}>
-                <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>
+                <span style={{ color: 'var(--on-status)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>
                   {product.badge}
                 </span>
               </div>
@@ -300,11 +300,11 @@ const ProductDetail = () => {
                 aria-label={`Ver imagen ${i + 1}`}
                 className="border-none cursor-pointer p-0"
                 style={{
-                  backgroundColor: '#0E1424',
+                  backgroundColor: 'var(--elev)',
                   borderRadius: '8px',
                   height: '68px',
                   width: '68px',
-                  border: activeThumb === i ? '2px solid #24A8F5' : '1px solid rgba(255,255,255,0.06)',
+                  border: activeThumb === i ? '2px solid var(--accent)' : '1px solid var(--card-border)',
                   flexShrink: 0,
                   overflow: 'hidden',
                   transition: 'border-color 0.15s ease',
@@ -321,55 +321,55 @@ const ProductDetail = () => {
 
           {/* Brand */}
           <div style={{ marginBottom: '10px' }}>
-            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
+            <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
               {product.brand}
             </span>
           </div>
 
           {/* Title */}
-          <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '26px', fontWeight: '600', lineHeight: '1.25', margin: '0 0 20px 0' }}>
+          <h1 style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '26px', fontWeight: '600', lineHeight: '1.25', margin: '0 0 20px 0' }}>
             {product.name}
           </h1>
 
           {/* Divider */}
-          <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', marginBottom: '20px' }} />
+          <div style={{ height: '1px', backgroundColor: 'rgba(var(--overlay-rgb),0.06)', marginBottom: '20px' }} />
 
           {/* Price */}
           <div style={{ marginBottom: '14px' }}>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '40px', fontWeight: '800', lineHeight: 1 }}>
+            <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '40px', fontWeight: '800', lineHeight: 1 }}>
               {formatARS(product.price_ars)}
             </span>
           </div>
 
           {/* Payment method tags */}
           <div className="flex items-center" style={{ gap: '8px', marginBottom: '20px' }}>
-            <div className="flex items-center" style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 10px', gap: '6px' }}>
+            <div className="flex items-center" style={{ backgroundColor: 'rgba(var(--overlay-rgb),0.04)', border: '1px solid rgba(var(--overlay-rgb),0.08)', borderRadius: '6px', padding: '5px 10px', gap: '6px' }}>
               <MercadoPagoLogo size={14} />
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>MercadoPago</span>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>MercadoPago</span>
             </div>
-            <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 12px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>BTC · ETH · USDT</span>
+            <div style={{ backgroundColor: 'rgba(var(--overlay-rgb),0.04)', border: '1px solid rgba(var(--overlay-rgb),0.08)', borderRadius: '6px', padding: '5px 12px' }}>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>BTC · ETH · USDT</span>
             </div>
-            <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '6px', padding: '5px 12px' }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Transferencia</span>
+            <div style={{ backgroundColor: 'rgba(var(--overlay-rgb),0.04)', border: '1px solid rgba(var(--overlay-rgb),0.08)', borderRadius: '6px', padding: '5px 12px' }}>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Transferencia</span>
             </div>
           </div>
 
           {/* Stock + shipping */}
           <div className="flex items-center flex-wrap" style={{ gap: '20px', marginBottom: '20px' }}>
             <div className="flex items-center" style={{ gap: '6px' }}>
-              <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: product.stock > 0 ? '#22C55E' : '#EF4444', flexShrink: 0 }} />
-              <span style={{ color: product.stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+              <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: product.stock > 0 ? 'var(--success)' : 'var(--error)', flexShrink: 0 }} />
+              <span style={{ color: product.stock > 0 ? 'var(--success)' : 'var(--error)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
                 {product.stock > 0 ? 'En stock' : 'Sin stock'}
               </span>
               {product.stock > 0 && (
-                <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', marginLeft: '4px' }}>
+                <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px', marginLeft: '4px' }}>
                   · {product.stock} {product.stock === 1 ? 'disponible' : 'disponibles'}
                 </span>
               )}
             </div>
             {product.stock > 0 && product.stock <= 3 && (
-              <div style={{ backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', padding: '4px 10px', borderRadius: '12px', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
+              <div style={{ backgroundColor: 'rgba(var(--warning-rgb), 0.15)', color: 'var(--warning)', padding: '4px 10px', borderRadius: '12px', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
                 ¡Pocas unidades!
               </div>
             )}
@@ -384,14 +384,14 @@ const ProductDetail = () => {
                     <div
                       key={label}
                       className="flex flex-1 items-center"
-                      style={{ backgroundColor: '#0A0C14', borderRadius: '10px', padding: '11px 14px', gap: '10px', border: '1px solid rgba(255,255,255,0.06)' }}
+                      style={{ backgroundColor: 'var(--bg)', borderRadius: '10px', padding: '11px 14px', gap: '10px', border: '1px solid var(--card-border)' }}
                     >
-                      <Icon size={15} color="#24A8F5" />
+                      <Icon size={15} color="var(--accent)" />
                       <div className="flex flex-col" style={{ gap: '2px' }}>
-                        <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '1px' }}>
+                        <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '1px' }}>
                           {label}
                         </span>
-                        <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '700' }}>
+                        <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '700' }}>
                           {value}
                         </span>
                       </div>
@@ -405,32 +405,32 @@ const ProductDetail = () => {
           {/* Quantity */}
           <div className="flex flex-col" style={{ gap: '6px', marginBottom: '16px' }}>
             <div className="flex items-center" style={{ gap: '14px' }}>
-              <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>Cantidad:</span>
-              <div className="flex items-center" style={{ backgroundColor: '#0A0C14', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', overflow: 'hidden' }}>
+              <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '13px' }}>Cantidad:</span>
+              <div className="flex items-center" style={{ backgroundColor: 'var(--bg)', border: '1px solid rgba(var(--overlay-rgb),0.08)', borderRadius: '8px', overflow: 'hidden' }}>
                 <button
                   onClick={() => setQty((q) => Math.max(1, q - 1))}
                   disabled={qty <= 1}
-                  style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: qty <= 1 ? 'not-allowed' : 'pointer', opacity: qty <= 1 ? 0.4 : 1 }}
+                  style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: 'var(--text)', fontSize: '20px', cursor: qty <= 1 ? 'not-allowed' : 'pointer', opacity: qty <= 1 ? 0.4 : 1 }}
                 >
                   −
                 </button>
                 <div
                   className="flex items-center justify-center"
-                  style={{ width: '44px', height: '40px', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}
+                  style={{ width: '44px', height: '40px', borderLeft: '1px solid var(--card-border)', borderRight: '1px solid var(--card-border)' }}
                 >
-                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
+                  <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
                 </div>
                 <button
                   onClick={() => setQty((q) => Math.min(maxAddable, q + 1))}
                   disabled={reachedMax}
-                  style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: reachedMax ? 'not-allowed' : 'pointer', opacity: reachedMax ? 0.4 : 1 }}
+                  style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: 'var(--text)', fontSize: '20px', cursor: reachedMax ? 'not-allowed' : 'pointer', opacity: reachedMax ? 0.4 : 1 }}
                 >
                   +
                 </button>
               </div>
             </div>
             {product.stock > 0 && inCart > 0 && (
-              <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px' }}>
+              <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '11px' }}>
                 Ya tenés {inCart} en el carrito · máx {product.stock}
               </span>
             )}
@@ -444,10 +444,10 @@ const ProductDetail = () => {
               onMouseLeave={() => setHoveredBtn(null)}
               disabled={product.stock === 0 || maxAddable === 0}
               className="flex items-center justify-center"
-              style={{ backgroundColor: hoveredBtn === 'add_m' ? '#00A8D8' : '#00C8FF', borderRadius: '10px', height: '54px', border: 'none', cursor: (product.stock === 0 || maxAddable === 0) ? 'not-allowed' : 'pointer', gap: '12px', width: '100%', opacity: (product.stock === 0 || maxAddable === 0) ? 0.5 : 1 }}
+              style={{ backgroundColor: hoveredBtn === 'add_m' ? 'var(--accent-deep)' : 'var(--accent-bright)', borderRadius: '10px', height: '54px', border: 'none', cursor: (product.stock === 0 || maxAddable === 0) ? 'not-allowed' : 'pointer', gap: '12px', width: '100%', opacity: (product.stock === 0 || maxAddable === 0) ? 0.5 : 1 }}
             >
-              <ShoppingCart size={18} color="#060810" />
-              <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
+              <ShoppingCart size={18} color="var(--on-accent)" />
+              <span style={{ color: 'var(--on-accent)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
                 {maxAddable === 0 && product.stock > 0 ? 'Stock cubierto en tu carrito' : 'Agregar al carrito'}
               </span>
             </button>
@@ -457,9 +457,9 @@ const ProductDetail = () => {
               onMouseLeave={() => setHoveredBtn(null)}
               disabled={product.stock === 0 || maxAddable === 0}
               className="flex items-center justify-center"
-              style={{ backgroundColor: hoveredBtn === 'buy_m' ? 'rgba(36,168,245,0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: (product.stock === 0 || maxAddable === 0) ? 'not-allowed' : 'pointer', width: '100%', opacity: (product.stock === 0 || maxAddable === 0) ? 0.5 : 1 }}
+              style={{ backgroundColor: hoveredBtn === 'buy_m' ? 'rgba(var(--accent-rgb),0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(var(--accent-rgb),0.35)', cursor: (product.stock === 0 || maxAddable === 0) ? 'not-allowed' : 'pointer', width: '100%', opacity: (product.stock === 0 || maxAddable === 0) ? 0.5 : 1 }}
             >
-              <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
+              <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
                 Comprar ahora
               </span>
             </button>
@@ -472,7 +472,7 @@ const ProductDetail = () => {
 
       {/* ═══ DESKTOP TABS ═══ */}
       <div className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 48px` }}>
-        <div className="flex" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', marginBottom: '32px' }}>
+        <div className="flex" style={{ borderBottom: '1px solid var(--card-border)', marginBottom: '32px' }}>
           {tabs.map((tab, i) => {
             const isActive = activeTab === i
             return (
@@ -484,11 +484,11 @@ const ProductDetail = () => {
                   backgroundColor: 'transparent',
                   height: '46px',
                   padding: '0 24px',
-                  borderBottom: isActive ? '2px solid #24A8F5' : '2px solid transparent',
+                  borderBottom: isActive ? '2px solid var(--accent)' : '2px solid transparent',
                   marginBottom: '-1px',
                 }}
               >
-                <span style={{ color: isActive ? '#24A8F5' : '#8890A4', fontFamily: 'Poppins', fontSize: '14px', fontWeight: isActive ? '700' : '500' }}>
+                <span style={{ color: isActive ? 'var(--accent)' : 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: isActive ? '700' : '500' }}>
                   {tab}
                 </span>
               </button>
@@ -498,17 +498,17 @@ const ProductDetail = () => {
 
         {activeTab === 0 && (
           <div className="flex w-full" style={{ gap: '48px', alignItems: 'flex-start' }}>
-            <p style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', lineHeight: '1.75', flex: 1, whiteSpace: 'pre-line', margin: 0 }}>
+            <p style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px', lineHeight: '1.75', flex: 1, whiteSpace: 'pre-line', margin: 0 }}>
               {product.description}
             </p>
-            <div style={{ width: '360px', flexShrink: 0, backgroundColor: '#0A0C14', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ width: '360px', flexShrink: 0, backgroundColor: 'var(--bg)', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--card-border)' }}>
               {detailSpecs.map((row, i) => (
                 <div key={row.label}>
                   <div className="flex items-center" style={{ padding: '11px 16px' }}>
-                    <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', flex: 1 }}>{row.label}</span>
-                    <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600', textAlign: 'right' }}>{row.value}</span>
+                    <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '13px', flex: 1 }}>{row.label}</span>
+                    <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600', textAlign: 'right' }}>{row.value}</span>
                   </div>
-                  {i < detailSpecs.length - 1 && <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.04)' }} />}
+                  {i < detailSpecs.length - 1 && <div style={{ height: '1px', backgroundColor: 'rgba(var(--overlay-rgb),0.04)' }} />}
                 </div>
               ))}
             </div>
@@ -516,18 +516,18 @@ const ProductDetail = () => {
         )}
 
         {activeTab === 1 && (
-          <div style={{ backgroundColor: '#0A0C14', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ backgroundColor: 'var(--bg)', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--card-border)' }}>
             {detailSpecs.map((row, i) => (
               <div key={row.label}>
                 <div className="flex items-baseline" style={{ padding: '13px 24px' }}>
-                  <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px', width: '260px', flexShrink: 0 }}>
+                  <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '13px', width: '260px', flexShrink: 0 }}>
                     {row.label}
                   </span>
-                  <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+                  <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
                     {row.value}
                   </span>
                 </div>
-                {i < detailSpecs.length - 1 && <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.04)' }} />}
+                {i < detailSpecs.length - 1 && <div style={{ height: '1px', backgroundColor: 'rgba(var(--overlay-rgb),0.04)' }} />}
               </div>
             ))}
           </div>
@@ -538,12 +538,12 @@ const ProductDetail = () => {
       {/* ═══ DESKTOP RELATED ═══ */}
       {relatedProducts.length > 0 && (
       <div className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 24px`, gap: '20px' }}>
-        <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
+        <div style={{ height: '1px', backgroundColor: 'rgba(var(--overlay-rgb),0.06)' }} />
         <div className="flex items-center">
-          <span className="flex-1" style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>
+          <span className="flex-1" style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '800' }}>
             También te puede gustar
           </span>
-          <Link to="#" className="no-underline" style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+          <Link to="#" className="no-underline" style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
             Ver todos →
           </Link>
         </div>
@@ -568,40 +568,40 @@ const ProductDetail = () => {
 
         {product.badge && (
           <div className="flex" style={{ gap: '8px' }}>
-            <div style={{ backgroundColor: product.badge === 'NUEVO' ? '#22C55E' : '#EF4444', borderRadius: '5px', padding: '4px 10px' }}>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>
+            <div style={{ backgroundColor: product.badge === 'NUEVO' ? 'var(--success)' : 'var(--error)', borderRadius: '5px', padding: '4px 10px' }}>
+              <span style={{ color: 'var(--on-status)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '1px' }}>
                 {product.badge}
               </span>
             </div>
           </div>
         )}
 
-        <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
+        <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
           {product.brand}
         </span>
 
-        <h1 style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '20px', fontWeight: '600', lineHeight: '1.25', margin: 0 }}>
+        <h1 style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '20px', fontWeight: '600', lineHeight: '1.25', margin: 0 }}>
           {product.name}
         </h1>
 
-        <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)' }} />
+        <div style={{ height: '1px', backgroundColor: 'rgba(var(--overlay-rgb),0.06)' }} />
 
-        <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '30px', fontWeight: '800' }}>{formatARS(product.price_ars)}</span>
+        <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '30px', fontWeight: '800' }}>{formatARS(product.price_ars)}</span>
 
         <div className="flex items-center flex-wrap" style={{ gap: '10px' }}>
           <div className="flex items-center" style={{ gap: '6px' }}>
-            <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: product.stock > 0 ? '#22C55E' : '#EF4444', flexShrink: 0 }} />
-            <span style={{ color: product.stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
+            <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: product.stock > 0 ? 'var(--success)' : 'var(--error)', flexShrink: 0 }} />
+            <span style={{ color: product.stock > 0 ? 'var(--success)' : 'var(--error)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600' }}>
               {product.stock > 0 ? 'En stock' : 'Sin stock'}
             </span>
             {product.stock > 0 && (
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', marginLeft: '4px' }}>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px', marginLeft: '4px' }}>
                 · {product.stock} {product.stock === 1 ? 'disponible' : 'disponibles'}
               </span>
             )}
           </div>
           {product.stock > 0 && product.stock <= 3 && (
-            <div style={{ backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', padding: '4px 10px', borderRadius: '12px', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
+            <div style={{ backgroundColor: 'rgba(var(--warning-rgb), 0.15)', color: 'var(--warning)', padding: '4px 10px', borderRadius: '12px', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>
               ¡Pocas unidades!
             </div>
           )}
@@ -615,12 +615,12 @@ const ProductDetail = () => {
                   <div
                     key={label}
                     className="flex flex-1 items-center"
-                    style={{ backgroundColor: '#0E1424', borderRadius: '10px', padding: '11px 12px', gap: '8px', border: '1px solid rgba(255,255,255,0.06)' }}
+                    style={{ backgroundColor: 'var(--elev)', borderRadius: '10px', padding: '11px 12px', gap: '8px', border: '1px solid var(--card-border)' }}
                   >
-                    <Icon size={14} color="#24A8F5" />
+                    <Icon size={14} color="var(--accent)" />
                     <div className="flex flex-col" style={{ gap: '2px' }}>
-                      <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '8px', fontWeight: '700', letterSpacing: '1px' }}>{label}</span>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700' }}>{value}</span>
+                      <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '8px', fontWeight: '700', letterSpacing: '1px' }}>{label}</span>
+                      <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700' }}>{value}</span>
                     </div>
                   </div>
                 ))}
@@ -631,29 +631,29 @@ const ProductDetail = () => {
 
         <div className="flex flex-col" style={{ gap: '10px' }}>
           <div className="flex items-center" style={{ gap: '14px' }}>
-            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '13px' }}>Cantidad:</span>
-            <div className="flex items-center" style={{ backgroundColor: '#0A0C14', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', overflow: 'hidden' }}>
+            <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '13px' }}>Cantidad:</span>
+            <div className="flex items-center" style={{ backgroundColor: 'var(--bg)', border: '1px solid rgba(var(--overlay-rgb),0.08)', borderRadius: '8px', overflow: 'hidden' }}>
               <button
                 onClick={() => setQty((q) => Math.max(1, q - 1))}
                 disabled={qty <= 1}
-                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: qty <= 1 ? 'not-allowed' : 'pointer', opacity: qty <= 1 ? 0.4 : 1 }}
+                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: 'var(--text)', fontSize: '20px', cursor: qty <= 1 ? 'not-allowed' : 'pointer', opacity: qty <= 1 ? 0.4 : 1 }}
               >
                 −
               </button>
-              <div className="flex items-center justify-center" style={{ width: '44px', height: '40px', borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
-                <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
+              <div className="flex items-center justify-center" style={{ width: '44px', height: '40px', borderLeft: '1px solid var(--card-border)', borderRight: '1px solid var(--card-border)' }}>
+                <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
               </div>
               <button
                 onClick={() => setQty((q) => Math.min(maxAddable, q + 1))}
                 disabled={reachedMax}
-                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: '#F5F7FA', fontSize: '20px', cursor: reachedMax ? 'not-allowed' : 'pointer', opacity: reachedMax ? 0.4 : 1 }}
+                style={{ width: '40px', height: '40px', backgroundColor: 'transparent', border: 'none', color: 'var(--text)', fontSize: '20px', cursor: reachedMax ? 'not-allowed' : 'pointer', opacity: reachedMax ? 0.4 : 1 }}
               >
                 +
               </button>
             </div>
           </div>
           {product.stock > 0 && inCart > 0 && (
-            <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px' }}>
+            <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '11px' }}>
               Ya tenés {inCart} en el carrito · máx {product.stock}
             </span>
           )}
@@ -664,10 +664,10 @@ const ProductDetail = () => {
             onMouseLeave={() => setHoveredBtn(null)}
             disabled={product.stock === 0 || maxAddable === 0}
             className="flex items-center justify-center"
-            style={{ backgroundColor: hoveredBtn === 'add_2' ? '#00A8D8' : '#00C8FF', borderRadius: '10px', height: '52px', border: 'none', cursor: (product.stock === 0 || maxAddable === 0) ? 'not-allowed' : 'pointer', gap: '10px', width: '100%', opacity: (product.stock === 0 || maxAddable === 0) ? 0.5 : 1 }}
+            style={{ backgroundColor: hoveredBtn === 'add_2' ? 'var(--accent-deep)' : 'var(--accent-bright)', borderRadius: '10px', height: '52px', border: 'none', cursor: (product.stock === 0 || maxAddable === 0) ? 'not-allowed' : 'pointer', gap: '10px', width: '100%', opacity: (product.stock === 0 || maxAddable === 0) ? 0.5 : 1 }}
           >
-            <ShoppingCart size={18} color="#060810" />
-            <span style={{ color: '#060810', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>
+            <ShoppingCart size={18} color="var(--on-accent)" />
+            <span style={{ color: 'var(--on-accent)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '800' }}>
               {maxAddable === 0 && product.stock > 0 ? 'Stock cubierto en tu carrito' : 'Agregar al carrito'}
             </span>
           </button>
@@ -678,25 +678,25 @@ const ProductDetail = () => {
             onMouseLeave={() => setHoveredBtn(null)}
             disabled={product.stock === 0 || maxAddable === 0}
             className="flex items-center justify-center"
-            style={{ backgroundColor: hoveredBtn === 'buy_2' ? 'rgba(36,168,245,0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(36,168,245,0.35)', cursor: (product.stock === 0 || maxAddable === 0) ? 'not-allowed' : 'pointer', width: '100%', opacity: (product.stock === 0 || maxAddable === 0) ? 0.5 : 1 }}
+            style={{ backgroundColor: hoveredBtn === 'buy_2' ? 'rgba(var(--accent-rgb),0.08)' : 'transparent', borderRadius: '10px', height: '44px', border: '1px solid rgba(var(--accent-rgb),0.35)', cursor: (product.stock === 0 || maxAddable === 0) ? 'not-allowed' : 'pointer', width: '100%', opacity: (product.stock === 0 || maxAddable === 0) ? 0.5 : 1 }}
           >
-            <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Comprar ahora</span>
+            <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Comprar ahora</span>
           </button>
         </div>
 
         {/* Descripción accordion */}
-        <div style={{ backgroundColor: '#0E1424', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ backgroundColor: 'var(--elev)', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--card-border)' }}>
           <button
             onClick={() => setDescOpen(!descOpen)}
             className="flex items-center justify-between w-full border-none cursor-pointer"
             style={{ backgroundColor: 'transparent', padding: '16px' }}
           >
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Descripción</span>
-            <ChevronDown size={18} color="#8890A4" style={{ transform: descOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }} />
+            <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Descripción</span>
+            <ChevronDown size={18} color="var(--text-subtle)" style={{ transform: descOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }} />
           </button>
           {descOpen && (
             <div style={{ padding: '0 16px 16px' }}>
-              <p style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', lineHeight: '1.65', margin: 0, whiteSpace: 'pre-line' }}>
+              <p style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px', lineHeight: '1.65', margin: 0, whiteSpace: 'pre-line' }}>
                 {product.description}
               </p>
             </div>
@@ -704,25 +704,25 @@ const ProductDetail = () => {
         </div>
 
         {/* Ficha técnica accordion */}
-        <div style={{ backgroundColor: '#0E1424', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ backgroundColor: 'var(--elev)', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--card-border)' }}>
           <button
             onClick={() => setSpecsOpen(!specsOpen)}
             className="flex items-center justify-between w-full border-none cursor-pointer"
             style={{ backgroundColor: 'transparent', padding: '16px' }}
           >
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Ficha técnica</span>
-            <ChevronDown size={18} color="#8890A4" style={{ transform: specsOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }} />
+            <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>Ficha técnica</span>
+            <ChevronDown size={18} color="var(--text-subtle)" style={{ transform: specsOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }} />
           </button>
           {specsOpen && (
             <div style={{ padding: '0 16px 16px' }}>
-              <div style={{ backgroundColor: '#070B16', borderRadius: '10px', overflow: 'hidden' }}>
+              <div style={{ backgroundColor: 'var(--bg-2)', borderRadius: '10px', overflow: 'hidden' }}>
                 {detailSpecs.map((row, i) => (
                   <div key={row.label}>
                     <div className="flex items-center" style={{ padding: '11px 14px' }}>
-                      <span className="flex-1" style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px' }}>{row.label}</span>
-                      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600', textAlign: 'right' }}>{row.value}</span>
+                      <span className="flex-1" style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '12px' }}>{row.label}</span>
+                      <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600', textAlign: 'right' }}>{row.value}</span>
                     </div>
-                    {i < detailSpecs.length - 1 && <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.04)' }} />}
+                    {i < detailSpecs.length - 1 && <div style={{ height: '1px', backgroundColor: 'rgba(var(--overlay-rgb),0.04)' }} />}
                   </div>
                 ))}
               </div>
@@ -733,7 +733,7 @@ const ProductDetail = () => {
         {/* Related */}
         {relatedProducts.length > 0 && (
         <div className="flex flex-col" style={{ gap: '12px' }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
+          <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '800' }}>
             También te puede gustar
           </span>
           <div className="grid grid-cols-2" style={{ gap: '10px' }}>

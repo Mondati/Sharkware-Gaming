@@ -10,16 +10,19 @@ import {
   Package,
   Coins,
   Sparkles,
+  Palette,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import MobileSidebar from "./MobileSidebar";
 import { useWindowWidth } from "../hooks/useWindowWidth";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 
 const Navbar = () => {
   const { cartCount } = useCart();
   const { user, logout, showToast } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [hoveredBtn, setHoveredBtn] = useState(null);
   const [searchFocused, setSearchFocused] = useState(false);
@@ -31,21 +34,23 @@ const Navbar = () => {
   const isTablet = sidePadding === "40px";
   const navigate = useNavigate();
 
+  const logoSrc = theme === "retro" ? "/images/logo-retro.png" : "/images/logo.png";
+
   const ghostPill = (hover) => ({
-    backgroundColor: hover ? "rgba(36,168,245,0.08)" : "transparent",
-    border: `1px solid ${hover ? "#24A8F5" : "#1B2333"}`,
+    backgroundColor: hover ? "rgba(var(--accent-rgb),0.08)" : "transparent",
+    border: `1px solid ${hover ? "var(--accent)" : "var(--border)"}`,
     borderRadius: "6px",
     padding: "7px 12px",
     gap: "7px",
     transition: "all 0.18s ease",
-    boxShadow: hover ? "0 0 14px rgba(36,168,245,0.22)" : "none",
+    boxShadow: hover ? "0 0 14px rgba(var(--accent-rgb),calc(0.22 * var(--glow-strength)))" : "none",
   });
 
   const ghostLabel = (hover) => ({
     fontFamily: "Poppins",
     fontSize: "13px",
     fontWeight: 600,
-    color: hover ? "#F5F7FA" : "#AAB3C5",
+    color: hover ? "var(--text)" : "var(--text-muted)",
     transition: "color 0.18s ease",
   });
 
@@ -83,7 +88,7 @@ const Navbar = () => {
       <nav
         className="flex md:hidden items-center w-full"
         style={{
-          backgroundColor: "#060810",
+          backgroundColor: "var(--bg-navbar)",
           height: "56px",
           padding: "0 16px",
           position: "sticky",
@@ -113,7 +118,7 @@ const Navbar = () => {
                 flexShrink: 0,
               }}
             >
-              <X size={20} color="#AAB3C5" />
+              <X size={20} color="var(--text-muted)" />
             </button>
             <input
               ref={mobileSearchRef}
@@ -123,11 +128,11 @@ const Navbar = () => {
               placeholder="Buscar productos..."
               style={{
                 flex: 1,
-                backgroundColor: "#1E2232",
-                border: "none",
+                backgroundColor: "var(--surface)",
+                border: "1px solid var(--input-border)",
                 borderRadius: "20px",
                 padding: "8px 14px",
-                color: "#F5F7FA",
+                color: "var(--text)",
                 fontFamily: "Poppins",
                 fontSize: "13px",
               }}
@@ -143,7 +148,7 @@ const Navbar = () => {
                 flexShrink: 0,
               }}
             >
-              <Search size={20} color="#24A8F5" />
+              <Search size={20} color="var(--accent)" />
             </button>
           </form>
         ) : (
@@ -151,7 +156,7 @@ const Navbar = () => {
           <>
             <Link to="/" style={{ display: "flex", alignItems: "center" }}>
               <img
-                src="/images/logo.png"
+                src={logoSrc}
                 alt="Sharkware Gaming"
                 style={{ height: "48px", width: "auto", display: "block" }}
               />
@@ -169,12 +174,12 @@ const Navbar = () => {
                   width: "36px",
                   height: "36px",
                   backgroundColor:
-                    hoveredBtn === "search" ? "#1E2232" : "transparent",
+                    hoveredBtn === "search" ? "var(--surface)" : "transparent",
                   borderRadius: "8px",
                   transition: "background-color 0.15s ease",
                 }}
               >
-                <Search size={20} color="#AAB3C5" />
+                <Search size={20} color="var(--text-muted)" />
               </button>
 
               {user ? (
@@ -185,12 +190,12 @@ const Navbar = () => {
                     style={{
                       width: "36px",
                       height: "36px",
-                      backgroundColor: userMenuOpen ? "#1E2232" : "transparent",
+                      backgroundColor: userMenuOpen ? "var(--surface)" : "transparent",
                       borderRadius: "8px",
                       transition: "background-color 0.15s ease",
                     }}
                   >
-                    <UserRound size={20} color="#24A8F5" />
+                    <UserRound size={20} color="var(--accent)" />
                   </button>
                   {userMenuOpen && (
                     <div
@@ -198,11 +203,11 @@ const Navbar = () => {
                         position: "absolute",
                         top: "42px",
                         right: 0,
-                        backgroundColor: "#1E2232",
+                        backgroundColor: "var(--surface)",
                         borderRadius: "12px",
                         padding: "12px 16px",
                         minWidth: "160px",
-                        border: "1px solid #1B2333",
+                        border: "1px solid var(--border)",
                         zIndex: 10,
                         display: "flex",
                         flexDirection: "column",
@@ -211,7 +216,7 @@ const Navbar = () => {
                     >
                       <span
                         style={{
-                          color: "#F5F7FA",
+                          color: "var(--text)",
                           fontFamily: "Poppins",
                           fontSize: "13px",
                           fontWeight: "600",
@@ -225,10 +230,10 @@ const Navbar = () => {
                           onClick={() => setUserMenuOpen(false)}
                           style={{
                             background: "transparent",
-                            border: "1px solid #24A8F5",
+                            border: "1px solid var(--accent)",
                             borderRadius: "8px",
                             padding: "6px 12px",
-                            color: "#24A8F5",
+                            color: "var(--accent)",
                             fontFamily: "Poppins",
                             fontSize: "12px",
                             fontWeight: "600",
@@ -248,10 +253,10 @@ const Navbar = () => {
                           onClick={() => setUserMenuOpen(false)}
                           style={{
                             background: "transparent",
-                            border: "1px solid #24A8F5",
+                            border: "1px solid var(--accent)",
                             borderRadius: "8px",
                             padding: "6px 12px",
-                            color: "#24A8F5",
+                            color: "var(--accent)",
                             fontFamily: "Poppins",
                             fontSize: "12px",
                             fontWeight: "600",
@@ -269,10 +274,10 @@ const Navbar = () => {
                         onClick={handleLogout}
                         style={{
                           background: "transparent",
-                          border: "1px solid #EF4444",
+                          border: "1px solid var(--error)",
                           borderRadius: "8px",
                           padding: "6px 12px",
-                          color: "#EF4444",
+                          color: "var(--error)",
                           fontFamily: "Poppins",
                           fontSize: "12px",
                           fontWeight: "600",
@@ -297,12 +302,12 @@ const Navbar = () => {
                     width: "36px",
                     height: "36px",
                     backgroundColor:
-                      hoveredBtn === "user" ? "#1E2232" : "transparent",
+                      hoveredBtn === "user" ? "var(--surface)" : "transparent",
                     borderRadius: "8px",
                     transition: "background-color 0.15s ease",
                   }}
                 >
-                  <UserRound size={20} color="#AAB3C5" />
+                  <UserRound size={20} color="var(--text-muted)" />
                 </Link>
               )}
 
@@ -317,25 +322,25 @@ const Navbar = () => {
                     width: "36px",
                     height: "36px",
                     backgroundColor:
-                      hoveredBtn === "cart" ? "#1E2232" : "transparent",
+                      hoveredBtn === "cart" ? "var(--surface)" : "transparent",
                     borderRadius: "8px",
                     transition: "background-color 0.15s ease",
                   }}
                 >
-                  <ShoppingCart size={20} color="#AAB3C5" />
+                  <ShoppingCart size={20} color="var(--text-muted)" />
                   {cartCount > 0 && (
                     <span
                       style={{
                         position: "absolute",
                         top: "2px",
                         right: "2px",
-                        backgroundColor: "#24A8F5",
+                        backgroundColor: "var(--accent)",
                         borderRadius: "50%",
                         width: "16px",
                         height: "16px",
                         fontSize: "9px",
                         fontWeight: "700",
-                        color: "#FFFFFF",
+                        color: "var(--text-strong)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -356,12 +361,12 @@ const Navbar = () => {
                   width: "36px",
                   height: "36px",
                   backgroundColor:
-                    hoveredBtn === "menu" ? "#1E2232" : "transparent",
+                    hoveredBtn === "menu" ? "var(--surface)" : "transparent",
                   borderRadius: "8px",
                   transition: "background-color 0.15s ease",
                 }}
               >
-                <Menu size={22} color="#AAB3C5" />
+                <Menu size={22} color="var(--text-muted)" />
               </button>
             </div>
           </>
@@ -372,22 +377,26 @@ const Navbar = () => {
       <nav
         className="hidden md:flex items-center w-full"
         style={{
-          backgroundColor: "#060810",
+          backgroundColor: "var(--bg-navbar)",
           height: "76px",
           padding: `0 ${sidePadding}`,
-          gap: isTablet ? "12px" : "20px",
           position: "sticky",
           top: 0,
           zIndex: 50,
         }}
       >
+        <div
+          className="flex items-center w-full"
+          style={{ justifyContent: "space-between", gap: isTablet ? "12px" : "20px" }}
+        >
+        {/* ── Grupo 1: logo ── */}
         <Link
           to="/"
           className="flex items-center"
           style={{ gap: "14px", flexShrink: 0 }}
         >
           <img
-            src="/images/logo.png"
+            src={logoSrc}
             alt="Sharkware Gaming"
             style={{ height: "44px", width: "auto", display: "block" }}
           />
@@ -396,24 +405,25 @@ const Navbar = () => {
             style={{
               lineHeight: 1.1,
               paddingLeft: "14px",
-              borderLeft: "1px solid #1B2333",
+              borderLeft: "1px solid var(--border)",
             }}
           ></span>
         </Link>
 
+        {/* ── Grupo 2: búsqueda ── */}
         <form
           onSubmit={handleDesktopSearch}
           className="flex items-center"
           style={{
-            backgroundColor: "#0E1424",
+            backgroundColor: "var(--elev)",
             borderRadius: "6px",
             padding: "7px 10px",
             gap: "10px",
-            flex: 1,
+            flex: isTablet ? "0 1 280px" : "0 1 480px",
             maxWidth: isTablet ? "280px" : "480px",
-            border: `1px solid ${searchFocused ? "#24A8F5" : "#1B2333"}`,
+            border: `1px solid ${searchFocused ? "var(--accent)" : "var(--border)"}`,
             boxShadow: searchFocused
-              ? "0 0 0 3px rgba(36,168,245,0.15), 0 0 20px rgba(36,168,245,0.12)"
+              ? "0 0 0 3px rgba(var(--accent-rgb),0.15), 0 0 20px rgba(var(--accent-rgb),0.12)"
               : "none",
             transition: "border-color 0.18s ease, box-shadow 0.18s ease",
           }}
@@ -424,7 +434,7 @@ const Navbar = () => {
               background: "transparent",
               border: "none",
               padding: "0 10px 0 2px",
-              borderRight: "1px solid #1B2333",
+              borderRight: "1px solid var(--border)",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
@@ -432,7 +442,7 @@ const Navbar = () => {
             }}
             aria-label="Buscar"
           >
-            <Search size={15} color={searchFocused ? "#24A8F5" : "#8890A4"} />
+            <Search size={15} color={searchFocused ? "var(--accent)" : "var(--text-subtle)"} />
           </button>
           <input
             type="text"
@@ -444,7 +454,7 @@ const Navbar = () => {
             style={{
               background: "transparent",
               border: "none",
-              color: "#F5F7FA",
+              color: "var(--text)",
               fontFamily: "Poppins",
               fontSize: "13px",
               flex: 1,
@@ -453,6 +463,8 @@ const Navbar = () => {
           />
         </form>
 
+        {/* ── Grupo 3: botones ── */}
+        <div className="flex items-center" style={{ gap: "8px", flexShrink: 0 }}>
         <div
           className="flex items-center"
           style={{ gap: "8px", flexShrink: 0 }}
@@ -465,7 +477,7 @@ const Navbar = () => {
               className="flex items-center no-underline"
               style={ghostPill(hoveredBtn === "builder")}
             >
-              <Sparkles size={13} color="#24A8F5" />
+              <Sparkles size={13} color="var(--accent)" />
               {!isTablet && (
                 <span style={ghostLabel(hoveredBtn === "builder")}>Armá tu PC</span>
               )}
@@ -479,11 +491,29 @@ const Navbar = () => {
             className="flex items-center no-underline"
             style={ghostPill(hoveredBtn === "crypto")}
           >
-            <Coins size={13} color="#24A8F5" />
+            <Coins size={13} color="var(--accent)" />
             {!isTablet && (
               <span style={ghostLabel(hoveredBtn === "crypto")}>Cripto</span>
             )}
           </Link>
+
+          <button
+            type="button"
+            onClick={toggleTheme}
+            onMouseEnter={() => setHoveredBtn("theme")}
+            onMouseLeave={() => setHoveredBtn(null)}
+            className="flex items-center cursor-pointer"
+            style={ghostPill(hoveredBtn === "theme")}
+            title={theme === "retro" ? "Cambiar a tema oscuro" : "Cambiar a tema retro"}
+            aria-label="Cambiar tema"
+          >
+            <Palette size={13} color="var(--accent)" />
+            {!isTablet && (
+              <span style={ghostLabel(hoveredBtn === "theme")}>
+                {theme === "retro" ? "Oscuro" : "Retro"}
+              </span>
+            )}
+          </button>
 
           {user?.role === "admin" && (
             <Link
@@ -493,7 +523,7 @@ const Navbar = () => {
               className="flex items-center no-underline"
               style={ghostPill(hoveredBtn === "adminPanel")}
             >
-              <LayoutDashboard size={13} color="#24A8F5" />
+              <LayoutDashboard size={13} color="var(--accent)" />
               {!isTablet && (
                 <span style={ghostLabel(hoveredBtn === "adminPanel")}>
                   Panel
@@ -510,7 +540,7 @@ const Navbar = () => {
               className="flex items-center no-underline"
               style={ghostPill(hoveredBtn === "myOrders")}
             >
-              <Package size={13} color="#24A8F5" />
+              <Package size={13} color="var(--accent)" />
               {!isTablet && (
                 <span style={ghostLabel(hoveredBtn === "myOrders")}>
                   Pedidos
@@ -524,18 +554,18 @@ const Navbar = () => {
           <div
             className="flex items-center"
             style={{
-              backgroundColor: "#0E1424",
+              backgroundColor: "var(--elev)",
               borderRadius: "6px",
-              border: "1px solid #1B2333",
+              border: "1px solid var(--border)",
               padding: "7px 12px",
               gap: "10px",
               flexShrink: 0,
             }}
           >
-            <UserRound size={15} color="#24A8F5" />
+            <UserRound size={15} color="var(--accent)" />
             <span
               style={{
-                color: "#F5F7FA",
+                color: "var(--text)",
                 fontFamily: "Poppins",
                 fontSize: "13px",
                 fontWeight: 600,
@@ -559,14 +589,14 @@ const Navbar = () => {
                 display: "flex",
                 alignItems: "center",
                 paddingLeft: "4px",
-                borderLeft: "1px solid #1B2333",
+                borderLeft: "1px solid var(--border)",
                 paddingTop: "2px",
                 paddingBottom: "2px",
               }}
             >
               <LogOut
                 size={14}
-                color={hoveredBtn === "logout" ? "#EF4444" : "#8890A4"}
+                color={hoveredBtn === "logout" ? "var(--error)" : "var(--text-subtle)"}
               />
             </button>
           </div>
@@ -578,26 +608,26 @@ const Navbar = () => {
             className="flex items-center no-underline"
             style={{
               backgroundColor:
-                hoveredBtn === "login" ? "rgba(36,168,245,0.08)" : "#0E1424",
+                hoveredBtn === "login" ? "rgba(var(--accent-rgb),0.08)" : "var(--elev)",
               borderRadius: "6px",
-              border: `1px solid ${hoveredBtn === "login" ? "#24A8F5" : "#1B2333"}`,
+              border: `1px solid ${hoveredBtn === "login" ? "var(--accent)" : "var(--border)"}`,
               padding: "7px 14px",
               gap: "8px",
               transition: "all 0.18s ease",
               flexShrink: 0,
               boxShadow:
                 hoveredBtn === "login"
-                  ? "0 0 12px rgba(36,168,245,0.2)"
+                  ? "0 0 12px rgba(var(--accent-rgb),calc(0.2 * var(--glow-strength)))"
                   : "none",
             }}
           >
             <UserRound
               size={14}
-              color={hoveredBtn === "login" ? "#24A8F5" : "#AAB3C5"}
+              color={hoveredBtn === "login" ? "var(--accent)" : "var(--text-muted)"}
             />
             <span
               style={{
-                color: "#F5F7FA",
+                color: "var(--text)",
                 fontFamily: "Poppins",
                 fontSize: "13px",
                 fontWeight: 600,
@@ -616,22 +646,22 @@ const Navbar = () => {
             className="flex items-center no-underline"
             style={{
               backgroundColor:
-                hoveredBtn === "cartDesktop" ? "#00B8EF" : "#00C8FF",
+                hoveredBtn === "cartDesktop" ? "var(--accent-deep-2)" : "var(--accent-bright)",
               borderRadius: "6px",
               padding: "8px 16px",
               gap: "8px",
               transition: "background-color 0.18s ease, box-shadow 0.18s ease",
               boxShadow:
                 cartCount > 0
-                  ? "0 0 18px rgba(0,200,255,0.45), inset 0 -1px 0 rgba(0,0,0,0.15)"
-                  : "0 0 10px rgba(0,200,255,0.18)",
+                  ? "0 0 18px rgba(var(--accent-bright-rgb),calc(0.45 * var(--glow-strength))), inset 0 -1px 0 rgba(0,0,0,0.15)"
+                  : "0 0 10px rgba(var(--accent-bright-rgb),calc(0.18 * var(--glow-strength)))",
               flexShrink: 0,
             }}
           >
-            <ShoppingCart size={14} color="#060810" strokeWidth={2.4} />
+            <ShoppingCart size={14} color="var(--on-accent)" strokeWidth={2.4} />
             <span
               style={{
-                color: "#060810",
+                color: "var(--on-accent)",
                 fontFamily: "Poppins",
                 fontSize: "13px",
                 fontWeight: 700,
@@ -641,6 +671,8 @@ const Navbar = () => {
             </span>
           </Link>
         )}
+        </div>
+        </div>
       </nav>
 
       <MobileSidebar

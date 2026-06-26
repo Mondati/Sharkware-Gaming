@@ -45,20 +45,20 @@ const BuildCard = ({ build }) => {
       className="flex flex-col"
       style={{
         marginTop: '8px',
-        backgroundColor: '#080D1A',
-        border: '1px solid rgba(36,168,245,0.35)',
+        backgroundColor: 'var(--img-bg-2)',
+        border: '1px solid rgba(var(--accent-rgb),0.35)',
         borderRadius: '12px',
         overflow: 'hidden',
       }}
     >
       <div
         className="flex items-center justify-between"
-        style={{ padding: '10px 14px', backgroundColor: '#0D1A40', borderBottom: '1px solid #1B2333' }}
+        style={{ padding: '10px 14px', backgroundColor: 'var(--hero-2)', borderBottom: '1px solid var(--border)' }}
       >
-        <span style={{ color: '#F5F7FA', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '15px', fontWeight: 700, letterSpacing: '0.3px' }}>
+        <span style={{ color: 'var(--text)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '15px', fontWeight: 700, letterSpacing: '0.3px' }}>
           BUILD RECOMENDADA
         </span>
-        <span style={{ color: '#00C8FF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '16px', fontWeight: 700 }}>
+        <span style={{ color: 'var(--accent-bright)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '16px', fontWeight: 700 }}>
           {formatARS(build.total)}
         </span>
       </div>
@@ -74,8 +74,8 @@ const BuildCard = ({ build }) => {
             <div
               style={{
                 width: '36px', height: '36px', borderRadius: '6px',
-                backgroundColor: '#0E1424', overflow: 'hidden', flexShrink: 0,
-                border: '1px solid #1B2333',
+                backgroundColor: 'var(--elev)', overflow: 'hidden', flexShrink: 0,
+                border: '1px solid var(--border)',
               }}
             >
               {it.imageUrl ? (
@@ -83,14 +83,14 @@ const BuildCard = ({ build }) => {
               ) : null}
             </div>
             <div className="flex flex-col" style={{ flex: 1, minWidth: 0 }}>
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                 {ROLE_LABEL[it.role] ?? it.role}
               </span>
-              <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {(it.quantity ?? 1) > 1 ? `${it.quantity}x ` : ''}{it.brand} {it.productName}
               </span>
             </div>
-            <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 600, flexShrink: 0 }}>
+            <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 600, flexShrink: 0 }}>
               {formatARS(Number(it.unitPrice) * (it.quantity ?? 1))}
             </span>
           </Link>
@@ -102,21 +102,21 @@ const BuildCard = ({ build }) => {
         const total = Number(build.total)
         const delta = total - budget
         const within = build.withinBudget !== false
-        const deltaColor = within ? '#22C55E' : '#F59E0B'
+        const deltaColor = within ? 'var(--success)' : 'var(--warning)'
         const deltaSign = delta > 0 ? '+' : ''
         return (
           <div
             className="flex items-center justify-between"
             style={{
               padding: '8px 14px',
-              borderTop: '1px solid #1B2333',
-              backgroundColor: '#070B16',
+              borderTop: '1px solid var(--border)',
+              backgroundColor: 'var(--bg-2)',
               fontFamily: 'Poppins',
               fontSize: '11px',
             }}
           >
-            <span style={{ color: '#AAB3C5' }}>
-              Presupuesto: <span style={{ color: '#F5F7FA', fontWeight: 600 }}>{formatARS(budget)}</span>
+            <span style={{ color: 'var(--text-muted)' }}>
+              Presupuesto: <span style={{ color: 'var(--text)', fontWeight: 600 }}>{formatARS(budget)}</span>
             </span>
             <span style={{ color: deltaColor, fontWeight: 700 }}>
               {deltaSign}{formatARS(Math.abs(delta))}
@@ -130,18 +130,18 @@ const BuildCard = ({ build }) => {
         style={{
           padding: '8px 14px',
           gap: '8px',
-          backgroundColor: compatible ? 'rgba(34,197,94,0.10)' : 'rgba(245,158,11,0.10)',
-          borderTop: '1px solid #1B2333',
+          backgroundColor: compatible ? 'rgba(var(--success-rgb),0.10)' : 'rgba(var(--warning-rgb),0.10)',
+          borderTop: '1px solid var(--border)',
         }}
       >
-        {compatible ? <Check size={14} color="#22C55E" /> : <AlertTriangle size={14} color="#F59E0B" />}
-        <span style={{ color: compatible ? '#22C55E' : '#F59E0B', fontFamily: 'Poppins', fontSize: '11px', fontWeight: 600 }}>
+        {compatible ? <Check size={14} color="var(--success)" /> : <AlertTriangle size={14} color="var(--warning)" />}
+        <span style={{ color: compatible ? 'var(--success)' : 'var(--warning)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: 600 }}>
           {compatible ? 'Compatibilidad verificada' : 'Build con advertencias'}
         </span>
       </div>
 
       {warnings.length > 0 && (
-        <ul style={{ margin: 0, padding: '0 16px 8px 28px', color: '#F59E0B', fontFamily: 'Poppins', fontSize: '11px' }}>
+        <ul style={{ margin: 0, padding: '0 16px 8px 28px', color: 'var(--warning)', fontFamily: 'Poppins', fontSize: '11px' }}>
           {warnings.map((w, i) => <li key={i} style={{ marginTop: '4px' }}>{w}</li>)}
         </ul>
       )}
@@ -152,8 +152,8 @@ const BuildCard = ({ build }) => {
         style={{
           margin: '8px 12px 12px',
           padding: '10px 14px',
-          backgroundColor: compatible ? '#24A8F5' : '#1B2333',
-          color: compatible ? '#FFFFFF' : '#AAB3C5',
+          backgroundColor: compatible ? 'var(--accent)' : 'var(--border)',
+          color: compatible ? 'var(--text-strong)' : 'var(--text-muted)',
           borderRadius: '8px',
           gap: '8px',
           fontFamily: 'Poppins',

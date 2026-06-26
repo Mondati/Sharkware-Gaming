@@ -26,7 +26,7 @@ const ProductImage = ({ image_url, brand, name, height, category_id }) => {
         style={{
           width: '100%',
           height: `${height}px`,
-          backgroundColor: '#080A12',
+          backgroundColor: 'var(--img-bg)',
           borderRadius: '10px',
           overflow: 'hidden',
           display: 'flex',
@@ -54,19 +54,19 @@ const ProductImage = ({ image_url, brand, name, height, category_id }) => {
     <div
       className="flex flex-col items-center justify-center"
       style={{
-        backgroundColor: '#0E1424',
+        backgroundColor: 'var(--elev)',
         borderRadius: '10px',
         height: `${height}px`,
         gap: '8px',
         padding: '12px',
-        border: '1px solid rgba(255,255,255,0.06)',
+        border: '1px solid var(--card-border)',
       }}
     >
-      {Icon && <Icon size={24} color="#24A8F5" style={{ opacity: 0.5 }} />}
-      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
+      {Icon && <Icon size={24} color="var(--accent)" style={{ opacity: 0.5 }} />}
+      <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700', letterSpacing: '2px' }}>
         {brand}
       </span>
-      <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', textAlign: 'center', lineHeight: '1.3' }}>
+      <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', textAlign: 'center', lineHeight: '1.3' }}>
         {name}
       </span>
     </div>
@@ -80,22 +80,22 @@ const StockDot = ({ stock }) => (
         width: '6px',
         height: '6px',
         borderRadius: '50%',
-        backgroundColor: stock > 0 ? '#22C55E' : '#EF4444',
+        backgroundColor: stock > 0 ? 'var(--success)' : 'var(--error)',
         flexShrink: 0,
       }} />
-      <span style={{ color: stock > 0 ? '#22C55E' : '#EF4444', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>
+      <span style={{ color: stock > 0 ? 'var(--success)' : 'var(--error)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600' }}>
         {stock > 0 ? 'En stock' : 'Sin stock'}
       </span>
     </div>
     {stock > 0 && stock <= 3 && (
-      <span style={{ backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', padding: '2px 8px', borderRadius: '10px', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600', whiteSpace: 'nowrap' }}>
+      <span style={{ backgroundColor: 'rgba(var(--warning-rgb), 0.15)', color: 'var(--warning)', padding: '2px 8px', borderRadius: '10px', fontFamily: 'Poppins', fontSize: '10px', fontWeight: '600', whiteSpace: 'nowrap' }}>
         Pocas unidades
       </span>
     )}
   </div>
 )
 
-const BADGE_COLORS = { NUEVO: '#22C55E', HOT: '#DC2626', OFERTA: '#FF8400' }
+const BADGE_COLORS = { NUEVO: 'var(--success)', HOT: 'var(--badge-hot)', OFERTA: 'var(--badge-oferta)' }
 
 const ProductCard = ({
   id, brand, name, spec, price_ars, image_url,
@@ -131,15 +131,15 @@ const ProductCard = ({
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
-          backgroundColor: '#121420',
+          backgroundColor: 'var(--surface-2)',
           borderRadius: '12px',
           padding: '12px',
           gap: '8px',
           height: '100%',
           position: 'relative',
           overflow: 'hidden',
-          border: `1px solid ${hovered ? 'rgba(0,200,255,0.3)' : 'rgba(255,255,255,0.06)'}`,
-          boxShadow: hovered ? '0 8px 32px rgba(0,200,255,0.2), 0 0 0 1px rgba(0,200,255,0.15)' : 'none',
+          border: `1px solid ${hovered ? 'rgba(var(--accent-bright-rgb),0.3)' : 'var(--card-border)'}`,
+          boxShadow: hovered ? '0 8px 32px rgba(var(--accent-bright-rgb),calc(0.2 * var(--glow-strength))), 0 0 0 1px rgba(var(--accent-bright-rgb),0.15)' : 'none',
           transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
           filter: hovered ? 'brightness(1.03)' : 'brightness(1)',
           transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease',
@@ -163,8 +163,8 @@ const ProductCard = ({
               borderRadius: '7px',
               border: 'none',
               cursor: disabled ? 'not-allowed' : 'pointer',
-              backgroundColor: added ? '#22C55E' : '#00C8FF',
-              boxShadow: cartHovered && !added ? '0 4px 16px rgba(0,200,255,0.5)' : 'none',
+              backgroundColor: added ? 'var(--success)' : 'var(--accent-bright)',
+              boxShadow: cartHovered && !added ? '0 4px 16px rgba(var(--accent-bright-rgb),0.5)' : 'none',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -173,8 +173,8 @@ const ProductCard = ({
             }}
           >
             {added
-              ? <Check size={13} color="#FFFFFF" />
-              : <ShoppingCart size={13} color="#060810" />
+              ? <Check size={13} color="var(--on-status)" />
+              : <ShoppingCart size={13} color="var(--on-accent)" />
             }
           </button>
         </div>
@@ -185,30 +185,30 @@ const ProductCard = ({
               position: 'absolute',
               top: '8px',
               left: '8px',
-              backgroundColor: BADGE_COLORS[badge] ?? '#1E2232',
+              backgroundColor: BADGE_COLORS[badge] ?? 'var(--surface)',
               borderRadius: '4px',
               padding: '3px 8px',
             }}
           >
-            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '0.5px' }}>
+            <span style={{ color: 'var(--on-status)', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '0.5px' }}>
               {badge}
             </span>
           </div>
         )}
 
-        <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '600', letterSpacing: '1px' }}>
+        <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '600', letterSpacing: '1px' }}>
           {brand}
         </span>
 
-        <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', lineHeight: '1.3' }}>
+        <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', lineHeight: '1.3' }}>
           {name}
         </span>
 
-        <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px', lineHeight: '1.3', flex: 1 }}>
+        <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '11px', lineHeight: '1.3', flex: 1 }}>
           {spec}
         </span>
 
-        <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
+        <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
           {price}
         </span>
 
@@ -224,15 +224,15 @@ const ProductCard = ({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        backgroundColor: '#121420',
+        backgroundColor: 'var(--surface-2)',
         borderRadius: '12px',
         padding: '14px',
         gap: '10px',
         flex: 1,
         height: '100%',
         position: 'relative',
-        border: `1px solid ${hovered ? 'rgba(0,200,255,0.3)' : 'rgba(255,255,255,0.06)'}`,
-        boxShadow: hovered ? '0 8px 32px rgba(0,200,255,0.2), 0 0 0 1px rgba(0,200,255,0.15)' : 'none',
+        border: `1px solid ${hovered ? 'rgba(var(--accent-bright-rgb),0.3)' : 'var(--card-border)'}`,
+        boxShadow: hovered ? '0 8px 32px rgba(var(--accent-bright-rgb),calc(0.2 * var(--glow-strength))), 0 0 0 1px rgba(var(--accent-bright-rgb),0.15)' : 'none',
         transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
         filter: hovered ? 'brightness(1.03)' : 'brightness(1)',
         transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease',
@@ -247,12 +247,12 @@ const ProductCard = ({
               position: 'absolute',
               top: '8px',
               left: '8px',
-              backgroundColor: BADGE_COLORS[badge] ?? '#1E2232',
+              backgroundColor: BADGE_COLORS[badge] ?? 'var(--surface)',
               borderRadius: '4px',
               padding: '3px 8px',
             }}
           >
-            <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '0.5px' }}>
+            <span style={{ color: 'var(--on-status)', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '0.5px' }}>
               {badge}
             </span>
           </div>
@@ -272,8 +272,8 @@ const ProductCard = ({
             borderRadius: '8px',
             border: 'none',
             cursor: disabled ? 'not-allowed' : 'pointer',
-            backgroundColor: added ? '#22C55E' : '#00C8FF',
-            boxShadow: cartHovered && !added ? '0 4px 16px rgba(0,200,255,0.5)' : 'none',
+            backgroundColor: added ? 'var(--success)' : 'var(--accent-bright)',
+            boxShadow: cartHovered && !added ? '0 4px 16px rgba(var(--accent-bright-rgb),0.5)' : 'none',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -282,25 +282,25 @@ const ProductCard = ({
           }}
         >
           {added
-            ? <Check size={15} color="#FFFFFF" />
-            : <ShoppingCart size={15} color="#060810" />
+            ? <Check size={15} color="var(--on-status)" />
+            : <ShoppingCart size={15} color="var(--on-accent)" />
           }
         </button>
       </div>
 
-      <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '1px' }}>
+      <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '1px' }}>
         {brand}
       </span>
 
-      <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
+      <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>
         {name}
       </span>
 
-      <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px', flex: 1 }}>
+      <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '12px', flex: 1 }}>
         {spec}
       </span>
 
-      <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
+      <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700' }}>
         {price}
       </span>
 

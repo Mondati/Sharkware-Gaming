@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { icon: Package, label: 'Productos', to: '/admin' },
 ]
 
-const HOVER_BG = '#141C2E'
+const HOVER_BG = 'var(--surface-3)'
 
 const AdminSidebar = () => {
   const { user, logout } = useAuth()
@@ -25,7 +25,7 @@ const AdminSidebar = () => {
 
   return (
     <div className="hidden md:flex flex-col"
-      style={{ width: '260px', flexShrink: 0, backgroundColor: '#0E1424', borderRight: '1px solid #1B2333', height: '100%' }}>
+      style={{ width: '260px', flexShrink: 0, backgroundColor: 'var(--elev)', borderRight: '1px solid var(--border)', height: '100%' }}>
       <Link
         to="/"
         className="flex items-center no-underline"
@@ -40,24 +40,24 @@ const AdminSidebar = () => {
         onMouseEnter={() => setHovered('logo')}
         onMouseLeave={() => setHovered(null)}
       >
-        <Zap size={22} color="#24A8F5" />
+        <Zap size={22} color="var(--accent)" />
         <div className="flex flex-col" style={{ gap: '1px', flex: 1 }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>SHARKWARE</span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '600' }}>GAMING</span>
+          <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700' }}>SHARKWARE</span>
+          <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '600' }}>GAMING</span>
         </div>
-        <div style={{ backgroundColor: '#0D2035', borderRadius: '4px', padding: '4px 8px' }}>
-          <span style={{ color: '#37C3FF', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Admin</span>
+        <div style={{ backgroundColor: 'var(--surface-accent-2)', borderRadius: '4px', padding: '4px 8px' }}>
+          <span style={{ color: 'var(--accent-light)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600' }}>Admin</span>
         </div>
       </Link>
-      <div style={{ height: '1px', backgroundColor: '#1B2333' }} />
+      <div style={{ height: '1px', backgroundColor: 'var(--border)' }} />
       <div className="flex flex-col" style={{ padding: '16px 0', gap: '4px' }}>
         <div style={{ padding: '0 24px 8px' }}>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700' }}>MENÚ PRINCIPAL</span>
+          <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '700' }}>MENÚ PRINCIPAL</span>
         </div>
         {NAV_ITEMS.map(({ icon: Icon, label, to }) => {
           const active = isActive(to)
           const isHover = hovered === to
-          const bg = active ? '#0D2035' : (isHover ? HOVER_BG : 'transparent')
+          const bg = active ? 'var(--surface-accent-2)' : (isHover ? HOVER_BG : 'transparent')
           return (
             <Link
               key={to}
@@ -67,14 +67,14 @@ const AdminSidebar = () => {
                 padding: '10px 24px',
                 gap: '12px',
                 backgroundColor: bg,
-                borderLeft: active ? '3px solid #24A8F5' : '3px solid transparent',
+                borderLeft: active ? '3px solid var(--accent)' : '3px solid transparent',
                 transition: 'background-color 120ms ease',
               }}
               onMouseEnter={() => setHovered(to)}
               onMouseLeave={() => setHovered(null)}
             >
-              <Icon size={18} color={active || isHover ? '#24A8F5' : '#AAB3C5'} />
-              <span style={{ color: active || isHover ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', fontWeight: active ? '600' : 'normal', transition: 'color 120ms ease' }}>
+              <Icon size={18} color={active || isHover ? 'var(--accent)' : 'var(--text-muted)'} />
+              <span style={{ color: active || isHover ? 'var(--text)' : 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: active ? '600' : 'normal', transition: 'color 120ms ease' }}>
                 {label}
               </span>
             </Link>
@@ -94,19 +94,19 @@ const AdminSidebar = () => {
           onMouseEnter={() => setHovered('tienda')}
           onMouseLeave={() => setHovered(null)}
         >
-          <Store size={18} color={hovered === 'tienda' ? '#24A8F5' : '#AAB3C5'} />
-          <span style={{ color: hovered === 'tienda' ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', transition: 'color 120ms ease' }}>Ver tienda</span>
+          <Store size={18} color={hovered === 'tienda' ? 'var(--accent)' : 'var(--text-muted)'} />
+          <span style={{ color: hovered === 'tienda' ? 'var(--text)' : 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px', transition: 'color 120ms ease' }}>Ver tienda</span>
         </Link>
       </div>
       <div style={{ flex: 1 }} />
-      <div style={{ height: '1px', backgroundColor: '#1B2333' }} />
+      <div style={{ height: '1px', backgroundColor: 'var(--border)' }} />
       <div className="flex items-center" style={{ padding: '16px 24px', gap: '10px' }}>
-        <div className="flex items-center justify-center" style={{ width: '34px', height: '34px', backgroundColor: '#1B2333', borderRadius: '17px', flexShrink: 0 }}>
-          <UserRound size={18} color="#24A8F5" />
+        <div className="flex items-center justify-center" style={{ width: '34px', height: '34px', backgroundColor: 'var(--border)', borderRadius: '17px', flexShrink: 0 }}>
+          <UserRound size={18} color="var(--accent)" />
         </div>
         <div className="flex flex-col" style={{ flex: 1, gap: '1px', minWidth: 0 }}>
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name ?? 'Administrador'}</span>
-          <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email ?? ''}</span>
+          <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: '600', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name ?? 'Administrador'}</span>
+          <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email ?? ''}</span>
         </div>
         <button
           onClick={handleLogout}
@@ -122,7 +122,7 @@ const AdminSidebar = () => {
           onMouseEnter={() => setLogoutHover(true)}
           onMouseLeave={() => setLogoutHover(false)}
         >
-          <LogOut size={16} color={logoutHover ? '#F5F7FA' : '#AAB3C5'} />
+          <LogOut size={16} color={logoutHover ? 'var(--text)' : 'var(--text-muted)'} />
         </button>
       </div>
     </div>

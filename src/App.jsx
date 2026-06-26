@@ -39,8 +39,8 @@ const CartToast = () => {
         bottom: '32px',
         left: '50%',
         transform: 'translateX(-50%)',
-        backgroundColor: '#1E2232',
-        border: '1px solid rgba(36,168,245,0.3)',
+        backgroundColor: 'var(--surface)',
+        border: '1px solid rgba(var(--accent-rgb),0.3)',
         borderRadius: '12px',
         padding: '12px 20px',
         gap: '10px',
@@ -49,8 +49,8 @@ const CartToast = () => {
         whiteSpace: 'nowrap',
       }}
     >
-      <Check size={16} color="#22C55E" />
-      <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
+      <Check size={16} color="var(--success)" />
+      <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
         ¡Agregado al carrito!
       </span>
     </div>
@@ -114,13 +114,13 @@ const App = () => {
               width: '52px',
               height: '52px',
               borderRadius: '999px',
-              backgroundColor: '#0E1424',
-              border: '1px solid rgba(0,200,255,0.2)',
-              boxShadow: '0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,200,255,0.60), 0 0 20px rgba(0,200,255,0.12)',
+              backgroundColor: 'var(--elev)',
+              border: '1px solid rgba(var(--accent-bright-rgb),0.2)',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(var(--accent-bright-rgb),0.60), 0 0 20px rgba(var(--accent-bright-rgb),calc(0.12 * var(--glow-strength)))',
               zIndex: 50,
             }}
           >
-            {chatOpen ? <X size={22} color="#FFFFFF" /> : <Bot size={26} color="#FFFFFF" />}
+            {chatOpen ? <X size={22} color="var(--text-strong)" /> : <Bot size={26} color="var(--text-strong)" />}
           </button>
         </>
       )}

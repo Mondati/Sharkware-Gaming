@@ -27,9 +27,9 @@ const ConfirmModal = ({
 
   if (!open) return null
 
-  const confirmBg = danger ? '#EF4444' : '#24A8F5'
-  const iconBg = danger ? '#2D1010' : '#0D2035'
-  const iconColor = danger ? '#EF4444' : '#24A8F5'
+  const confirmBg = danger ? 'var(--error)' : 'var(--accent)'
+  const iconBg = danger ? 'var(--error-bg-2)' : 'var(--surface-accent-2)'
+  const iconColor = danger ? 'var(--error)' : 'var(--accent)'
 
   return (
     <div
@@ -38,7 +38,7 @@ const ConfirmModal = ({
       style={{
         position: 'fixed',
         inset: 0,
-        background: 'rgba(7,6,16,0.85)',
+        background: 'rgba(var(--scrim-rgb),0.85)',
         backdropFilter: 'blur(4px)',
         zIndex: 60,
         display: 'flex',
@@ -52,8 +52,8 @@ const ConfirmModal = ({
         aria-modal="true"
         aria-labelledby="confirm-modal-title"
         style={{
-          backgroundColor: '#0E1424',
-          border: '1px solid #1B2333',
+          backgroundColor: 'var(--elev)',
+          border: '1px solid var(--border)',
           borderRadius: '14px',
           padding: '24px',
           width: '100%',
@@ -78,7 +78,7 @@ const ConfirmModal = ({
             <span
               id="confirm-modal-title"
               style={{
-                color: '#F5F7FA',
+                color: 'var(--text)',
                 fontFamily: 'Rajdhani, Poppins, sans-serif',
                 fontSize: '20px',
                 fontWeight: '700',
@@ -89,7 +89,7 @@ const ConfirmModal = ({
             </span>
             <span
               style={{
-                color: '#AAB3C5',
+                color: 'var(--text-muted)',
                 fontFamily: 'Poppins',
                 fontSize: '13px',
                 lineHeight: 1.5,
@@ -113,7 +113,7 @@ const ConfirmModal = ({
               opacity: loading ? 0.4 : 1,
             }}
           >
-            <X size={18} color="#AAB3C5" />
+            <X size={18} color="var(--text-muted)" />
           </button>
         </div>
 
@@ -127,8 +127,8 @@ const ConfirmModal = ({
             className="cursor-pointer"
             style={{
               background: 'transparent',
-              border: '1px solid #1B2333',
-              color: '#F5F7FA',
+              border: '1px solid var(--border)',
+              color: 'var(--text)',
               fontFamily: 'Poppins',
               fontSize: '13px',
               fontWeight: '600',
@@ -145,7 +145,7 @@ const ConfirmModal = ({
             className="cursor-pointer border-none"
             style={{
               background: confirmBg,
-              color: '#FFFFFF',
+              color: 'var(--text-strong)',
               fontFamily: 'Poppins',
               fontSize: '13px',
               fontWeight: '700',

@@ -13,8 +13,8 @@ const AdminBottomNav = () => {
     <div
       className="flex md:hidden items-center justify-around w-full fixed bottom-0 left-0 right-0 z-40"
       style={{
-        backgroundColor: '#0E1424',
-        borderTop: '1px solid #1B2333',
+        backgroundColor: 'var(--elev)',
+        borderTop: '1px solid var(--border)',
         height: '64px',
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
       }}
@@ -29,15 +29,15 @@ const AdminBottomNav = () => {
             style={{
               flex: 1,
               height: '100%',
-              backgroundColor: active ? '#0D2035' : 'transparent',
+              backgroundColor: active ? 'var(--surface-accent-2)' : 'transparent',
               padding: '8px 4px',
               gap: '4px',
             }}
           >
-            <Icon size={20} color={active ? '#24A8F5' : '#AAB3C5'} />
+            <Icon size={20} color={active ? 'var(--accent)' : 'var(--text-muted)'} />
             <span
               style={{
-                color: active ? '#24A8F5' : '#AAB3C5',
+                color: active ? 'var(--accent)' : 'var(--text-muted)',
                 fontFamily: 'Poppins',
                 fontSize: '11px',
                 fontWeight: active ? '700' : '500',

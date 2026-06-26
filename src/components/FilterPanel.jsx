@@ -9,7 +9,7 @@ const PriceRangeInputs = ({ catalogMin, catalogMax, minParam, maxParam, onApply,
 
   const priceRangeInvalid =
     localMin !== '' && localMax !== '' && Number(localMin) > Number(localMax)
-  const inputBorder = priceRangeInvalid ? '1px solid #EF4444' : '1px solid #1B2333'
+  const inputBorder = priceRangeInvalid ? '1px solid var(--error)' : '1px solid var(--border)'
 
   const apply = () => {
     if (!priceRangeInvalid) onApply(localMin, localMax)
@@ -26,11 +26,11 @@ const PriceRangeInputs = ({ catalogMin, catalogMax, minParam, maxParam, onApply,
         disabled={noProducts}
         placeholder={catalogMin !== null ? `Mín. ${catalogMin.toLocaleString('es-AR')}` : 'Mínimo'}
         style={{
-          backgroundColor: '#0A0C14',
+          backgroundColor: 'var(--bg)',
           border: inputBorder,
           borderRadius: '6px',
           padding: '7px 10px',
-          color: '#F5F7FA',
+          color: 'var(--text)',
           fontFamily: 'Poppins',
           fontSize: '13px',
           width: '100%',
@@ -46,11 +46,11 @@ const PriceRangeInputs = ({ catalogMin, catalogMax, minParam, maxParam, onApply,
         disabled={noProducts}
         placeholder={catalogMax !== null ? `Máx. ${catalogMax.toLocaleString('es-AR')}` : 'Máximo'}
         style={{
-          backgroundColor: '#0A0C14',
+          backgroundColor: 'var(--bg)',
           border: inputBorder,
           borderRadius: '6px',
           padding: '7px 10px',
-          color: '#F5F7FA',
+          color: 'var(--text)',
           fontFamily: 'Poppins',
           fontSize: '13px',
           width: '100%',
@@ -58,7 +58,7 @@ const PriceRangeInputs = ({ catalogMin, catalogMax, minParam, maxParam, onApply,
         }}
       />
       {priceRangeInvalid && (
-        <span style={{ color: '#EF4444', fontFamily: 'Poppins', fontSize: '11px' }}>
+        <span style={{ color: 'var(--error)', fontFamily: 'Poppins', fontSize: '11px' }}>
           El mínimo no puede superar el máximo
         </span>
       )}
@@ -96,7 +96,7 @@ const FilterPanel = ({
 
       {/* Categoría */}
       <div className="flex flex-col" style={{ gap: '8px' }}>
-        <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+        <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
           Categoría
         </span>
         <div className="flex flex-col" style={{ gap: '2px' }}>
@@ -110,11 +110,11 @@ const FilterPanel = ({
                 onMouseEnter={() => setHoveredFilter(`cat-${cat.id}`)}
                 onMouseLeave={() => setHoveredFilter(null)}
                 style={{
-                  backgroundColor: isActive ? '#0E1424' : (isHovered ? '#0A0C14' : 'transparent'),
-                  border: `1px solid ${isActive ? '#24A8F5' : (isHovered ? 'rgba(36,168,245,0.2)' : 'transparent')}`,
+                  backgroundColor: isActive ? 'var(--elev)' : (isHovered ? 'var(--bg)' : 'transparent'),
+                  border: `1px solid ${isActive ? 'var(--accent)' : (isHovered ? 'rgba(var(--accent-rgb),0.2)' : 'transparent')}`,
                   borderRadius: '6px',
                   padding: '7px 10px',
-                  color: isActive ? '#24A8F5' : (isHovered ? '#F5F7FA' : '#AAB3C5'),
+                  color: isActive ? 'var(--accent)' : (isHovered ? 'var(--text)' : 'var(--text-muted)'),
                   fontFamily: 'Poppins',
                   fontSize: '13px',
                   cursor: 'pointer',
@@ -131,8 +131,8 @@ const FilterPanel = ({
 
       {/* Marca */}
       {availableBrands.length > 0 && (
-        <div className="flex flex-col" style={{ gap: '8px', borderTop: '1px solid #1B2333', paddingTop: '20px' }}>
-          <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+        <div className="flex flex-col" style={{ gap: '8px', borderTop: '1px solid var(--border)', paddingTop: '20px' }}>
+          <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
             Marca
           </span>
           <div className="flex flex-col" style={{ gap: '2px' }}>
@@ -146,11 +146,11 @@ const FilterPanel = ({
                   onMouseEnter={() => setHoveredFilter(`brand-${brand}`)}
                   onMouseLeave={() => setHoveredFilter(null)}
                   style={{
-                    backgroundColor: isActive ? '#0E1424' : (isHovered ? '#0A0C14' : 'transparent'),
-                    border: `1px solid ${isActive ? '#24A8F5' : (isHovered ? 'rgba(36,168,245,0.2)' : 'transparent')}`,
+                    backgroundColor: isActive ? 'var(--elev)' : (isHovered ? 'var(--bg)' : 'transparent'),
+                    border: `1px solid ${isActive ? 'var(--accent)' : (isHovered ? 'rgba(var(--accent-rgb),0.2)' : 'transparent')}`,
                     borderRadius: '6px',
                     padding: '7px 10px',
-                    color: isActive ? '#24A8F5' : (isHovered ? '#F5F7FA' : '#AAB3C5'),
+                    color: isActive ? 'var(--accent)' : (isHovered ? 'var(--text)' : 'var(--text-muted)'),
                     fontFamily: 'Poppins',
                     fontSize: '13px',
                     cursor: 'pointer',
@@ -167,8 +167,8 @@ const FilterPanel = ({
       )}
 
       {/* Precio */}
-      <div className="flex flex-col" style={{ gap: '8px', borderTop: '1px solid #1B2333', paddingTop: '20px' }}>
-        <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+      <div className="flex flex-col" style={{ gap: '8px', borderTop: '1px solid var(--border)', paddingTop: '20px' }}>
+        <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
           Precio (ARS)
         </span>
         <PriceRangeInputs
@@ -193,10 +193,10 @@ const FilterPanel = ({
           onMouseLeave={() => setHoveredFilter(null)}
           style={{
             backgroundColor: 'transparent',
-            border: `1px solid ${hoveredFilter === 'clear' ? '#EF4444' : '#1B2333'}`,
+            border: `1px solid ${hoveredFilter === 'clear' ? 'var(--error)' : 'var(--border)'}`,
             borderRadius: '6px',
             padding: '8px 12px',
-            color: hoveredFilter === 'clear' ? '#F87171' : '#EF4444',
+            color: hoveredFilter === 'clear' ? 'var(--error-light)' : 'var(--error)',
             fontFamily: 'Poppins',
             fontSize: '13px',
             cursor: 'pointer',
@@ -217,8 +217,8 @@ const FilterPanel = ({
         style={{
           width: '220px',
           minWidth: '220px',
-          backgroundColor: '#0E1424',
-          border: '1px solid #1B2333',
+          backgroundColor: 'var(--elev)',
+          border: '1px solid var(--border)',
           borderRadius: '12px',
           padding: '20px 16px',
           alignSelf: 'flex-start',
@@ -227,8 +227,8 @@ const FilterPanel = ({
         }}
       >
         <div className="flex items-center" style={{ gap: '8px', marginBottom: '20px' }}>
-          <SlidersHorizontal size={15} color="#AAB3C5" />
-          <span style={{ color: '#F5F7FA', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
+          <SlidersHorizontal size={15} color="var(--text-muted)" />
+          <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600' }}>
             Filtros
           </span>
         </div>
@@ -240,11 +240,11 @@ const FilterPanel = ({
         <button
           onClick={() => setMobileOpen(v => !v)}
           style={{
-            backgroundColor: '#0E1424',
-            border: '1px solid #1B2333',
+            backgroundColor: 'var(--elev)',
+            border: '1px solid var(--border)',
             borderRadius: mobileOpen ? '12px 12px 0 0' : '12px',
             padding: '12px 16px',
-            color: '#F5F7FA',
+            color: 'var(--text)',
             fontFamily: 'Poppins',
             fontSize: '14px',
             fontWeight: '600',
@@ -254,12 +254,12 @@ const FilterPanel = ({
             gap: '8px',
           }}
         >
-          <SlidersHorizontal size={15} color="#AAB3C5" />
+          <SlidersHorizontal size={15} color="var(--text-muted)" />
           <span style={{ flex: 1, textAlign: 'left' }}>Filtros</span>
           {activeFilterCount > 0 && (
             <span style={{
-              backgroundColor: '#24A8F5',
-              color: '#060810',
+              backgroundColor: 'var(--accent)',
+              color: 'var(--on-accent)',
               borderRadius: '50%',
               width: '18px',
               height: '18px',
@@ -273,14 +273,14 @@ const FilterPanel = ({
             </span>
           )}
           {mobileOpen
-            ? <ChevronUp size={16} color="#8890A4" />
-            : <ChevronDown size={16} color="#8890A4" />
+            ? <ChevronUp size={16} color="var(--text-subtle)" />
+            : <ChevronDown size={16} color="var(--text-subtle)" />
           }
         </button>
         {mobileOpen && (
           <div style={{
-            backgroundColor: '#0E1424',
-            border: '1px solid #1B2333',
+            backgroundColor: 'var(--elev)',
+            border: '1px solid var(--border)',
             borderTop: 'none',
             borderRadius: '0 0 12px 12px',
             padding: '16px',

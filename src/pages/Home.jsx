@@ -16,8 +16,8 @@ const HomeProductCardSkeleton = ({ mobile = false }) => {
     <div
       className="flex flex-col"
       style={{
-        backgroundColor: '#121420',
-        border: '1px solid #1B2333',
+        backgroundColor: 'var(--surface-2)',
+        border: '1px solid var(--border)',
         borderRadius: '12px',
         padding: mobile ? '10px' : '14px',
         gap: '10px',
@@ -35,7 +35,7 @@ const HomeProductCardSkeleton = ({ mobile = false }) => {
 }
 
 const HomeSkeleton = ({ sidePadding, cardFlex }) => (
-  <div className="flex flex-col flex-1" style={{ backgroundColor: '#0A0C14' }}>
+  <div className="flex flex-col flex-1" style={{ backgroundColor: 'var(--bg)' }}>
     {/* Hero desktop */}
     <div
       className="hidden md:block w-full"
@@ -43,7 +43,7 @@ const HomeSkeleton = ({ sidePadding, cardFlex }) => (
         position: 'relative',
         height: '480px',
         padding: `0 ${sidePadding}`,
-        background: 'linear-gradient(130deg, #071530 0%, #0D1A40 40%, #0A0C14 100%)',
+        background: 'linear-gradient(130deg, var(--hero-3) 0%, var(--hero-2) 40%, var(--bg) 100%)',
       }}
     >
       <div className="flex items-center w-full h-full" style={{ gap: '48px' }}>
@@ -64,7 +64,7 @@ const HomeSkeleton = ({ sidePadding, cardFlex }) => (
     {/* Hero mobile */}
     <div
       className="flex md:hidden flex-col w-full"
-      style={{ padding: '24px 16px 48px', gap: '12px', background: 'linear-gradient(180deg, #071530 0%, #0A0C14 100%)' }}
+      style={{ padding: '24px 16px 48px', gap: '12px', background: 'linear-gradient(180deg, var(--hero-3) 0%, var(--bg) 100%)' }}
     >
       <Skeleton height={18} width={100} radius={5} />
       <Skeleton height={36} width="80%" />
@@ -79,7 +79,7 @@ const HomeSkeleton = ({ sidePadding, cardFlex }) => (
     {/* Category bar */}
     <div
       className="hidden md:flex w-full"
-      style={{ backgroundColor: '#070B16', borderBottom: '1px solid #1B2333', padding: `12px ${sidePadding}`, gap: '12px' }}
+      style={{ backgroundColor: 'var(--bg-2)', borderBottom: '1px solid var(--border)', padding: `12px ${sidePadding}`, gap: '12px' }}
     >
       {Array.from({ length: 8 }).map((_, i) => (
         <Skeleton key={i} height={32} width={90} radius={6} />
@@ -132,9 +132,9 @@ const ALL_CATEGORY = { id: 'all', label: 'Todo', icon: null }
 const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box, CircuitBoard, Plug }
 
 const BADGE_COLOR = {
-  NUEVO:  { bg: '#00C8FF22', text: '#00C8FF', dot: '#00C8FF' },
-  HOT:    { bg: '#FF840022', text: '#FF8400', dot: '#FF8400' },
-  OFERTA: { bg: '#EF444422', text: '#EF4444', dot: '#EF4444' },
+  NUEVO:  { bg: 'rgba(var(--accent-bright-rgb),0.13)', text: 'var(--accent-bright)', dot: 'var(--accent-bright)' },
+  HOT:    { bg: 'rgba(var(--badge-oferta-rgb),0.13)', text: 'var(--badge-oferta)', dot: 'var(--badge-oferta)' },
+  OFERTA: { bg: 'rgba(var(--error-rgb),0.13)', text: 'var(--error)', dot: 'var(--error)' },
 }
 
 const notebookFilters = ['Todos', 'i7 / i9', 'Ryzen 5', 'Ryzen 7', 'Ryzen 9']
@@ -228,7 +228,7 @@ const Home = () => {
   if (loading) return <HomeSkeleton sidePadding={sidePadding} cardFlex={cardFlex} />
 
   return (
-    <div className="flex flex-col flex-1" style={{ backgroundColor: '#0A0C14' }}>
+    <div className="flex flex-col flex-1" style={{ backgroundColor: 'var(--bg)' }}>
 
       {/* ═══════════════ HERO ═══════════════ */}
 
@@ -248,7 +248,7 @@ const Home = () => {
               style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(130deg, #071530 0%, #0D1A40 40%, #0A0C14 100%)',
+                background: 'linear-gradient(130deg, var(--hero-3) 0%, var(--hero-2) 40%, var(--bg) 100%)',
                 padding: `0 ${sidePadding}`,
                 gap: '48px',
                 opacity: i === activeSlide ? 1 : 0,
@@ -268,28 +268,28 @@ const Home = () => {
                     </span>
                   </div>
                 )}
-                <h1 style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '68px', fontWeight: '700', letterSpacing: '-1px', lineHeight: 1, margin: 0 }}>
+                <h1 style={{ color: 'var(--text-strong)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '68px', fontWeight: '700', letterSpacing: '-1px', lineHeight: 1, margin: 0 }}>
                   {p.name}
                 </h1>
-                <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '16px', maxWidth: '520px', lineHeight: '1.5', margin: 0 }}>
+                <p style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '16px', maxWidth: '520px', lineHeight: '1.5', margin: 0 }}>
                   {p.spec}
                 </p>
                 <div className="flex flex-col" style={{ gap: '4px' }}>
-                  <span style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px' }}>Precio desde</span>
-                  <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '32px', fontWeight: '800' }}>{formatARS(p.price_ars)}</span>
+                  <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '12px' }}>Precio desde</span>
+                  <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '32px', fontWeight: '800' }}>{formatARS(p.price_ars)}</span>
                 </div>
                 <div className="flex items-center flex-wrap" style={{ gap: '14px' }}>
                   <Link
                     to={`/product/${p.id}`}
                     className="sw-hero-primary"
-                    style={{ borderRadius: '8px', padding: '14px 28px', color: '#060810', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700', textDecoration: 'none', whiteSpace: 'nowrap' }}
+                    style={{ borderRadius: '8px', padding: '14px 28px', color: 'var(--on-accent)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700', textDecoration: 'none', whiteSpace: 'nowrap' }}
                   >
                     Comprar ahora
                   </Link>
                   <Link
                     to={`/product/${p.id}`}
                     className="sw-hero-secondary"
-                    style={{ borderRadius: '8px', padding: '14px 28px', color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600', textDecoration: 'none', whiteSpace: 'nowrap' }}
+                    style={{ borderRadius: '8px', padding: '14px 28px', color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '600', textDecoration: 'none', whiteSpace: 'nowrap' }}
                   >
                     Ver especificaciones
                   </Link>
@@ -297,16 +297,16 @@ const Home = () => {
               </div>
               <div
                 className="flex items-center justify-center"
-                style={{ position: 'relative', backgroundColor: '#1E2232', borderRadius: '20px', width: '400px', height: '380px', flexShrink: 0, overflow: 'hidden', padding: '16px' }}
+                style={{ position: 'relative', backgroundColor: 'var(--surface)', borderRadius: '20px', width: '400px', height: '380px', flexShrink: 0, overflow: 'hidden', padding: '16px' }}
               >
-                <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(0,200,255,0.12) 0%, transparent 70%)', zIndex: 0 }} />
-                <span style={{ color: '#00C8FF12', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '36px', fontWeight: '700', position: 'absolute', textAlign: 'center', padding: '0 16px', zIndex: 0 }}>
+                <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(var(--accent-bright-rgb),0.12) 0%, transparent 70%)', zIndex: 0 }} />
+                <span style={{ color: 'rgba(var(--accent-bright-rgb),0.07)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '36px', fontWeight: '700', position: 'absolute', textAlign: 'center', padding: '0 16px', zIndex: 0 }}>
                   {p.name}
                 </span>
                 <img
                   src={p.image_url}
                   alt={p.name}
-                  style={{ width: '100%', height: '100%', objectFit: 'contain', position: 'relative', zIndex: 1, filter: 'drop-shadow(0 0 40px rgba(0,200,255,0.25))' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain', position: 'relative', zIndex: 1, filter: 'drop-shadow(0 0 40px rgba(var(--accent-bright-rgb),0.25))' }}
                   onError={(e) => { e.target.style.display = 'none' }}
                 />
               </div>
@@ -324,7 +324,7 @@ const Home = () => {
                 width: i === activeSlide ? '24px' : '8px',
                 height: '8px',
                 borderRadius: '4px',
-                backgroundColor: i === activeSlide ? '#00C8FF' : '#1E2232',
+                backgroundColor: i === activeSlide ? 'var(--accent-bright)' : 'var(--surface)',
                 border: 'none',
                 cursor: 'pointer',
                 padding: 0,
@@ -351,7 +351,7 @@ const Home = () => {
               style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(180deg, #071530 0%, #0A0C14 100%)',
+                background: 'linear-gradient(180deg, var(--hero-3) 0%, var(--bg) 100%)',
                 padding: '24px 16px 48px',
                 gap: '12px',
                 opacity: i === activeSlide ? 1 : 0,
@@ -370,23 +370,23 @@ const Home = () => {
                   </span>
                 </div>
               )}
-              <h1 style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '38px', fontWeight: '700', letterSpacing: '-0.5px', lineHeight: 1, margin: 0 }}>
+              <h1 style={{ color: 'var(--text-strong)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '38px', fontWeight: '700', letterSpacing: '-0.5px', lineHeight: 1, margin: 0 }}>
                 {p.name}
               </h1>
-              <p style={{ color: '#8890A4', fontFamily: 'Poppins', fontSize: '12px', lineHeight: '1.4', margin: 0 }}>
+              <p style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '12px', lineHeight: '1.4', margin: 0 }}>
                 {p.spec}
               </p>
-              <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>{formatARS(p.price_ars)}</span>
+              <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '22px', fontWeight: '800' }}>{formatARS(p.price_ars)}</span>
               <div className="flex items-center" style={{ gap: '10px' }}>
                 <Link
                   to={`/product/${p.id}`}
-                  style={{ backgroundColor: '#00C8FF', borderRadius: '8px', padding: '10px 22px', color: '#060810', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', textDecoration: 'none', whiteSpace: 'nowrap' }}
+                  style={{ backgroundColor: 'var(--accent-bright)', borderRadius: '8px', padding: '10px 22px', color: 'var(--on-accent)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '700', textDecoration: 'none', whiteSpace: 'nowrap' }}
                 >
                   Comprar
                 </Link>
                 <Link
                   to={`/product/${p.id}`}
-                  style={{ backgroundColor: '#1E2232', borderRadius: '8px', padding: '10px 18px', color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600', textDecoration: 'none', whiteSpace: 'nowrap' }}
+                  style={{ backgroundColor: 'var(--surface)', borderRadius: '8px', padding: '10px 18px', color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: '600', textDecoration: 'none', whiteSpace: 'nowrap' }}
                 >
                   Ver specs
                 </Link>
@@ -405,7 +405,7 @@ const Home = () => {
                 width: i === activeSlide ? '20px' : '6px',
                 height: '6px',
                 borderRadius: '3px',
-                backgroundColor: i === activeSlide ? '#00C8FF' : '#1E2232',
+                backgroundColor: i === activeSlide ? 'var(--accent-bright)' : 'var(--surface)',
                 border: 'none',
                 cursor: 'pointer',
                 padding: 0,
@@ -419,7 +419,7 @@ const Home = () => {
       {/* ═══════════════ CATEGORY BAR ═══════════════ */}
 
       {/* Desktop Category Bar */}
-      <div className="hidden md:block w-full" style={{ backgroundColor: '#070B16', borderBottom: '1px solid #1B2333', padding: `4px ${sidePadding}` }}>
+      <div className="hidden md:block w-full" style={{ backgroundColor: 'var(--bg-2)', borderBottom: '1px solid var(--border)', padding: `4px ${sidePadding}` }}>
       <div
         className="flex items-center sw-scroll"
         style={{
@@ -439,8 +439,8 @@ const Home = () => {
               onClick={() => id === 'all' ? setSearchParams({}) : setSearchParams({ cat: id })}
               className={isActive ? 'flex items-center border-none cursor-pointer flex-shrink-0' : 'sw-pill flex items-center border-none cursor-pointer flex-shrink-0'}
               style={{
-                background: isActive ? 'linear-gradient(135deg, #1A9FFF, #00C8FF)' : undefined,
-                boxShadow: isActive ? '0 0 14px rgba(0,200,255,0.45)' : 'none',
+                background: isActive ? 'linear-gradient(135deg, var(--accent-2), var(--accent-bright))' : undefined,
+                boxShadow: isActive ? '0 0 14px rgba(var(--accent-bright-rgb),calc(0.45 * var(--glow-strength)))' : 'none',
                 borderRadius: '20px',
                 padding: '8px 18px',
                 gap: '6px',
@@ -448,8 +448,8 @@ const Home = () => {
                 transition: 'box-shadow 0.2s ease',
               }}
             >
-              {Icon && <Icon size={14} color={isActive ? '#060810' : '#AAB3C5'} />}
-              <span style={{ color: isActive ? '#060810' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', fontWeight: isActive ? '700' : '600' }}>
+              {Icon && <Icon size={14} color={isActive ? 'var(--bg-navbar)' : 'var(--text-muted)'} />}
+              <span style={{ color: isActive ? 'var(--bg-navbar)' : 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px', fontWeight: isActive ? '700' : '600' }}>
                 {label}
               </span>
             </button>
@@ -462,8 +462,8 @@ const Home = () => {
       <div
         className="flex md:hidden w-full overflow-x-auto sw-no-scrollbar"
         style={{
-          backgroundColor: '#070B16',
-          borderBottom: '1px solid #1B2333',
+          backgroundColor: 'var(--bg-2)',
+          borderBottom: '1px solid var(--border)',
           padding: '10px 16px',
           gap: '8px',
           flexShrink: 0,
@@ -478,15 +478,15 @@ const Home = () => {
               onClick={() => id === 'all' ? setSearchParams({}) : setSearchParams({ cat: id })}
               className="flex items-center border-none cursor-pointer flex-shrink-0"
               style={{
-                backgroundColor: isActive ? '#00C8FF' : '#1E2232',
+                backgroundColor: isActive ? 'var(--accent-bright)' : 'var(--surface)',
                 borderRadius: '20px',
                 padding: '6px 14px',
                 gap: '5px',
                 whiteSpace: 'nowrap',
               }}
             >
-              {Icon && <Icon size={12} color={isActive ? '#060810' : '#AAB3C5'} />}
-              <span style={{ color: isActive ? '#060810' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '12px', fontWeight: isActive ? '700' : '600' }}>
+              {Icon && <Icon size={12} color={isActive ? 'var(--bg-navbar)' : 'var(--text-muted)'} />}
+              <span style={{ color: isActive ? 'var(--bg-navbar)' : 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: isActive ? '700' : '600' }}>
                 {label}
               </span>
             </button>
@@ -501,18 +501,18 @@ const Home = () => {
           {/* Desktop — categoría filtrada */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
+              <span className="flex-1" style={{ color: 'var(--text-strong)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', boxShadow: 'inset 3px 0 0 var(--accent-bright)', paddingLeft: '12px', letterSpacing: '0.5px' }}>
                 {categories.find((c) => c.id === activeCategory)?.label}
               </span>
               <select
                 value={sortOrder}
                 onChange={(e) => setSortOrder(e.target.value)}
                 style={{
-                  backgroundColor: '#1E2232',
-                  border: '1px solid #1B2333',
+                  backgroundColor: 'var(--surface)',
+                  border: '1px solid var(--border)',
                   borderRadius: '8px',
                   padding: '7px 12px',
-                  color: '#AAB3C5',
+                  color: 'var(--text-muted)',
                   fontFamily: 'Poppins',
                   fontSize: '13px',
                   cursor: 'pointer',
@@ -524,7 +524,7 @@ const Home = () => {
               </select>
             </div>
             {sortedFilteredByCategory.length === 0 ? (
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px' }}>
                 No hay productos en esta categoría.
               </span>
             ) : (
@@ -541,18 +541,18 @@ const Home = () => {
           {/* Mobile — categoría filtrada */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
             <div className="flex items-center w-full">
-              <span className="flex-1" style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
+              <span className="flex-1" style={{ color: 'var(--text-strong)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', boxShadow: 'inset 3px 0 0 var(--accent-bright)', paddingLeft: '10px', letterSpacing: '0.5px' }}>
                 {categories.find((c) => c.id === activeCategory)?.label}
               </span>
               <select
                 value={sortOrder}
                 onChange={(e) => setSortOrder(e.target.value)}
                 style={{
-                  backgroundColor: '#1E2232',
-                  border: '1px solid #1B2333',
+                  backgroundColor: 'var(--surface)',
+                  border: '1px solid var(--border)',
                   borderRadius: '8px',
                   padding: '6px 10px',
-                  color: '#AAB3C5',
+                  color: 'var(--text-muted)',
                   fontFamily: 'Poppins',
                   fontSize: '12px',
                   cursor: 'pointer',
@@ -564,7 +564,7 @@ const Home = () => {
               </select>
             </div>
             {sortedFilteredByCategory.length === 0 ? (
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px' }}>
                 No hay productos en esta categoría.
               </span>
             ) : (
@@ -582,7 +582,7 @@ const Home = () => {
 
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `40px ${sidePadding}`, gap: '20px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
+            <span style={{ color: 'var(--text-strong)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', boxShadow: 'inset 3px 0 0 var(--accent-bright)', paddingLeft: '12px', letterSpacing: '0.5px' }}>
               Nuevos Productos
             </span>
             <div className="flex sw-scroll" style={{ gap: '10px', justifyContent: 'space-between', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
@@ -596,7 +596,7 @@ const Home = () => {
 
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '24px 16px', gap: '14px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
+            <span style={{ color: 'var(--text-strong)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', boxShadow: 'inset 3px 0 0 var(--accent-bright)', paddingLeft: '10px', letterSpacing: '0.5px' }}>
               Nuevos Productos
             </span>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
@@ -622,15 +622,15 @@ const Home = () => {
                   alignItems: 'stretch',
                   borderRadius: '16px',
                   overflow: 'hidden',
-                  border: '1px solid rgba(36,168,245,0.35)',
-                  backgroundColor: '#070B16',
+                  border: '1px solid rgba(var(--accent-rgb),0.35)',
+                  backgroundColor: 'var(--bg-2)',
                   backgroundImage:
-                    'radial-gradient(60% 80% at 90% 50%, rgba(36,168,245,0.22) 0%, transparent 60%),' +
-                    'radial-gradient(40% 80% at 0% 50%, rgba(13,26,64,0.55) 0%, transparent 60%),' +
-                    'linear-gradient(rgba(36,168,245,0.04) 1px, transparent 1px),' +
-                    'linear-gradient(90deg, rgba(36,168,245,0.04) 1px, transparent 1px)',
+                    'radial-gradient(60% 80% at 90% 50%, rgba(var(--accent-rgb),0.22) 0%, transparent 60%),' +
+                    'radial-gradient(40% 80% at 0% 50%, rgba(var(--hero-2-rgb),0.55) 0%, transparent 60%),' +
+                    'linear-gradient(rgba(var(--accent-rgb),0.04) 1px, transparent 1px),' +
+                    'linear-gradient(90deg, rgba(var(--accent-rgb),0.04) 1px, transparent 1px)',
                   backgroundSize: 'auto, auto, 32px 32px, 32px 32px',
-                  boxShadow: '0 0 0 1px rgba(0,200,255,0.08), 0 12px 40px rgba(0,0,0,0.35)',
+                  boxShadow: '0 0 0 1px rgba(var(--accent-bright-rgb),0.08), 0 12px 40px rgba(0,0,0,0.35)',
                 }}
               >
                 <div
@@ -642,7 +642,7 @@ const Home = () => {
                     right: 0,
                     height: 2,
                     background:
-                      'linear-gradient(90deg, transparent 0%, #24A8F5 30%, #00C8FF 50%, #24A8F5 70%, transparent 100%)',
+                      'linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent-bright) 50%, var(--accent) 70%, transparent 100%)',
                     opacity: 0.6,
                   }}
                 />
@@ -658,8 +658,8 @@ const Home = () => {
                   }}
                 >
                   <div className="flex items-center" style={{ gap: 10 }}>
-                    <Sparkles size={14} color="#24A8F5" />
-                    <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: 11, letterSpacing: 3, fontWeight: 500 }}>
+                    <Sparkles size={14} color="var(--accent)" />
+                    <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: 11, letterSpacing: 3, fontWeight: 500 }}>
                       SHARKWARE // PC BUILDER
                     </span>
                   </div>
@@ -667,7 +667,7 @@ const Home = () => {
                     style={{
                       margin: 0,
                       fontFamily: 'Rajdhani, Poppins, sans-serif',
-                      color: '#F5F7FA',
+                      color: 'var(--text)',
                       fontSize: 'clamp(28px, 4vw, 44px)',
                       fontWeight: 700,
                       lineHeight: 1.05,
@@ -678,7 +678,7 @@ const Home = () => {
                     ¿No sabés qué comprar?{' '}
                     <span
                       style={{
-                        background: 'linear-gradient(90deg, #24A8F5 0%, #00C8FF 100%)',
+                        background: 'linear-gradient(90deg, var(--accent) 0%, var(--accent-bright) 100%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         backgroundClip: 'text',
@@ -690,7 +690,7 @@ const Home = () => {
                   <p
                     style={{
                       margin: 0,
-                      color: '#AAB3C5',
+                      color: 'var(--text-muted)',
                       fontFamily: 'Poppins',
                       fontSize: 14,
                       lineHeight: 1.55,
@@ -707,12 +707,12 @@ const Home = () => {
                         gap: 8,
                         padding: '10px 18px',
                         borderRadius: 999,
-                        backgroundColor: '#24A8F5',
-                        color: '#FFFFFF',
+                        backgroundColor: 'var(--accent)',
+                        color: 'var(--text-strong)',
                         fontFamily: 'Poppins',
                         fontSize: 13,
                         fontWeight: 700,
-                        boxShadow: '0 0 24px rgba(36,168,245,0.4)',
+                        boxShadow: '0 0 24px rgba(var(--accent-rgb),calc(0.4 * var(--glow-strength)))',
                       }}
                     >
                       <Sparkles size={14} /> Probar el asistente
@@ -720,11 +720,11 @@ const Home = () => {
                     </span>
                     <span
                       style={{
-                        color: '#22C55E',
+                        color: 'var(--success)',
                         fontFamily: 'Poppins',
                         fontSize: 10,
-                        backgroundColor: 'rgba(34,197,94,0.10)',
-                        border: '1px solid rgba(34,197,94,0.30)',
+                        backgroundColor: 'rgba(var(--success-rgb),0.10)',
+                        border: '1px solid rgba(var(--success-rgb),0.30)',
                         padding: '4px 10px',
                         borderRadius: 4,
                         letterSpacing: 1.5,
@@ -741,7 +741,7 @@ const Home = () => {
                   style={{
                     flex: '0 0 280px',
                     position: 'relative',
-                    borderLeft: '1px solid rgba(36,168,245,0.2)',
+                    borderLeft: '1px solid rgba(var(--accent-rgb),0.2)',
                   }}
                 >
                   <div
@@ -749,10 +749,10 @@ const Home = () => {
                       position: 'absolute',
                       inset: 0,
                       background:
-                        'radial-gradient(50% 50% at 50% 50%, rgba(0,200,255,0.18) 0%, transparent 70%)',
+                        'radial-gradient(50% 50% at 50% 50%, rgba(var(--accent-bright-rgb),0.18) 0%, transparent 70%)',
                     }}
                   />
-                  <Cpu size={120} color="#24A8F5" strokeWidth={1} style={{ opacity: 0.85, filter: 'drop-shadow(0 0 24px rgba(0,200,255,0.5))' }} />
+                  <Cpu size={120} color="var(--accent)" strokeWidth={1} style={{ opacity: 0.85, filter: 'drop-shadow(0 0 24px rgba(var(--accent-bright-rgb),0.5))' }} />
                 </div>
               </Link>
             </section>
@@ -762,7 +762,7 @@ const Home = () => {
 
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 40px`, gap: '20px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
+            <span style={{ color: 'var(--text-strong)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', boxShadow: 'inset 3px 0 0 var(--accent-bright)', paddingLeft: '12px', letterSpacing: '0.5px' }}>
               Notebooks Gamer
             </span>
             <div className="flex" style={{ gap: '8px' }}>
@@ -774,10 +774,10 @@ const Home = () => {
                     onClick={() => setActiveNbFilter(f)}
                     className="sw-pill border-none cursor-pointer"
                     style={{
-                      backgroundColor: isActive ? '#00C8FF' : undefined,
+                      backgroundColor: isActive ? 'var(--accent-bright)' : undefined,
                       borderRadius: '20px',
                       padding: '6px 16px',
-                      color: isActive ? '#060810' : '#AAB3C5',
+                      color: isActive ? 'var(--bg-navbar)' : 'var(--text-muted)',
                       fontFamily: 'Poppins',
                       fontSize: '12px',
                       fontWeight: isActive ? '700' : 'normal',
@@ -789,7 +789,7 @@ const Home = () => {
               })}
             </div>
             {filteredNotebooks.length === 0 ? (
-              <span style={{ color: '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px' }}>
+              <span style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px' }}>
                 Sin resultados para este filtro.
               </span>
             ) : (
@@ -805,7 +805,7 @@ const Home = () => {
 
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
+            <span style={{ color: 'var(--text-strong)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', boxShadow: 'inset 3px 0 0 var(--accent-bright)', paddingLeft: '10px', letterSpacing: '0.5px' }}>
               Notebooks Gamer
             </span>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>
@@ -819,7 +819,7 @@ const Home = () => {
 
           {/* Desktop */}
           <section className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 40px`, gap: '20px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '12px', letterSpacing: '0.5px' }}>
+            <span style={{ color: 'var(--text-strong)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '26px', fontWeight: '700', boxShadow: 'inset 3px 0 0 var(--accent-bright)', paddingLeft: '12px', letterSpacing: '0.5px' }}>
               Monitores Gaming
             </span>
             <div className="flex sw-scroll" style={{ gap: '10px', justifyContent: 'space-between', overflowX: 'auto', paddingTop: '8px', paddingBottom: '8px' }}>
@@ -833,7 +833,7 @@ const Home = () => {
 
           {/* Mobile */}
           <section className="flex md:hidden flex-col w-full" style={{ padding: '0 16px 24px', gap: '14px' }}>
-            <span style={{ color: '#FFFFFF', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', boxShadow: 'inset 3px 0 0 #00C8FF', paddingLeft: '10px', letterSpacing: '0.5px' }}>
+            <span style={{ color: 'var(--text-strong)', fontFamily: 'Rajdhani, Poppins, sans-serif', fontSize: '20px', fontWeight: '700', boxShadow: 'inset 3px 0 0 var(--accent-bright)', paddingLeft: '10px', letterSpacing: '0.5px' }}>
               Monitores Gaming
             </span>
             <div className="grid grid-cols-2" style={{ gap: '10px' }}>

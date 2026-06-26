@@ -23,15 +23,15 @@ const Footer = () => {
       {/* ── Mobile Footer ── */}
       <footer
         className="md:hidden flex flex-col items-center w-full"
-        style={{ backgroundColor: '#060810', padding: '20px 16px', gap: '16px' }}
+        style={{ backgroundColor: 'var(--bg-navbar)', padding: '20px 16px', gap: '16px' }}
       >
-        <div style={{ backgroundColor: '#1E2232', height: '1px', width: '100%' }} />
+        <div style={{ backgroundColor: 'var(--surface)', height: '1px', width: '100%' }} />
 
         <div className="flex flex-col items-center" style={{ gap: '2px' }}>
-          <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700', letterSpacing: '1px' }}>
+          <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: '700', letterSpacing: '1px' }}>
             SHARKWARE
           </span>
-          <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '8px', fontWeight: '700', letterSpacing: '2px' }}>
+          <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '8px', fontWeight: '700', letterSpacing: '2px' }}>
             GAMING
           </span>
         </div>
@@ -42,7 +42,7 @@ const Footer = () => {
               className: 'no-underline',
               onMouseEnter: () => setHoveredLink(label),
               onMouseLeave: () => setHoveredLink(null),
-              style: { color: hoveredLink === label ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '13px', transition: 'color 0.15s ease' },
+              style: { color: hoveredLink === label ? 'var(--text)' : 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '13px', transition: 'color 0.15s ease' },
             }
             return href
               ? <a key={label} href={href} target="_blank" rel="noopener noreferrer" {...sharedProps}>{label}</a>
@@ -50,7 +50,7 @@ const Footer = () => {
           })}
         </div>
 
-        <span style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '11px', textAlign: 'center' }}>
+        <span style={{ color: 'var(--text-faint)', fontFamily: 'Poppins', fontSize: '11px', textAlign: 'center' }}>
           © 2026 Sharkware Gaming. Todos los derechos reservados.
         </span>
       </footer>
@@ -58,13 +58,13 @@ const Footer = () => {
       {/* ── Desktop Footer ── */}
       <footer
         className="hidden md:flex items-center w-full"
-        style={{ backgroundColor: '#060810', padding: `24px ${sidePadding}`, gap: '32px', borderTop: '1px solid #1E2232' }}
+        style={{ backgroundColor: 'var(--bg-navbar)', padding: `24px ${sidePadding}`, gap: '32px', borderTop: '1px solid var(--surface)' }}
       >
         <div className="flex flex-col" style={{ gap: '2px', flexShrink: 0 }}>
-          <span style={{ color: '#FFFFFF', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700', letterSpacing: '1px' }}>
+          <span style={{ color: 'var(--text-strong)', fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700', letterSpacing: '1px' }}>
             SHARKWARE
           </span>
-          <span style={{ color: '#24A8F5', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
+          <span style={{ color: 'var(--accent)', fontFamily: 'Poppins', fontSize: '9px', fontWeight: '700', letterSpacing: '2px' }}>
             GAMING
           </span>
         </div>
@@ -75,7 +75,7 @@ const Footer = () => {
               className: 'no-underline',
               onMouseEnter: () => setHoveredLink(label),
               onMouseLeave: () => setHoveredLink(null),
-              style: { color: hoveredLink === label ? '#F5F7FA' : '#AAB3C5', fontFamily: 'Poppins', fontSize: '14px', transition: 'color 0.15s ease' },
+              style: { color: hoveredLink === label ? 'var(--text)' : 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px', transition: 'color 0.15s ease' },
             }
             return href
               ? <a key={label} href={href} target="_blank" rel="noopener noreferrer" {...sharedProps}>{label}</a>
@@ -83,7 +83,7 @@ const Footer = () => {
           })}
         </nav>
 
-        <span style={{ color: '#454E64', fontFamily: 'Poppins', fontSize: '12px' }}>
+        <span style={{ color: 'var(--text-faint)', fontFamily: 'Poppins', fontSize: '12px' }}>
           © 2026 Sharkware Gaming. Todos los derechos reservados.
         </span>
       </footer>
