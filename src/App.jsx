@@ -116,7 +116,7 @@ const App = () => {
               borderRadius: '999px',
               backgroundColor: 'var(--elev)',
               border: '1px solid rgba(var(--accent-bright-rgb),0.2)',
-              boxShadow: '0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(var(--accent-bright-rgb),0.60), 0 0 20px rgba(var(--accent-bright-rgb),0.12)',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(var(--accent-bright-rgb),0.60), 0 0 20px rgba(var(--accent-bright-rgb),calc(0.12 * var(--glow-strength)))',
               zIndex: 50,
             }}
           >

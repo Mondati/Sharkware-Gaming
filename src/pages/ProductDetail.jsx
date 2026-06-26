@@ -277,7 +277,7 @@ const ProductDetail = () => {
             height: '420px',
             position: 'relative',
             overflow: 'hidden',
-            border: '1px solid rgba(var(--overlay-rgb),0.06)',
+            border: '1px solid var(--card-border)',
           }}>
             <ImgOrPlaceholder src={displayGallery[activeThumb]} brand={product.brand} name={product.name} />
             {product.badge && (
@@ -304,7 +304,7 @@ const ProductDetail = () => {
                   borderRadius: '8px',
                   height: '68px',
                   width: '68px',
-                  border: activeThumb === i ? '2px solid var(--accent)' : '1px solid rgba(var(--overlay-rgb),0.06)',
+                  border: activeThumb === i ? '2px solid var(--accent)' : '1px solid var(--card-border)',
                   flexShrink: 0,
                   overflow: 'hidden',
                   transition: 'border-color 0.15s ease',
@@ -384,7 +384,7 @@ const ProductDetail = () => {
                     <div
                       key={label}
                       className="flex flex-1 items-center"
-                      style={{ backgroundColor: 'var(--bg)', borderRadius: '10px', padding: '11px 14px', gap: '10px', border: '1px solid rgba(var(--overlay-rgb),0.06)' }}
+                      style={{ backgroundColor: 'var(--bg)', borderRadius: '10px', padding: '11px 14px', gap: '10px', border: '1px solid var(--card-border)' }}
                     >
                       <Icon size={15} color="var(--accent)" />
                       <div className="flex flex-col" style={{ gap: '2px' }}>
@@ -416,7 +416,7 @@ const ProductDetail = () => {
                 </button>
                 <div
                   className="flex items-center justify-center"
-                  style={{ width: '44px', height: '40px', borderLeft: '1px solid rgba(var(--overlay-rgb),0.06)', borderRight: '1px solid rgba(var(--overlay-rgb),0.06)' }}
+                  style={{ width: '44px', height: '40px', borderLeft: '1px solid var(--card-border)', borderRight: '1px solid var(--card-border)' }}
                 >
                   <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
                 </div>
@@ -472,7 +472,7 @@ const ProductDetail = () => {
 
       {/* ═══ DESKTOP TABS ═══ */}
       <div className="hidden md:flex flex-col w-full" style={{ padding: `0 ${sidePadding} 48px` }}>
-        <div className="flex" style={{ borderBottom: '1px solid rgba(var(--overlay-rgb),0.06)', marginBottom: '32px' }}>
+        <div className="flex" style={{ borderBottom: '1px solid var(--card-border)', marginBottom: '32px' }}>
           {tabs.map((tab, i) => {
             const isActive = activeTab === i
             return (
@@ -501,7 +501,7 @@ const ProductDetail = () => {
             <p style={{ color: 'var(--text-muted)', fontFamily: 'Poppins', fontSize: '14px', lineHeight: '1.75', flex: 1, whiteSpace: 'pre-line', margin: 0 }}>
               {product.description}
             </p>
-            <div style={{ width: '360px', flexShrink: 0, backgroundColor: 'var(--bg)', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(var(--overlay-rgb),0.06)' }}>
+            <div style={{ width: '360px', flexShrink: 0, backgroundColor: 'var(--bg)', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--card-border)' }}>
               {detailSpecs.map((row, i) => (
                 <div key={row.label}>
                   <div className="flex items-center" style={{ padding: '11px 16px' }}>
@@ -516,7 +516,7 @@ const ProductDetail = () => {
         )}
 
         {activeTab === 1 && (
-          <div style={{ backgroundColor: 'var(--bg)', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(var(--overlay-rgb),0.06)' }}>
+          <div style={{ backgroundColor: 'var(--bg)', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--card-border)' }}>
             {detailSpecs.map((row, i) => (
               <div key={row.label}>
                 <div className="flex items-baseline" style={{ padding: '13px 24px' }}>
@@ -615,7 +615,7 @@ const ProductDetail = () => {
                   <div
                     key={label}
                     className="flex flex-1 items-center"
-                    style={{ backgroundColor: 'var(--elev)', borderRadius: '10px', padding: '11px 12px', gap: '8px', border: '1px solid rgba(var(--overlay-rgb),0.06)' }}
+                    style={{ backgroundColor: 'var(--elev)', borderRadius: '10px', padding: '11px 12px', gap: '8px', border: '1px solid var(--card-border)' }}
                   >
                     <Icon size={14} color="var(--accent)" />
                     <div className="flex flex-col" style={{ gap: '2px' }}>
@@ -640,7 +640,7 @@ const ProductDetail = () => {
               >
                 −
               </button>
-              <div className="flex items-center justify-center" style={{ width: '44px', height: '40px', borderLeft: '1px solid rgba(var(--overlay-rgb),0.06)', borderRight: '1px solid rgba(var(--overlay-rgb),0.06)' }}>
+              <div className="flex items-center justify-center" style={{ width: '44px', height: '40px', borderLeft: '1px solid var(--card-border)', borderRight: '1px solid var(--card-border)' }}>
                 <span style={{ color: 'var(--text)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: '700' }}>{qty}</span>
               </div>
               <button
@@ -685,7 +685,7 @@ const ProductDetail = () => {
         </div>
 
         {/* Descripción accordion */}
-        <div style={{ backgroundColor: 'var(--elev)', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(var(--overlay-rgb),0.06)' }}>
+        <div style={{ backgroundColor: 'var(--elev)', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--card-border)' }}>
           <button
             onClick={() => setDescOpen(!descOpen)}
             className="flex items-center justify-between w-full border-none cursor-pointer"
@@ -704,7 +704,7 @@ const ProductDetail = () => {
         </div>
 
         {/* Ficha técnica accordion */}
-        <div style={{ backgroundColor: 'var(--elev)', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(var(--overlay-rgb),0.06)' }}>
+        <div style={{ backgroundColor: 'var(--elev)', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--card-border)' }}>
           <button
             onClick={() => setSpecsOpen(!specsOpen)}
             className="flex items-center justify-between w-full border-none cursor-pointer"

@@ -166,7 +166,6 @@ const CryptoConverter = () => {
               style={{
                 background: 'transparent',
                 border: 'none',
-                outline: 'none',
                 color: 'var(--text)',
                 fontFamily: DISPLAY,
                 fontWeight: 600,
@@ -348,7 +347,7 @@ const CryptoConverter = () => {
                 background: 'linear-gradient(140deg, var(--accent) 0%, var(--accent-2) 100%)',
                 border: '3px solid var(--elev)',
                 color: 'var(--on-accent)',
-                boxShadow: '0 0 0 1px rgba(var(--accent-rgb),0.5), 0 0 24px rgba(var(--accent-rgb),0.45)',
+                boxShadow: '0 0 0 1px rgba(var(--accent-rgb),0.5), 0 0 24px rgba(var(--accent-rgb),calc(0.45 * var(--glow-strength)))',
                 transition: 'transform 0.2s ease',
               }}
               onMouseEnter={(e) => { e.currentTarget.style.transform = 'rotate(180deg)' }}

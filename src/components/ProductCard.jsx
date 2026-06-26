@@ -59,7 +59,7 @@ const ProductImage = ({ image_url, brand, name, height, category_id }) => {
         height: `${height}px`,
         gap: '8px',
         padding: '12px',
-        border: '1px solid rgba(var(--overlay-rgb),0.06)',
+        border: '1px solid var(--card-border)',
       }}
     >
       {Icon && <Icon size={24} color="var(--accent)" style={{ opacity: 0.5 }} />}
@@ -138,8 +138,8 @@ const ProductCard = ({
           height: '100%',
           position: 'relative',
           overflow: 'hidden',
-          border: `1px solid ${hovered ? 'rgba(var(--accent-bright-rgb),0.3)' : 'rgba(var(--overlay-rgb),0.06)'}`,
-          boxShadow: hovered ? '0 8px 32px rgba(var(--accent-bright-rgb),0.2), 0 0 0 1px rgba(var(--accent-bright-rgb),0.15)' : 'none',
+          border: `1px solid ${hovered ? 'rgba(var(--accent-bright-rgb),0.3)' : 'var(--card-border)'}`,
+          boxShadow: hovered ? '0 8px 32px rgba(var(--accent-bright-rgb),calc(0.2 * var(--glow-strength))), 0 0 0 1px rgba(var(--accent-bright-rgb),0.15)' : 'none',
           transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
           filter: hovered ? 'brightness(1.03)' : 'brightness(1)',
           transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease',
@@ -231,8 +231,8 @@ const ProductCard = ({
         flex: 1,
         height: '100%',
         position: 'relative',
-        border: `1px solid ${hovered ? 'rgba(var(--accent-bright-rgb),0.3)' : 'rgba(var(--overlay-rgb),0.06)'}`,
-        boxShadow: hovered ? '0 8px 32px rgba(var(--accent-bright-rgb),0.2), 0 0 0 1px rgba(var(--accent-bright-rgb),0.15)' : 'none',
+        border: `1px solid ${hovered ? 'rgba(var(--accent-bright-rgb),0.3)' : 'var(--card-border)'}`,
+        boxShadow: hovered ? '0 8px 32px rgba(var(--accent-bright-rgb),calc(0.2 * var(--glow-strength))), 0 0 0 1px rgba(var(--accent-bright-rgb),0.15)' : 'none',
         transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
         filter: hovered ? 'brightness(1.03)' : 'brightness(1)',
         transition: 'transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease',

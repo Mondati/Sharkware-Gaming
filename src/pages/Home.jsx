@@ -440,7 +440,7 @@ const Home = () => {
               className={isActive ? 'flex items-center border-none cursor-pointer flex-shrink-0' : 'sw-pill flex items-center border-none cursor-pointer flex-shrink-0'}
               style={{
                 background: isActive ? 'linear-gradient(135deg, var(--accent-2), var(--accent-bright))' : undefined,
-                boxShadow: isActive ? '0 0 14px rgba(var(--accent-bright-rgb),0.45)' : 'none',
+                boxShadow: isActive ? '0 0 14px rgba(var(--accent-bright-rgb),calc(0.45 * var(--glow-strength)))' : 'none',
                 borderRadius: '20px',
                 padding: '8px 18px',
                 gap: '6px',
@@ -712,7 +712,7 @@ const Home = () => {
                         fontFamily: 'Poppins',
                         fontSize: 13,
                         fontWeight: 700,
-                        boxShadow: '0 0 24px rgba(var(--accent-rgb),0.4)',
+                        boxShadow: '0 0 24px rgba(var(--accent-rgb),calc(0.4 * var(--glow-strength)))',
                       }}
                     >
                       <Sparkles size={14} /> Probar el asistente

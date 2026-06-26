@@ -38,7 +38,7 @@ const ConfirmModal = ({
       style={{
         position: 'fixed',
         inset: 0,
-        background: 'rgba(7,6,16,0.85)',
+        background: 'rgba(var(--scrim-rgb),0.85)',
         backdropFilter: 'blur(4px)',
         zIndex: 60,
         display: 'flex',

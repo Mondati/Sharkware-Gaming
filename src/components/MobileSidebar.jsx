@@ -53,7 +53,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
           width: '300px',
           height: '100vh',
           backgroundColor: 'var(--bg)',
-          borderRight: '1px solid rgba(var(--overlay-rgb),0.06)',
+          borderRight: '1px solid var(--card-border)',
           overflowY: 'auto',
           transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
           transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -62,7 +62,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
         {/* Header */}
         <div
           className="flex items-center justify-between"
-          style={{ padding: '20px 16px', borderBottom: '1px solid rgba(var(--overlay-rgb),0.06)' }}
+          style={{ padding: '20px 16px', borderBottom: '1px solid var(--card-border)' }}
         >
           <div className="flex flex-col" style={{ gap: '2px' }}>
             <div className="flex items-center" style={{ gap: '6px' }}>
@@ -116,7 +116,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
                   height: '34px',
                   borderRadius: '8px',
                   backgroundColor: 'var(--elev)',
-                  border: '1px solid rgba(var(--overlay-rgb),0.06)',
+                  border: '1px solid var(--card-border)',
                   flexShrink: 0,
                 }}
               >

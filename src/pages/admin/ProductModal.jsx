@@ -766,7 +766,7 @@ const ProductModal = ({ mode, product, onClose, onSave }) => {
 
       {/* Desktop */}
       <div className="hidden md:flex items-center justify-center" aria-hidden="true"
-        style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(7,6,16,0.97)', zIndex: 50, padding: '20px' }}>
+        style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(var(--scrim-rgb),0.97)', zIndex: 50, padding: '20px' }}>
         <div role="dialog" aria-modal="true" aria-label={mode === 'edit' ? 'Editar Producto' : 'Agregar Producto'} className="flex flex-col"
           style={{ width: 'min(820px, 95vw)', height: 'min(730px, calc(100vh - 40px))', backgroundColor: 'var(--elev)', borderRadius: '12px', border: '1px solid var(--border)', overflow: 'hidden' }}>
           <DesktopBody mode={mode} product={product} state={state} onClose={onClose} />

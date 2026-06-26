@@ -43,7 +43,7 @@ const Navbar = () => {
     padding: "7px 12px",
     gap: "7px",
     transition: "all 0.18s ease",
-    boxShadow: hover ? "0 0 14px rgba(var(--accent-rgb),0.22)" : "none",
+    boxShadow: hover ? "0 0 14px rgba(var(--accent-rgb),calc(0.22 * var(--glow-strength)))" : "none",
   });
 
   const ghostLabel = (hover) => ({
@@ -129,7 +129,7 @@ const Navbar = () => {
               style={{
                 flex: 1,
                 backgroundColor: "var(--surface)",
-                border: "none",
+                border: "1px solid var(--input-border)",
                 borderRadius: "20px",
                 padding: "8px 14px",
                 color: "var(--text)",
@@ -617,7 +617,7 @@ const Navbar = () => {
               flexShrink: 0,
               boxShadow:
                 hoveredBtn === "login"
-                  ? "0 0 12px rgba(var(--accent-rgb),0.2)"
+                  ? "0 0 12px rgba(var(--accent-rgb),calc(0.2 * var(--glow-strength)))"
                   : "none",
             }}
           >
@@ -653,8 +653,8 @@ const Navbar = () => {
               transition: "background-color 0.18s ease, box-shadow 0.18s ease",
               boxShadow:
                 cartCount > 0
-                  ? "0 0 18px rgba(var(--accent-bright-rgb),0.45), inset 0 -1px 0 rgba(0,0,0,0.15)"
-                  : "0 0 10px rgba(var(--accent-bright-rgb),0.18)",
+                  ? "0 0 18px rgba(var(--accent-bright-rgb),calc(0.45 * var(--glow-strength))), inset 0 -1px 0 rgba(0,0,0,0.15)"
+                  : "0 0 10px rgba(var(--accent-bright-rgb),calc(0.18 * var(--glow-strength)))",
               flexShrink: 0,
             }}
           >

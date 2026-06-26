@@ -86,7 +86,7 @@ const BuilderPage = () => {
           padding: `56px ${sidePadding} 40px`,
           backgroundColor: 'var(--bg-2)',
           backgroundImage:
-            'radial-gradient(60% 50% at 80% 0%, rgba(var(--accent-rgb),0.18) 0%, transparent 60%),' +
+            'radial-gradient(60% 50% at 80% 0%, rgba(var(--accent-rgb),calc(0.18 * var(--glow-strength))) 0%, transparent 60%),' +
             'radial-gradient(40% 40% at 0% 100%, rgba(var(--hero-2-rgb),0.6) 0%, transparent 60%),' +
             'linear-gradient(rgba(var(--accent-rgb),0.04) 1px, transparent 1px),' +
             'linear-gradient(90deg, rgba(var(--accent-rgb),0.04) 1px, transparent 1px)',
