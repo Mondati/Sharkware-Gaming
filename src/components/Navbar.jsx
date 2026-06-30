@@ -9,8 +9,9 @@ import {
   LayoutDashboard,
   Package,
   Coins,
-  Sparkles,
-  Palette,
+  Cpu,
+  Moon,
+  Sun,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import MobileSidebar from "./MobileSidebar";
@@ -49,8 +50,11 @@ const Navbar = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [phIdx, setPhIdx] = useState(0);
-  const { sidePadding } = useWindowWidth();
-  const isTablet = sidePadding === "40px";
+  const { width, sidePadding } = useWindowWidth();
+  // Por debajo de este ancho el cluster de pills no entra dentro del padding lateral
+  // (medido: con labels el contenido mínimo supera el usable en toda banda < 1500) →
+  // las ghost-pills pasan a icon-only.
+  const compact = width < 1500;
   const navigate = useNavigate();
   const desktopInputRef = useRef(null);
 
@@ -515,7 +519,7 @@ const Navbar = () => {
       >
         <div
           className="flex items-center w-full"
-          style={{ justifyContent: "space-between", gap: isTablet ? "12px" : "20px" }}
+          style={{ justifyContent: "space-between", gap: compact ? "12px" : "16px" }}
         >
         {/* ── Grupo 1: logo ── */}
         <Link
@@ -549,8 +553,8 @@ const Navbar = () => {
             borderRadius: "6px",
             padding: "7px 10px",
             gap: "10px",
-            flex: isTablet ? "0 1 280px" : "0 1 480px",
-            maxWidth: isTablet ? "280px" : "480px",
+            flex: compact ? "0 1 230px" : "0 1 185px",
+            maxWidth: compact ? "230px" : "185px",
             border: `1px solid ${searchFocused ? "var(--accent)" : "var(--border)"}`,
             boxShadow: searchFocused
               ? "0 0 0 3px rgba(var(--accent-rgb),0.15), 0 0 20px rgba(var(--accent-rgb),0.12)"
@@ -654,9 +658,11 @@ const Navbar = () => {
               onMouseLeave={() => setHoveredBtn(null)}
               className="flex items-center no-underline"
               style={ghostPill(hoveredBtn === "builder")}
+              title="Armá tu PC con IA"
+              aria-label="Armá tu PC con IA"
             >
-              <Sparkles size={13} color="var(--accent)" />
-              {!isTablet && (
+              <Cpu size={13} color="var(--accent)" />
+              {!compact && (
                 <span style={ghostLabel(hoveredBtn === "builder")}>Armá tu PC</span>
               )}
             </Link>
@@ -668,9 +674,11 @@ const Navbar = () => {
             onMouseLeave={() => setHoveredBtn(null)}
             className="flex items-center no-underline"
             style={ghostPill(hoveredBtn === "crypto")}
+            title="Cotizaciones cripto"
+            aria-label="Cotizaciones cripto"
           >
             <Coins size={13} color="var(--accent)" />
-            {!isTablet && (
+            {!compact && (
               <span style={ghostLabel(hoveredBtn === "crypto")}>Cripto</span>
             )}
           </Link>
@@ -683,10 +691,14 @@ const Navbar = () => {
             className="flex items-center cursor-pointer"
             style={ghostPill(hoveredBtn === "theme")}
             title={theme === "retro" ? "Cambiar a tema oscuro" : "Cambiar a tema retro"}
-            aria-label="Cambiar tema"
+            aria-label={theme === "retro" ? "Cambiar a tema oscuro" : "Cambiar a tema retro"}
           >
-            <Palette size={13} color="var(--accent)" />
-            {!isTablet && (
+            {theme === "retro" ? (
+              <Moon size={13} color="var(--accent)" />
+            ) : (
+              <Sun size={13} color="var(--accent)" />
+            )}
+            {!compact && (
               <span style={ghostLabel(hoveredBtn === "theme")}>
                 {theme === "retro" ? "Oscuro" : "Retro"}
               </span>
@@ -700,9 +712,11 @@ const Navbar = () => {
               onMouseLeave={() => setHoveredBtn(null)}
               className="flex items-center no-underline"
               style={ghostPill(hoveredBtn === "adminPanel")}
+              title="Panel de administración"
+              aria-label="Panel de administración"
             >
               <LayoutDashboard size={13} color="var(--accent)" />
-              {!isTablet && (
+              {!compact && (
                 <span style={ghostLabel(hoveredBtn === "adminPanel")}>
                   Panel
                 </span>
@@ -717,9 +731,11 @@ const Navbar = () => {
               onMouseLeave={() => setHoveredBtn(null)}
               className="flex items-center no-underline"
               style={ghostPill(hoveredBtn === "myOrders")}
+              title="Mis pedidos"
+              aria-label="Mis pedidos"
             >
               <Package size={13} color="var(--accent)" />
-              {!isTablet && (
+              {!compact && (
                 <span style={ghostLabel(hoveredBtn === "myOrders")}>
                   Pedidos
                 </span>
@@ -747,7 +763,7 @@ const Navbar = () => {
                 fontFamily: "Poppins",
                 fontSize: "13px",
                 fontWeight: 600,
-                maxWidth: isTablet ? "80px" : "140px",
+                maxWidth: compact ? "70px" : "100px",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
