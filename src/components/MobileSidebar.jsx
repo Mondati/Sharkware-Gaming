@@ -2,25 +2,34 @@ import { useState, useEffect } from 'react'
 import {
   X, User, Package, Headphones, ChevronRight, Laptop, Coins, Sparkles, Palette,
   Monitor, Cpu, Zap, MemoryStick, HardDrive, Keyboard, Fan, Box, CircuitBoard, Plug,
+  LayoutDashboard,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { getCategories } from '../api/products'
 import { useTheme } from '../context/ThemeContext'
+import { useAuth } from '../context/AuthContext'
 
 const ICON_MAP = { Laptop, Cpu, Zap, MemoryStick, Monitor, HardDrive, Keyboard, Fan, Box, CircuitBoard, Plug }
 
 const accountLinks = [
-  { icon: User,       label: 'Mi cuenta',   to: '/login'    },
-  { icon: Package,    label: 'Mis pedidos', to: '/'         },
-  { icon: Sparkles,   label: 'Armá tu PC',  to: '/builder'  },
-  { icon: Coins,      label: 'Cripto',      to: '/crypto'   },
-  { icon: Headphones, label: 'Soporte',     to: '/'         },
+  { icon: User,       label: 'Mi cuenta',   to: '/login'                       },
+  { icon: Package,    label: 'Mis pedidos', to: '/mis-pedidos', userOnly: true },
+  { icon: Sparkles,   label: 'Armá tu PC',  to: '/builder',     userOnly: true },
+  { icon: Coins,      label: 'Cripto',      to: '/crypto'                      },
+  { icon: Headphones, label: 'Soporte',     to: '/'                            },
 ]
 
 const MobileSidebar = ({ isOpen, onClose }) => {
   const [hoveredItem, setHoveredItem] = useState(null)
   const [categories, setCategories] = useState([])
   const { theme, toggleTheme } = useTheme()
+  const { user } = useAuth()
+
+  // Mismo gating por rol que el navbar desktop: el admin no ve links de usuario
+  // (Mis pedidos / Armá tu PC) y sí su acceso al panel.
+  const links = user?.role === 'admin'
+    ? [...accountLinks.filter((l) => !l.userOnly), { icon: LayoutDashboard, label: 'Panel admin', to: '/admin' }]
+    : accountLinks
 
   useEffect(() => {
     getCategories().then(setCategories).catch(() => setCategories([]))
@@ -133,7 +142,7 @@ const MobileSidebar = ({ isOpen, onClose }) => {
 
         {/* Account links */}
         <div className="flex flex-col">
-          {accountLinks.map(({ icon: Icon, label, to }) => (
+          {links.map(({ icon: Icon, label, to }) => (
             <Link
               key={label}
               to={to}

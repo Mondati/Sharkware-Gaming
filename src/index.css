@@ -122,7 +122,7 @@
   --text: #3A2E1F;
   --text-strong: #2A2014;
   --text-muted: #5E5039;   /* oscurecido: recupera jerarquía bajo --text-subtle y pasa AA también sobre cards */
-  --text-subtle: #6E5F49;  /* oscurecido: el #8A7B63 daba ~3.1:1 sobre --bg (falla AA) */
+  --text-subtle: #615440;  /* oscurecido a AA (4.5:1) sobre --bg y cards (--surface); el #6E5F49 daba 3.81:1 sobre cards */
   --text-faint: #A99B82;
 
   /* foreground sobre color — crema en retro (legible sobre óxido/olivo/ladrillo) */
