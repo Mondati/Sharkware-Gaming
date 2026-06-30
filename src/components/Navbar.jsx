@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import {
   Search,
   UserRound,
@@ -18,6 +18,23 @@ import { useWindowWidth } from "../hooks/useWindowWidth";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
+import { getCategories } from "../api/products";
+
+const PLACEHOLDER_EXAMPLES = ["placa de video", "monitor", "teclado", "mouse", "procesador"];
+const POPULAR_IDS = ["gpu", "cpu", "monitors", "notebooks", "ram", "storage"];
+
+const catChipStyle = {
+  backgroundColor: "transparent",
+  border: "1px solid var(--border)",
+  borderRadius: "20px",
+  padding: "6px 14px",
+  color: "var(--text-muted)",
+  fontFamily: "Poppins",
+  fontSize: "12px",
+  fontWeight: 600,
+  cursor: "pointer",
+  whiteSpace: "nowrap",
+};
 
 const Navbar = () => {
   const { cartCount } = useCart();
@@ -30,11 +47,68 @@ const Navbar = () => {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [mobileSearchTerm, setMobileSearchTerm] = useState("");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [phIdx, setPhIdx] = useState(0);
   const { sidePadding } = useWindowWidth();
   const isTablet = sidePadding === "40px";
   const navigate = useNavigate();
+  const desktopInputRef = useRef(null);
 
   const logoSrc = theme === "retro" ? "/images/logo-retro.png" : "/images/logo.png";
+
+  useEffect(() => {
+    getCategories()
+      .then((cats) => setCategories(Array.isArray(cats) ? cats : []))
+      .catch(() => setCategories([]));
+  }, []);
+
+  // Placeholder rotativo con ejemplos — frena si el usuario pidió menos movimiento
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = setInterval(
+      () => setPhIdx((i) => (i + 1) % PLACEHOLDER_EXAMPLES.length),
+      2500
+    );
+    return () => clearInterval(t);
+  }, []);
+
+  // Atajo "/" enfoca la búsqueda desktop, salvo que ya se esté escribiendo en otro input
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key !== "/") return;
+      const el = document.activeElement;
+      const tag = el?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || el?.isContentEditable) return;
+      e.preventDefault();
+      desktopInputRef.current?.focus();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const popularCategories = useMemo(() => {
+    const byId = new Map(categories.map((c) => [c.id, c]));
+    const picked = POPULAR_IDS.map((id) => byId.get(id)).filter(Boolean);
+    if (picked.length >= 6) return picked.slice(0, 6);
+    const rest = categories.filter((c) => !POPULAR_IDS.includes(c.id));
+    return [...picked, ...rest].slice(0, 6);
+  }, [categories]);
+
+  const searchPlaceholder = `Buscar "${PLACEHOLDER_EXAMPLES[phIdx]}"...`;
+
+  const goToCategory = (id) => {
+    navigate(`/search?category=${id}`);
+    setSearchTerm("");
+    setSearchFocused(false);
+    setMobileSearchTerm("");
+    setMobileSearchOpen(false);
+    desktopInputRef.current?.blur();
+  };
+
+  const showDesktopCats =
+    searchFocused && !searchTerm.trim() && popularCategories.length > 0;
+  const showMobileCats =
+    mobileSearchOpen && !mobileSearchTerm.trim() && popularCategories.length > 0;
 
   const ghostPill = (hover) => ({
     backgroundColor: hover ? "rgba(var(--accent-rgb),0.08)" : "transparent",
@@ -98,10 +172,12 @@ const Navbar = () => {
       >
         {mobileSearchOpen ? (
           /* ── Mobile search bar mode ── */
+          <>
           <form
             onSubmit={handleMobileSearch}
             className="flex items-center w-full"
             style={{ gap: "8px" }}
+            role="search"
           >
             <button
               type="button"
@@ -109,6 +185,7 @@ const Navbar = () => {
                 setMobileSearchOpen(false);
                 setMobileSearchTerm("");
               }}
+              aria-label="Cerrar búsqueda"
               className="flex items-center justify-center border-none cursor-pointer"
               style={{
                 width: "36px",
@@ -125,7 +202,14 @@ const Navbar = () => {
               type="text"
               value={mobileSearchTerm}
               onChange={(e) => setMobileSearchTerm(e.target.value)}
-              placeholder="Buscar productos..."
+              onKeyDown={(e) => {
+                if (e.key === "Escape") {
+                  setMobileSearchOpen(false);
+                  setMobileSearchTerm("");
+                }
+              }}
+              placeholder={searchPlaceholder}
+              aria-label="Buscar productos"
               style={{
                 flex: 1,
                 backgroundColor: "var(--surface)",
@@ -139,6 +223,7 @@ const Navbar = () => {
             />
             <button
               type="submit"
+              aria-label="Buscar"
               className="flex items-center justify-center border-none cursor-pointer"
               style={{
                 width: "36px",
@@ -151,6 +236,49 @@ const Navbar = () => {
               <Search size={20} color="var(--accent)" />
             </button>
           </form>
+          {showMobileCats && (
+            <div
+              style={{
+                position: "absolute",
+                top: "100%",
+                left: 0,
+                right: 0,
+                backgroundColor: "var(--bg-navbar)",
+                borderTop: "1px solid var(--border)",
+                borderBottom: "1px solid var(--border)",
+                padding: "12px 16px",
+                zIndex: 60,
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                boxShadow: "0 8px 24px rgba(var(--scrim-rgb),0.35)",
+              }}
+            >
+              <span
+                style={{
+                  color: "var(--text-subtle)",
+                  fontFamily: "Poppins",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                }}
+              >
+                Categorías populares
+              </span>
+              <div className="flex flex-wrap" style={{ gap: "8px" }}>
+                {popularCategories.map((c) => (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => goToCategory(c.id)}
+                    style={catChipStyle}
+                  >
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          </>
         ) : (
           /* ── Mobile normal mode ── */
           <>
@@ -414,7 +542,9 @@ const Navbar = () => {
         <form
           onSubmit={handleDesktopSearch}
           className="flex items-center"
+          role="search"
           style={{
+            position: "relative",
             backgroundColor: "var(--elev)",
             borderRadius: "6px",
             padding: "7px 10px",
@@ -445,12 +575,17 @@ const Navbar = () => {
             <Search size={15} color={searchFocused ? "var(--accent)" : "var(--text-subtle)"} />
           </button>
           <input
+            ref={desktopInputRef}
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
-            placeholder="Buscar productos..."
+            onKeyDown={(e) => {
+              if (e.key === "Escape") e.currentTarget.blur();
+            }}
+            placeholder={searchPlaceholder}
+            aria-label="Buscar productos"
             style={{
               background: "transparent",
               border: "none",
@@ -461,6 +596,49 @@ const Navbar = () => {
               minWidth: 0,
             }}
           />
+          {showDesktopCats && (
+            <div
+              style={{
+                position: "absolute",
+                top: "calc(100% + 8px)",
+                left: 0,
+                right: 0,
+                backgroundColor: "var(--surface)",
+                border: "1px solid var(--border)",
+                borderRadius: "8px",
+                padding: "12px",
+                zIndex: 60,
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                boxShadow: "0 8px 24px rgba(var(--scrim-rgb),0.35)",
+              }}
+            >
+              <span
+                style={{
+                  color: "var(--text-subtle)",
+                  fontFamily: "Poppins",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                }}
+              >
+                Categorías populares
+              </span>
+              <div className="flex flex-wrap" style={{ gap: "8px" }}>
+                {popularCategories.map((c) => (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => goToCategory(c.id)}
+                    style={catChipStyle}
+                  >
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </form>
 
         {/* ── Grupo 3: botones ── */}

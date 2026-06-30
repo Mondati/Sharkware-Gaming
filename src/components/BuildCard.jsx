@@ -102,8 +102,17 @@ const BuildCard = ({ build }) => {
         const total = Number(build.total)
         const delta = total - budget
         const within = build.withinBudget !== false
-        const deltaColor = within ? 'var(--success)' : 'var(--warning)'
-        const deltaSign = delta > 0 ? '+' : ''
+        let label, color
+        if (within) {
+          label = 'Dentro del presupuesto'
+          color = 'var(--success)'
+        } else if (delta > 0) {
+          label = `Supera tu presupuesto en ${formatARS(delta)}`
+          color = 'var(--warning)'
+        } else {
+          label = `${formatARS(Math.abs(delta))} por debajo del presupuesto`
+          color = 'var(--warning)'
+        }
         return (
           <div
             className="flex items-center justify-between"
@@ -113,13 +122,15 @@ const BuildCard = ({ build }) => {
               backgroundColor: 'var(--bg-2)',
               fontFamily: 'Poppins',
               fontSize: '11px',
+              flexWrap: 'wrap',
+              gap: '2px 10px',
             }}
           >
             <span style={{ color: 'var(--text-muted)' }}>
               Presupuesto: <span style={{ color: 'var(--text)', fontWeight: 600 }}>{formatARS(budget)}</span>
             </span>
-            <span style={{ color: deltaColor, fontWeight: 700 }}>
-              {deltaSign}{formatARS(Math.abs(delta))}
+            <span style={{ color, fontWeight: 700 }}>
+              {label}
             </span>
           </div>
         )
