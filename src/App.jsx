@@ -17,6 +17,7 @@ import BuilderPage from './pages/BuilderPage'
 import AboutPage from './pages/AboutPage'
 import ProtectedRoute from './components/ProtectedRoute'
 import ScrollToTop from './components/ScrollToTop'
+import PendingOrderRedirect from './components/PendingOrderRedirect'
 import Toast from './components/Toast'
 import { useCart } from './context/CartContext'
 
@@ -66,6 +67,7 @@ const App = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <ScrollToTop />
+      <PendingOrderRedirect />
       {!hideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
