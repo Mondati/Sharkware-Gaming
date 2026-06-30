@@ -36,7 +36,7 @@ const ProductCardSkeleton = ({ mobile = false }) => {
   )
 }
 
-const EmptyState = ({ isMobile, hasActiveFilters, onClear }) => (
+const EmptyState = ({ isMobile, hasActiveFilters, onClear, categories = [] }) => (
   <div
     className="flex flex-col items-center justify-center"
     style={{ gap: '16px', padding: isMobile ? '60px 0' : '80px 0' }}
@@ -89,6 +89,35 @@ const EmptyState = ({ isMobile, hasActiveFilters, onClear }) => (
       >
         Ver catálogo
       </Link>
+    )}
+    {categories.length > 0 && (
+      <div className="flex flex-col items-center" style={{ gap: '10px', marginTop: '12px' }}>
+        <span style={{ color: 'var(--text-subtle)', fontFamily: 'Poppins', fontSize: '13px', textAlign: 'center' }}>
+          O explorá por categoría:
+        </span>
+        <div className="flex flex-wrap items-center justify-center" style={{ gap: '8px', maxWidth: '440px' }}>
+          {categories.slice(0, 6).map(c => (
+            <Link
+              key={c.id}
+              to={`/search?category=${c.id}`}
+              style={{
+                backgroundColor: 'transparent',
+                border: '1px solid var(--border)',
+                borderRadius: '20px',
+                padding: '6px 14px',
+                color: 'var(--text-muted)',
+                fontFamily: 'Poppins',
+                fontSize: '12px',
+                fontWeight: '600',
+                textDecoration: 'none',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {c.label}
+            </Link>
+          ))}
+        </div>
+      </div>
     )}
   </div>
 )
@@ -256,7 +285,7 @@ const SearchResults = () => {
   if (brandParam) activeChips.push({ key: 'brand', label: brandParam })
   if (minParam)   activeChips.push({ key: 'minPrice', label: `Desde $${Number(minParam).toLocaleString('es-AR')}` })
   if (maxParam)   activeChips.push({ key: 'maxPrice', label: `Hasta $${Number(maxParam).toLocaleString('es-AR')}` })
-  if (badgeParam) activeChips.push({ key: 'badge', label: `Badge: ${badgeParam}` })
+  if (badgeParam) activeChips.push({ key: 'badge', label: badgeParam === 'OFERTA' ? 'Oferta' : badgeParam })
 
   const chips = hasActiveFilters && (
     <div className="flex flex-wrap items-center" style={{ gap: '8px' }}>
@@ -376,7 +405,7 @@ const SearchResults = () => {
               </div>
             )
             : sortedLength === 0
-            ? <EmptyState isMobile={false} hasActiveFilters={hasActiveFilters} onClear={clearFilters} />
+            ? <EmptyState isMobile={false} hasActiveFilters={hasActiveFilters} onClear={clearFilters} categories={categories} />
             : (
               <>
                 <div
@@ -419,7 +448,7 @@ const SearchResults = () => {
             </div>
           )
           : sortedLength === 0
-          ? <EmptyState isMobile hasActiveFilters={hasActiveFilters} onClear={clearFilters} />
+          ? <EmptyState isMobile hasActiveFilters={hasActiveFilters} onClear={clearFilters} categories={categories} />
           : (
             <>
               <div className="grid grid-cols-2" style={{ gap: '10px' }}>

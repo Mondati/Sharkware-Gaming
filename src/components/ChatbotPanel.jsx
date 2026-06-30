@@ -1,10 +1,67 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Bot, X, Send } from 'lucide-react'
 import { sendChatbotMessage } from '../api/chatbot'
+import MicButton from './MicButton'
 
 const INITIAL_MESSAGE = {
   role: 'assistant',
   content: '¡Hola! Soy Sharkbot, tu asistente de Sharkware Gaming. ¿En qué te puedo ayudar?',
+}
+
+const INLINE_RE = /\*\*([^*]+)\*\*|\[([^\]]+)\]\(([^)]+)\)/g
+
+// Render inline: **negrita** y [texto](/ruta interna) → <Link>. Links externos quedan en texto.
+const parseInline = (text, kp) => {
+  const nodes = []
+  let last = 0
+  let n = 0
+  let m
+  INLINE_RE.lastIndex = 0
+  while ((m = INLINE_RE.exec(text)) !== null) {
+    if (m.index > last) nodes.push(text.slice(last, m.index))
+    if (m[1] !== undefined) {
+      nodes.push(<strong key={`${kp}-b${n++}`}>{m[1]}</strong>)
+    } else if (m[3].startsWith('/')) {
+      nodes.push(
+        <Link key={`${kp}-l${n++}`} to={m[3]} style={{ color: 'var(--accent-bright)', fontWeight: 600 }}>
+          {m[2]}
+        </Link>
+      )
+    } else {
+      nodes.push(m[2])
+    }
+    last = INLINE_RE.lastIndex
+  }
+  if (last < text.length) nodes.push(text.slice(last))
+  return nodes
+}
+
+// Agrupa líneas en párrafos y listas de viñetas (* / -) antes de aplicar el inline.
+const renderRich = (content) => {
+  const blocks = []
+  let bullets = null
+  content.split('\n').forEach((line) => {
+    const t = line.trim()
+    const b = /^[*-]\s+(.*)$/.exec(t)
+    if (b) {
+      ;(bullets ??= []).push(b[1])
+    } else {
+      if (bullets) { blocks.push({ type: 'ul', items: bullets }); bullets = null }
+      if (t) blocks.push({ type: 'p', text: t })
+    }
+  })
+  if (bullets) blocks.push({ type: 'ul', items: bullets })
+
+  return blocks.map((blk, i) =>
+    blk.type === 'ul' ? (
+      <ul key={i} className="flex flex-col" style={{ margin: '2px 0', paddingLeft: 18, gap: 4 }}>
+        {blk.items.map((it, j) => <li key={j}>{parseInline(it, `${i}-${j}`)}</li>)}
+      </ul>
+    ) : (
+      <p key={i} style={{ margin: i === 0 ? 0 : '6px 0 0' }}>{parseInline(blk.text, `${i}`)}</p>
+    )
+  )
 }
 
 const ChatbotPanel = ({ onClose }) => {
@@ -14,6 +71,7 @@ const ChatbotPanel = ({ onClose }) => {
   const [messages, setMessages] = useState([INITIAL_MESSAGE])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [micListening, setMicListening] = useState(false)
   const [conversationId, setConversationId] = useState(null)
   const scrollRef = useRef(null)
 
@@ -189,11 +247,11 @@ const ChatbotPanel = ({ onClose }) => {
                 fontFamily: 'Poppins',
                 fontSize: '13px',
                 lineHeight: '1.5',
-                whiteSpace: 'pre-wrap',
+                whiteSpace: isUser ? 'pre-wrap' : 'normal',
                 wordBreak: 'break-word',
               }}
             >
-              {m.content}
+              {isUser ? m.content : renderRich(m.content)}
             </div>
           )
         })}
@@ -233,9 +291,10 @@ const ChatbotPanel = ({ onClose }) => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={loading}
-          placeholder="Escribí tu mensaje..."
+          placeholder={micListening ? 'Escuchando… hablá ahora' : 'Escribí tu mensaje...'}
           style={{
             flex: 1,
+            minWidth: 0,
             padding: '10px 14px',
             borderRadius: '999px',
             backgroundColor: 'var(--elev)',
@@ -245,6 +304,7 @@ const ChatbotPanel = ({ onClose }) => {
             fontSize: '13px',
           }}
         />
+        <MicButton value={input} onChange={setInput} disabled={loading} size={40} onListeningChange={setMicListening} />
         <button
           type="submit"
           disabled={loading || !input.trim()}

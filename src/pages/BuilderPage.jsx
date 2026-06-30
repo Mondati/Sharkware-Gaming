@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import Footer from '../components/Footer'
 import BuildCard from '../components/BuildCard'
+import MicButton from '../components/MicButton'
 import { sendBuilderMessage } from '../api/builder'
 
 const MONO = 'Poppins, sans-serif'
@@ -23,6 +24,7 @@ const BuilderPage = () => {
   const [conversationId, setConversationId] = useState(null)
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [micListening, setMicListening] = useState(false)
   const scrollRef = useRef(null)
 
   useEffect(() => {
@@ -340,11 +342,12 @@ const BuilderPage = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder={loading ? 'esperando respuesta…' : 'Escribí tu presupuesto y uso'}
+              placeholder={loading ? 'esperando respuesta…' : micListening ? 'Escuchando… hablá ahora' : 'Escribí tu presupuesto y uso'}
               disabled={loading}
               maxLength={1000}
               style={{
                 flex: 1,
+                minWidth: 0,
                 padding: '11px 16px',
                 borderRadius: 999,
                 backgroundColor: 'var(--elev)',
@@ -355,6 +358,7 @@ const BuilderPage = () => {
                 opacity: loading ? 0.6 : 1,
               }}
             />
+            <MicButton value={input} onChange={setInput} disabled={loading} size={44} onListeningChange={setMicListening} />
             <button
               type="submit"
               disabled={loading || !input.trim()}
