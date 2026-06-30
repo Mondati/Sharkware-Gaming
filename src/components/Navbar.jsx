@@ -119,7 +119,7 @@ const Navbar = () => {
     border: `1px solid ${hover ? "var(--accent)" : "var(--border)"}`,
     borderRadius: "6px",
     padding: "7px 12px",
-    gap: "7px",
+    gap: compact ? 0 : "7px",
     transition: "all 0.18s ease",
     boxShadow: hover ? "0 0 14px rgba(var(--accent-rgb),calc(0.22 * var(--glow-strength)))" : "none",
   });
@@ -129,7 +129,13 @@ const Navbar = () => {
     fontSize: "13px",
     fontWeight: 600,
     color: hover ? "var(--text)" : "var(--text-muted)",
-    transition: "color 0.18s ease",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    ...(compact && {
+      maxWidth: hover ? "120px" : "0px",
+      opacity: hover ? 1 : 0,
+      marginLeft: hover ? "7px" : "0px",
+    }),
   });
 
   const handleLogout = async () => {
@@ -656,15 +662,17 @@ const Navbar = () => {
               to="/builder"
               onMouseEnter={() => setHoveredBtn("builder")}
               onMouseLeave={() => setHoveredBtn(null)}
+              onFocus={() => setHoveredBtn("builder")}
+              onBlur={() => setHoveredBtn(null)}
               className="flex items-center no-underline"
               style={ghostPill(hoveredBtn === "builder")}
               title="Armá tu PC con IA"
               aria-label="Armá tu PC con IA"
             >
               <Cpu size={13} color="var(--accent)" />
-              {!compact && (
-                <span style={ghostLabel(hoveredBtn === "builder")}>Armá tu PC</span>
-              )}
+              <span className="sw-nav-label" style={ghostLabel(hoveredBtn === "builder")}>
+                Armá tu PC
+              </span>
             </Link>
           )}
 
@@ -672,15 +680,17 @@ const Navbar = () => {
             to="/crypto"
             onMouseEnter={() => setHoveredBtn("crypto")}
             onMouseLeave={() => setHoveredBtn(null)}
+            onFocus={() => setHoveredBtn("crypto")}
+            onBlur={() => setHoveredBtn(null)}
             className="flex items-center no-underline"
             style={ghostPill(hoveredBtn === "crypto")}
             title="Cotizaciones cripto"
             aria-label="Cotizaciones cripto"
           >
             <Coins size={13} color="var(--accent)" />
-            {!compact && (
-              <span style={ghostLabel(hoveredBtn === "crypto")}>Cripto</span>
-            )}
+            <span className="sw-nav-label" style={ghostLabel(hoveredBtn === "crypto")}>
+              Cripto
+            </span>
           </Link>
 
           <button
@@ -688,6 +698,8 @@ const Navbar = () => {
             onClick={toggleTheme}
             onMouseEnter={() => setHoveredBtn("theme")}
             onMouseLeave={() => setHoveredBtn(null)}
+            onFocus={() => setHoveredBtn("theme")}
+            onBlur={() => setHoveredBtn(null)}
             className="flex items-center cursor-pointer"
             style={ghostPill(hoveredBtn === "theme")}
             title={theme === "retro" ? "Cambiar a tema oscuro" : "Cambiar a tema retro"}
@@ -698,11 +710,9 @@ const Navbar = () => {
             ) : (
               <Sun size={13} color="var(--accent)" />
             )}
-            {!compact && (
-              <span style={ghostLabel(hoveredBtn === "theme")}>
-                {theme === "retro" ? "Oscuro" : "Retro"}
-              </span>
-            )}
+            <span className="sw-nav-label" style={ghostLabel(hoveredBtn === "theme")}>
+              {theme === "retro" ? "Oscuro" : "Retro"}
+            </span>
           </button>
 
           {user?.role === "admin" && (
@@ -710,17 +720,17 @@ const Navbar = () => {
               to="/admin"
               onMouseEnter={() => setHoveredBtn("adminPanel")}
               onMouseLeave={() => setHoveredBtn(null)}
+              onFocus={() => setHoveredBtn("adminPanel")}
+              onBlur={() => setHoveredBtn(null)}
               className="flex items-center no-underline"
               style={ghostPill(hoveredBtn === "adminPanel")}
               title="Panel de administración"
               aria-label="Panel de administración"
             >
               <LayoutDashboard size={13} color="var(--accent)" />
-              {!compact && (
-                <span style={ghostLabel(hoveredBtn === "adminPanel")}>
-                  Panel
-                </span>
-              )}
+              <span className="sw-nav-label" style={ghostLabel(hoveredBtn === "adminPanel")}>
+                Panel
+              </span>
             </Link>
           )}
 
@@ -729,17 +739,17 @@ const Navbar = () => {
               to="/mis-pedidos"
               onMouseEnter={() => setHoveredBtn("myOrders")}
               onMouseLeave={() => setHoveredBtn(null)}
+              onFocus={() => setHoveredBtn("myOrders")}
+              onBlur={() => setHoveredBtn(null)}
               className="flex items-center no-underline"
               style={ghostPill(hoveredBtn === "myOrders")}
               title="Mis pedidos"
               aria-label="Mis pedidos"
             >
               <Package size={13} color="var(--accent)" />
-              {!compact && (
-                <span style={ghostLabel(hoveredBtn === "myOrders")}>
-                  Pedidos
-                </span>
-              )}
+              <span className="sw-nav-label" style={ghostLabel(hoveredBtn === "myOrders")}>
+                Pedidos
+              </span>
             </Link>
           )}
         </div>

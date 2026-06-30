@@ -255,6 +255,14 @@ input, select {
   .sw-mic-pulse { animation: none; }
 }
 
+.sw-nav-label {
+  transition: max-width 0.2s ease, opacity 0.18s ease,
+              margin-left 0.2s ease, color 0.18s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sw-nav-label { transition: none; }
+}
+
 .sw-skeleton {
   position: relative;
   overflow: hidden;
